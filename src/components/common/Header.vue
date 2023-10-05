@@ -161,9 +161,6 @@ a.router-link-exact-active {
     }
 }
 
-/* .groupicon {
-    fill: red !important;
-} */
 </style>
 <template>
     <div class="header">
