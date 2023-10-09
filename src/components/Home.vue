@@ -1,15 +1,54 @@
+<template>
+    <div id="map"></div>
+</template>
 
 <script>
 import Header from './common/Header.vue';
+import mapboxgl from "mapbox-gl";
+
 export default{
     name: 'Home',
     components:{
         Header
-    }
+    },
+    data() {
+      return {
+        accessToken: 'pk.eyJ1Ijoicmh3b3JrcyIsImEiOiJjazBmZmE0bGIwNzh3M25wMjBhOHI2em56In0.317s4zEB48T9QC33pf6sVw#13'
+      }
+    },
+    mounted() {
+    mapboxgl.accessToken = this.accessToken;
+    const map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/light-v11',
+      center: [103.811279, 1.345399],
+      zoom: 9,
+    });
+
+    const nav = new mapboxgl.NavigationControl();
+    map.addControl(nav, "bottom-right");
+
+    const marker = new mapboxgl.Marker()
+    .setLngLat([103.811279, 1.345399])
+    .addTo(map);
+
+    const geolocate = new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true
+      },
+      trackUserLocation: true
+    });
+
+    map.addControl(geolocate, "bottom-right")
+
+    map.setProjection('Mercator');
+  },
 }
 </script>
 
-<style>
+<style scoped>
+#map {width: 100%; height: 90%; position: absolute;}
+
 .map {
   position: relative;
   background-color: #c2c8ca;
@@ -49,14 +88,3 @@ export default{
   height: 900.43px;
 }
 </style>
-
-<template>
-    <!-- <Header/> -->
-    <div class="">
-        <div class="map">
-            <img src="../assets/map.png" class="screenshot20210522At336" alt="">
-            <img src="../assets/add5.svg" class="addIcon" alt="">
-            <img src="../../src/assets/group-23971.svg" class="mapInner" alt="">
-        </div>
-    </div>
-</template>

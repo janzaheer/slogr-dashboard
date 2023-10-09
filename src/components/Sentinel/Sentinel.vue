@@ -1,199 +1,3 @@
-<script>
-import Header from '../common/Header.vue';
-export default {
-    name: 'Sentinel',
-    components: {
-        Header
-    }
-}
-</script>
-
-<style>
-.pageHeight {
-    height: 100vh;
-}
-
-.addBtn {
-    background-color: #8CB63D;
-    border-radius: 6px;
-    border: 1px solid #8CB63D;
-    padding: 7px 15px;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.addBtn:hover {
-    background-color: #72962f;
-}
-
-.addBtn2 {
-    background-color: white;
-    border-radius: 6px;
-    border: 1px solid #8CB63D;
-    padding: 10px 15px;
-    color: #8CB63D;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.addBtn2:hover {
-    background-color: #72962f;
-    color: white;
-}
-
-.modelSaveBtn {
-    background-color: #8CB63D;
-    border-radius: 6px;
-    border: 1px solid #8CB63D;
-    padding: 7px 50px;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.modelSaveBtn:hover {
-    background-color: #72962f;
-}
-
-.modelCancelBtn {
-    border: none;
-    background-color: white;
-    color: darkgray;
-    padding: 7px 30px;
-    text-decoration: none;
-}
-
-.modelCancelBtn:hover {
-    color: #8CB63D;
-}
-
-.createGroupBtn {
-    background-color: white;
-    border-radius: 6px;
-    border: 1px solid #8CB63D;
-    padding: 7px 40px;
-    color: #8CB63D;
-    cursor: pointer;
-}
-
-.createGroupBtn:hover {
-    background-color: #8CB63D;
-    color: white;
-}
-
-/* .sentinel {
-    margin-top: 40px;
-} */
-
-.bg {
-    background-color: #f7f7f8;
-    min-height: 100vh;
-    top: 1;
-}
-
-.pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.prevBtn,
-.nextBtn {
-    padding: 10px 15px;
-    /* font-size: 16px; */
-    border-radius: 6px;
-    /* background-color:  #8CB63D; */
-    border: 1px solid #8CB63D;
-    /* color: #8CB63D; */
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    background-color: white;
-}
-
-.prevBtn:hover,
-.nextBtn:hover {
-    background-color: #8CB63D;
-    color: white;
-}
-
-.pageNumber {
-    font-size: 15px;
-    margin: 0 20px;
-    color: darkgray;
-}
-
-.pageBtn {
-    background-color: #8CB63D;
-    padding: 5px 15px;
-    border-radius: 7px;
-    color: white;
-}
-
-.tableDiv {
-    padding-bottom: 22px;
-}
-
-.pointer {
-    cursor: pointer;
-    color: darkgrey;
-}
-
-.modelText {
-    font-size: 20px;
-}
-
-p {
-    margin-bottom: 0 !important;
-}
-
-.tableP {
-    font-size: 18px;
-    margin-top: 15px !important;
-    margin-bottom: 10px !important;
-    display: inline-block;
-}
-
-.tableHead {
-    text-decoration: none;
-    color: #000;
-    margin-top: 10px !important;
-    margin-bottom: 10px !important;
-    font-size: 16px;
-    display: inline-block;
-}
-
-.ApplyBtn {
-    background-color: #8CB63D;
-    color: white;
-    border-radius: 6px;
-    border: 1px solid #8CB63D;
-    padding: 5px 0;
-
-}
-
-.ApplyBtn:hover {
-    background-color: #72962f;
-}
-
-/* Style the label text */
-.form-check-label {
-    font-weight: normal;
-    /* Make the label text normal weight */
-    color: #333;
-    /* Change the label text color */
-}
-
-/* Style the checkbox when checked */
-.form-check-input:checked {
-    background-color: #8CB63D !important;
-    /* Change the background color when checked */
-    border: 1px solid #8CB63D !important;
-    /* Change the border color when checked */
-}
-
-</style>
-
 <template>
     <!-- <Header/> -->
     <div class="pageHeight">
@@ -840,4 +644,220 @@ p {
             </div>
         </div>
     </div>
-</div></template>
+</div>
+
+</template>
+
+
+<script>
+import Header from '../common/Header.vue';
+import {agentList} from "../../services/agent_services";
+
+export default {
+    name: 'Sentinel',
+    components: {
+        Header
+    },
+    mounted() {
+        console.log(import.meta.env.VITE_BASE_URL)
+        console.log('--------11------')
+        console.log('--------11------')
+        console.log('--------11------')
+        console.log('--------11------')
+        resp = this.getAgentList()
+        console.log(resp)
+        console.log('--------11-------')
+    },
+    methods: {
+        getAgentList() {
+            return agentList()
+        }
+    }
+}
+</script>
+
+<style>
+.pageHeight {
+    height: 100vh;
+}
+
+.addBtn {
+    background-color: #8CB63D;
+    border-radius: 6px;
+    border: 1px solid #8CB63D;
+    padding: 7px 15px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.addBtn:hover {
+    background-color: #72962f;
+}
+
+.addBtn2 {
+    background-color: white;
+    border-radius: 6px;
+    border: 1px solid #8CB63D;
+    padding: 10px 15px;
+    color: #8CB63D;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.addBtn2:hover {
+    background-color: #72962f;
+    color: white;
+}
+
+.modelSaveBtn {
+    background-color: #8CB63D;
+    border-radius: 6px;
+    border: 1px solid #8CB63D;
+    padding: 7px 50px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modelSaveBtn:hover {
+    background-color: #72962f;
+}
+
+.modelCancelBtn {
+    border: none;
+    background-color: white;
+    color: darkgray;
+    padding: 7px 30px;
+    text-decoration: none;
+}
+
+.modelCancelBtn:hover {
+    color: #8CB63D;
+}
+
+.createGroupBtn {
+    background-color: white;
+    border-radius: 6px;
+    border: 1px solid #8CB63D;
+    padding: 7px 40px;
+    color: #8CB63D;
+    cursor: pointer;
+}
+
+.createGroupBtn:hover {
+    background-color: #8CB63D;
+    color: white;
+}
+
+/* .sentinel {
+    margin-top: 40px;
+} */
+
+.bg {
+    background-color: #f7f7f8;
+    min-height: 100vh;
+    top: 1;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.prevBtn,
+.nextBtn {
+    padding: 10px 15px;
+    /* font-size: 16px; */
+    border-radius: 6px;
+    /* background-color:  #8CB63D; */
+    border: 1px solid #8CB63D;
+    /* color: #8CB63D; */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    background-color: white;
+}
+
+.prevBtn:hover,
+.nextBtn:hover {
+    background-color: #8CB63D;
+    color: white;
+}
+
+.pageNumber {
+    font-size: 15px;
+    margin: 0 20px;
+    color: darkgray;
+}
+
+.pageBtn {
+    background-color: #8CB63D;
+    padding: 5px 15px;
+    border-radius: 7px;
+    color: white;
+}
+
+.tableDiv {
+    padding-bottom: 22px;
+}
+
+.pointer {
+    cursor: pointer;
+    color: darkgrey;
+}
+
+.modelText {
+    font-size: 20px;
+}
+
+p {
+    margin-bottom: 0 !important;
+}
+
+.tableP {
+    font-size: 18px;
+    margin-top: 15px !important;
+    margin-bottom: 10px !important;
+    display: inline-block;
+}
+
+.tableHead {
+    text-decoration: none;
+    color: #000;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+    font-size: 16px;
+    display: inline-block;
+}
+
+.ApplyBtn {
+    background-color: #8CB63D;
+    color: white;
+    border-radius: 6px;
+    border: 1px solid #8CB63D;
+    padding: 5px 0;
+
+}
+
+.ApplyBtn:hover {
+    background-color: #72962f;
+}
+
+/* Style the label text */
+.form-check-label {
+    font-weight: normal;
+    /* Make the label text normal weight */
+    color: #333;
+    /* Change the label text color */
+}
+
+/* Style the checkbox when checked */
+.form-check-input:checked {
+    background-color: #8CB63D !important;
+    /* Change the background color when checked */
+    border: 1px solid #8CB63D !important;
+    /* Change the border color when checked */
+}
+
+</style>
