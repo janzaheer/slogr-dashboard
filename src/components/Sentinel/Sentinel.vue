@@ -14,80 +14,77 @@ export default {
 }
 
 .addBtn {
-    background-color: #8CB63D;
+    background-color: var(--primary_color);
     border-radius: 6px;
-    border: 1px solid #8CB63D;
+    /* border: 1px solid #8CB63D; */
     padding: 7px 15px;
-    color: white;
+    color: var(--white_color);
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .addBtn:hover {
-    background-color: #72962f;
+    background-color: var(--primary_color_Hover);
 }
 
 .addBtn2 {
-    background-color: white;
+    background-color: var(--white_color);
     border-radius: 6px;
-    border: 1px solid #8CB63D;
+    border: 1px solid var(--primary_color);
     padding: 10px 15px;
-    color: #8CB63D;
+    color: var(--primary_color);
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .addBtn2:hover {
-    background-color: #72962f;
-    color: white;
+    background-color: var(--primary_color_Hover);
+    color: var(--white_color);
 }
 
 .modelSaveBtn {
-    background-color: #8CB63D;
+    background-color: var(--primary_color);
     border-radius: 6px;
-    border: 1px solid #8CB63D;
+    /* border: 1px solid #8CB63D; */
     padding: 7px 50px;
-    color: white;
+    color: var(--white_color);
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .modelSaveBtn:hover {
-    background-color: #72962f;
+    background-color: var(--primary_color_Hover);
 }
 
 .modelCancelBtn {
     border: none;
-    background-color: white;
-    color: darkgray;
+    background-color: var(--white_color);
+    color: var(--dark_gray_Color);
     padding: 7px 30px;
     text-decoration: none;
 }
 
 .modelCancelBtn:hover {
-    color: #8CB63D;
+    color: var(--primary_color_Hover);
 }
 
 .createGroupBtn {
-    background-color: white;
+    background-color: var(--white_color);
     border-radius: 6px;
-    border: 1px solid #8CB63D;
+    border: 1px solid var(--primary_color);
     padding: 7px 40px;
-    color: #8CB63D;
+    color: var(--primary_color);
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .createGroupBtn:hover {
-    background-color: #8CB63D;
-    color: white;
+    background-color: var(--primary_color_Hover);
+    color: var(--white_color);
 }
 
-/* .sentinel {
-    margin-top: 40px;
-} */
-
 .bg {
-    background-color: #f7f7f8;
+    background-color: var(--main_bg_color);
     min-height: 100vh;
     top: 1;
 }
@@ -101,33 +98,30 @@ export default {
 .prevBtn,
 .nextBtn {
     padding: 10px 15px;
-    /* font-size: 16px; */
     border-radius: 6px;
-    /* background-color:  #8CB63D; */
-    border: 1px solid #8CB63D;
-    /* color: #8CB63D; */
+    border: 1px solid var(--primary_color);
     cursor: pointer;
     transition: background-color 0.3s ease;
-    background-color: white;
+    background-color: var(--white_color);
 }
 
 .prevBtn:hover,
 .nextBtn:hover {
-    background-color: #8CB63D;
-    color: white;
+    background-color: var(--primary_color);
+    color: var(--white_color);
 }
 
 .pageNumber {
     font-size: 15px;
     margin: 0 20px;
-    color: darkgray;
+    color: var(--dark_gray_Color);
 }
 
 .pageBtn {
-    background-color: #8CB63D;
+    background-color: var(--primary_color);
     padding: 5px 15px;
     border-radius: 7px;
-    color: white;
+    color: var(--white_color);
 }
 
 .tableDiv {
@@ -164,31 +158,31 @@ p {
 }
 
 .ApplyBtn {
-    background-color: #8CB63D;
-    color: white;
+    background-color: var(--primary_color);
+    color:var(--white_color);
     border-radius: 6px;
-    border: 1px solid #8CB63D;
+    border: 1px solid var(--primary_color);
     padding: 5px 0;
 
 }
 
 .ApplyBtn:hover {
-    background-color: #72962f;
+    background-color: var(--primary_color_Hover);
 }
 
 /* Style the label text */
 .form-check-label {
     font-weight: normal;
     /* Make the label text normal weight */
-    color: #333;
+    color: var(--dark_black_Color);
     /* Change the label text color */
 }
 
 /* Style the checkbox when checked */
 .form-check-input:checked {
-    background-color: #8CB63D !important;
+    background-color: var(--primary_color) !important;
     /* Change the background color when checked */
-    border: 1px solid #8CB63D !important;
+    border: 1px solid var(--primary_color) !important;
     /* Change the border color when checked */
 }
 

@@ -9,187 +9,50 @@ export default {
 </script>
 
 <style>
-.pageHeight {
-    height: 100vh;
-}
-
 .addBtn {
-    background-color: #8CB63D;
+    background-color: var(--primary_color);
     border-radius: 6px;
-    border: 1px solid #8CB63D;
+    border: 1px solid var(--primary_color);
     padding: 7px 15px;
-    color: white;
+    color: var(--white_color);
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .addBtn:hover {
-    background-color: #72962f;
-}
-
-.addBtnSessions {
-    background-color: white;
-    border-radius: 6px;
-    border: 1px solid #8CB63D;
-    padding: 7px 15px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    color: #8CB63D;
-}
-
-.addBtnSessions:hover {
-    background-color: #8CB63D;
-    color: white;
-}
-
-.addBtn2 {
-    background-color: white;
-    border-radius: 6px;
-    border: 1px solid #8CB63D;
-    padding: 10px 15px;
-    color: #8CB63D;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.addBtn2:hover {
-    background-color: #72962f;
-    color: white;
+    background-color:  var(--primary_color_Hover);
 }
 
 .modelSaveBtn {
-    background-color: #8CB63D;
+    background-color: var(--primary_color);
     border-radius: 6px;
-    border: 1px solid #8CB63D;
+    border: 1px solid var(--primary_color);
     padding: 7px 50px;
-    color: white;
+    color: var(--white_color);
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .modelSaveBtn:hover {
-    background-color: #72962f;
+    background-color:  var(--primary_color_Hover);
 }
 
 .modelCancelBtn {
     border: none;
-    background-color: white;
-    color: darkgray;
+    background-color: var(--white_color);
+    color: var(--dark_gray_Color);
     padding: 7px 30px;
     text-decoration: none;
 }
 
 .modelCancelBtn:hover {
-    color: #8CB63D;
-}
-
-.createGroupBtn {
-    background-color: white;
-    border-radius: 6px;
-    border: 1px solid #8CB63D;
-    padding: 7px 40px;
-    color: #8CB63D;
-    cursor: pointer;
-}
-
-.createGroupBtn:hover {
-    background-color: #8CB63D;
-    color: white;
+    color: var(--primary_color_Hover);
 }
 
 .css{
     line-height: 1.2;
 }
 
-.bg {
-    background-color: #f7f7f8;
-    min-height: 100vh;
-    top: 1;
-}
-
-.pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.prevBtn,
-.nextBtn {
-    padding: 10px 15px;
-    /* font-size: 16px; */
-    border-radius: 6px;
-    /* background-color:  #8CB63D; */
-    border: 1px solid #8CB63D;
-    /* color: #8CB63D; */
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    background-color: white;
-}
-
-.prevBtn:hover,
-.nextBtn:hover {
-    background-color: #8CB63D;
-    color: white;
-}
-
-.pageNumber {
-    font-size: 15px;
-    margin: 0 20px;
-    color: darkgray;
-}
-
-.pageBtn {
-    background-color: #8CB63D;
-    padding: 5px 15px;
-    border-radius: 7px;
-    color: white;
-}
-
-.tableDiv {
-    padding-bottom: 22px;
-}
-
-.pointer {
-    cursor: pointer;
-    color: darkgrey;
-}
-
-.modelText {
-    font-size: 20px;
-}
-
-p {
-    margin-bottom: 0 !important;
-}
-
-.tableP {
-    font-size: 18px;
-    margin-top: 15px !important;
-    margin-bottom: 10px !important;
-    display: inline-block;
-}
-
-.tableHead {
-    text-decoration: none;
-    color: #000;
-    margin-top: 10px !important;
-    margin-bottom: 10px !important;
-    font-size: 16px;
-    display: inline-block;
-}
-
-.ApplyBtn {
-    background-color: #8CB63D;
-    color: white;
-    border-radius: 6px;
-    border: 1px solid #8CB63D;
-    padding: 5px 0;
-
-}
-
-.ApplyBtn:hover {
-    background-color: #72962f;
-}
 </style>
 
 <template>
