@@ -660,17 +660,12 @@ export default {
     },
     mounted() {
         console.log(import.meta.env.VITE_BASE_URL)
-        console.log('--------11------')
-        console.log('--------11------')
-        console.log('--------11------')
-        console.log('--------11------')
-        resp = this.getAgentList()
-        console.log(resp)
-        console.log('--------11-------')
+        this.getAgentList()
     },
     methods: {
-        getAgentList() {
-            return agentList()
+        async getAgentList() {
+            const data = await agentList()
+            console.log(data)
         }
     }
 }
