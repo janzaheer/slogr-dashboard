@@ -13,3 +13,14 @@ body {
 #app{
   background-color: brown !important;
 }
+
+:root {
+  --primary_color: #8cb63d;
+  --secondary_color: #f3f3f3;
+  --dark_color: #000;
+  --white_color: #fff;
+  --dark_gray_color: darkgrey;
+  --primary_color_Hover: #72962f;
+  --dark_black_Color:  #333;
+  --main_bg_color: #f7f7f8;
+}

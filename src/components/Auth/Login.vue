@@ -16,18 +16,7 @@ export default {
 </script>
 
 <style>
-/* .form-style input{
-	border:0;
-	height:50px;
-	border-radius:0;
-border-bottom:1px solid #ebebeb;	
-}
-.form-style input:focus{
-border-bottom:1px solid #007bff;	
-box-shadow:none;
-outline:0;
-background-color:#ebebeb;	
-} */
+
 .sideline {
     display: flex;
     width: 100%;
@@ -36,9 +25,7 @@ background-color:#ebebeb;
     text-align: center;
 	color:#ccc;
 }
-/* button{
-height:50px;	
-} */
+
 .sideline:before,
 .sideline:after {
     content: '';
@@ -49,6 +36,29 @@ height:50px;
 
 .sideline:after {
     margin: 0 0 0 20px;
+}
+.socialBtn{
+    padding: 14px 0;
+    border-radius: 8px;
+    border: 1px solid var(--secondary_color);
+    background-color: var(--white_color);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.socialBtn:hover{
+border: 1px  solid var(--primary_color);
+}
+.signInBtn{
+    padding: 14px 0;
+    border-radius: 8px;
+    border: 1px solid var(--primary_color);
+    background-color: var(--primary_color);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: var(--white_color);
+}
+.signInBtn:hover{
+    background-color: var(--primary_color_Hover);
 }
 </style>
 
@@ -70,33 +80,25 @@ height:50px;
                         <form>
                             <div class="form-group pb-3">
                                 <label for="exampleInputEmail1">Email Address</label>
-                                <input type="email" placeholder="Email" class="form-control" id="exampleInputEmail1"
+                                <input type="email" placeholder="Benjaminrobert77@email.com" class="form-control form-control-lg" id="exampleInputEmail1"
                                     aria-describedby="emailHelp">
                             </div>
                             <div class="form-group pb-3">
                                 <label for="exampleInputPassword1">Password</label>
-                                <input type="password" placeholder="Password" class="form-control"
+                                <input type="password" placeholder="Password" class="form-control form-control-lg"
                                     id="exampleInputPassword1">
                             </div>
-                            <div class="d-flex align-items-center justify-content-between">
-                                
-                                <div class="d-flex align-items-center"><input name="" type="checkbox" value="" /> <span
-                                        class="pl-2 font-weight-bold">Remember Me</span></div>
-                                <div><a href="#">Forget Password?</a></div>
-                            </div>
                             <div class="pb-2">
-                                <button type="submit" class="btn btn-success w-100 font-weight-bold mt-2">Sign In</button>
+                                <button type="submit" class="signInBtn w-100 my-5">Sign In</button>
                             </div>
                         </form>
-                        <div class="sideline">Or Sign In With</div>
-                        <div>
-                            <button type="submit" class="btn btn-primary w-100 font-weight-bold mt-2"><i
-                                    class="fa fa-facebook" aria-hidden="true"></i> Login With Facebook</button>
-                                    <button type="submit" class="btn btn-primary w-100 font-weight-bold mt-2"><i
-                                    class="fa fa-facebook" aria-hidden="true"></i> Login With Google</button>
+                        <div class="sideline mt-1">Or Sign In With</div>
+                        <div class="d-flex justify-content-between align-items-center ">
+                           <button class="socialBtn w-100 me-2" ><i class="fa-brands fa-google fa-2xl"></i> Google</button>
+                           <button class="socialBtn w-100"><i class="fa-brands fa-facebook-f fa-2xl"></i> Facebook</button>
                         </div>
                         <div class="pt-4 text-center">
-                            Get Members Benefit. <a href="#">Sign Up</a>
+                            Create Account. <a href="#">Sign Up</a>
                         </div>
                     </div>
 

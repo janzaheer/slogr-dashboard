@@ -16,13 +16,6 @@ export default {
 </script>
 
 <style>
-:root {
-    --primary_color: #8cb63d;
-    --secondary_color: #f3f3f3;
-    --dark_color: #000;
-    --white_color: #fff;
-    --blue_color: darkgrey;
-}
 
 a {
     color: var(--dark_color);
@@ -161,9 +154,6 @@ a.router-link-exact-active {
     }
 }
 
-/* .groupicon {
-    fill: red !important;
-} */
 </style>
 <template>
     <div class="header">
