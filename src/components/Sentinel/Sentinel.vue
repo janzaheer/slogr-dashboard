@@ -1,193 +1,3 @@
-<script>
-import Header from '../common/Header.vue';
-export default {
-    name: 'Sentinel',
-    components: {
-        Header
-    }
-}
-</script>
-
-<style>
-.pageHeight {
-    height: 100vh;
-}
-
-.addBtn {
-    background-color: var(--primary_color);
-    border-radius: 6px;
-    /* border: 1px solid #8CB63D; */
-    padding: 7px 15px;
-    color: var(--white_color);
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.addBtn:hover {
-    background-color: var(--primary_color_Hover);
-}
-
-.addBtn2 {
-    background-color: var(--white_color);
-    border-radius: 6px;
-    border: 1px solid var(--primary_color);
-    padding: 10px 15px;
-    color: var(--primary_color);
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.addBtn2:hover {
-    background-color: var(--primary_color_Hover);
-    color: var(--white_color);
-}
-
-.modelSaveBtn {
-    background-color: var(--primary_color);
-    border-radius: 6px;
-    /* border: 1px solid #8CB63D; */
-    padding: 7px 50px;
-    color: var(--white_color);
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.modelSaveBtn:hover {
-    background-color: var(--primary_color_Hover);
-}
-
-.modelCancelBtn {
-    border: none;
-    background-color: var(--white_color);
-    color: var(--dark_gray_Color);
-    padding: 7px 30px;
-    text-decoration: none;
-}
-
-.modelCancelBtn:hover {
-    color: var(--primary_color_Hover);
-}
-
-.createGroupBtn {
-    background-color: var(--white_color);
-    border-radius: 6px;
-    border: 1px solid var(--primary_color);
-    padding: 7px 40px;
-    color: var(--primary_color);
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.createGroupBtn:hover {
-    background-color: var(--primary_color_Hover);
-    color: var(--white_color);
-}
-
-.bg {
-    background-color: var(--main_bg_color);
-    min-height: 100vh;
-    top: 1;
-}
-
-.pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.prevBtn,
-.nextBtn {
-    padding: 10px 15px;
-    border-radius: 6px;
-    border: 1px solid var(--primary_color);
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    background-color: var(--white_color);
-}
-
-.prevBtn:hover,
-.nextBtn:hover {
-    background-color: var(--primary_color);
-    color: var(--white_color);
-}
-
-.pageNumber {
-    font-size: 15px;
-    margin: 0 20px;
-    color: var(--dark_gray_Color);
-}
-
-.pageBtn {
-    background-color: var(--primary_color);
-    padding: 5px 15px;
-    border-radius: 7px;
-    color: var(--white_color);
-}
-
-.tableDiv {
-    padding-bottom: 22px;
-}
-
-.pointer {
-    cursor: pointer;
-    color: darkgrey;
-}
-
-.modelText {
-    font-size: 20px;
-}
-
-p {
-    margin-bottom: 0 !important;
-}
-
-.tableP {
-    font-size: 18px;
-    margin-top: 15px !important;
-    margin-bottom: 10px !important;
-    display: inline-block;
-}
-
-.tableHead {
-    text-decoration: none;
-    color: #000;
-    margin-top: 10px !important;
-    margin-bottom: 10px !important;
-    font-size: 16px;
-    display: inline-block;
-}
-
-.ApplyBtn {
-    background-color: var(--primary_color);
-    color:var(--white_color);
-    border-radius: 6px;
-    border: 1px solid var(--primary_color);
-    padding: 5px 0;
-
-}
-
-.ApplyBtn:hover {
-    background-color: var(--primary_color_Hover);
-}
-
-/* Style the label text */
-.form-check-label {
-    font-weight: normal;
-    /* Make the label text normal weight */
-    color: var(--dark_black_Color);
-    /* Change the label text color */
-}
-
-/* Style the checkbox when checked */
-.form-check-input:checked {
-    background-color: var(--primary_color) !important;
-    /* Change the background color when checked */
-    border: 1px solid var(--primary_color) !important;
-    /* Change the border color when checked */
-}
-
-</style>
-
 <template>
     <!-- <Header/> -->
     <div class="pageHeight">
@@ -834,4 +644,209 @@ p {
             </div>
         </div>
     </div>
-</div></template>
+</div>
+
+</template>
+
+
+<script>
+import Header from '../common/Header.vue';
+import {agentList} from "../../services/agent_services";
+
+export default {
+    name: 'Sentinel',
+    components: {
+        Header
+    },
+    mounted() {
+        console.log(import.meta.env.VITE_BASE_URL)
+        this.getAgentList()
+    },
+    methods: {
+        async getAgentList() {
+            const data = await agentList()
+            console.log(data)
+        }
+    }
+}
+</script>
+
+<style>
+.pageHeight {
+    height: 100vh;
+}
+
+.addBtn {
+    background-color: var(--primary_color);
+    border-radius: 6px;
+    /* border: 1px solid #8CB63D; */
+    padding: 7px 15px;
+    color: var(--white_color);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.addBtn:hover {
+    background-color: var(--primary_color_Hover);
+}
+
+.addBtn2 {
+    background-color: var(--white_color);
+    border-radius: 6px;
+    border: 1px solid var(--primary_color);
+    padding: 10px 15px;
+    color: var(--primary_color);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.addBtn2:hover {
+    background-color: var(--primary_color_Hover);
+    color: var(--white_color);
+}
+
+.modelSaveBtn {
+    background-color: var(--primary_color);
+    border-radius: 6px;
+    /* border: 1px solid #8CB63D; */
+    padding: 7px 50px;
+    color: var(--white_color);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modelSaveBtn:hover {
+    background-color: var(--primary_color_Hover);
+}
+
+.modelCancelBtn {
+    border: none;
+    background-color: var(--white_color);
+    color: var(--dark_gray_Color);
+    padding: 7px 30px;
+    text-decoration: none;
+}
+
+.modelCancelBtn:hover {
+    color: var(--primary_color_Hover);
+}
+
+.createGroupBtn {
+    background-color: var(--white_color);
+    border-radius: 6px;
+    border: 1px solid var(--primary_color);
+    padding: 7px 40px;
+    color: var(--primary_color);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.createGroupBtn:hover {
+    background-color: var(--primary_color_Hover);
+    color: var(--white_color);
+}
+
+.bg {
+    background-color: var(--main_bg_color);
+    min-height: 100vh;
+    top: 1;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.prevBtn,
+.nextBtn {
+    padding: 10px 15px;
+    border-radius: 6px;
+    border: 1px solid var(--primary_color);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    background-color: var(--white_color);
+}
+
+.prevBtn:hover,
+.nextBtn:hover {
+    background-color: var(--primary_color);
+    color: var(--white_color);
+}
+
+.pageNumber {
+    font-size: 15px;
+    margin: 0 20px;
+    color: var(--dark_gray_Color);
+}
+
+.pageBtn {
+    background-color: var(--primary_color);
+    padding: 5px 15px;
+    border-radius: 7px;
+    color: var(--white_color);
+}
+
+.tableDiv {
+    padding-bottom: 22px;
+}
+
+.pointer {
+    cursor: pointer;
+    color: darkgrey;
+}
+
+.modelText {
+    font-size: 20px;
+}
+
+p {
+    margin-bottom: 0 !important;
+}
+
+.tableP {
+    font-size: 18px;
+    margin-top: 15px !important;
+    margin-bottom: 10px !important;
+    display: inline-block;
+}
+
+.tableHead {
+    text-decoration: none;
+    color: #000;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+    font-size: 16px;
+    display: inline-block;
+}
+
+.ApplyBtn {
+    background-color: var(--primary_color);
+    color:var(--white_color);
+    border-radius: 6px;
+    border: 1px solid var(--primary_color);
+    padding: 5px 0;
+
+}
+
+.ApplyBtn:hover {
+    background-color: var(--primary_color_Hover);
+}
+
+/* Style the label text */
+.form-check-label {
+    font-weight: normal;
+    /* Make the label text normal weight */
+    color: var(--dark_black_Color);
+    /* Change the label text color */
+}
+
+/* Style the checkbox when checked */
+.form-check-input:checked {
+    background-color: var(--primary_color) !important;
+    /* Change the background color when checked */
+    border: 1px solid var(--primary_color) !important;
+    /* Change the border color when checked */
+}
+
+</style>
