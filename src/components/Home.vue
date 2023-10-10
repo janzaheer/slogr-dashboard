@@ -2,7 +2,15 @@
   
     <div id="map">
 
-      <h2 class="position-absolute top-0 start-0 p-2 bg-info">map</h2>
+      <div class="position-absolute top-0 start-0 p-2 bg-info">
+
+<div class="card bg-secondary">
+  <div class="card-body">
+<h6 class="card-title">Legend</h6>
+<p class="card">asdasd</p>
+  </div>
+</div>
+      </div>
     </div>
     
 </template>
