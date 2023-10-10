@@ -1,60 +1,3 @@
-<script>
-import Header from '../common/Header.vue';
-export default {
-    name: 'Monitor',
-    components: {
-        Header
-    }
-}
-</script>
-
-<style>
-.addBtn {
-    background-color: var(--primary_color);
-    border-radius: 6px;
-    border: 1px solid var(--primary_color);
-    padding: 7px 15px;
-    color: var(--white_color);
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.addBtn:hover {
-    background-color:  var(--primary_color_Hover);
-}
-
-.modelSaveBtn {
-    background-color: var(--primary_color);
-    border-radius: 6px;
-    border: 1px solid var(--primary_color);
-    padding: 7px 50px;
-    color: var(--white_color);
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.modelSaveBtn:hover {
-    background-color:  var(--primary_color_Hover);
-}
-
-.modelCancelBtn {
-    border: none;
-    background-color: var(--white_color);
-    color: var(--dark_gray_Color);
-    padding: 7px 30px;
-    text-decoration: none;
-}
-
-.modelCancelBtn:hover {
-    color: var(--primary_color_Hover);
-}
-
-.css{
-    line-height: 1.2;
-}
-
-</style>
-
 <template>
     <!-- <Header/> -->
     <div class="pageHeight">
@@ -456,3 +399,60 @@ export default {
         </div>
     </div>
 </template>
+
+<script>
+import Header from '../common/Header.vue';
+export default {
+    name: 'Monitor',
+    components: {
+        Header
+    }
+}
+</script>
+
+<style>
+.addBtn {
+    background-color: var(--primary_color);
+    border-radius: 6px;
+    border: 1px solid var(--primary_color);
+    padding: 7px 15px;
+    color: var(--white_color);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.addBtn:hover {
+    background-color:  var(--primary_color_Hover);
+}
+
+.modelSaveBtn {
+    background-color: var(--primary_color);
+    border-radius: 6px;
+    border: 1px solid var(--primary_color);
+    padding: 7px 50px;
+    color: var(--white_color);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modelSaveBtn:hover {
+    background-color:  var(--primary_color_Hover);
+}
+
+.modelCancelBtn {
+    border: none;
+    background-color: var(--white_color);
+    color: var(--dark_gray_Color);
+    padding: 7px 30px;
+    text-decoration: none;
+}
+
+.modelCancelBtn:hover {
+    color: var(--primary_color_Hover);
+}
+
+.css{
+    line-height: 1.2;
+}
+
+</style>
