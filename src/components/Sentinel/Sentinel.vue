@@ -635,9 +635,10 @@
                             <label for="exampleFormControlInput1" class="form-label ms-1">Name</label>
                             <input type="text" class="form-control form-control-lg" id="exampleFormControlInput1"
                                 placeholder="Enter Name" v-model="addSentinel.name">
+                            <span class="text-danger" v-if="!addSentinel.name">This field is required.</span>
                         </div>
                         <div class="d-flex justify-content-end">
-                            <button type="button" class="modelCancelBtn" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" id="AddCancelButton" class="modelCancelBtn" data-bs-dismiss="modal">Cancel</button>
                             <button type="button" class="modelSaveBtn ms-2" @click="handleSentinelCreation">Save</button>
                         </div>
                     </div>
@@ -690,12 +691,16 @@ export default {
     },
     methods: {
         async handleSentinelCreation() {
-            const payload = {name: this.addSentinel.name}
-            const data = await createAgent(payload)
+            if (this.addSentinel.name) {
+                // TODO: Zaheer enable this once APIs are up
+                
+                // const payload = {name: this.addSentinel.name}
+                // const data = await createAgent(payload)
+                // console.log(data)
 
-            console.log(data)
-            console.log('-------11----------')
-
+                document.getElementById('AddCancelButton').click();
+                this.addSentinel.name = null;
+            }
         }
     }
 }
