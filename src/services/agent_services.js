@@ -11,3 +11,10 @@ export async function agentList(page=1) {
     })
     return resp.data
 }
+
+export async function createAgent(payload) {
+    const resp = await axios.post(`${base_url}/api/add-agents`, payload, {
+        'content_type': 'application/json', 'Authorization': `Bearer ${TOKEN}`
+    })
+    return resp.data
+}
