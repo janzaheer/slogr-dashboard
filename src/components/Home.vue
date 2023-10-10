@@ -1,35 +1,96 @@
 <template>
-  
-    <div id="map">
-
-      <div class="position-absolute top-0 start-0 p-2 bg-info">
-
-<div class="card bg-secondary">
-  <div class="card-body">
-<h6 class="card-title">Legend</h6>
-<p class="card">asdasd</p>
+  <div id="map">
   </div>
-</div>
+  <div class="position-relative bg-secondary mt-md-5 ms-md-3 opacity-75">
+    <div class="position-absolute p-2">
+      <div class="card bg-light" style="width: 200px; height: 220px;">
+        <div class="card-body">
+          <h6 class="card-title mb-0">Legend</h6>
+          <hr>
+          <div class="d-flex justify-content-between align-items-center">
+            <label class="form-check-label" for="flexSwitchCheckDefault">Group 1</label>
+            <div class="form-check form-switch">
+              <input class="form-check-input fs-4" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+            </div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center my-3">
+            <label class="form-check-label" for="flexSwitchCheckDefault2">Group 2</label>
+            <div class="form-check form-switch">
+              <input class="form-check-input fs-4" type="checkbox" role="switch" id="flexSwitchCheckDefault2">
+            </div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center">
+            <label class="form-check-label" for="flexSwitchCheckDefault3">Group 3</label>
+            <div class="form-check form-switch">
+              <input class="form-check-input fs-4" type="checkbox" role="switch" id="flexSwitchCheckDefault3">
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    
+  </div>
+
+  <div class="position-relative bg-secondary mt-md-3 ms-md-3 opacity-75" style="width: 200px; top: 250px;">
+    <div class="position-absolute p-2">
+      <div class="card bg-light" style="width: 200px; height: 350px;">
+        <div class="card-body">
+          <h6 class="card-title mb-0">Monitoring Profile</h6>
+          <hr>
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <span class="" style="font-size: 14px;">Monitoring</span>
+              <label class="form-check-label" for="flexSwitchCheckDefault4">Profile 01</label>
+            </div>
+            <div class="form-check form-switch">
+              <input class="form-check-input fs-4" type="checkbox" role="switch" id="flexSwitchCheckDefault4">
+            </div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center my-3">
+            <div>
+              <span class="" style="font-size: 14px;">Monitoring</span>
+              <label class="form-check-label" for="flexSwitchCheckDefault5">Profile 02</label>
+            </div>
+            <div class="form-check form-switch">
+              <input class="form-check-input fs-4" type="checkbox" role="switch" id="flexSwitchCheckDefault5">
+            </div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <span class="" style="font-size: 14px;">Monitoring</span>
+              <label class="form-check-label" for="flexSwitchCheckDefault6">Profile 03</label>
+            </div>
+            <div class="form-check form-switch">
+              <input class="form-check-input fs-4" type="checkbox" role="switch" id="flexSwitchCheckDefault6">
+            </div>
+          </div>
+          <hr>
+          <div>
+            <h6 class="card-title my-3">Monitoring</h6>
+
+          </div>
+          <span><i class="fa-solid fa-gear" style="color: var(--primary_color); margin-top: 12px;"></i> Profile
+            Setting</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 import Header from './common/Header.vue';
 import mapboxgl from "mapbox-gl";
 
-export default{
-    name: 'Home',
-    components:{
-        Header
-    },
-    data() {
-      return {
-        accessToken: 'pk.eyJ1Ijoicmh3b3JrcyIsImEiOiJjazBmZmE0bGIwNzh3M25wMjBhOHI2em56In0.317s4zEB48T9QC33pf6sVw#13'
-      }
-    },
-    mounted() {
+export default {
+  name: 'Home',
+  components: {
+    Header
+  },
+  data() {
+    return {
+      accessToken: 'pk.eyJ1Ijoicmh3b3JrcyIsImEiOiJjazBmZmE0bGIwNzh3M25wMjBhOHI2em56In0.317s4zEB48T9QC33pf6sVw#13'
+    }
+  },
+  mounted() {
     mapboxgl.accessToken = this.accessToken;
     const map = new mapboxgl.Map({
       container: 'map',
@@ -42,8 +103,8 @@ export default{
     map.addControl(nav, "bottom-right");
 
     const marker = new mapboxgl.Marker()
-    .setLngLat([103.811279, 1.345399])
-    .addTo(map);
+      .setLngLat([103.811279, 1.345399])
+      .addTo(map);
 
     const geolocate = new mapboxgl.GeolocateControl({
       positionOptions: {
@@ -60,7 +121,11 @@ export default{
 </script>
 
 <style scoped>
-#map {width: 100%; height: 90%; position: absolute;}
+#map {
+  width: 100%;
+  height: 90%;
+  position: absolute;
+}
 
 .map {
   position: relative;
@@ -73,14 +138,16 @@ export default{
   color: var(--color-black);
   font-family: var(--font-inter);
 }
+
 .screenshot20210522At336 {
   position: absolute;
-   top: 1px;
+  top: 1px;
   /* left: 156px; */
   width: 1920px;
   height: 1027px;
   object-fit: cover;
 }
+
 .addIcon {
   position: absolute;
   height: 9.66%;
@@ -93,6 +160,7 @@ export default{
   overflow: hidden;
   max-height: 100%;
 }
+
 .mapInner {
   position: absolute;
   top: 100px;
