@@ -7,6 +7,7 @@ import Monitor from '../components/Monitor/Monitor.vue';
 import Login from '../components/Auth/Login.vue';
 import Groups from '../components/Groups/Groups.vue';
 import Analytics from '../components/Analytics/Analytics.vue';
+import SentinelReports from '../components/Sentinel/SentinelReports.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -50,6 +51,11 @@ const router = createRouter({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/sentinelReports',
+      name: 'SentinelReports',
+      component: SentinelReports
     },
     {
       path: '/about',

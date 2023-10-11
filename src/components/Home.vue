@@ -1,7 +1,7 @@
 <template>
   <div id="map">
   </div>
-  <div class="position-relative bg-secondary mt-md-5 ms-md-3 opacity-75">
+  <div class="position-relative bg-secondary mt-md-4 ms-md-3 opacity-75">
     <div class="position-absolute p-2">
       <div class="card bg-light" style="width: 200px; height: 220px;">
         <div class="card-body">
@@ -30,7 +30,7 @@
     </div>
   </div>
 
-  <div class="position-relative bg-secondary mt-md-3 ms-md-3 opacity-75" style="width: 200px; top: 250px;">
+  <div class="position-relative bg-secondary mt-md-2 ms-md-3 opacity-75" style="width: 200px; top: 250px;">
     <div class="position-absolute p-2">
       <div class="card bg-light" style="width: 200px; height: 350px;">
         <div class="card-body">
@@ -65,10 +65,9 @@
           </div>
           <hr>
           <div>
-            <h6 class="card-title my-3">Monitoring</h6>
-
+            <h6 class="card-title my-2">Monitoring</h6>
           </div>
-          <span><i class="fa-solid fa-gear" style="color: var(--primary_color); margin-top: 12px;"></i> Profile
+          <span><i class="fa-solid fa-gear" style="color: var(--primary_color); margin-top: 5px;"></i> Profile
             Setting</span>
         </div>
       </div>
@@ -142,7 +141,6 @@ export default {
 .screenshot20210522At336 {
   position: absolute;
   top: 1px;
-  /* left: 156px; */
   width: 1920px;
   height: 1027px;
   object-fit: cover;
