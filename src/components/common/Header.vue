@@ -201,7 +201,7 @@ a.router-link-exact-active {
                             </RouterLink>
                         </li>
                         <li class="nav-item mx-xl-1">
-                            <RouterLink class="nav-link mx-lg-1 mx-xl-1" to="/groups">
+                            <RouterLink class="nav-link mx-lg-1 mx-xl-1" to="/sentinelReports">
                                 <img id="svglinks" src="../../assets/group-25271.svg" height="20" alt="" />
                                 <span class="mx-lg-1">Groups</span>
                             </RouterLink>
