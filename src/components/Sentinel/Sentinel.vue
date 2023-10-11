@@ -161,8 +161,33 @@
                                         <th scope="col" style="font-size: 18px; color: darkgray;"></th>
                                         <th scope="col" style="font-size: 18px; color: darkgray;"></th>
                                     </tr>
-                                </thead>
+                                </thead>  
                                 <tbody>
+                                    <tr v-for="data in agents" :key="data">
+                                        <td>
+                                            <p class="tableP">{{ data.name }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="tableP">{{ data.ipaddress }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="tableP">-</p>
+                                        </td>
+                                        <td>
+                                            <p class="tableP">us-west1-a</p>
+                                        </td>
+                                        <td>
+                                            <p class="tableP">{{ data.location }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="tableP">United States of America</p>
+                                        </td>
+                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP"
+                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop" @click="handleUpdateModalData(data.id, data.name)"> <i
+                                                    class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
+                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
+                                                <i class="fa-solid fa-chevron-right"></i></a></td>
+                                    </tr>
                                     <tr>
                                         <td>
                                             <p class="tableP">SJC-1 T1 Node</p>
@@ -554,11 +579,11 @@
                             <div>
                                 <div class="pagination">
                                     <button class="prevBtn"><i class="fa-solid fa-angle-left"></i> Prev</button>
-                                    <div class="pageNumber">1</div>
-                                    <div class="pageNumber">2</div>
-                                    <div class="pageNumber pageBtn">3</div>
-                                    <div class="pageNumber">4</div>
-                                    <div class="pageNumber">5</div>
+                                    <div class="pageNumber">-</div>
+                                    <div class="pageNumber">-</div>
+                                    <div class="pageNumber pageBtn">{{ pages.currentPage }}</div>
+                                    <div class="pageNumber">-</div>
+                                    <div class="pageNumber">-</div>
                                     <button class="nextBtn">Next <i class="fa-solid fa-angle-right"></i></button>
                                 </div>
                             </div>
@@ -661,11 +686,12 @@
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label ms-1">Name</label>
                             <input type="text" class="form-control form-control-lg" id="exampleFormControlInput1"
-                                placeholder="Type here">
+                                placeholder="Enter Name" v-model="updateData.name">
+                            <span class="text-danger" v-if="!updateData.name">This field is required.</span>
                         </div>
                         <div class="d-flex justify-content-end">
-                            <button type="button" class="modelCancelBtn" data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" class="modelSaveBtn ms-2">Save</button>
+                            <button type="button" id="EditCancelButton" class="modelCancelBtn" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="modelSaveBtn ms-2" @click="handleSentinelUpdate">Save</button>
                         </div>
                     </div>
                 </div>
@@ -676,7 +702,7 @@
 
 <script>
 import Header from '../common/Header.vue';
-import {createAgent} from '../../services/agent_services'
+import {createAgent, agentUpdate, agentList} from '../../services/agent_services'
 export default {
     name: 'Sentinel',
     components: {
@@ -686,20 +712,55 @@ export default {
         return {
             addSentinel: {
                 name: null
+            },
+            updateData: {
+                id: null,
+                name: null
+            },
+            editName: null,
+            agents: [],
+            pages: {
+                currentPage: 1,
+                previousPage: 0,
+                nextPage:null
             }
         }
     },
+    async mounted() {
+        await this.handleSentinelListing()
+
+    },
     methods: {
+        async handleSentinelListing() {
+            const respData = await agentList()
+            this.agents = respData.data.agents
+            this.pages.previousPage = respData.data.prev || 0
+            this.pages.currentPage = this.pages.previousPage + 1
+            this.pages.nextPage = respData.data.prev 
+        },
         async handleSentinelCreation() {
             if (this.addSentinel.name) {
-                // TODO: Zaheer enable this once APIs are up
-                
-                // const payload = {name: this.addSentinel.name}
-                // const data = await createAgent(payload)
-                // console.log(data)
+                const payload = {name: this.addSentinel.name}
+                await createAgent(payload)
+                await this.handleSentinelListing()
 
                 document.getElementById('AddCancelButton').click();
                 this.addSentinel.name = null;
+            }
+        },
+        handleUpdateModalData(id, name) {
+            this.updateData.id = id
+            this.updateData.name = name
+        },
+        async handleSentinelUpdate() {
+            if (this.updateData.name) {
+                const payload = {aid: this.updateData.id, name: this.updateData.name}
+                await agentUpdate(payload)
+                await this.handleSentinelListing()
+
+                document.getElementById('EditCancelButton').click();
+                this.updateData.name = null;
+                this.updateData.id = null;
             }
         }
     }
