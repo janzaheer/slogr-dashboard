@@ -72,68 +72,143 @@
     </div>
   </div>
 </template>
-
 <script>
 import Header from './common/Header.vue';
-import mapboxgl from "mapbox-gl";
+import mapboxgl from 'mapbox-gl';
+import supercluster from 'supercluster';
 
 export default {
-  name: 'Home',
-  components: {
-    Header
-  },
-  data() {
-    return {
-      accessToken: 'pk.eyJ1Ijoicmh3b3JrcyIsImEiOiJjazBmZmE0bGIwNzh3M25wMjBhOHI2em56In0.317s4zEB48T9QC33pf6sVw#13'
-    }
-  },
   mounted() {
-    mapboxgl.accessToken = this.accessToken;
-    const map = new mapboxgl.Map({
+    mapboxgl.accessToken = 'pk.eyJ1Ijoicmh3b3JrcyIsImEiOiJjazBmZmE0bGIwNzh3M25wMjBhOHI2em56In0.317s4zEB48T9QC33pf6sVw#13';
+    var map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/light-v11',
-      center: [103.811279, 1.345399],
-      zoom: 9,
+      center: [100.0, 0.5],
+      zoom: 5
     });
-
     const nav = new mapboxgl.NavigationControl();
     map.addControl(nav, "bottom-right");
-
-    const marker = new mapboxgl.Marker()
-      .setLngLat([103.811279, 1.345399])
-      .addTo(map);
-
-    const geolocate = new mapboxgl.GeolocateControl({
-      positionOptions: {
-        enableHighAccuracy: true
-      },
-      trackUserLocation: true
-    });
-
-    map.addControl(geolocate, "bottom-right")
-
-    map.setProjection('Mercator');
-  },
+    
+    map.on('load', () => {
+      // Add a new source from our GeoJSON data and
+      // set the 'cluster' option to true. GL-JS will
+      // add the point_count property to your source data.
+      map.addSource('earthquakes', {
+        type: 'geojson',
+        // Point to GeoJSON data. This example visualizes all M1.0+ earthquakes
+        // from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
+        data: 'https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson',
+        cluster: true,
+        clusterMaxZoom: 14, // Max zoom to cluster points on
+        clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
+      });
+      
+      map.addLayer({
+        id: 'clusters',
+        type: 'circle',
+        source: 'earthquakes',
+        filter: ['has', 'point_count'],
+          paint: {
+          // Use step expressions (https://docs.mapbox.com/style-spec/reference/expressions/#step)
+          // with three steps to implement three types of circles:
+          //   * Blue, 20px circles when point count is less than 100
+          //   * Yellow, 30px circles when point count is between 100 and 750
+          //   * Pink, 40px circles when point count is greater than or equal to 750
+          'circle-color': [
+          'step',
+          ['get', 'point_count'],
+          '#51bbd6',
+          100,
+          '#f1f075',
+          750,
+          '#f28cb1'
+          ],
+          'circle-radius': [
+              'step',
+              ['get', 'point_count'],
+              20,
+              100,
+              30,
+              750,
+              40
+            ]
+          }
+      });
+      
+      map.addLayer({
+        id: 'cluster-count',
+        type: 'symbol',
+        source: 'earthquakes',
+        filter: ['has', 'point_count'],
+        layout: {
+        'text-field': ['get', 'point_count_abbreviated'],
+        'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+        'text-size': 12
+        }
+      });
+      
+      map.addLayer({
+        id: 'unclustered-point',
+        type: 'circle',
+        source: 'earthquakes',
+        filter: ['!', ['has', 'point_count']],
+        paint: {
+        'circle-color': '#11b4da',
+        'circle-radius': 4,
+        'circle-stroke-width': 1,
+        'circle-stroke-color': '#fff'
+        }
+      });
+      
+      // inspect a cluster on click
+      map.on('click', 'clusters', (e) => {
+        const features = map.queryRenderedFeatures(e.point, {
+        layers: ['clusters']
+      });
+      const clusterId = features[0].properties.cluster_id;
+        map.getSource('earthquakes').getClusterExpansionZoom(
+          clusterId,
+          (err, zoom) => {
+            if (err) return;
+            
+            map.easeTo({
+              center: features[0].geometry.coordinates,
+              zoom: zoom
+              });
+            }
+        );
+      });
+      
+      
+      map.on('mouseenter', 'clusters', () => {
+        map.getCanvas().style.cursor = 'pointer';
+      });
+      map.on('mouseleave', 'clusters', () => {
+        map.getCanvas().style.cursor = '';
+        });
+      });
+  }
 }
 </script>
 
+
 <style scoped>
 #map {
-  width: 100%;
-  height: 90%;
-  position: absolute;
+width: 100%;
+height: 90%;
+position: absolute;
 }
 
 .map {
-  position: relative;
-  background-color: #c2c8ca;
-  width: 100%;
-  height: 1115px;
-  overflow: hidden;
-  text-align: left;
-  font-size: var(--font-size-base);
-  color: var(--color-black);
-  font-family: var(--font-inter);
+position: relative;
+background-color: #c2c8ca;
+width: 100%;
+height: 1115px;
+overflow: hidden;
+text-align: left;
+font-size: var(--font-size-base);
+color: var(--color-black);
+font-family: var(--font-inter);
 }
 
 .screenshot20210522At336 {
@@ -145,24 +220,24 @@ export default {
 }
 
 .addIcon {
-  position: absolute;
-  height: 9.66%;
-  width: 5.61%;
-  top: 10.76%;
-  right: 1.74%;
-  bottom: 79.58%;
-  left: 92.66%;
-  max-width: 100%;
-  overflow: hidden;
-  max-height: 100%;
+position: absolute;
+height: 9.66%;
+width: 5.61%;
+top: 10.76%;
+right: 1.74%;
+bottom: 79.58%;
+left: 92.66%;
+max-width: 100%;
+overflow: hidden;
+max-height: 100%;
 }
 
 .mapInner {
-  position: absolute;
-  top: 100px;
-  left: 142px;
-  width: 1330px;
-  height: 900.43px;
+position: absolute;
+top: 100px;
+left: 142px;
+width: 1330px;
+height: 900.43px;
 }
 .hr1 {
     margin: 0.6rem 0;
