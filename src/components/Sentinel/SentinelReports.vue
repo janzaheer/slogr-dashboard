@@ -163,7 +163,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <figure class="highcharts-figure">
-                                    <div id="container"></div>
+                                    <div id="container2"></div>
                                 </figure>
                             </div>
                         </div>
@@ -171,7 +171,9 @@
                     <div class="col-md-4">
                         <div class="card">
                             <div class="card-body">
-                                
+                                <figure class="highcharts-figure">
+                                    <div id="container3"></div>
+                                </figure>
                             </div>
                         </div>
                     </div>
@@ -198,15 +200,9 @@ export default {
         loadCharts() {
             const chart = Highcharts.chart('container', {
                 title: {
-                    text: 'PDV TX',
+                    text: 'PDV',
                     align: 'left'
                 },
-                // subtitle: {
-                //     text: 'Chart option: Plain | Source: ' +
-                //         '<a href="https://www.nav.no/no/nav-og-samfunn/statistikk/arbeidssokere-og-stillinger-statistikk/helt-ledige"' +
-                //         'target="_blank">NAV</a>',
-                //     align: 'left'
-                // },
                 colors: [
                     '#4caefe',
                     '#3fbdf3',
@@ -229,53 +225,74 @@ export default {
                     name: 'Unemployed',
                     borderRadius: 5,
                     colorByPoint: true,
-                    data: [5412, 4977, 4730, 4437, 3947, 3707],
+                    data: [75, 25, 130, 40, 60, 30],
                     showInLegend: false
                 }]
             });
 
-            document.getElementById('plain').addEventListener('click', () => {
-                chart.update({
-                    chart: {
-                        inverted: false,
-                        polar: false
-                    },
-                    subtitle: {
-                        text: 'Chart option: Plain | Source: ' +
-                            '<a href="https://www.nav.no/no/nav-og-samfunn/statistikk/arbeidssokere-og-stillinger-statistikk/helt-ledige"' +
-                            'target="_blank">NAV</a>'
-                    }
-                });
+            const chart2 = Highcharts.chart('container2', {
+                title: {
+                    text: 'PDV TX',
+                    align: 'left'
+                },
+                colors: [
+                    '#4caefe',
+                    '#3fbdf3',
+                    '#35c3e8',
+                    '#2bc9dc',
+                    '#20cfe1',
+                    '#16d4e6',
+                    '#0dd9db',
+                    '#03dfd0',
+                    '#00e4c5',
+                    '#00e9ba',
+                    '#00eeaf',
+                    '#23e274'
+                ],
+                xAxis: {
+                    categories: ['2009', '2010', '2011', '2012', '2013', '2014']
+                },
+                series: [{
+                    type: 'column',
+                    name: 'Unemployed',
+                    borderRadius: 5,
+                    colorByPoint: true,
+                    data: [75, 7, 130, 40, 60, 7],
+                    showInLegend: false
+                }]
             });
 
-            document.getElementById('inverted').addEventListener('click', () => {
-                chart.update({
-                    chart: {
-                        inverted: true,
-                        polar: false
-                    },
-                    // subtitle: {
-                    //     text: 'Chart option: Inverted | Source: ' +
-                    //         '<a href="https://www.nav.no/no/nav-og-samfunn/statistikk/arbeidssokere-og-stillinger-statistikk/helt-ledige"' +
-                    //         'target="_blank">NAV</a>'
-                    // }
-                });
+            const chart3 = Highcharts.chart('container3', {
+                title: {
+                    text: 'PDV RX',
+                    align: 'left'
+                },
+                colors: [
+                    '#4caefe',
+                    '#3fbdf3',
+                    '#35c3e8',
+                    '#2bc9dc',
+                    '#20cfe1',
+                    '#16d4e6',
+                    '#0dd9db',
+                    '#03dfd0',
+                    '#00e4c5',
+                    '#00e9ba',
+                    '#00eeaf',
+                    '#23e274'
+                ],
+                xAxis: {
+                    categories: ['2009', '2010', '2011', '2012', '2013', '2014']
+                },
+                series: [{
+                    type: 'column',
+                    name: 'Unemployed',
+                    borderRadius: 5,
+                    colorByPoint: true,
+                    data: [75, 25, 130, 40, 60, 7],
+                    showInLegend: false
+                }]
             });
-
-            document.getElementById('polar').addEventListener('click', () => {
-                chart.update({
-                    chart: {
-                        inverted: false,
-                        polar: true
-                    },
-                    // subtitle: {
-                    //     text: 'Chart option: Polar | Source: ' +
-                    //         '<a href="https://www.nav.no/no/nav-og-samfunn/statistikk/arbeidssokere-og-stillinger-statistikk/helt-ledige"' +
-                    //         'target="_blank">NAV</a>'
-                    // }
-                });
-            });
-
         }
     },
     mounted() {
@@ -294,6 +311,14 @@ export default {
 }
 
 #container {
+    height: 400px;
+}
+
+#container2 {
+    height: 400px;
+}
+
+#container3 {
     height: 400px;
 }
 
