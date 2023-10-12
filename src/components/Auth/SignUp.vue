@@ -11,9 +11,9 @@
                         <RouterLink to="/"><img src="../../assets/group-2420.svg" alt=""></RouterLink>
                     </h1>
                     <div class="my-5">
-                        <span>Welcome,</span>
+                        <span>Welcome.</span>
                         <h3>Sign Up for an Account</h3>
-                        <span class="text-muted">Enter your details below</span>
+                        <span class="text-secondary">Enter your details below</span>
                     </div>
                     <div class="form-style">
                         <form>
@@ -38,7 +38,7 @@
                                 <button type="submit" class="signInBtn w-100 my-5">Sign Up</button>
                             </div>
                         </form>
-                        <div class="pt-4 text-center">
+                        <div class="pt-4 text-center text-secondary">
                             Already have Account Please. <RouterLink to="/login">Sign In</RouterLink>
                         </div>
                     </div>

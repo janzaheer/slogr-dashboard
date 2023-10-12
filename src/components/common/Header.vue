@@ -160,7 +160,6 @@ a.router-link-exact-active {
         <nav class="navbar navbar-expand-lg bg-body-white">
             <div class="container-fluid">
                 <RouterLink class="navbar-brand" to="/">
-                    <!-- <img src="../../assets/group-2420.svg" class="mx-lg-4" alt="" height="35px" /> -->
                     <img src="../../assets/group-2420.svg" class="mx-xl-5" alt="" >
                 </RouterLink>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -195,13 +194,13 @@ a.router-link-exact-active {
                             </RouterLink>
                         </li>
                         <li class="nav-item">
-                            <RouterLink class="nav-link" to="/analytics">
+                            <RouterLink class="nav-link" to="#">
                                 <img id="svglinks" src="../../assets/group-24571.svg" height="20" alt="" />
                                 <span class="mx-lg-1">Analytics</span>
                             </RouterLink>
                         </li>
                         <li class="nav-item mx-xl-1">
-                            <RouterLink class="nav-link mx-lg-1 mx-xl-1" to="/sentinelReports">
+                            <RouterLink class="nav-link mx-lg-1 mx-xl-1" to="#">
                                 <img id="svglinks" src="../../assets/group-25271.svg" height="20" alt="" />
                                 <span class="mx-lg-1">Groups</span>
                             </RouterLink>
@@ -226,6 +225,5 @@ a.router-link-exact-active {
             </div>
         </nav>
     </div>
- 
     <RouterView />
 </template>

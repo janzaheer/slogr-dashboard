@@ -3,10 +3,10 @@
   </div>
   <div class="position-relative bg-secondary mt-md-2 ms-md-3 opacity-75">
     <div class="position-absolute p-2">
-      <div class="card bg-light" style="width: 200px; height: 195px;">
+      <div class="card bg-light" style="width: 190px; height: 180px;">
         <div class="card-body">
           <h6 class="card-title mb-0">Legend</h6>
-          <hr>
+          <hr class="hr1">
           <div class="d-flex justify-content-between align-items-center">
             <label class="form-check-label" for="flexSwitchCheckDefault">Group 1</label>
             <div class="form-check form-switch">
@@ -30,12 +30,12 @@
     </div>
   </div>
 
-  <div class="position-relative bg-secondary mt-md-3 ms-md-3 opacity-75" style="width: 200px; top: 200px;">
+  <div class="position-relative bg-secondary mt-md-3 ms-md-3 opacity-75" style="width: 190px; top: 190px;">
     <div class="position-absolute p-2">
-      <div class="card bg-light" style="width: 200px; height: 330px;">
+      <div class="card bg-light" style="width: 190px; height: 290px;">
         <div class="card-body">
           <h6 class="card-title mb-0">Monitoring Profile</h6>
-          <hr>
+          <hr class="hr1">
           <div class="d-flex justify-content-between align-items-center">
             <div>
               <span class="" style="font-size: 14px;">Monitoring</span>
@@ -63,10 +63,8 @@
               <input class="form-check-input fs-4" type="checkbox" role="switch" id="flexSwitchCheckDefault6">
             </div>
           </div>
-          <hr>
-          <div>
-            <h6 class="card-title my-2">Monitoring</h6>
-          </div>
+          <hr class="hr1">
+            <h6 class="my-1">Monitoring</h6>
           <span><i class="fa-solid fa-gear" style="color: var(--primary_color); margin-top: 5px;"></i> Profile
             Setting</span>
         </div>
@@ -165,5 +163,12 @@ export default {
   left: 142px;
   width: 1330px;
   height: 900.43px;
+}
+.hr1 {
+    margin: 0.6rem 0;
+    color: inherit;
+    border: 0;
+    border-top: var(--bs-border-width) solid;
+    opacity: 0.25;
 }
 </style>

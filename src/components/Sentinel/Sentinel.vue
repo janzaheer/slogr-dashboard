@@ -18,7 +18,8 @@
                             <div class="d-flex align-items-center">
                                 <h6 class="mx-1 mt-2 text-muted">Home </h6>
                                 <h6 class="me-4 mt-2"> - Sentinel</h6>
-                                <button class="addBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop2"> <i class="fa-solid fa-plus fa-lg"></i> Add New Sentinel</button>
+                                <button class="addBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop2"> <i
+                                        class="fa-solid fa-plus fa-lg"></i> Add New Sentinel</button>
                                 <div class="mx-3"><i class="fa-solid fa-ellipsis fa-2xl"></i></div>
                             </div>
                         </div>
@@ -35,7 +36,7 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col"><a href="#" class="tableHead" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">Home</a> <img src="../../assets/group.svg" alt="">
+                                                        aria-expanded="false">Home <i class="fa-solid fa-filter" style="color: var(--dark_gray_color);"></i></a>
                                                     <ul class="dropdown-menu shadow px-2">
                                                         <li lass="dropdown-item">
                                                             <div class="my-2">
@@ -51,9 +52,9 @@
                                                         </li>
                                                     </ul>
                                                 </th>
-                                                <th scope="col" style="font-size: 18px; color: darkgray;"><a href="#"
+                                                <th scope="col"><a href="#"
                                                         class="tableHead" data-bs-toggle="dropdown" aria-expanded="false">Ip
-                                                        Address</a><img src="../../assets/group.svg" alt="">
+                                                        Address <i class="fa-solid fa-filter" style="color: var(--dark_gray_color);"></i></a>
                                                     <ul class="dropdown-menu shadow px-2">
                                                         <li lass="dropdown-item">
                                                             <div class="my-2">
@@ -61,12 +62,14 @@
                                                                     <p>Ip Address Form:</p>
                                                                     <p class="pointer">X</p>
                                                                 </div>
-                                                                <input type="text" class="form-control" placeholder="66655443222">
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="66655443222">
                                                             </div>
                                                         </li>
                                                         <li lass="dropdown-item">
                                                             <div class="my-3">
-                                                                <label for="exampleFormControlInput1" class="form-label">Ip Address
+                                                                <label for="exampleFormControlInput1" class="form-label">Ip
+                                                                    Address
                                                                     To:</label>
                                                                 <input type="text" class="form-control"
                                                                     id="exampleFormControlInput1" placeholder="12345677776">
@@ -75,14 +78,16 @@
                                                         </li>
                                                     </ul>
                                                 </th>
-                                                <th scope="col" style="font-size: 18px; color: darkgray;"><a href="#"
-                                                        class="tableHead" data-bs-toggle="dropdown" aria-expanded="false">System
-                                                        Information </a> <img src="../../assets/group.svg" alt="">
+                                                <th scope="col"><a href="#"
+                                                        class="tableHead" data-bs-toggle="dropdown"
+                                                        aria-expanded="false">System
+                                                        Information <i class="fa-solid fa-filter" style="color: var(--dark_gray_color);"></i></a>
                                                     <ul class="dropdown-menu shadow px-2">
                                                         <li lass="dropdown-item">
                                                             <div class="my-2">
                                                                 <div class="d-flex justify-content-between">
-                                                                    <label for="exampleFormControlInput1" class="form-label">System
+                                                                    <label for="exampleFormControlInput1"
+                                                                        class="form-label">System
                                                                         Information</label>
                                                                     <p class="pointer">X</p>
                                                                 </div>
@@ -96,9 +101,10 @@
                                                         </li>
                                                     </ul>
                                                 </th>
-                                                <th scope="col" style="font-size: 18px; color: darkgray;"><a href="#"
-                                                        class="tableHead" data-bs-toggle="dropdown" aria-expanded="false"> Deployed
-                                                        at</a> <img src="../../assets/group.svg" alt="">
+                                                <th scope="col"><a href="#"
+                                                        class="tableHead" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Deployed
+                                                        at <i class="fa-solid fa-filter" style="color: var(--dark_gray_color);"></i></a>
                                                     <ul class="dropdown-menu shadow px-2">
                                                         <li lass="dropdown-item">
                                                             <div class="my-2">
@@ -114,9 +120,9 @@
                                                         </li>
                                                     </ul>
                                                 </th>
-                                                <th scope="col" style="font-size: 18px; color: darkgray;"><a href="#"
-                                                        class="tableHead" data-bs-toggle="dropdown" aria-expanded="false">City</a>
-                                                    <img src="../../assets/group.svg" alt="">
+                                                <th scope="col"><a href="#"
+                                                        class="tableHead" data-bs-toggle="dropdown"
+                                                        aria-expanded="false">City <i class="fa-solid fa-filter" style="color: var(--dark_gray_color);"></i></a>
                                                     <ul class="dropdown-menu shadow px-2">
                                                         <li lass="dropdown-item">
                                                             <div class="my-2">
@@ -137,9 +143,9 @@
                                                         </li>
                                                     </ul>
                                                 </th>
-                                                <th scope="col" style="font-size: 18px; color: darkgray;"><a href="#"
+                                                <th scope="col"><a href="#"
                                                         class="tableHead" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">Country</a> <img src="../../assets/group.svg" alt="">
+                                                        aria-expanded="false">Country <i class="fa-solid fa-filter" style="color: var(--dark_gray_color);"></i></a>
                                                     <ul class="dropdown-menu shadow px-2">
                                                         <li lass="dropdown-item">
                                                             <div class="my-2">
@@ -160,10 +166,10 @@
                                                         </li>
                                                     </ul>
                                                 </th>
-                                                <th scope="col" style="font-size: 18px; color: darkgray;"></th>
-                                                <th scope="col" style="font-size: 18px; color: darkgray;"></th>
+                                                <th scope="col"></th>
+                                                <th scope="col"></th>
                                             </tr>
-                                        </thead>  
+                                        </thead>
                                         <tbody>
                                             <tr v-for="data in agents" :key="data">
                                                 <td>
@@ -185,9 +191,11 @@
                                                     <p class="tableP">United States of America</p>
                                                 </td>
                                                 <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP"
-                                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop" @click="handleUpdateModalData(data.id, data.name)"> <i
+                                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                                                        @click="handleUpdateModalData(data.id, data.name)"> <i
                                                             class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
-                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP" @click="handleGrids(data.id, data.name)" >
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP"
+                                                        @click="handleGrids(data.id, data.name)">
                                                         <i class="fa-solid fa-chevron-right"></i></a></td>
                                             </tr>
                                             <tr>
@@ -594,19 +602,29 @@
                         </div>
                     </div>
                     <div id="col2" class="col-2 d-none">
-                        <div class="card pb-3">
+                        <div class="card mt-4 mb-5">
                             <div class="card-body">
-                                <p class="card-text ms-3">Minio-SJC1 T1 Node</p>
-                                <span class="card-text text-secondary ms-3">SJC-1C-node </span> <br>
-                                <span class="card-text text-secondary ms-3">{{ selectedGridName }}</span>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <p class="card-text ms-2">Minio-SJC1</p>
+                                        <span class="text-secondary ms-2" style="font-size: 13px;">SJC-1C-node </span> <br>
+                                        <span class="text-secondary ms-2" style="font-size: 13px;">Data</span>
+                                    </div>
+                                    <div>
+                                        <RouterLink to="/sentinelReports"><i class="fa-solid fa-chevron-right me-1 text-secondary"></i></RouterLink>
+                                    </div>
+                                </div>
                                 <hr class="">
-                                <p class="card-text ms-3">System</p>
-                                <hr class="">
-                                <p class="card-text ms-3">Organization</p>
-                                <hr class="">
-                                <p class="card-text ms-3">City</p>
-                                <hr class="">
-                                <p class="card-text ms-3">Country</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <p class="card-text ms-2">Minio-SJC1</p>
+                                        <span class="text-secondary ms-2" style="font-size: 13px;">SJC-1C-node </span> <br>
+                                        <span class="text-secondary ms-2" style="font-size: 13px;">Data</span>
+                                    </div>
+                                    <div>
+                                        <RouterLink to="/sentinelReports"><i class="fa-solid fa-chevron-right me-1 text-secondary"></i></RouterLink>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -666,8 +684,8 @@
         </div>
     </div>
 
- <!-- Modal  Add new sentinel-->
- <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    <!-- Modal  Add new sentinel-->
+    <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdrop2Label" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -684,7 +702,8 @@
                             <span class="text-danger" v-if="!addSentinel.name">This field is required.</span>
                         </div>
                         <div class="d-flex justify-content-end">
-                            <button type="button" id="AddCancelButton" class="modelCancelBtn" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" id="AddCancelButton" class="modelCancelBtn"
+                                data-bs-dismiss="modal">Cancel</button>
                             <button type="button" class="modelSaveBtn ms-2" @click="handleSentinelCreation">Save</button>
                         </div>
                     </div>
@@ -711,7 +730,8 @@
                             <span class="text-danger" v-if="!updateData.name">This field is required.</span>
                         </div>
                         <div class="d-flex justify-content-end">
-                            <button type="button" id="EditCancelButton" class="modelCancelBtn" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" id="EditCancelButton" class="modelCancelBtn"
+                                data-bs-dismiss="modal">Cancel</button>
                             <button type="button" class="modelSaveBtn ms-2" @click="handleSentinelUpdate">Save</button>
                         </div>
                     </div>
@@ -723,7 +743,7 @@
 
 <script>
 import Header from '../common/Header.vue';
-import {createAgent, agentUpdate, agentList} from '../../services/agent_services'
+import { createAgent, agentUpdate, agentList } from '../../services/agent_services'
 export default {
     name: 'Sentinel',
     components: {
@@ -743,7 +763,7 @@ export default {
             pages: {
                 currentPage: 1,
                 previousPage: 0,
-                nextPage:null
+                nextPage: null
             },
             selectedGridId: 0,
             selectedGridName: null
@@ -759,11 +779,11 @@ export default {
             this.agents = respData.data.agents
             this.pages.previousPage = respData.data.prev || 0
             this.pages.currentPage = this.pages.previousPage + 1
-            this.pages.nextPage = respData.data.prev 
+            this.pages.nextPage = respData.data.prev
         },
         async handleSentinelCreation() {
             if (this.addSentinel.name) {
-                const payload = {name: this.addSentinel.name}
+                const payload = { name: this.addSentinel.name }
                 await createAgent(payload)
                 await this.handleSentinelListing()
 
@@ -777,7 +797,7 @@ export default {
         },
         async handleSentinelUpdate() {
             if (this.updateData.name) {
-                const payload = {aid: this.updateData.id, name: this.updateData.name}
+                const payload = { aid: this.updateData.id, name: this.updateData.name }
                 await agentUpdate(payload)
                 await this.handleSentinelListing()
 
@@ -993,5 +1013,4 @@ p {
     /* Change the background color when checked */
     border: 1px solid #8CB63D !important;
     /* Change the border color when checked */
-}
-</style>
+}</style>
