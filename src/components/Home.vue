@@ -1,9 +1,9 @@
 <template>
   <div id="map">
   </div>
-  <div class="position-relative bg-secondary mt-md-4 ms-md-3 opacity-75">
+  <div class="position-relative bg-secondary mt-md-2 ms-md-3 opacity-75">
     <div class="position-absolute p-2">
-      <div class="card bg-light" style="width: 200px; height: 220px;">
+      <div class="card bg-light" style="width: 200px; height: 195px;">
         <div class="card-body">
           <h6 class="card-title mb-0">Legend</h6>
           <hr>
@@ -13,7 +13,7 @@
               <input class="form-check-input fs-4" type="checkbox" role="switch" id="flexSwitchCheckDefault">
             </div>
           </div>
-          <div class="d-flex justify-content-between align-items-center my-3">
+          <div class="d-flex justify-content-between align-items-center my-2 my-lg-1">
             <label class="form-check-label" for="flexSwitchCheckDefault2">Group 2</label>
             <div class="form-check form-switch">
               <input class="form-check-input fs-4" type="checkbox" role="switch" id="flexSwitchCheckDefault2">
@@ -21,7 +21,7 @@
           </div>
           <div class="d-flex justify-content-between align-items-center">
             <label class="form-check-label" for="flexSwitchCheckDefault3">Group 3</label>
-            <div class="form-check form-switch">
+            <div class="form-check form-switch mb-0">
               <input class="form-check-input fs-4" type="checkbox" role="switch" id="flexSwitchCheckDefault3">
             </div>
           </div>
@@ -30,9 +30,9 @@
     </div>
   </div>
 
-  <div class="position-relative bg-secondary mt-md-2 ms-md-3 opacity-75" style="width: 200px; top: 250px;">
+  <div class="position-relative bg-secondary mt-md-3 ms-md-3 opacity-75" style="width: 200px; top: 200px;">
     <div class="position-absolute p-2">
-      <div class="card bg-light" style="width: 200px; height: 350px;">
+      <div class="card bg-light" style="width: 200px; height: 330px;">
         <div class="card-body">
           <h6 class="card-title mb-0">Monitoring Profile</h6>
           <hr>
@@ -45,7 +45,7 @@
               <input class="form-check-input fs-4" type="checkbox" role="switch" id="flexSwitchCheckDefault4">
             </div>
           </div>
-          <div class="d-flex justify-content-between align-items-center my-3">
+          <div class="d-flex justify-content-between align-items-center my-2 my-lg-1">
             <div>
               <span class="" style="font-size: 14px;">Monitoring</span>
               <label class="form-check-label" for="flexSwitchCheckDefault5">Profile 02</label>
