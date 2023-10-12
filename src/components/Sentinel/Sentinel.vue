@@ -26,566 +26,587 @@
                 </div>
             </div>
             <div class="container-fluid tableDiv">
-                <div class="card mx-md-2 mt-4 mb-5">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table text-center">
-                                <thead>
-                                    <tr>
-                                        <th scope="col"><a href="#" class="tableHead" data-bs-toggle="dropdown"
-                                                aria-expanded="false">Home</a> <img src="../../assets/group.svg" alt="">
-                                            <ul class="dropdown-menu shadow px-2">
-                                                <li lass="dropdown-item">
-                                                    <div class="my-2">
-                                                        <div class="d-flex justify-content-between">
-                                                            <p>Name</p>
-                                                            <p class="pointer">X</p>
-                                                        </div>
+                <div class="row g-2">
+                    <div id="col1" class="col-12">
+                        <div class="card mx-md-2 mt-4 mb-5">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table text-center">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"><a href="#" class="tableHead" data-bs-toggle="dropdown"
+                                                        aria-expanded="false">Home</a> <img src="../../assets/group.svg" alt="">
+                                                    <ul class="dropdown-menu shadow px-2">
+                                                        <li lass="dropdown-item">
+                                                            <div class="my-2">
+                                                                <div class="d-flex justify-content-between">
+                                                                    <p>Name</p>
+                                                                    <p class="pointer">X</p>
+                                                                </div>
 
-                                                        <input type="text" class="form-control form-control-sm"
-                                                            placeholder="search name...">
-                                                    </div>
-                                                    <button class="ApplyBtn w-100 mb-2">Apply</button>
-                                                </li>
-                                            </ul>
-                                        </th>
-                                        <th scope="col" style="font-size: 18px; color: darkgray;"><a href="#"
-                                                class="tableHead" data-bs-toggle="dropdown" aria-expanded="false">Ip
-                                                Address</a><img src="../../assets/group.svg" alt="">
-                                            <ul class="dropdown-menu shadow px-2">
-                                                <li lass="dropdown-item">
-                                                    <div class="my-2">
-                                                        <div class="d-flex justify-content-between">
-                                                            <p>Ip Address Form:</p>
-                                                            <p class="pointer">X</p>
-                                                        </div>
-                                                        <input type="text" class="form-control" placeholder="66655443222">
-                                                    </div>
-                                                </li>
-                                                <li lass="dropdown-item">
-                                                    <div class="my-3">
-                                                        <label for="exampleFormControlInput1" class="form-label">Ip Address
-                                                            To:</label>
-                                                        <input type="text" class="form-control"
-                                                            id="exampleFormControlInput1" placeholder="12345677776">
-                                                    </div>
-                                                    <button class="ApplyBtn w-100 mb-2">Apply</button>
-                                                </li>
-                                            </ul>
-                                        </th>
-                                        <th scope="col" style="font-size: 18px; color: darkgray;"><a href="#"
-                                                class="tableHead" data-bs-toggle="dropdown" aria-expanded="false">System
-                                                Information </a> <img src="../../assets/group.svg" alt="">
-                                            <ul class="dropdown-menu shadow px-2">
-                                                <li lass="dropdown-item">
-                                                    <div class="my-2">
-                                                        <div class="d-flex justify-content-between">
-                                                            <label for="exampleFormControlInput1" class="form-label">System
-                                                                Information</label>
-                                                            <p class="pointer">X</p>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <input type="text" class="form-control"
-                                                                id="exampleFormControlInput1"
-                                                                placeholder="search System Information...">
-                                                        </div>
-                                                    </div>
-                                                    <button class="ApplyBtn w-100 mb-2">Apply</button>
-                                                </li>
-                                            </ul>
-                                        </th>
-                                        <th scope="col" style="font-size: 18px; color: darkgray;"><a href="#"
-                                                class="tableHead" data-bs-toggle="dropdown" aria-expanded="false"> Deployed
-                                                at</a> <img src="../../assets/group.svg" alt="">
-                                            <ul class="dropdown-menu shadow px-2">
-                                                <li lass="dropdown-item">
-                                                    <div class="my-2">
-                                                        <div class="d-flex justify-content-between">
-                                                            <label for="exampleFormControlInput1"
-                                                                class="form-label">Deployed at:</label>
-                                                            <p class="pointer">X</p>
-                                                        </div>
-                                                        <input type="text" class="form-control"
-                                                            placeholder="search here...">
-                                                    </div>
-                                                    <button class="ApplyBtn w-100 mb-2">Apply</button>
-                                                </li>
-                                            </ul>
-                                        </th>
-                                        <th scope="col" style="font-size: 18px; color: darkgray;"><a href="#"
-                                                class="tableHead" data-bs-toggle="dropdown" aria-expanded="false">City</a>
-                                            <img src="../../assets/group.svg" alt="">
-                                            <ul class="dropdown-menu shadow px-2">
-                                                <li lass="dropdown-item">
-                                                    <div class="my-2">
-                                                        <div class="d-flex justify-content-between">
-                                                            <label for="exampleFormControlInput1"
-                                                                class="form-label">City</label>
-                                                            <p class="pointer">X</p>
-                                                        </div>
-                                                        <select class="form-select form-select-sm"
-                                                            aria-label=".form-select-sm example">
-                                                            <option selected>City</option>
-                                                            <option value="1">Quetta</option>
-                                                            <option value="2">Nushki</option>
-                                                            <option value="3">Sialkot</option>
-                                                        </select>
-                                                    </div>
-                                                    <button class="ApplyBtn w-100 mb-2">Apply</button>
-                                                </li>
-                                            </ul>
-                                        </th>
-                                        <th scope="col" style="font-size: 18px; color: darkgray;"><a href="#"
-                                                class="tableHead" data-bs-toggle="dropdown"
-                                                aria-expanded="false">Country</a> <img src="../../assets/group.svg" alt="">
-                                            <ul class="dropdown-menu shadow px-2">
-                                                <li lass="dropdown-item">
-                                                    <div class="my-2">
-                                                        <div class="d-flex justify-content-between">
-                                                            <label for="exampleFormControlInput1"
-                                                                class="form-label">Country</label>
-                                                            <p class="pointer">X</p>
-                                                        </div>
-                                                        <select class="form-select form-select-sm"
-                                                            aria-label=".form-select-sm example">
-                                                            <option selected>Country</option>
-                                                            <option value="1">Pakistan</option>
-                                                            <option value="2">Australia</option>
-                                                            <option value="3">England</option>
-                                                        </select>
-                                                    </div>
-                                                    <button class="ApplyBtn w-100 mb-2">Apply</button>
-                                                </li>
-                                            </ul>
-                                        </th>
-                                        <th scope="col" style="font-size: 18px; color: darkgray;"></th>
-                                        <th scope="col" style="font-size: 18px; color: darkgray;"></th>
-                                    </tr>
-                                </thead>  
-                                <tbody>
-                                    <tr v-for="data in agents" :key="data">
-                                        <td>
-                                            <p class="tableP">{{ data.name }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">{{ data.ipaddress }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">-</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">us-west1-a</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">{{ data.location }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">United States of America</p>
-                                        </td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP"
-                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop" @click="handleUpdateModalData(data.id, data.name)"> <i
-                                                    class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                <i class="fa-solid fa-chevron-right"></i></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">SJC-1 T1 Node</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">45.325.326.32</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">-------------</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">us-west1-a</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">The Dalles</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">United States of America</p>
-                                        </td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP"
-                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
-                                                    class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                <i class="fa-solid fa-chevron-right"></i></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">SJC-1 T1 Node</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">45.325.326.32</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">-------------</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">us-west1-a</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">The Dalles</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">United States of America</p>
-                                        </td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark"
-                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
-                                                    class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                <i class="fa-solid fa-chevron-right"></i></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">SJC-1 T1 Node</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">45.325.326.32</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">-------------</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">us-west1-a</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">The Dalles</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">United States of America</p>
-                                        </td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark"
-                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
-                                                    class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                <i class="fa-solid fa-chevron-right"></i></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">SJC-1 T1 Node</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">45.325.326.32</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">-------------</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">us-west1-a</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">The Dalles</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">United States of America</p>
-                                        </td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark"
-                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
-                                                    class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                <i class="fa-solid fa-chevron-right"></i></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">SJC-1 T1 Node</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">45.325.326.32</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">-------------</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">us-west1-a</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">The Dalles</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">United States of America</p>
-                                        </td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark"
-                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
-                                                    class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                <i class="fa-solid fa-chevron-right"></i></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">SJC-1 T1 Node</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">45.325.326.32</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">-------------</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">us-west1-a</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">The Dalles</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">United States of America</p>
-                                        </td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark"
-                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
-                                                    class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                <i class="fa-solid fa-chevron-right"></i></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">SJC-1 T1 Node</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">45.325.326.32</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">-------------</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">us-west1-a</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">The Dalles</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">United States of America</p>
-                                        </td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark"
-                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
-                                                    class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                <i class="fa-solid fa-chevron-right"></i></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">SJC-1 T1 Node</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">45.325.326.32</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">-------------</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">us-west1-a</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">The Dalles</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">United States of America</p>
-                                        </td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark"
-                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
-                                                    class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                <i class="fa-solid fa-chevron-right"></i></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">SJC-1 T1 Node</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">45.325.326.32</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">-------------</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">us-west1-a</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">The Dalles</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">United States of America</p>
-                                        </td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark"
-                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
-                                                    class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                <i class="fa-solid fa-chevron-right"></i></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">SJC-1 T1 Node</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">45.325.326.32</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">-------------</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">us-west1-a</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">The Dalles</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">United States of America</p>
-                                        </td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark"
-                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
-                                                    class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                <i class="fa-solid fa-chevron-right"></i></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">SJC-1 T1 Node</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">45.325.326.32</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">-------------</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">us-west1-a</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">The Dalles</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">United States of America</p>
-                                        </td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark"
-                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
-                                                    class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                <i class="fa-solid fa-chevron-right"></i></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">SJC-1 T1 Node</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">45.325.326.32</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">-------------</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">us-west1-a</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">The Dalles</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">United States of America</p>
-                                        </td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark"
-                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
-                                                    class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                <i class="fa-solid fa-chevron-right"></i></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">SJC-1 T1 Node</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">45.325.326.32</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">-------------</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">us-west1-a</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">The Dalles</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">United States of America</p>
-                                        </td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark"
-                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
-                                                    class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                <i class="fa-solid fa-chevron-right"></i></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">SJC-1 T1 Node</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">45.325.326.32</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">-------------</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">us-west1-a</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">The Dalles</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">United States of America</p>
-                                        </td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark"
-                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
-                                                    class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                <i class="fa-solid fa-chevron-right"></i></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">SJC-1 T1 Node</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">45.325.326.32</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">-------------</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">us-west1-a</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">The Dalles</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">United States of America</p>
-                                        </td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark"
-                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
-                                                    class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                <i class="fa-solid fa-chevron-right"></i></a></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <button class="addBtn2"><i class="fa-solid fa-chevron-down fa-lg"></i> Go to
-                                    Page</button>
-                                <button class="addBtn2 mx-2" data-bs-toggle="modal" data-bs-target="#groupModal"><i
-                                        class="fa-solid fa-plus fa-lg"></i> Add to
-                                    Group</button>
-                                <button class="addBtn2"><i class="fa-solid fa-plus fa-lg"></i> Create
-                                    Report</button>
-                            </div>
-                            <div>
-                                <div class="pagination">
-                                    <button class="prevBtn"><i class="fa-solid fa-angle-left"></i> Prev</button>
-                                    <div class="pageNumber">-</div>
-                                    <div class="pageNumber">-</div>
-                                    <div class="pageNumber pageBtn">{{ pages.currentPage }}</div>
-                                    <div class="pageNumber">-</div>
-                                    <div class="pageNumber">-</div>
-                                    <button class="nextBtn">Next <i class="fa-solid fa-angle-right"></i></button>
+                                                                <input type="text" class="form-control form-control-sm"
+                                                                    placeholder="search name...">
+                                                            </div>
+                                                            <button class="ApplyBtn w-100 mb-2">Apply</button>
+                                                        </li>
+                                                    </ul>
+                                                </th>
+                                                <th scope="col" style="font-size: 18px; color: darkgray;"><a href="#"
+                                                        class="tableHead" data-bs-toggle="dropdown" aria-expanded="false">Ip
+                                                        Address</a><img src="../../assets/group.svg" alt="">
+                                                    <ul class="dropdown-menu shadow px-2">
+                                                        <li lass="dropdown-item">
+                                                            <div class="my-2">
+                                                                <div class="d-flex justify-content-between">
+                                                                    <p>Ip Address Form:</p>
+                                                                    <p class="pointer">X</p>
+                                                                </div>
+                                                                <input type="text" class="form-control" placeholder="66655443222">
+                                                            </div>
+                                                        </li>
+                                                        <li lass="dropdown-item">
+                                                            <div class="my-3">
+                                                                <label for="exampleFormControlInput1" class="form-label">Ip Address
+                                                                    To:</label>
+                                                                <input type="text" class="form-control"
+                                                                    id="exampleFormControlInput1" placeholder="12345677776">
+                                                            </div>
+                                                            <button class="ApplyBtn w-100 mb-2">Apply</button>
+                                                        </li>
+                                                    </ul>
+                                                </th>
+                                                <th scope="col" style="font-size: 18px; color: darkgray;"><a href="#"
+                                                        class="tableHead" data-bs-toggle="dropdown" aria-expanded="false">System
+                                                        Information </a> <img src="../../assets/group.svg" alt="">
+                                                    <ul class="dropdown-menu shadow px-2">
+                                                        <li lass="dropdown-item">
+                                                            <div class="my-2">
+                                                                <div class="d-flex justify-content-between">
+                                                                    <label for="exampleFormControlInput1" class="form-label">System
+                                                                        Information</label>
+                                                                    <p class="pointer">X</p>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <input type="text" class="form-control"
+                                                                        id="exampleFormControlInput1"
+                                                                        placeholder="search System Information...">
+                                                                </div>
+                                                            </div>
+                                                            <button class="ApplyBtn w-100 mb-2">Apply</button>
+                                                        </li>
+                                                    </ul>
+                                                </th>
+                                                <th scope="col" style="font-size: 18px; color: darkgray;"><a href="#"
+                                                        class="tableHead" data-bs-toggle="dropdown" aria-expanded="false"> Deployed
+                                                        at</a> <img src="../../assets/group.svg" alt="">
+                                                    <ul class="dropdown-menu shadow px-2">
+                                                        <li lass="dropdown-item">
+                                                            <div class="my-2">
+                                                                <div class="d-flex justify-content-between">
+                                                                    <label for="exampleFormControlInput1"
+                                                                        class="form-label">Deployed at:</label>
+                                                                    <p class="pointer">X</p>
+                                                                </div>
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="search here...">
+                                                            </div>
+                                                            <button class="ApplyBtn w-100 mb-2">Apply</button>
+                                                        </li>
+                                                    </ul>
+                                                </th>
+                                                <th scope="col" style="font-size: 18px; color: darkgray;"><a href="#"
+                                                        class="tableHead" data-bs-toggle="dropdown" aria-expanded="false">City</a>
+                                                    <img src="../../assets/group.svg" alt="">
+                                                    <ul class="dropdown-menu shadow px-2">
+                                                        <li lass="dropdown-item">
+                                                            <div class="my-2">
+                                                                <div class="d-flex justify-content-between">
+                                                                    <label for="exampleFormControlInput1"
+                                                                        class="form-label">City</label>
+                                                                    <p class="pointer">X</p>
+                                                                </div>
+                                                                <select class="form-select form-select-sm"
+                                                                    aria-label=".form-select-sm example">
+                                                                    <option selected>City</option>
+                                                                    <option value="1">Quetta</option>
+                                                                    <option value="2">Nushki</option>
+                                                                    <option value="3">Sialkot</option>
+                                                                </select>
+                                                            </div>
+                                                            <button class="ApplyBtn w-100 mb-2">Apply</button>
+                                                        </li>
+                                                    </ul>
+                                                </th>
+                                                <th scope="col" style="font-size: 18px; color: darkgray;"><a href="#"
+                                                        class="tableHead" data-bs-toggle="dropdown"
+                                                        aria-expanded="false">Country</a> <img src="../../assets/group.svg" alt="">
+                                                    <ul class="dropdown-menu shadow px-2">
+                                                        <li lass="dropdown-item">
+                                                            <div class="my-2">
+                                                                <div class="d-flex justify-content-between">
+                                                                    <label for="exampleFormControlInput1"
+                                                                        class="form-label">Country</label>
+                                                                    <p class="pointer">X</p>
+                                                                </div>
+                                                                <select class="form-select form-select-sm"
+                                                                    aria-label=".form-select-sm example">
+                                                                    <option selected>Country</option>
+                                                                    <option value="1">Pakistan</option>
+                                                                    <option value="2">Australia</option>
+                                                                    <option value="3">England</option>
+                                                                </select>
+                                                            </div>
+                                                            <button class="ApplyBtn w-100 mb-2">Apply</button>
+                                                        </li>
+                                                    </ul>
+                                                </th>
+                                                <th scope="col" style="font-size: 18px; color: darkgray;"></th>
+                                                <th scope="col" style="font-size: 18px; color: darkgray;"></th>
+                                            </tr>
+                                        </thead>  
+                                        <tbody>
+                                            <tr v-for="data in agents" :key="data">
+                                                <td>
+                                                    <p class="tableP">{{ data.name }}</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">{{ data.ipaddress }}</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">-</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">us-west1-a</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">{{ data.location }}</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">United States of America</p>
+                                                </td>
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP"
+                                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop" @click="handleUpdateModalData(data.id, data.name)"> <i
+                                                            class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP" @click="handleGrids(data.id, data.name)" >
+                                                        <i class="fa-solid fa-chevron-right"></i></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p class="tableP">SJC-1 T1 Node</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">45.325.326.32</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">-------------</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">us-west1-a</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">The Dalles</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">United States of America</p>
+                                                </td>
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP"
+                                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
+                                                            class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
+                                                        <i class="fa-solid fa-chevron-right"></i></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p class="tableP">SJC-1 T1 Node</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">45.325.326.32</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">-------------</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">us-west1-a</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">The Dalles</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">United States of America</p>
+                                                </td>
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark"
+                                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
+                                                            class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
+                                                        <i class="fa-solid fa-chevron-right"></i></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p class="tableP">SJC-1 T1 Node</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">45.325.326.32</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">-------------</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">us-west1-a</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">The Dalles</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">United States of America</p>
+                                                </td>
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark"
+                                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
+                                                            class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
+                                                        <i class="fa-solid fa-chevron-right"></i></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p class="tableP">SJC-1 T1 Node</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">45.325.326.32</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">-------------</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">us-west1-a</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">The Dalles</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">United States of America</p>
+                                                </td>
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark"
+                                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
+                                                            class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
+                                                        <i class="fa-solid fa-chevron-right"></i></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p class="tableP">SJC-1 T1 Node</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">45.325.326.32</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">-------------</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">us-west1-a</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">The Dalles</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">United States of America</p>
+                                                </td>
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark"
+                                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
+                                                            class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
+                                                        <i class="fa-solid fa-chevron-right"></i></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p class="tableP">SJC-1 T1 Node</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">45.325.326.32</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">-------------</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">us-west1-a</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">The Dalles</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">United States of America</p>
+                                                </td>
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark"
+                                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
+                                                            class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
+                                                        <i class="fa-solid fa-chevron-right"></i></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p class="tableP">SJC-1 T1 Node</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">45.325.326.32</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">-------------</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">us-west1-a</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">The Dalles</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">United States of America</p>
+                                                </td>
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark"
+                                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
+                                                            class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
+                                                        <i class="fa-solid fa-chevron-right"></i></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p class="tableP">SJC-1 T1 Node</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">45.325.326.32</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">-------------</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">us-west1-a</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">The Dalles</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">United States of America</p>
+                                                </td>
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark"
+                                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
+                                                            class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
+                                                        <i class="fa-solid fa-chevron-right"></i></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p class="tableP">SJC-1 T1 Node</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">45.325.326.32</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">-------------</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">us-west1-a</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">The Dalles</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">United States of America</p>
+                                                </td>
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark"
+                                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
+                                                            class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
+                                                        <i class="fa-solid fa-chevron-right"></i></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p class="tableP">SJC-1 T1 Node</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">45.325.326.32</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">-------------</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">us-west1-a</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">The Dalles</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">United States of America</p>
+                                                </td>
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark"
+                                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
+                                                            class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
+                                                        <i class="fa-solid fa-chevron-right"></i></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p class="tableP">SJC-1 T1 Node</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">45.325.326.32</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">-------------</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">us-west1-a</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">The Dalles</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">United States of America</p>
+                                                </td>
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark"
+                                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
+                                                            class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
+                                                        <i class="fa-solid fa-chevron-right"></i></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p class="tableP">SJC-1 T1 Node</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">45.325.326.32</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">-------------</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">us-west1-a</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">The Dalles</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">United States of America</p>
+                                                </td>
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark"
+                                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
+                                                            class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
+                                                        <i class="fa-solid fa-chevron-right"></i></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p class="tableP">SJC-1 T1 Node</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">45.325.326.32</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">-------------</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">us-west1-a</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">The Dalles</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">United States of America</p>
+                                                </td>
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark"
+                                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
+                                                            class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
+                                                        <i class="fa-solid fa-chevron-right"></i></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p class="tableP">SJC-1 T1 Node</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">45.325.326.32</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">-------------</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">us-west1-a</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">The Dalles</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">United States of America</p>
+                                                </td>
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark"
+                                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
+                                                            class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
+                                                        <i class="fa-solid fa-chevron-right"></i></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p class="tableP">SJC-1 T1 Node</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">45.325.326.32</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">-------------</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">us-west1-a</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">The Dalles</p>
+                                                </td>
+                                                <td>
+                                                    <p class="tableP">United States of America</p>
+                                                </td>
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark"
+                                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
+                                                            class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
+                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
+                                                        <i class="fa-solid fa-chevron-right"></i></a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <button class="addBtn2"><i class="fa-solid fa-chevron-down fa-lg"></i> Go to
+                                            Page</button>
+                                        <button class="addBtn2 mx-2" data-bs-toggle="modal" data-bs-target="#groupModal"><i
+                                                class="fa-solid fa-plus fa-lg"></i> Add to
+                                            Group</button>
+                                        <button class="addBtn2"><i class="fa-solid fa-plus fa-lg"></i> Create
+                                            Report</button>
+                                    </div>
+                                    <div>
+                                        <div class="pagination">
+                                            <button class="prevBtn"><i class="fa-solid fa-angle-left"></i> Prev</button>
+                                            <div class="pageNumber">-</div>
+                                            <div class="pageNumber">-</div>
+                                            <div class="pageNumber pageBtn">{{ pages.currentPage }}</div>
+                                            <div class="pageNumber">-</div>
+                                            <div class="pageNumber">-</div>
+                                            <button class="nextBtn">Next <i class="fa-solid fa-angle-right"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="col2" class="col-2 d-none">
+                        <div class="card pb-3">
+                            <div class="card-body">
+                                <p class="card-text ms-3">Minio-SJC1 T1 Node</p>
+                                <span class="card-text text-secondary ms-3">SJC-1C-node </span> <br>
+                                <span class="card-text text-secondary ms-3">{{ selectedGridName }}</span>
+                                <hr class="">
+                                <p class="card-text ms-3">System</p>
+                                <hr class="">
+                                <p class="card-text ms-3">Organization</p>
+                                <hr class="">
+                                <p class="card-text ms-3">City</p>
+                                <hr class="">
+                                <p class="card-text ms-3">Country</p>
                             </div>
                         </div>
                     </div>
@@ -723,7 +744,9 @@ export default {
                 currentPage: 1,
                 previousPage: 0,
                 nextPage:null
-            }
+            },
+            selectedGridId: 0,
+            selectedGridName: null
         }
     },
     async mounted() {
@@ -762,6 +785,27 @@ export default {
                 this.updateData.name = null;
                 this.updateData.id = null;
             }
+        },
+        handleGrids(selectedId, selectedName) {
+            let col1 = document.getElementById('col1')
+            let col2 = document.getElementById('col2')
+            if (selectedId == this.selectedGridId) {
+                if (col2.classList.contains('d-none')) {
+                    col1.classList.remove("col-12")
+                    col1.classList.add("col-10")
+                    col2.classList.remove("d-none")
+                } else {
+                    col1.classList.add("col-12")
+                    col1.classList.remove("col-10")
+                    col2.classList.add("d-none")
+                }
+            } else {
+                col1.classList.remove("col-12")
+                col1.classList.add("col-10")
+                col2.classList.remove("d-none")
+            }
+            this.selectedGridId = selectedId
+            this.selectedGridName = selectedName
         }
     }
 }
