@@ -5,9 +5,12 @@ import Sentinel from '../components/Sentinel/Sentinel.vue';
 import Sessions from '../components/Sessions/Sessions.vue';
 import Monitor from '../components/Monitor/Monitor.vue';
 import Login from '../components/Auth/Login.vue';
+import SignUp from '../components/Auth/SignUp.vue';
 import Groups from '../components/Groups/Groups.vue';
 import Analytics from '../components/Analytics/Analytics.vue';
 import SentinelReports from '../components/Sentinel/SentinelReports.vue';
+////////////////////ADMIN/////////////////////////////////////
+import Dashboard from '../components/Admin/Dashboard/Dashboard.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -53,9 +56,19 @@ const router = createRouter({
       component: Login
     },
     {
+      path: '/signUp',
+      name: 'SignUp',
+      component: SignUp
+    },
+    {
       path: '/sentinelReports',
       name: 'SentinelReports',
       component: SentinelReports
+    },
+    {
+      path: '/dashboard',
+      name: 'Dashboard',
+      component: Dashboard
     },
     {
       path: '/about',

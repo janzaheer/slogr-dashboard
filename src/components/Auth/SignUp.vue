@@ -11,12 +11,19 @@
                         <RouterLink to="/"><img src="../../assets/group-2420.svg" alt=""></RouterLink>
                     </h1>
                     <div class="my-5">
-                        <span>Welcome to Back,</span>
-                        <h3>Sign In to Slogr</h3>
+                        <span>Welcome.</span>
+                        <h3>Sign Up for an Account</h3>
+                        <span class="text-secondary">Enter your details below</span>
                     </div>
                     <div class="form-style">
                         <form>
                             <div class="form-group pb-3">
+                                <label for="exampleInputName1">Name</label>
+                                <input type="text" placeholder="Benjaminrobert77@email.com"
+                                    class="form-control form-control-lg" id="exampleInputName1"
+                                    aria-describedby="emailHelp">
+                            </div>
+                            <div class="form-group pb-3 my-3">
                                 <label for="exampleInputEmail1">Email Address</label>
                                 <input type="email" placeholder="Benjaminrobert77@email.com"
                                     class="form-control form-control-lg" id="exampleInputEmail1"
@@ -28,18 +35,11 @@
                                     id="exampleInputPassword1">
                             </div>
                             <div class="">
-                                <button type="submit" class="signInBtn w-100 my-5">Sign In</button>
+                                <button type="submit" class="signInBtn w-100 my-5">Sign Up</button>
                             </div>
                         </form>
-                        <div class="sideline mb-2">Or Sign In With</div>
-                        <div class="d-flex justify-content-between align-items-center ">
-                            <button class="socialBtn w-100 me-2"><i class="fa-brands fa-google fa-2xl"
-                                    style="color: var(--primary_color);"></i> Google</button>
-                            <button class="socialBtn w-100"><i class="fa-brands fa-facebook-f fa-2xl"
-                                    style="color: var(--primary_color);"></i> Facebook</button>
-                        </div>
-                        <div class="pt-4 text-center">
-                            Create Account. <RouterLink to="/signUp">Sign Up</RouterLink>
+                        <div class="pt-4 text-center text-secondary">
+                            Already have Account Please. <RouterLink to="/login">Sign In</RouterLink>
                         </div>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
 <script>
 import { RouterLink } from 'vue-router';
 export default {
-    name: 'Login',
+    name: 'SignUp',
     data() {
         return {
 
