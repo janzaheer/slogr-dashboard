@@ -88,8 +88,8 @@ export default {
     var map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/light-v11',
-      center: [100.0, 0.5],
-      zoom: 5
+      center: [-98.5795, 39.8283],
+      zoom: 4
     });
     const nav = new mapboxgl.NavigationControl();
     map.addControl(nav, "bottom-right");
@@ -122,7 +122,7 @@ export default {
           'circle-color': [
           'step',
           ['get', 'point_count'],
-          '#51bbd6',
+          '#8cb63d',
           100,
           '#f1f075',
           750,
@@ -192,6 +192,7 @@ export default {
         map.getCanvas().style.cursor = '';
         });
       });
+      map.setProjection('Mercator');
   }
 }
 </script>
