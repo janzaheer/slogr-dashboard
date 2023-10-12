@@ -5,7 +5,7 @@
             <Header />
             <div class="container-fluid sentinel mt-2">
                 <div class="d-flex justify-content-end">
-                    <h1 class="me-2"><i class="fa-solid fa-xmark fa-xs" style="color: #d8dce2;"></i></h1>
+                    <h1 class="me-2"> <RouterLink to="/"> <i class="fa-solid fa-xmark fa-xs" style="color: #d8dce2;"></i></RouterLink></h1>
                 </div>
             </div>
             <div class="container-fluid">

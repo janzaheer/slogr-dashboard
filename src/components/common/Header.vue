@@ -23,7 +23,7 @@ a {
 
 .nav-link {
     font-size: 20px;
-    color: black;
+    color: #404040;
     display: flex;
 }
 
@@ -44,7 +44,7 @@ a.router-link-exact-active {
 }
 
 .btnn {
-    border: 1px solid var(--dark_black_Color);
+    border: 1px solid var(--nav-color);
     border-radius: 10px;
     padding: 8px 12px;
     color: var(--blue_color);
@@ -52,7 +52,7 @@ a.router-link-exact-active {
 }
 
 .btnn:hover {
-    border: 1px solid var(--primary_color);
+    border: 1px solid var(--primary_color_Hover);
 }
 
 .btnn1 {
@@ -194,13 +194,13 @@ a.router-link-exact-active {
                             </RouterLink>
                         </li>
                         <li class="nav-item">
-                            <RouterLink class="nav-link" to="#">
+                            <RouterLink class="nav-link" style="color: var(--nav-color);" to="#">
                                 <img id="svglinks" src="../../assets/group-24571.svg" height="20" alt="" />
                                 <span class="mx-lg-1">Analytics</span>
                             </RouterLink>
                         </li>
                         <li class="nav-item mx-xl-1">
-                            <RouterLink class="nav-link mx-lg-1 mx-xl-1" to="#">
+                            <RouterLink class="nav-link mx-lg-1 mx-xl-1" style="color: var(--nav-color);" to="#">
                                 <img id="svglinks" src="../../assets/group-25271.svg" height="20" alt="" />
                                 <span class="mx-lg-1">Groups</span>
                             </RouterLink>
@@ -217,10 +217,10 @@ a.router-link-exact-active {
                     <button class="btnn">
                         <i class="fa-regular fa-bell" style="color: #e4eaee"></i>
                     </button>
-                    <button class="btnn mx-lg-1 mx-xl-2">
-                        <img src="../../assets/p.png" height="20" alt="">
-                    </button>
-                    <RouterLink class="btnn text-decoration-none text-dark" to="/login">AB</RouterLink>
+                    <RouterLink to="/dashboard" class="btnn mx-lg-1 mx-xl-2">
+                        <i class="fa-solid fa-users text-secondary"></i>
+                    </RouterLink>
+                    <RouterLink class="btnn text-decoration-none text-secondary" to="/login">AB</RouterLink>
                 </div>
             </div>
         </nav>

@@ -4,7 +4,7 @@
             <Header />
             <div class="container-fluid sentinel mt-2">
                 <div class="d-flex justify-content-end">
-                    <h1 class="me-2"><i class="fa-solid fa-xmark fa-xs" style="color: #d8dce2;"></i></h1>
+                    <h1 class="me-2"> <RouterLink to="/sentinel"> <i class="fa-solid fa-xmark fa-xs" style="color: #d8dce2;"></i></RouterLink></h1>
                 </div>
             </div>
             <div class="container-fluid">
@@ -184,13 +184,14 @@
 </template>
 
 <script>
+import { RouterLink } from 'vue-router';
 import Header from '../common/Header.vue'
 export default {
     name: 'SentinelReports',
     components: {
-        Header,
-       
-    },
+    Header,
+    RouterLink
+},
     data() {
         return {
            

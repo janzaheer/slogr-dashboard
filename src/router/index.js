@@ -9,6 +9,8 @@ import SignUp from '../components/Auth/SignUp.vue';
 import Groups from '../components/Groups/Groups.vue';
 import Analytics from '../components/Analytics/Analytics.vue';
 import SentinelReports from '../components/Sentinel/SentinelReports.vue';
+////////////////////ADMIN/////////////////////////////////////
+import Dashboard from '../components/Admin/Dashboard/Dashboard.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -62,6 +64,11 @@ const router = createRouter({
       path: '/sentinelReports',
       name: 'SentinelReports',
       component: SentinelReports
+    },
+    {
+      path: '/dashboard',
+      name: 'Dashboard',
+      component: Dashboard
     },
     {
       path: '/about',
