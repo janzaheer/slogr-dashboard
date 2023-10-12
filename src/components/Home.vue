@@ -217,12 +217,11 @@ font-family: var(--font-inter);
 }
 
 .screenshot20210522At336 {
-position: absolute;
-top: 1px;
-/* left: 156px; */
-width: 1920px;
-height: 1027px;
-object-fit: cover;
+  position: absolute;
+  top: 1px;
+  width: 1920px;
+  height: 1027px;
+  object-fit: cover;
 }
 
 .addIcon {

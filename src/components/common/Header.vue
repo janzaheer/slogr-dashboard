@@ -44,7 +44,7 @@ a.router-link-exact-active {
 }
 
 .btnn {
-    border: 1px solid var(--blue_color);
+    border: 1px solid var(--dark_black_Color);
     border-radius: 10px;
     padding: 8px 12px;
     color: var(--blue_color);
@@ -115,12 +115,12 @@ a.router-link-exact-active {
 }
 @media screen and (max-width: 1539px) {
     .nav-link {
-        font-size: 12px !important;
+        font-size: 15px !important;
     }
 }
 @media screen and (max-width: 1370px) {
     .nav-link {
-        font-size: 11px !important;
+        font-size: 12px !important;
     }
 
     .search-button {
@@ -201,7 +201,7 @@ a.router-link-exact-active {
                             </RouterLink>
                         </li>
                         <li class="nav-item mx-xl-1">
-                            <RouterLink class="nav-link mx-lg-1 mx-xl-1" to="/groups">
+                            <RouterLink class="nav-link mx-lg-1 mx-xl-1" to="/sentinelReports">
                                 <img id="svglinks" src="../../assets/group-25271.svg" height="20" alt="" />
                                 <span class="mx-lg-1">Groups</span>
                             </RouterLink>
