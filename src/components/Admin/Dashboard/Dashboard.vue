@@ -133,13 +133,10 @@ export default {
         Sidebar
     },
     data() {
-
     },
     mounted() {
-
     },
     methods: {
-
     }
 }
 </script>
