@@ -23,28 +23,93 @@
             <div class="container-fluid tableDiv">
                 <div class="row g-2 mx-md-2 mt-4 mb-4">
                     <div class="col-3">
-                        <div class="card" style="height: 100vh;">
-                            <div class="card-body">
-                                <h5 class="card-title">Special title treatment</h5>
-                                <p class="card-text">With supporting text below as a natural lead-in to additional content.
-                                </p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>
+                        <Sidebar />
                     </div>
                     <div class="col-9">
                         <div class="card" style="height: 100vh;">
                             <div class="card-body">
-                                <div class="d-flex justify-content-start mt-3 ms-3">
+                                <div class="d-flex justify-content-start mt-5 ms-3">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
-                                            <p>ddd</p>
+                                            <div class="card border-0" style="background-color: var(--icon-bg);">
+                                                <div class="card-body d-flex justify-content-center align-items-center">
+                                                    <h1><i class="fa-solid fa-user-plus fa-lg" style="color: var(--primary_color);"></i>
+                                                    </h1>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="mx-2">
-                                            <p>ddd</p>
+                                        <div class="mx-4">
+                                            <h4>John Doe</h4>
+                                            <span>Organization</span>
                                         </div>
                                         <div>
-                                            <p>ddd</p>
+                                            <p>Designation</p>
+                                            <button class="editBtn ms-4">Edit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="boxTop">
+                                    <div class="row g-2">
+                                        <div class="col-lg-3">
+                                            <div class="card border border-4">
+                                                <div class="card-body">
+                                                    <div class="my-2 d-flex align-items-center">
+                                                        <h5 class="card-title">Create New User</h5>
+                                                    </div>
+                                                    <hr>
+                                                    <p>To enjoy the experience as a organization,
+                                                        create new pro your employee</p>
+                                                    <div class="d-flex justify-content-end align-items-center my-3">
+                                                       <h1><i class="fa-solid fa-user-plus fa-2xl" style="color: #c5c4c4;"></i></h1> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="card border border-4">
+                                                <div class="card-body">
+                                                    <div class="my-2 d-flex align-items-center">
+                                                        <h5 class="card-title">Rights Profile</h5>
+                                                    </div>
+                                                    <hr>
+                                                    <p>To enjoy the experience as a organization,
+                                                        create new pro your employee</p>
+                                                        <div class="d-flex justify-content-end align-items-center my-3">
+                                                       <h1><i class="fa-solid fa-shield-halved fa-2xl" style="color: #c5c4c4;"></i></h1> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="card border border-4">
+                                                <div class="card-body">
+                                                    <div class="my-2 d-flex align-items-center">
+                                                        <h5 class="card-title">Billing</h5>
+                                                    </div>
+                                                    <hr>
+                                                    <p>To enjoy the experience as a organization,
+                                                        create new pro your employee</p>
+                                                        <div class="d-flex justify-content-end align-items-center my-3">
+                                                       <h1><i class="fa-solid fa-dollar-sign fa-2xl" style="color: #c5c4c4;"></i>
+                                                    </h1> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="card border border-4">
+                                                <div class="card-body">
+                                                    <div class="my-2 d-flex align-items-center">
+                                                        <h5 class="card-title">Select Plan</h5>
+                                                    </div>
+                                                    <hr>
+                                                    <p>To enjoy the experience as a organization,
+                                                        create new pro your employee</p>
+                                                        <div class="d-flex justify-content-end align-items-center my-3">
+                                                       <h1><i class="fa-solid fa-file-lines fa-2xl" style="color: #c5c4c4;"></i></h1> 
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -60,10 +125,12 @@
 <script>
 import { RouterLink } from 'vue-router';
 import Header from '../../common/Header.vue';
+import Sidebar from '../Sidebar.vue';
 export default {
     name: 'Dashboard',
     components: {
-        Header
+        Header,
+        Sidebar
     },
     data() {
 
@@ -77,4 +144,22 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.boxTop {
+    margin-top: 200px;
+}
+.editBtn{
+    background-color:var(--white_color);
+    border-radius: 6px;
+    border: 1px solid var(--primary_color);
+    padding: 2px 15px;
+    color: var(--primary_color);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 5px;
+}
+.editBtn:hover{
+    color: var(--white_color);
+    background-color: var(--primary_color_Hover);
+}
+</style>

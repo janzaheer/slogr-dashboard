@@ -11,6 +11,7 @@ import Analytics from '../components/Analytics/Analytics.vue';
 import SentinelReports from '../components/Sentinel/SentinelReports.vue';
 ////////////////////ADMIN/////////////////////////////////////
 import Dashboard from '../components/Admin/Dashboard/Dashboard.vue'
+import CreateNewUser from '../components/Admin/CreateUser/CreateNewUser.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -71,9 +72,14 @@ const router = createRouter({
       component: Dashboard
     },
     {
+      path: '/createNewUser',
+      name: 'CreateNewUser',
+      component: CreateNewUser
+    },
+    {
       path: '/about',
       name: 'about',
-      // route level code-splitting
+      // route level code-splitting 
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue')
