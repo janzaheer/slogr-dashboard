@@ -22,9 +22,9 @@
                     </li>
                     <hr>
                     <li>
-                        <a href="#" class="nav-linker">
+                        <RouterLink to="/editRightsProfile" class="nav-linker">
                             Edit User Rights
-                        </a>
+                        </RouterLink>
                     </li>
                     <hr>
                     <li>
