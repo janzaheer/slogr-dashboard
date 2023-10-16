@@ -51,7 +51,7 @@
                                 <div class="boxTop">
                                     <div class="row g-2">
                                         <div class="col-lg-3">
-                                            <div class="card border border-4">
+                                            <div class="card border border-2">
                                                 <div class="card-body">
                                                     <div class="my-2 d-flex align-items-center">
                                                         <h5 class="card-title">Create New User</h5>
@@ -60,13 +60,13 @@
                                                     <p>To enjoy the experience as a organization,
                                                         create new pro your employee</p>
                                                     <div class="d-flex justify-content-end align-items-center my-3">
-                                                       <h1><i class="fa-solid fa-user-plus fa-2xl" style="color: #c5c4c4;"></i></h1> 
+                                                       <h1><i class="fa-solid fa-user-plus fa-2xl" style="color: #e9efc6;"></i></h1> 
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
-                                            <div class="card border border-4">
+                                            <div class="card border border-2">
                                                 <div class="card-body">
                                                     <div class="my-2 d-flex align-items-center">
                                                         <h5 class="card-title">Rights Profile</h5>
@@ -75,13 +75,13 @@
                                                     <p>To enjoy the experience as a organization,
                                                         create new pro your employee</p>
                                                         <div class="d-flex justify-content-end align-items-center my-3">
-                                                       <h1><i class="fa-solid fa-shield-halved fa-2xl" style="color: #c5c4c4;"></i></h1> 
+                                                       <h1><i class="fa-solid fa-shield-halved fa-2xl" style="color: #e9efc6;"></i></h1> 
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
-                                            <div class="card border border-4">
+                                            <div class="card border border-2">
                                                 <div class="card-body">
                                                     <div class="my-2 d-flex align-items-center">
                                                         <h5 class="card-title">Billing</h5>
@@ -90,14 +90,14 @@
                                                     <p>To enjoy the experience as a organization,
                                                         create new pro your employee</p>
                                                         <div class="d-flex justify-content-end align-items-center my-3">
-                                                       <h1><i class="fa-solid fa-dollar-sign fa-2xl" style="color: #c5c4c4;"></i>
+                                                       <h1><i class="fa-solid fa-dollar-sign fa-2xl" style="color: #e9efc6;"></i>
                                                     </h1> 
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
-                                            <div class="card border border-4">
+                                            <div class="card border border-2">
                                                 <div class="card-body">
                                                     <div class="my-2 d-flex align-items-center">
                                                         <h5 class="card-title">Select Plan</h5>
@@ -106,7 +106,7 @@
                                                     <p>To enjoy the experience as a organization,
                                                         create new pro your employee</p>
                                                         <div class="d-flex justify-content-end align-items-center my-3">
-                                                       <h1><i class="fa-solid fa-file-lines fa-2xl" style="color: #c5c4c4;"></i></h1> 
+                                                       <h1><i class="fa-solid fa-file-lines fa-2xl" style="color: #e9efc6;"></i></h1> 
                                                     </div>
                                                 </div>
                                             </div>
@@ -143,7 +143,7 @@ export default {
 
 <style>
 .boxTop {
-    margin-top: 200px;
+    margin-top: 120px !important;
 }
 .editBtn{
     background-color:var(--white_color);

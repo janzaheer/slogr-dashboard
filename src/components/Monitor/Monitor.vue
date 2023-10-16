@@ -30,7 +30,7 @@
                 <div class="card mx-md-2 mt-4 mb-5">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table text-center">
+                            <table class="table table-striped table-hover text-center">
                                 <thead>
                                     <tr>
                                         <th><a href="#" class="tableHead">Date</a></th>

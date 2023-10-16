@@ -31,10 +31,10 @@
                                 <div class="mt-3 p-3 bg-warning bg-opacity-10 border border-warning rounded">
                                     To enjoy the experience as a organization,create new pro your employee
                                 </div>
-                                <div class="mt-5">
+                                <div class="mt-3">
                                     <div class="row g-2">
                                         <div class="col-lg-4">
-                                            <div class="card border border-3">
+                                            <div class="card border border-2" style="height: 29rem;">
                                                 <div class="card-body">
                                                     <div class="my-2 d-flex align-items-center">
                                                         <h5 class="card-title">Basic Information</h5>
@@ -72,7 +72,7 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
-                                            <div class="card border border-3">
+                                            <div class="card border border-2" style="height: 29rem;">
                                                 <div class="card-body">
                                                     <div class="my-2 d-flex align-items-center">
                                                         <h5 class="card-title">Contact Information</h5>
@@ -94,7 +94,7 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
-                                            <div class="card border border-3">
+                                            <div class="card border border-2" style="height: 29rem;">
                                                 <div class="card-body">
                                                     <div class="my-2 d-flex align-items-center">
                                                         <h5 class="card-title">Organization Information</h5>
@@ -157,13 +157,10 @@ export default {
 </script>
 
 <style>
-.boxTop {
-    margin-top: 200px;
-}
 
 .contact-form .form-field{
     position: relative;
-    margin: 32px 0;
+    margin: 25px 0;
 }
 
 .contact-form .input-text {

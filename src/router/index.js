@@ -12,6 +12,7 @@ import SentinelReports from '../components/Sentinel/SentinelReports.vue';
 ////////////////////ADMIN/////////////////////////////////////
 import Dashboard from '../components/Admin/Dashboard/Dashboard.vue'
 import CreateNewUser from '../components/Admin/CreateUser/CreateNewUser.vue'
+import RightsProfiles from '../components/Admin/RightsProfile/RightsProfile.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -75,6 +76,11 @@ const router = createRouter({
       path: '/createNewUser',
       name: 'CreateNewUser',
       component: CreateNewUser
+    },
+    {
+      path: '/rightsProfiles',
+      name: 'RightsProfiles',
+      component: RightsProfiles
     },
     {
       path: '/about',
