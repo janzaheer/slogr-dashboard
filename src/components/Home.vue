@@ -85,8 +85,8 @@ export default {
     var map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/light-v11',
-      center: [-98.5795, 39.8283],
-      zoom: 4
+      center: [0, 20],  // Centered on the equator at 20 degrees latitude
+      zoom: 2,         // Zoom level to fit the entire world
     });
     const nav = new mapboxgl.NavigationControl();
     map.addControl(nav, "bottom-right");
