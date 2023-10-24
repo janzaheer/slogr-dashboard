@@ -75,12 +75,14 @@
 <script>
 import Header from './common/Header.vue';
 import mapboxgl from 'mapbox-gl';
-import { fetchClusters } from '../services/agent_services'
+import * as turf from '@turf/turf';
+import { fetchClusters, fetchSessions } from '../services/agent_services'
 import supercluster from 'supercluster';
 
 export default {
   async mounted() {
     var clusters = await this.handleClusters()
+    var sessions = await this.handleSessions()
     mapboxgl.accessToken = 'pk.eyJ1Ijoicmh3b3JrcyIsImEiOiJjazBmZmE0bGIwNzh3M25wMjBhOHI2em56In0.317s4zEB48T9QC33pf6sVw#13';
     var map = new mapboxgl.Map({
       container: 'map',
@@ -92,6 +94,8 @@ export default {
     map.addControl(nav, "bottom-right");
     
     map.on('load', () => {
+      // Add logic to draw lines between two points here
+      this.drawLines(map, sessions);
       // Add a new source from our GeoJSON data and
       // set the 'cluster' option to true. GL-JS will
       // add the point_count property to your source data.
@@ -190,62 +194,40 @@ export default {
         });
       });
       map.setProjection('Mercator');
-      this.connectClusters();
+      
+      
   },
   methods: {
     async handleClusters() {
       const respData = await fetchClusters()
       return respData;
     },
-    connectClusters() {
-      // Define the coordinates of the clusters you want to connect
-      const clusterCoordinates = [
-        [-151.5129, 63.1016], // Cluster 1
-        [-118.945167, 34.213667],  // Cluster 2
-        // Add more cluster coordinates as needed
-      ];
+    async handleSessions() {
+      const respData = await fetchSessions()
+      return respData;
+    },
+    drawLines(map, lines) {
+      console.log(lines);
 
-      // Iterate through the cluster coordinates and draw lines
-      clusterCoordinates.forEach((coordinates, index) => {
-        if (index < clusterCoordinates.length - 1) {
-          // Calculate the coordinates of the line path
-          const lineCoordinates = [
-            coordinates,
-            clusterCoordinates[index + 1],
-          ];
-
-          // Create a GeoJSON line feature
-          const lineFeature = {
-            type: 'Feature',
-            geometry: {
-              type: 'LineString',
-              coordinates: lineCoordinates,
-            },
-          };
-
-          // Add the line feature to the map
-          this.map.addSource(`line-${index}`, {
+      lines.forEach((line, index) => {
+        map.addLayer({
+          id: `line-${index}`,
+          type: 'line',
+          source: {
             type: 'geojson',
             data: {
-              type: 'FeatureCollection',
-              features: [lineFeature],
+              type: 'Feature',
+              geometry: {
+                type: 'LineString',
+                coordinates: line.coordinates,
+              },
             },
-          });
-
-          this.map.addLayer({
-            id: `line-layer-${index}`,
-            type: 'line',
-            source: `line-${index}`,
-            layout: {
-              'line-join': 'round',
-              'line-cap': 'round',
-            },
-            paint: {
-              'line-color': 'blue', // Set line color
-              'line-width': 10,       // Set line width
-            },
-          });
-        }
+          },
+          paint: {
+            'line-color': line.color,
+            'line-width': 0.5,
+          },
+        });
       });
     },
   },
