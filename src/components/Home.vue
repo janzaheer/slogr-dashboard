@@ -75,16 +75,18 @@
 <script>
 import Header from './common/Header.vue';
 import mapboxgl from 'mapbox-gl';
+import { fetchClusters } from '../services/agent_services'
 import supercluster from 'supercluster';
 
 export default {
-  mounted() {
+  async mounted() {
+    var clusters = await this.handleClusters()
     mapboxgl.accessToken = 'pk.eyJ1Ijoicmh3b3JrcyIsImEiOiJjazBmZmE0bGIwNzh3M25wMjBhOHI2em56In0.317s4zEB48T9QC33pf6sVw#13';
     var map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/light-v11',
-      center: [-98.5795, 39.8283],
-      zoom: 4
+      center: [0, 20],  // Centered on the equator at 20 degrees latitude
+      zoom: 2,         // Zoom level to fit the entire world
     });
     const nav = new mapboxgl.NavigationControl();
     map.addControl(nav, "bottom-right");
@@ -97,7 +99,7 @@ export default {
         type: 'geojson',
         // Point to GeoJSON data. This example visualizes all M1.0+ earthquakes
         // from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
-        data: 'https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson',
+        data: clusters,
         cluster: true,
         clusterMaxZoom: 14, // Max zoom to cluster points on
         clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
@@ -188,7 +190,66 @@ export default {
         });
       });
       map.setProjection('Mercator');
-  }
+      this.connectClusters();
+  },
+  methods: {
+    async handleClusters() {
+      const respData = await fetchClusters()
+      return respData;
+    },
+    connectClusters() {
+      // Define the coordinates of the clusters you want to connect
+      const clusterCoordinates = [
+        [-151.5129, 63.1016], // Cluster 1
+        [-118.945167, 34.213667],  // Cluster 2
+        // Add more cluster coordinates as needed
+      ];
+
+      // Iterate through the cluster coordinates and draw lines
+      clusterCoordinates.forEach((coordinates, index) => {
+        if (index < clusterCoordinates.length - 1) {
+          // Calculate the coordinates of the line path
+          const lineCoordinates = [
+            coordinates,
+            clusterCoordinates[index + 1],
+          ];
+
+          // Create a GeoJSON line feature
+          const lineFeature = {
+            type: 'Feature',
+            geometry: {
+              type: 'LineString',
+              coordinates: lineCoordinates,
+            },
+          };
+
+          // Add the line feature to the map
+          this.map.addSource(`line-${index}`, {
+            type: 'geojson',
+            data: {
+              type: 'FeatureCollection',
+              features: [lineFeature],
+            },
+          });
+
+          this.map.addLayer({
+            id: `line-layer-${index}`,
+            type: 'line',
+            source: `line-${index}`,
+            layout: {
+              'line-join': 'round',
+              'line-cap': 'round',
+            },
+            paint: {
+              'line-color': 'blue', // Set line color
+              'line-width': 10,       // Set line width
+            },
+          });
+        }
+      });
+    },
+  },
+  
 }
 </script>
 

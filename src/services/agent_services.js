@@ -23,3 +23,8 @@ export async function agentUpdate(payload) {
     const resp = await axios.post(`${base_url}/api/edit-agent`, payload, {headers: HEADERS})
     return resp.data
 }
+
+export async function fetchClusters() {
+    const resp = await axios.get(`${base_url}/api/cluster`, {headers: HEADERS})
+    return resp.data
+}
