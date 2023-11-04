@@ -9,26 +9,12 @@ let HEADERS = {
     "Authorization": `Bearer ${TOKEN}`
 }
 
-export async function agentList(page=1) {
-    const resp = await axios.get(`${base_url}/api/agents?page=${page}`, {headers: HEADERS})
+export async function sessionsList() {
+    const resp = await axios.get(`${base_url}/api/sessions`, {headers: HEADERS})
     return resp.data
 }
 
-export async function createAgent(payload) {
-    const resp = await axios.post(`${base_url}/api/add-agent`, payload, {headers: HEADERS})
-    return resp.data
-}
-
-export async function agentUpdate(payload) {
-    const resp = await axios.post(`${base_url}/api/edit-agent`, payload, {headers: HEADERS})
-    return resp.data
-}
-
-export async function fetchClusters() {
-    const resp = await axios.get(`${base_url}/api/cluster`, {headers: HEADERS})
-    return resp.data
-}
-export async function agentRefSessions(id){
-    const resp = await axios.get(`${base_url}/api/get-ref-sessions?aid=` + id, {headers: HEADERS})
+export async function getSessionsResults(id) {
+    const resp = await axios.get(`${base_url}/api/analytics?sid=` + id, {headers: HEADERS})
     return resp.data
 }

@@ -1,31 +1,3 @@
-<script>
-import Header from '../common/Header.vue';
-export default {
-    name: 'Sessions',
-    components: {
-        Header
-    }
-}
-</script>
-
-<style>
-
-.addBtnSessions {
-    background-color: var(--white_color);
-    border-radius: 6px;
-    border: 1px solid  var(--primary_color);
-    padding: 7px 15px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    color: var(--primary_color);
-}
-
-.addBtnSessions:hover {
-    background-color: var(--primary_color_Hover);
-    color: var(--white_color);
-}
-</style>
-
 <template>
     <!-- <Header/> -->
     <div class="pageHeight">
@@ -94,7 +66,43 @@ export default {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <tr v-for="data in sessionsData" :key="data.id">
+                                        <td>
+                                            <p class="tableP">{{ data?.s_name }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="tableP">{{ data?.c_name }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="tableP">Demo PCo1P</p>
+                                        </td>
+                                        <td>
+                                            <p class="tableP">{{ data?.count }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="tableP">25.0</p>
+                                        </td>
+                                        <td>
+                                            <p class="tableP">1.0</p>
+                                        </td>
+                                        <td>
+                                            <p class="tableP">1.0</p>
+                                        </td>
+                                        <td>
+                                            <p class="tableP">1.0</p>
+                                        </td>
+                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
+                                                <i class="fa-solid fa-circle-play"></i></a></td>
+                                        <td class="fs-5 dropstart"><a href="#" class="text-decoration-none text-dark tableP" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="fa-solid fa-ellipsis"></i></a>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-pen-to-square"></i> Edit</a></li>
+                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-eye"></i> Details</a></li>
+                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-trash-can"></i> Delete</a></li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <!-- <tr>
                                         <td>
                                             <p class="tableP">Demo-Sentinel-1</p>
                                         </td>
@@ -345,43 +353,7 @@ export default {
                                                 <li><a class="dropdown-item" href="#"><i class="fa-regular fa-trash-can"></i> Delete</a></li>
                                             </ul>
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">Demo-Sentinel-1</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">US west 2</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">Demo PCo1P</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">25.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                <i class="fa-solid fa-circle-play"></i></a></td>
-                                        <td class="fs-5 dropstart"><a href="#" class="text-decoration-none text-dark tableP" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fa-solid fa-ellipsis"></i></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-pen-to-square"></i> Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-eye"></i> Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-trash-can"></i> Delete</a></li>
-                                            </ul>
-                                        </td>
-                                    </tr>
+                                    </tr> -->
                                 </tbody>
                             </table>
                         </div>
@@ -562,3 +534,50 @@ export default {
         </div>
     </div>
 </template>
+
+<script>
+import Header from '../common/Header.vue';
+import { sessionsList } from '../../services/sessions_services';
+export default {
+    name: 'Sessions',
+    components: {
+        Header
+    },
+    data(){
+        return {
+            sessionsData: []
+        }
+    },
+    mounted(){
+        this.getSessions();
+    },
+    methods:{
+        async getSessions(){
+            let res = await sessionsList()
+            console.log('----------------------------')
+            // console.log('data',res.data.sessions)
+            this.sessionsData = res.data.sessions
+            console.log('----------------------------')
+        }
+    }
+}
+</script>
+
+<style>
+
+.addBtnSessions {
+    background-color: var(--white_color);
+    border-radius: 6px;
+    border: 1px solid  var(--primary_color);
+    padding: 7px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: var(--primary_color);
+}
+
+.addBtnSessions:hover {
+    background-color: var(--primary_color_Hover);
+    color: var(--white_color);
+}
+</style>
+

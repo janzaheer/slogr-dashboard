@@ -603,19 +603,19 @@
                     </div>
                     <div id="col2" class="col-2 d-none">
                         <div class="card mt-4 mb-5">
-                            <div class="card-body">
+                            <div class="card-body" v-for="data in refSessions" :key="data.id">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
                                         <p class="card-text ms-2">Minio-SJC1</p>
-                                        <span class="text-secondary ms-2" style="font-size: 13px;">SJC-1C-node </span> <br>
+                                        <span class="text-secondary ms-2" style="font-size: 13px;">{{ data?.c_name }} </span> <br>
                                         <span class="text-secondary ms-2" style="font-size: 13px;">Data</span>
                                     </div>
                                     <div>
-                                        <RouterLink to="/sentinelReports"><i class="fa-solid fa-chevron-right me-1 text-secondary"></i></RouterLink>
+                                        <RouterLink :to="`/sentinelReports/` + data.id"><i class="fa-solid fa-chevron-right me-1 text-secondary"></i></RouterLink>
                                     </div>
                                 </div>
                                 <hr class="">
-                                <div class="d-flex justify-content-between align-items-center">
+                                <!-- <div class="d-flex justify-content-between align-items-center">
                                     <div>
                                         <p class="card-text ms-2">Minio-SJC1</p>
                                         <span class="text-secondary ms-2" style="font-size: 13px;">SJC-1C-node </span> <br>
@@ -624,7 +624,7 @@
                                     <div>
                                         <RouterLink to="/sentinelReports"><i class="fa-solid fa-chevron-right me-1 text-secondary"></i></RouterLink>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -743,7 +743,7 @@
 
 <script>
 import Header from '../common/Header.vue';
-import { createAgent, agentUpdate, agentList } from '../../services/agent_services'
+import { createAgent, agentUpdate, agentList, agentRefSessions } from '../../services/agent_services'
 export default {
     name: 'Sentinel',
     components: {
@@ -766,7 +766,8 @@ export default {
                 nextPage: null
             },
             selectedGridId: 0,
-            selectedGridName: null
+            selectedGridName: null,
+            refSessions: []
         }
     },
     async mounted() {
@@ -806,7 +807,7 @@ export default {
                 this.updateData.id = null;
             }
         },
-        handleGrids(selectedId, selectedName) {
+        async handleGrids(selectedId, selectedName) {
             let col1 = document.getElementById('col1')
             let col2 = document.getElementById('col2')
             if (selectedId == this.selectedGridId) {
@@ -826,6 +827,17 @@ export default {
             }
             this.selectedGridId = selectedId
             this.selectedGridName = selectedName
+            console.log('id-grid',selectedId)
+            try {
+                let res = await agentRefSessions(selectedId)
+                console.log('res',res)
+                this,this.refSessions = res.sessions
+            } catch (error) {
+                console.log(error)
+            }
+        },
+        handleSentinelSessionsListing(){
+
         }
     }
 }
