@@ -30,20 +30,20 @@
                     <div class="card">
                         <div class="card-body">
                             <p class="card-text ms-3">Minio-SJC1</p>
-                            <span class="card-text text-secondary ms-3">SJC-1C-node </span> <br>
+                            <span class="card-text text-secondary ms-3">{{ clientData.name }}</span> <br>
                             <span class="card-text text-secondary ms-3">Data</span>
                             <hr class="hr">
                             <p class="card-text ms-3">System</p>
-                            <span class="card-text text-secondary ms-3">Ubuntu</span>
+                            <span class="card-text text-secondary ms-3">{{ clientData.platform }}</span>
                             <hr class="hr">
                             <p class="card-text ms-3">Organization</p>
-                            <span class="card-text text-secondary ms-3">12345 Packet Host</span>
+                            <span class="card-text text-secondary ms-3">{{ clientData.Organization }}</span>
                             <hr class="hr">
-                            <p class="card-text ms-3">City</p>
-                            <span class="card-text text-secondary ms-3">Sugut</span>
+                            <p class="card-text ms-3">Location</p>
+                            <span class="card-text text-secondary ms-3">{{ clientData.location }}</span>
                             <hr class="hr">
                             <p class="card-text ms-3">Country</p>
-                            <span class="card-text text-secondary ms-3">Turkiye</span>
+                            <span class="card-text text-secondary ms-3">{{ clientData.Country }}</span>
                         </div>
                     </div>
                 </div>
@@ -51,16 +51,16 @@
                     <div class="card pb-3">
                         <div class="card-body">
                             <p class="card-text ms-3">Minio-SJC1 T1 Node</p>
-                            <span class="card-text text-secondary ms-3">SJC-1C-node </span> <br>
+                            <span class="card-text text-secondary ms-3">{{ serverData.name }} </span> <br>
                             <span class="card-text text-secondary ms-3">Data</span>
                             <hr class="">
-                            <p class="card-text ms-3">System</p>
+                            <p class="card-text ms-3">{{ serverData.platform }}</p>
                             <hr class="">
-                            <p class="card-text ms-3">Organization</p>
+                            <p class="card-text ms-3">{{ serverData.Organization }}</p>
                             <hr class="">
-                            <p class="card-text ms-3">City</p>
+                            <p class="card-text ms-3">{{ serverData.location }}</p>
                             <hr class="">
-                            <p class="card-text ms-3">Country</p>
+                            <p class="card-text ms-3">{{ serverData.Country }}</p>
                         </div>
                     </div>
                 </div>
@@ -129,7 +129,6 @@
                                     </div>
                                 </div> -->
                             </perfect-scrollbar>
-                            
                         </div>
                     </div>
                 </div>
@@ -178,6 +177,7 @@ import Header from '../common/Header.vue'
 import {
     getSessionsResults
 } from '../../../src/services/sessions_services';
+import { getSessionsDetails } from '../../services/agents_reports_services'
 import {PerfectScrollbar} from 'vue3-perfect-scrollbar'
 import 'vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css'
 export default {
@@ -189,7 +189,9 @@ export default {
     },
     data() {
         return {
-            analyticsData: []
+            analyticsData: [],
+            clientData:[],
+            serverData:[]
         }
     },
     methods: {
@@ -294,8 +296,17 @@ export default {
             let id = this.$route.params.id
             try {
                 let res = await getSessionsResults(id)
-                console.log('data', res)
                 this.analyticsData = res.data.analytics
+            } catch (error) {
+                console.log(error)
+            }
+        },
+        async SessionsDetails(){
+            let id = this.$route.params.id
+            try {
+                let res = await getSessionsDetails(id)
+                this.clientData = res.data.client
+                this.serverData = res.data.server
             } catch (error) {
                 console.log(error)
             }
@@ -304,6 +315,7 @@ export default {
     mounted() {
         this.loadCharts()
         this.handleSessionResults()
+        this.SessionsDetails()
         console.log('id', this.$route.params.id)
     }
 }
