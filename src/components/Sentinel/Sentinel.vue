@@ -40,7 +40,7 @@
                                                 <th scope="col"><a href="#" class="tableHead" data-bs-toggle="dropdown"
                                                         aria-expanded="false">Home <i class="fa-solid fa-filter"
                                                             style="color: var(--dark_gray_color);"></i></a>
-                                                    <ul class="dropdown-menu shadow px-2">
+                                                    <!-- <ul class="dropdown-menu shadow px-2">
                                                         <li lass="dropdown-item">
                                                             <div class="my-2">
                                                                 <div class="d-flex justify-content-between">
@@ -53,13 +53,13 @@
                                                             </div>
                                                             <button class="ApplyBtn w-100 mb-2">Apply</button>
                                                         </li>
-                                                    </ul>
+                                                    </ul> -->
                                                 </th>
                                                 <th scope="col"><a href="#" class="tableHead" data-bs-toggle="dropdown"
                                                         aria-expanded="false">Ip
                                                         Address <i class="fa-solid fa-filter"
                                                             style="color: var(--dark_gray_color);"></i></a>
-                                                    <ul class="dropdown-menu shadow px-2">
+                                                    <!-- <ul class="dropdown-menu shadow px-2">
                                                         <li lass="dropdown-item">
                                                             <div class="my-2">
                                                                 <div class="d-flex justify-content-between">
@@ -80,12 +80,12 @@
                                                             </div>
                                                             <button class="ApplyBtn w-100 mb-2">Apply</button>
                                                         </li>
-                                                    </ul>
+                                                    </ul> -->
                                                 </th>
                                                 <th scope="col"><a href="#" class="tableHead" data-bs-toggle="dropdown"
                                                         aria-expanded="false">Organization <i class="fa-solid fa-filter"
                                                             style="color: var(--dark_gray_color);"></i></a>
-                                                    <ul class="dropdown-menu shadow px-2">
+                                                    <!-- <ul class="dropdown-menu shadow px-2">
                                                         <li lass="dropdown-item">
                                                             <div class="my-2">
                                                                 <div class="d-flex justify-content-between">
@@ -102,7 +102,7 @@
                                                             </div>
                                                             <button class="ApplyBtn w-100 mb-2">Apply</button>
                                                         </li>
-                                                    </ul>
+                                                    </ul> -->
                                                 </th>
                                                 <th scope="col"><a href="#" class="tableHead" data-bs-toggle="dropdown"
                                                         aria-expanded="false">
@@ -149,7 +149,7 @@
                                                 <th scope="col"><a href="#" class="tableHead" data-bs-toggle="dropdown"
                                                         aria-expanded="false">Country <i class="fa-solid fa-filter"
                                                             style="color: var(--dark_gray_color);"></i></a>
-                                                    <ul class="dropdown-menu shadow px-2">
+                                                    <!-- <ul class="dropdown-menu shadow px-2">
                                                         <li lass="dropdown-item">
                                                             <div class="my-2">
                                                                 <div class="d-flex justify-content-between">
@@ -167,7 +167,7 @@
                                                             </div>
                                                             <button class="ApplyBtn w-100 mb-2">Apply</button>
                                                         </li>
-                                                    </ul>
+                                                    </ul> -->
                                                 </th>
                                                 <th scope="col"></th>
                                                 <th scope="col"></th>
