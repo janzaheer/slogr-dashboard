@@ -231,6 +231,9 @@
                     </div>
                     <div id="col2" class="col-2 d-none">
                         <div class="card mt-4 mb-5">
+                            <div class="text-center m-5" v-if="loading">
+                                <VueSpinner size="80" color="#8cb63d" />
+                            </div>
                             <div class="text-center m-5" v-if="error">
                                 <h3 class="text-danger">Data not found.</h3>
                             </div>
@@ -380,11 +383,13 @@
 
 <script>
 import Header from '../common/Header.vue';
-import { createAgent, agentUpdate, agentList, agentRefSessions } from '../../services/agent_services'
+import { createAgent, agentUpdate, agentList, agentRefSessions } from '../../services/agent_services';
+import { VueSpinner } from 'vue3-spinners'
 export default {
     name: 'Sentinel',
     components: {
-        Header
+        Header,
+        VueSpinner
     },
     data() {
         return {
@@ -405,8 +410,8 @@ export default {
             selectedGridId: 0,
             selectedGridName: null,
             refSessions: [],
-            refSessionsCheck: [],
             error: null, // data not found check
+            loading: false
         }
     },
     async mounted() {
@@ -468,6 +473,7 @@ export default {
             this.selectedGridName = selectedName
             console.log('id-grid', selectedId)
             try {
+                this.loading = true;
                 this.error = null;
                 let res = await agentRefSessions(selectedId)
                 if (res.sessions.length === 0) {
@@ -478,6 +484,8 @@ export default {
                 }
             } catch (error) {
                 console.log(error)
+            } finally {
+                this.loading = false;
             }
         },
     }

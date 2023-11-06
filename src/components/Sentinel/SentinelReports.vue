@@ -1,117 +1,131 @@
 <template>
-<div class="pageHeight">
-    <div class="bg">
-        <Header />
-        <div class="container-fluid sentinel mt-2">
-            <div class="d-flex justify-content-end">
-                <h1 class="me-2">
-                    <RouterLink to="/sentinel"> <i class="fa-solid fa-xmark fa-xs" style="color: #d8dce2;"></i>
-                    </RouterLink>
-                </h1>
-            </div>
-        </div>
-        <div class="container-fluid">
-            <div class="card mx-md-2">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center ">
-                        <div>
-                            <h3 class="text-secondary ms-3 mt-2">Minio-SJC1</h3>
-                        </div>
-                        <div class="">
-                            <div class="mx-3"><i class="fa-solid fa-rotate-right fa-rotate-270 fa-2xl"></i></div>
-                        </div>
-                    </div>
+    <div class="pageHeight">
+        <div class="bg">
+            <Header />
+            <div class="container-fluid sentinel mt-2">
+                <div class="d-flex justify-content-end">
+                    <h1 class="me-2">
+                        <RouterLink to="/sentinel"> <i class="fa-solid fa-xmark fa-xs" style="color: #d8dce2;"></i>
+                        </RouterLink>
+                    </h1>
                 </div>
             </div>
-        </div>
-        <div class="container-fluid">
-            <div class="row g-2 mx-md-2 mt-4 mb-4">
-                <div class="col-lg-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <p class="card-text ms-3">Minio-SJC1</p>
-                            <span class="card-text text-secondary ms-3">{{ clientData.name }}</span> <br>
-                            <span class="card-text text-secondary ms-3">Data</span>
-                            <hr class="hr">
-                            <p class="card-text ms-3">System</p>
-                            <span class="card-text text-secondary ms-3">{{ clientData.platform }}</span>
-                            <hr class="hr">
-                            <p class="card-text ms-3">Organization</p>
-                            <span class="card-text text-secondary ms-3">{{ clientData.Organization }}</span>
-                            <hr class="hr">
-                            <p class="card-text ms-3">Location</p>
-                            <span class="card-text text-secondary ms-3">{{ clientData.location }}</span>
-                            <hr class="hr">
-                            <p class="card-text ms-3">Country</p>
-                            <span class="card-text text-secondary ms-3">{{ clientData.Country }}</span>
+            <div class="container-fluid">
+                <div class="card mx-md-2">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center ">
+                            <div>
+                                <h3 class="text-secondary ms-3 mt-2">Minio-SJC1</h3>
+                            </div>
+                            <div class="">
+                                <div class="mx-3"><i class="fa-solid fa-rotate-right fa-rotate-270 fa-2xl"></i></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-2">
-                    <div class="card pb-3">
-                        <div class="card-body">
-                            <p class="card-text ms-3">Minio-SJC1 T1 Node</p>
-                            <span class="card-text text-secondary ms-3">{{ serverData.name }} </span> <br>
-                            <span class="card-text text-secondary ms-3">Data</span>
-                            <hr class="">
-                            <p class="card-text ms-3">{{ serverData.platform }}</p>
-                            <hr class="">
-                            <p class="card-text ms-3">{{ serverData.Organization }}</p>
-                            <hr class="">
-                            <p class="card-text ms-3">{{ serverData.location }}</p>
-                            <hr class="">
-                            <p class="card-text ms-3">{{ serverData.Country }}</p>
+            </div>
+            <div class="container-fluid">
+                <div class="row g-2 mx-md-2 mt-4 mb-4">
+                    <div class="col-lg-3">
+
+                        <div class="card">
+                            <div class="text-center m-5" v-if="loading">
+                                <VueSpinner size="100" color="#8cb63d" />
+                            </div>
+                            <div class="card-body" v-else>
+                                <p class="card-text ms-3">Minio-SJC1</p>
+                                <span class="card-text text-secondary ms-3">{{ clientData.name }}</span> <br>
+                                <span class="card-text text-secondary ms-3">Data</span>
+                                <hr class="hr">
+                                <p class="card-text ms-3">System</p>
+                                <span class="card-text text-secondary ms-3">{{ clientData.platform }}</span>
+                                <hr class="hr">
+                                <p class="card-text ms-3">Organization</p>
+                                <span class="card-text text-secondary ms-3">{{ clientData.Organization }}</span>
+                                <hr class="hr">
+                                <p class="card-text ms-3">Location</p>
+                                <span class="card-text text-secondary ms-3">{{ clientData.location }}</span>
+                                <hr class="hr">
+                                <p class="card-text ms-3">Country</p>
+                                <span class="card-text text-secondary ms-3">{{ clientData.Country }}</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-7">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <perfect-scrollbar>
-                                <div class="table-responsive">
-                                <table class="table text-center">
-                                    <thead>
-                                        <tr>
-                                            <th><a href="#" class="tableHead">UP <br> Min /Max /Sdev</a></th>
-                                            <th><a href="#" class="tableHead"> DOWN <br> Min /Max /Sdev</a></th>
-                                            <th><a href="#" class="tableHead">RTT <br> Min /Max /Sdev</a></th>
-                                            <!-- <th><a href="#" class="tableHead"> Packet <br> Loss</a></th> -->
-                                            <th><a href="#" class="tableHead"> JITTER <br> Min /Max /Sdev</a></th>
-                                            <th style="font-size: 18px; color: darkgray;"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr v-for="data in analyticsData" :key="data.id">
-                                            <td>
-                                                <p class="tableP css">{{ data?.avg_up }}</p>
-                                                <p class="css fw-lighter"> {{ data.min_up }}/ {{ data.max_up }} /{{
-                                                        data.st_up }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="tableP css">{{ data.avg_down }}</p>
-                                                <p class="css fw-lighter">{{ data.min_down }}/ {{ data.max_down }} /{{
-                                                        data.st_down }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="tableP css">{{ data.avg_rtt }}</p>
-                                                <p class="css fw-lighter">{{ data.min_rtt }}/ {{ data.max_rtt }} /{{
-                                                        data.st_rtt }}</p>
-                                            </td>
-                                            <!-- <td>
+                    <div class="col-lg-2">
+
+                        <div class="card pb-3">
+                            <div class="text-center m-5" v-if="loading">
+                                <VueSpinner size="100" color="#8cb63d" />
+                            </div>
+                            <div class="card-body" v-else>
+                                <p class="card-text ms-3">Minio-SJC1 T1 Node</p>
+                                <span class="card-text text-secondary ms-3">{{ serverData.name }} </span> <br>
+                                <span class="card-text text-secondary ms-3">Data</span>
+                                <hr class="">
+                                <p class="card-text ms-3">{{ serverData.platform }}</p>
+                                <hr class="">
+                                <p class="card-text ms-3">{{ serverData.Organization }}</p>
+                                <hr class="">
+                                <p class="card-text ms-3">{{ serverData.location }}</p>
+                                <hr class="">
+                                <p class="card-text ms-3">{{ serverData.Country }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="card h-100">
+                            <div class="text-center m-5" v-if="loading2">
+                                <VueSpinner size="100" color="#8cb63d" />
+                            </div>
+                            <div class="card-body" v-else>
+                                <perfect-scrollbar>
+                                    <div class="table-responsive">
+                                        <table class="table text-center">
+                                            <thead>
+                                                <tr>
+                                                    <th><a href="#" class="tableHead">UP <br> Min /Max /Sdev</a></th>
+                                                    <th><a href="#" class="tableHead"> DOWN <br> Min /Max /Sdev</a></th>
+                                                    <th><a href="#" class="tableHead">RTT <br> Min /Max /Sdev</a></th>
+                                                    <!-- <th><a href="#" class="tableHead"> Packet <br> Loss</a></th> -->
+                                                    <th><a href="#" class="tableHead"> JITTER <br> Min /Max /Sdev</a></th>
+                                                    <th style="font-size: 18px; color: darkgray;"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="data in analyticsData" :key="data.id">
+                                                    <td>
+                                                        <p class="tableP css">{{ data?.avg_up }}</p>
+                                                        <p class="css fw-lighter"> {{ data.min_up }}/ {{ data.max_up }} /{{
+                                                            data.st_up }}</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="tableP css">{{ data.avg_down }}</p>
+                                                        <p class="css fw-lighter">{{ data.min_down }}/ {{ data.max_down }}
+                                                            /{{
+                                                                data.st_down }}</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="tableP css">{{ data.avg_rtt }}</p>
+                                                        <p class="css fw-lighter">{{ data.min_rtt }}/ {{ data.max_rtt }} /{{
+                                                            data.st_rtt }}</p>
+                                                    </td>
+                                                    <!-- <td>
                                                     <p class="tableP">{{ data?.t_packets }}</p>
                                                 </td> -->
-                                            <td>
-                                                <p class="tableP css">{{ data.avg_jitter }}</p>
-                                                <p class="css fw-lighter">{{ data.min_jitter }} / {{ data.max_jitter }}
-                                                </p>
-                                            </td>
-                                            <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                    <i class="fa-solid fa-ellipsis"></i></a></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- <div class="d-flex justify-content-between">
+                                                    <td>
+                                                        <p class="tableP css">{{ data.avg_jitter }}</p>
+                                                        <p class="css fw-lighter">{{ data.min_jitter }} / {{ data.max_jitter
+                                                        }}
+                                                        </p>
+                                                    </td>
+                                                    <td class="fs-5"><a href="#"
+                                                            class="text-decoration-none text-dark tableP">
+                                                            <i class="fa-solid fa-ellipsis"></i></a></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- <div class="d-flex justify-content-between">
                                     <div>
                                         <button class="addBtn2"><i class="fa-solid fa-chevron-down fa-lg"></i> Go to
                                             Page</button>
@@ -128,45 +142,45 @@
                                         </div>
                                     </div>
                                 </div> -->
-                            </perfect-scrollbar>
+                                </perfect-scrollbar>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="container-fluid tableDiv">
-            <div class="row g-2 mx-md-5 mb-5">
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <figure class="highcharts-figure">
-                                <div id="container"></div>
-                            </figure>
+            <div class="container-fluid tableDiv">
+                <div class="row g-2 mx-md-5 mb-5">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <figure class="highcharts-figure">
+                                    <div id="container"></div>
+                                </figure>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <figure class="highcharts-figure">
-                                <div id="container2"></div>
-                            </figure>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <figure class="highcharts-figure">
+                                    <div id="container2"></div>
+                                </figure>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <figure class="highcharts-figure">
-                                <div id="container3"></div>
-                            </figure>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <figure class="highcharts-figure">
+                                    <div id="container3"></div>
+                                </figure>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </template>
 
 <script>
@@ -178,20 +192,24 @@ import {
     getSessionsResults
 } from '../../../src/services/sessions_services';
 import { getSessionsDetails } from '../../services/agents_reports_services'
-import {PerfectScrollbar} from 'vue3-perfect-scrollbar'
+import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
 import 'vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css'
+import { VueSpinner } from 'vue3-spinners'
 export default {
     name: 'SentinelReports',
     components: {
         Header,
         RouterLink,
-        PerfectScrollbar
+        PerfectScrollbar,
+        VueSpinner
     },
     data() {
         return {
             analyticsData: [],
-            clientData:[],
-            serverData:[]
+            clientData: [],
+            serverData: [],
+            loading: false,
+            loading2: false
         }
     },
     methods: {
@@ -295,20 +313,26 @@ export default {
         async handleSessionResults() {
             let id = this.$route.params.id
             try {
+                this.loading2 = true;
                 let res = await getSessionsResults(id)
                 this.analyticsData = res.data.analytics
             } catch (error) {
                 console.log(error)
+            } finally {
+                this.loading2 = false;
             }
         },
-        async SessionsDetails(){
+        async SessionsDetails() {
             let id = this.$route.params.id
             try {
+                this.loading = true;
                 let res = await getSessionsDetails(id)
                 this.clientData = res.data.client
                 this.serverData = res.data.server
             } catch (error) {
                 console.log(error)
+            } finally {
+                this.loading = false;
             }
         }
     },
@@ -387,5 +411,4 @@ export default {
 
 .highcharts-data-table tr:hover {
     background: #f1f7ff;
-}
-</style>
+}</style>
