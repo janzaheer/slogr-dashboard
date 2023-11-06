@@ -52,7 +52,6 @@
                         </div>
                     </div>
                     <div class="col-lg-2">
-
                         <div class="card pb-3">
                             <div class="text-center m-5" v-if="loading">
                                 <VueSpinner size="100" color="#8cb63d" />
@@ -61,14 +60,18 @@
                                 <p class="card-text ms-3">Minio-SJC1 T1 Node</p>
                                 <span class="card-text text-secondary ms-3">{{ serverData.name }} </span> <br>
                                 <span class="card-text text-secondary ms-3">Data</span>
-                                <hr class="">
-                                <p class="card-text ms-3">{{ serverData.platform }}</p>
-                                <hr class="">
-                                <p class="card-text ms-3">{{ serverData.Organization }}</p>
-                                <hr class="">
-                                <p class="card-text ms-3">{{ serverData.location }}</p>
-                                <hr class="">
-                                <p class="card-text ms-3">{{ serverData.Country }}</p>
+                                <hr class="hr">
+                                <p class="card-text ms-3">System</p>
+                                <span class="card-text text-secondary ms-3">{{ serverData.platform }}</span>
+                                <hr class="hr">
+                                <p class="card-text ms-3">Organization</p>
+                                <span class="card-text text-secondary ms-3">{{ serverData.Organization }}</span>
+                                <hr class="hr">
+                                <p class="card-text ms-3">Location</p>
+                                <span class="card-text text-secondary ms-3">{{ serverData.location }}</span>
+                                <hr class="hr">
+                                <p class="card-text ms-3">Country</p>
+                                <span class="card-text text-secondary ms-3">{{ serverData.Country }}</span>
                             </div>
                         </div>
                     </div>

@@ -33,13 +33,18 @@
                     <div id="col1" class="col-12">
                         <div class="card mx-md-2 mt-4 mb-5">
                             <div class="card-body">
-                                <div class="table-responsive">
+                                <div class="text-center m-5" v-if="loading2">
+                                    <VueSpinner size="100" color="#8cb63d" />
+                                </div>
+                                <div class="table-responsive" v-else>
                                     <table class="table table-striped table-hover text-center">
                                         <thead>
                                             <tr>
                                                 <th scope="col"><a href="#" class="tableHead" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">Home <i class="fa-solid fa-filter"
-                                                            style="color: var(--dark_gray_color);"></i></a>
+                                                        aria-expanded="false">Home
+                                                         <!-- <i class="fa-solid fa-filter"
+                                                            style="color: var(--dark_gray_color);"></i> -->
+                                                        </a>
                                                     <!-- <ul class="dropdown-menu shadow px-2">
                                                         <li lass="dropdown-item">
                                                             <div class="my-2">
@@ -57,8 +62,7 @@
                                                 </th>
                                                 <th scope="col"><a href="#" class="tableHead" data-bs-toggle="dropdown"
                                                         aria-expanded="false">Ip
-                                                        Address <i class="fa-solid fa-filter"
-                                                            style="color: var(--dark_gray_color);"></i></a>
+                                                        Address</a>
                                                     <!-- <ul class="dropdown-menu shadow px-2">
                                                         <li lass="dropdown-item">
                                                             <div class="my-2">
@@ -83,8 +87,7 @@
                                                     </ul> -->
                                                 </th>
                                                 <th scope="col"><a href="#" class="tableHead" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">Organization <i class="fa-solid fa-filter"
-                                                            style="color: var(--dark_gray_color);"></i></a>
+                                                        aria-expanded="false">Organization</a>
                                                     <!-- <ul class="dropdown-menu shadow px-2">
                                                         <li lass="dropdown-item">
                                                             <div class="my-2">
@@ -106,8 +109,7 @@
                                                 </th>
                                                 <th scope="col"><a href="#" class="tableHead" data-bs-toggle="dropdown"
                                                         aria-expanded="false">
-                                                        Machine <i class="fa-solid fa-filter"
-                                                            style="color: var(--dark_gray_color);"></i></a>
+                                                        Machine</a>
                                                     <!-- <ul class="dropdown-menu shadow px-2">
                                                         <li lass="dropdown-item">
                                                             <div class="my-2">
@@ -124,8 +126,7 @@
                                                     </ul> -->
                                                 </th>
                                                 <th scope="col"><a href="#" class="tableHead" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">Location <i class="fa-solid fa-filter"
-                                                            style="color: var(--dark_gray_color);"></i></a>
+                                                        aria-expanded="false">Location</a>
                                                     <!-- <ul class="dropdown-menu shadow px-2">
                                                         <li lass="dropdown-item">
                                                             <div class="my-2">
@@ -147,8 +148,7 @@
                                                     </ul> -->
                                                 </th>
                                                 <th scope="col"><a href="#" class="tableHead" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">Country <i class="fa-solid fa-filter"
-                                                            style="color: var(--dark_gray_color);"></i></a>
+                                                        aria-expanded="false">Country</a>
                                                     <!-- <ul class="dropdown-menu shadow px-2">
                                                         <li lass="dropdown-item">
                                                             <div class="my-2">
@@ -411,7 +411,8 @@ export default {
             selectedGridName: null,
             refSessions: [],
             error: null, // data not found check
-            loading: false
+            loading: false,
+            loading2: false
         }
     },
     async mounted() {
@@ -420,11 +421,19 @@ export default {
     },
     methods: {
         async handleSentinelListing() {
-            const respData = await agentList()
-            this.agents = respData.data.agents
-            this.pages.previousPage = respData.data.prev || 0
-            this.pages.currentPage = this.pages.previousPage + 1
-            this.pages.nextPage = respData.data.prev
+            try {
+                this.loading2 = true
+                const respData = await agentList()
+                this.agents = respData.data.agents
+                this.pages.previousPage = respData.data.prev || 0
+                this.pages.currentPage = this.pages.previousPage + 1
+                this.pages.nextPage = respData.data.prev
+            } catch (error) {
+                console.log(error)
+            } finally {
+                this.loading2 = false;
+            }
+
         },
         async handleSentinelCreation() {
             if (this.addSentinel.name) {
