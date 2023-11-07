@@ -14,7 +14,7 @@ export async function sessionsList() {
     return resp.data
 }
 
-export async function getSessionsResults(id) {
-    const resp = await axios.get(`${base_url}/api/analytics?sid=` + id, {headers: HEADERS})
+export async function getSessionsResults(id, page=1) {
+    const resp = await axios.get(`${base_url}/api/analytics?sid=${id}&page=${page}`, {headers: HEADERS})
     return resp.data
 }

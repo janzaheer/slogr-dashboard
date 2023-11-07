@@ -216,13 +216,13 @@
                                     </div>
                                     <div>
                                         <div class="pagination">
-                                            <button class="prevBtn"><i class="fa-solid fa-angle-left"></i> Prev</button>
+                                            <button class="prevBtn" @click="handleSentinelListing(pages.previousPage)"><i class="fa-solid fa-angle-left"></i> Prev</button>
                                             <div class="pageNumber">-</div>
                                             <div class="pageNumber">-</div>
                                             <div class="pageNumber pageBtn">{{ pages.currentPage }}</div>
                                             <div class="pageNumber">-</div>
                                             <div class="pageNumber">-</div>
-                                            <button class="nextBtn">Next <i class="fa-solid fa-angle-right"></i></button>
+                                            <button class="nextBtn" @click="handleSentinelListing(pages.nextPage)">Next <i class="fa-solid fa-angle-right"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -241,8 +241,8 @@
                                 <div class="card-body" v-for="data in refSessions" :key="data.id">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
-                                            <p class="card-text ms-2">Minio-SJC1</p>
-                                            <span class="text-secondary ms-2" style="font-size: 13px;">{{ data?.c_name }}
+                                            <p class="card-text ms-2">{{ data?.name }}</p>
+                                            <span class="text-secondary ms-2" style="font-size: 13px;">{{ data?.machine_name }}
                                             </span> <br>
                                             <span class="text-secondary ms-2" style="font-size: 13px;">Data</span>
                                         </div>
@@ -264,8 +264,6 @@
                                 </div> -->
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
                 </div>
@@ -404,8 +402,8 @@ export default {
             agents: [],
             pages: {
                 currentPage: 1,
-                previousPage: 0,
-                nextPage: null
+                previousPage: 1,
+                nextPage: 1
             },
             selectedGridId: 0,
             selectedGridName: null,
@@ -420,14 +418,14 @@ export default {
 
     },
     methods: {
-        async handleSentinelListing() {
+        async handleSentinelListing(page=1) {
             try {
                 this.loading2 = true
-                const respData = await agentList()
+                const respData = await agentList(page)
                 this.agents = respData.data.agents
                 this.pages.previousPage = respData.data.prev || 0
                 this.pages.currentPage = this.pages.previousPage + 1
-                this.pages.nextPage = respData.data.prev
+                this.pages.nextPage = respData.data.next || 1
             } catch (error) {
                 console.log(error)
             } finally {
@@ -490,6 +488,7 @@ export default {
                     this.refSessions = []
                 } else {
                     this.refSessions = res.sessions
+                    console.log('ref-sessions',res.sessions)
                 }
             } catch (error) {
                 console.log(error)

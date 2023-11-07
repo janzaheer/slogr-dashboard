@@ -128,24 +128,29 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <!-- <div class="d-flex justify-content-between">
-                                    <div>
-                                        <button class="addBtn2"><i class="fa-solid fa-chevron-down fa-lg"></i> Go to
-                                            Page</button>
-                                    </div>
-                                    <div>
-                                        <div class="pagination">
-                                            <button class="prevBtn"><i class="fa-solid fa-angle-left"></i> Prev</button>
-                                            <div class="pageNumber">1</div>
-                                            <div class="pageNumber">2</div>
-                                            <div class="pageNumber pageBtn">3</div>
-                                            <div class="pageNumber">4</div>
-                                            <div class="pageNumber">5</div>
-                                            <button class="nextBtn">Next <i class="fa-solid fa-angle-right"></i></button>
+                                </perfect-scrollbar>
+                                    <div class="d-flex justify-content-between mt-3">
+                                        <div>
+                                            <button class="addBtn2"><i class="fa-solid fa-chevron-down fa-lg"></i> Go to
+                                                Page</button>
+                                        </div>
+                                        <div>
+                                            <div class="pagination">
+                                                <button class="prevBtn" :disabled="pages.previousPage === 0"
+                                                    v-on:click="handleSessionResults(pages.previousPage)"><i
+                                                        class="fa-solid fa-angle-left"></i> Prev</button>
+                                                <div class="pageNumber">-</div>
+                                                <div class="pageNumber">-</div>
+                                                <div class="pageNumber pageBtn">{{ pages.currentPage }}</div>
+                                                <div class="pageNumber">-</div>
+                                                <div class="pageNumber">-</div>
+                                                <button class="nextBtn" :disabled="pages.nextPage === 0"
+                                                    v-on:click="handleSessionResults(pages.nextPage)">Next <i
+                                                        class="fa-solid fa-angle-right"></i></button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div> -->
-                                </perfect-scrollbar>
+                                
                             </div>
                         </div>
                     </div>
@@ -198,6 +203,8 @@ import { getSessionsDetails } from '../../services/agents_reports_services'
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
 import 'vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css'
 import { VueSpinner } from 'vue3-spinners'
+import axios from 'axios';
+let base_url = import.meta.env.VITE_BASE_URL
 export default {
     name: 'SentinelReports',
     components: {
@@ -212,8 +219,21 @@ export default {
             clientData: [],
             serverData: [],
             loading: false,
-            loading2: false
+            loading2: false,
+            nextUrlPage: null,
+            preUrlPage: null,
+            pages:{
+                currentPage: 1,
+                previousPage: 1,
+                nextPage: 1
+            }
         }
+    },
+    mounted() {
+        this.loadCharts()
+        this.handleSessionResults()
+        this.SessionsDetails()
+        console.log('id', this.$route.params.id)
     },
     methods: {
         loadCharts() {
@@ -313,12 +333,16 @@ export default {
                 }]
             });
         },
-        async handleSessionResults() {
+        async handleSessionResults(page=1) {
             let id = this.$route.params.id
             try {
                 this.loading2 = true;
-                let res = await getSessionsResults(id)
+                let res = await getSessionsResults(id,page)
                 this.analyticsData = res.data.analytics
+                this.pages.previousPage = res?.data?.prev || 0
+                this.pages.currentPage = this.pages.previousPage + 1
+                this.pages.nextPage = res?.data?.next || 0
+                console.log('results', res.data)
             } catch (error) {
                 console.log(error)
             } finally {
@@ -332,6 +356,7 @@ export default {
                 let res = await getSessionsDetails(id)
                 this.clientData = res.data.client
                 this.serverData = res.data.server
+                console.log('details', res.data)
             } catch (error) {
                 console.log(error)
             } finally {
@@ -339,12 +364,6 @@ export default {
             }
         }
     },
-    mounted() {
-        this.loadCharts()
-        this.handleSessionResults()
-        this.SessionsDetails()
-        console.log('id', this.$route.params.id)
-    }
 }
 </script>
 
@@ -414,4 +433,5 @@ export default {
 
 .highcharts-data-table tr:hover {
     background: #f1f7ff;
-}</style>
+}
+</style>
