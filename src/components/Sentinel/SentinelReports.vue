@@ -15,7 +15,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center ">
                             <div>
-                                <h3 class="text-secondary ms-3 mt-2">Minio-SJC1</h3>
+                                <h3 class="text-muted ms-3 mt-2">{{ serverData.name }} <i class="fa-solid fa-arrow-right mx-2"></i> {{ clientData.name }} </h3>
                             </div>
                             <div class="">
                                 <div class="mx-3"><i class="fa-solid fa-rotate-right fa-rotate-270 fa-2xl"></i></div>
@@ -27,39 +27,13 @@
             <div class="container-fluid">
                 <div class="row g-2 mx-md-2 mt-4 mb-4">
                     <div class="col-lg-3">
-
-                        <div class="card">
+                        <div class="card h-100">
                             <div class="text-center m-5" v-if="loading">
                                 <VueSpinner size="100" color="#8cb63d" />
                             </div>
                             <div class="card-body" v-else>
-                                <p class="card-text ms-3">Minio-SJC1</p>
-                                <span class="card-text text-secondary ms-3">{{ clientData.name }}</span> <br>
-                                <span class="card-text text-secondary ms-3">Data</span>
-                                <hr class="hr">
-                                <p class="card-text ms-3">System</p>
-                                <span class="card-text text-secondary ms-3">{{ clientData.platform }}</span>
-                                <hr class="hr">
-                                <p class="card-text ms-3">Organization</p>
-                                <span class="card-text text-secondary ms-3">{{ clientData.Organization }}</span>
-                                <hr class="hr">
-                                <p class="card-text ms-3">Location</p>
-                                <span class="card-text text-secondary ms-3">{{ clientData.location }}</span>
-                                <hr class="hr">
-                                <p class="card-text ms-3">Country</p>
-                                <span class="card-text text-secondary ms-3">{{ clientData.Country }}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2">
-                        <div class="card pb-3">
-                            <div class="text-center m-5" v-if="loading">
-                                <VueSpinner size="100" color="#8cb63d" />
-                            </div>
-                            <div class="card-body" v-else>
-                                <p class="card-text ms-3">Minio-SJC1 T1 Node</p>
-                                <span class="card-text text-secondary ms-3">{{ serverData.name }} </span> <br>
-                                <span class="card-text text-secondary ms-3">Data</span>
+                                <p class="card-text ms-3">Server</p>
+                                <span class="card-text text-secondary ms-3">{{ serverData.name }}</span> <br>
                                 <hr class="hr">
                                 <p class="card-text ms-3">System</p>
                                 <span class="card-text text-secondary ms-3">{{ serverData.platform }}</span>
@@ -75,7 +49,30 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-7">
+                    <div class="col-lg-3">
+                        <div class="card pb-3 h-100">
+                            <div class="text-center m-5" v-if="loading">
+                                <VueSpinner size="100" color="#8cb63d" />
+                            </div>
+                            <div class="card-body" v-else>
+                                <p class="card-text ms-3">Client</p>
+                                <span class="card-text text-secondary ms-3">{{ clientData.name }} </span> <br>
+                                <hr class="hr">
+                                <p class="card-text ms-3">System</p>
+                                <span class="card-text text-secondary ms-3">{{ clientData.platform }}</span>
+                                <hr class="hr">
+                                <p class="card-text ms-3">Organization</p>
+                                <span class="card-text text-secondary ms-3">{{ clientData.Organization }}</span>
+                                <hr class="hr">
+                                <p class="card-text ms-3">Location</p>
+                                <span class="card-text text-secondary ms-3">{{ clientData.location }}</span>
+                                <hr class="hr">
+                                <p class="card-text ms-3">Country</p>
+                                <span class="card-text text-secondary ms-3">{{ clientData.Country }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
                         <div class="card h-100">
                             <div class="text-center m-5" v-if="loading2">
                                 <VueSpinner size="100" color="#8cb63d" />
@@ -86,11 +83,11 @@
                                         <table class="table text-center">
                                             <thead>
                                                 <tr>
-                                                    <th><a href="#" class="tableHead">UP <br> Min /Max /Sdev</a></th>
-                                                    <th><a href="#" class="tableHead"> DOWN <br> Min /Max /Sdev</a></th>
-                                                    <th><a href="#" class="tableHead">RTT <br> Min /Max /Sdev</a></th>
+                                                    <th><a href="#" class="tableHead text-muted">UP <br> Min /Max /Sdev</a></th>
+                                                    <th><a href="#" class="tableHead text-muted"> DOWN <br> Min /Max /Sdev</a></th>
+                                                    <th><a href="#" class="tableHead text-muted">RTT <br> Min /Max /Sdev</a></th>
                                                     <!-- <th><a href="#" class="tableHead"> Packet <br> Loss</a></th> -->
-                                                    <th><a href="#" class="tableHead"> JITTER <br> Min /Max /Sdev</a></th>
+                                                    <th><a href="#" class="tableHead text-muted"> JITTER <br> Min /Max /Sdev</a></th>
                                                     <th style="font-size: 18px; color: darkgray;"></th>
                                                 </tr>
                                             </thead>
@@ -129,35 +126,34 @@
                                         </table>
                                     </div>
                                 </perfect-scrollbar>
-                                    <div class="d-flex justify-content-between mt-3">
-                                        <div>
+                                <div class="d-flex justify-content-end mt-3">
+                                    <!-- <div>
                                             <button class="addBtn2"><i class="fa-solid fa-chevron-down fa-lg"></i> Go to
                                                 Page</button>
-                                        </div>
-                                        <div>
-                                            <div class="pagination">
-                                                <button class="prevBtn" :disabled="pages.previousPage === 0"
-                                                    v-on:click="handleSessionResults(pages.previousPage)"><i
-                                                        class="fa-solid fa-angle-left"></i> Prev</button>
-                                                <div class="pageNumber">-</div>
-                                                <div class="pageNumber">-</div>
-                                                <div class="pageNumber pageBtn">{{ pages.currentPage }}</div>
-                                                <div class="pageNumber">-</div>
-                                                <div class="pageNumber">-</div>
-                                                <button class="nextBtn" :disabled="pages.nextPage === 0"
-                                                    v-on:click="handleSessionResults(pages.nextPage)">Next <i
-                                                        class="fa-solid fa-angle-right"></i></button>
-                                            </div>
+                                        </div> -->
+                                    <div>
+                                        <div class="pagination">
+                                            <button class="prevBtn" :disabled="pages.previousPage === 0"
+                                                v-on:click="handleSessionResults(pages.previousPage)"><i
+                                                    class="fa-solid fa-angle-left"></i> Prev</button>
+                                            <div class="pageNumber">-</div>
+                                            <div class="pageNumber">-</div>
+                                            <div class="pageNumber pageBtn">{{ pages.currentPage }}</div>
+                                            <div class="pageNumber">-</div>
+                                            <div class="pageNumber">-</div>
+                                            <button class="nextBtn" :disabled="pages.nextPage === 0"
+                                                v-on:click="handleSessionResults(pages.nextPage)">Next <i
+                                                    class="fa-solid fa-angle-right"></i></button>
                                         </div>
                                     </div>
-                                
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="container-fluid tableDiv">
-                <div class="row g-2 mx-md-5 mb-5">
+                <div class="row g-2 mx-md-2 mb-5">
                     <div class="col-md-4">
                         <div class="card">
                             <div class="card-body">
@@ -202,9 +198,9 @@ import {
 import { getSessionsDetails } from '../../services/agents_reports_services'
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
 import 'vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css'
-import { VueSpinner } from 'vue3-spinners'
-import axios from 'axios';
-let base_url = import.meta.env.VITE_BASE_URL
+import { VueSpinner } from 'vue3-spinners';
+import moment from 'moment'
+
 export default {
     name: 'SentinelReports',
     components: {
@@ -212,6 +208,9 @@ export default {
         RouterLink,
         PerfectScrollbar,
         VueSpinner
+    },
+    created: function () {
+        this.moment = moment;
     },
     data() {
         return {
@@ -222,122 +221,28 @@ export default {
             loading2: false,
             nextUrlPage: null,
             preUrlPage: null,
-            pages:{
+            pages: {
                 currentPage: 1,
                 previousPage: 1,
                 nextPage: 1
-            }
+            },
+            Up: [],
+            DownLink:[],
+            Rtt:[]
         }
     },
     mounted() {
-        this.loadCharts()
         this.handleSessionResults()
         this.SessionsDetails()
         console.log('id', this.$route.params.id)
     },
     methods: {
-        loadCharts() {
-            const chart = Highcharts.chart('container', {
-                title: {
-                    text: 'PDV',
-                    align: 'left'
-                },
-                colors: [
-                    '#4caefe',
-                    '#3fbdf3',
-                    '#35c3e8',
-                    '#2bc9dc',
-                    '#20cfe1',
-                    '#16d4e6',
-                    '#0dd9db',
-                    '#03dfd0',
-                    '#00e4c5',
-                    '#00e9ba',
-                    '#00eeaf',
-                    '#23e274'
-                ],
-                xAxis: {
-                    categories: ['2009', '2010', '2011', '2012', '2013', '2014']
-                },
-                series: [{
-                    type: 'column',
-                    name: 'Unemployed',
-                    borderRadius: 5,
-                    colorByPoint: true,
-                    data: [75, 25, 130, 40, 60, 30],
-                    showInLegend: false
-                }]
-            });
 
-            const chart2 = Highcharts.chart('container2', {
-                title: {
-                    text: 'PDV TX',
-                    align: 'left'
-                },
-                colors: [
-                    '#4caefe',
-                    '#3fbdf3',
-                    '#35c3e8',
-                    '#2bc9dc',
-                    '#20cfe1',
-                    '#16d4e6',
-                    '#0dd9db',
-                    '#03dfd0',
-                    '#00e4c5',
-                    '#00e9ba',
-                    '#00eeaf',
-                    '#23e274'
-                ],
-                xAxis: {
-                    categories: ['2009', '2010', '2011', '2012', '2013', '2014']
-                },
-                series: [{
-                    type: 'column',
-                    name: 'Unemployed',
-                    borderRadius: 5,
-                    colorByPoint: true,
-                    data: [75, 7, 130, 40, 60, 7],
-                    showInLegend: false
-                }]
-            });
-
-            const chart3 = Highcharts.chart('container3', {
-                title: {
-                    text: 'PDV RX',
-                    align: 'left'
-                },
-                colors: [
-                    '#4caefe',
-                    '#3fbdf3',
-                    '#35c3e8',
-                    '#2bc9dc',
-                    '#20cfe1',
-                    '#16d4e6',
-                    '#0dd9db',
-                    '#03dfd0',
-                    '#00e4c5',
-                    '#00e9ba',
-                    '#00eeaf',
-                    '#23e274'
-                ],
-                xAxis: {
-                    categories: ['2009', '2010', '2011', '2012', '2013', '2014']
-                },
-                series: [{
-                    type: 'column',
-                    name: 'Unemployed',
-                    borderRadius: 5,
-                    colorByPoint: true,
-                    data: [75, 25, 130, 40, 60, 7],
-                    showInLegend: false
-                }]
-            });
-        },
-        async handleSessionResults(page=1) {
+        async handleSessionResults(page = 1) {
             let id = this.$route.params.id
             try {
                 this.loading2 = true;
-                let res = await getSessionsResults(id,page)
+                let res = await getSessionsResults(id, page)
                 this.analyticsData = res.data.analytics
                 this.pages.previousPage = res?.data?.prev || 0
                 this.pages.currentPage = this.pages.previousPage + 1
@@ -356,13 +261,169 @@ export default {
                 let res = await getSessionsDetails(id)
                 this.clientData = res.data.client
                 this.serverData = res.data.server
-                console.log('details', res.data)
+                this.Up = res.data.uplink
+                this.DownLink = res.data.downlink
+                this.Rtt = res.data.rtt
+                await this.loadCharts();
             } catch (error) {
                 console.log(error)
             } finally {
                 this.loading = false;
             }
-        }
+        },
+
+        async loadCharts() {
+            const categories = this.Up.map(data => moment(data.date).format('MMMM Do YYYY, h:mm:ss a') )
+            const value = this.Up.map(data => parseFloat(data.value))
+            
+            const chart = await Highcharts.chart('container', {
+                title: {
+                    text: 'UPLINK',
+                    align: 'center'
+                },
+                colors: [
+                    '#4caefe',
+                    '#3fbdf3',
+                    '#35c3e8',
+                    '#2bc9dc',
+                    '#20cfe1',
+                    '#16d4e6',
+                    '#0dd9db',
+                    '#03dfd0',
+                    '#00e4c5',
+                    '#00e9ba',
+                    '#00eeaf',
+                    '#23e274'
+                ],
+                xAxis: {
+                    dateTimeLabelFormats:{
+                        hour:{
+                            main:"%H:%M",
+                            range:false
+                        }
+                    },
+                    type: 'datetime',
+                    categories: categories.reverse(),
+                     min: 0,
+                     max: 30,
+                     scrollbar: {
+                        enabled: true
+                    },
+                    reversed: true,
+                    labels: {
+                        enabled: false,
+                    }
+                },
+                series: [{
+                    type: 'column',
+                    name: 'Uplink Data',
+                    borderRadius: 1,
+                    colorByPoint: true,
+                    data: value.reverse(),
+                    showInLegend: false
+                }]
+            });
+
+            const categories2 = this.DownLink.map(data => moment(data.date).format('MMMM Do YYYY, h:mm:ss a') )
+            const value2 = this.DownLink.map(data => parseFloat(data.value))
+            const chart2 = Highcharts.chart('container2', {
+                title: {
+                    text: 'DOWNLINK',
+                    align: 'center'
+                },
+                colors: [
+                    '#4caefe',
+                    '#3fbdf3',
+                    '#35c3e8',
+                    '#2bc9dc',
+                    '#20cfe1',
+                    '#16d4e6',
+                    '#0dd9db',
+                    '#03dfd0',
+                    '#00e4c5',
+                    '#00e9ba',
+                    '#00eeaf',
+                    '#23e274'
+                ],
+                xAxis: {
+                    dateTimeLabelFormats:{
+                        hour:{
+                            main:"%H:%M",
+                            range:false
+                        }
+                    },
+                    type: 'datetime',
+                    categories: categories2.reverse(),
+                     min: 0,
+                     max: 30,
+                     scrollbar: {
+                        enabled: true
+                    },
+                    reversed: true,
+                    labels: {
+                        enabled: false,
+                    }
+                },
+                series: [{
+                    type: 'column',
+                    name: 'Uplink Data',
+                    borderRadius: 1,
+                    colorByPoint: true,
+                    data: value2.reverse(),
+                    showInLegend: false
+                }]
+            });
+
+            const categories3 = this.Rtt.map(data => moment(data.date).format('MMMM Do YYYY, h:mm:ss a') )
+            const value3 = this.Rtt.map(data => parseFloat(data.value))
+            const chart3 = Highcharts.chart('container3', {
+                title: {
+                    text: 'RTT',
+                    align: 'center'
+                },
+                colors: [
+                    '#4caefe',
+                    '#3fbdf3',
+                    '#35c3e8',
+                    '#2bc9dc',
+                    '#20cfe1',
+                    '#16d4e6',
+                    '#0dd9db',
+                    '#03dfd0',
+                    '#00e4c5',
+                    '#00e9ba',
+                    '#00eeaf',
+                    '#23e274'
+                ],
+                xAxis: {
+                    dateTimeLabelFormats:{
+                        hour:{
+                            main:"%H:%M",
+                            range:false
+                        }
+                    },
+                    type: 'datetime',
+                    categories: categories3.reverse(),
+                     min: 0,
+                     max: 30,
+                     scrollbar: {
+                        enabled: true
+                    },
+                    reversed: true,
+                    labels: {
+                        enabled: false,
+                    }
+                },
+                series: [{
+                    type: 'column',
+                    name: 'Uplink Data',
+                    borderRadius: 1,
+                    colorByPoint: true,
+                    data: value3.reverse(),
+                    showInLegend: false
+                }]
+            });
+        },
     },
 }
 </script>
