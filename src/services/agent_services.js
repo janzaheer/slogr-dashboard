@@ -33,3 +33,8 @@ export async function fetchSessions() {
     const resp = await axios.get(`${base_url}/api/links`, {headers: HEADERS})
     return resp.data
 }
+
+export async function fetchAgentlinks(id) {
+    const resp = await axios.get(`${base_url}/api/agentlinks?aid=${id}`, {headers: HEADERS})
+    return resp.data
+}
