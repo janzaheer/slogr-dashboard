@@ -24,17 +24,22 @@ export async function agentUpdate(payload) {
     return resp.data
 }
 
-export async function fetchClusters() {
-    const resp = await axios.get(`${base_url}/api/cluster`, {headers: HEADERS})
+export async function fetchClusters(id) {
+    const resp = await axios.get(`${base_url}/api/cluster?group=${id}`, {headers: HEADERS})
     return resp.data
 }
 
-export async function fetchSessions() {
-    const resp = await axios.get(`${base_url}/api/links`, {headers: HEADERS})
+export async function fetchSessions(group_id) {
+    const resp = await axios.get(`${base_url}/api/links?group=${group_id}`, {headers: HEADERS})
     return resp.data
 }
 
 export async function fetchAgentlinks(id) {
     const resp = await axios.get(`${base_url}/api/agentlinks?aid=${id}`, {headers: HEADERS})
+    return resp.data
+}
+
+export async function fetchGroups() {
+    const resp = await axios.get(`${base_url}/api/groups`, {headers: HEADERS})
     return resp.data
 }

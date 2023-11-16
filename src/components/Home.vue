@@ -12,22 +12,11 @@
         <div class="card-body">
           <h6 class="card-title mb-0">Legend</h6>
           <hr class="hr1">
-          <div class="d-flex justify-content-between align-items-center">
-            <label class="form-check-label" for="flexSwitchCheckDefault">Group 1</label>
+          <!-- Use v-for to iterate over the groups -->
+          <div v-for="group in groups" :key="group.id" class="d-flex justify-content-between align-items-center">
+            <label class="form-check-label" :for="'flexSwitchCheckDefault_' + group.id">{{ group.name }}</label>
             <div class="form-check form-switch">
-              <input class="form-check-input fs-4" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-            </div>
-          </div>
-          <div class="d-flex justify-content-between align-items-center my-2 my-lg-1">
-            <label class="form-check-label" for="flexSwitchCheckDefault2">Group 2</label>
-            <div class="form-check form-switch">
-              <input class="form-check-input fs-4" type="checkbox" role="switch" id="flexSwitchCheckDefault2">
-            </div>
-          </div>
-          <div class="d-flex justify-content-between align-items-center">
-            <label class="form-check-label" for="flexSwitchCheckDefault3">Group 3</label>
-            <div class="form-check form-switch mb-0">
-              <input class="form-check-input fs-4" type="checkbox" role="switch" id="flexSwitchCheckDefault3">
+              <input class="form-check-input fs-4" type="checkbox" role="switch" :id="'flexSwitchCheckDefault_' + group.id" @change="handleToggleGroup(group.id)">
             </div>
           </div>
           <div class="d-flex justify-content-between align-items-center">
@@ -87,17 +76,20 @@
 import Header from './common/Header.vue';
 import mapboxgl from 'mapbox-gl';
 import * as turf from '@turf/turf';
-import { fetchClusters, fetchSessions, fetchAgentlinks } from '../services/agent_services';
+import { fetchClusters, fetchSessions, fetchAgentlinks, fetchGroups } from '../services/agent_services';
 
 export default {
   data() {
     return {
       map: null,
+      groups: [],
+      clusters: []
     };
   },
   async mounted() {
-    var clusters = await this.handleClusters();
-    var sessions = await this.handleSessions();
+    
+    var clusters = await this.handleClusters('');
+    var sessions = await this.handleSessions('');
     mapboxgl.accessToken = 'pk.eyJ1Ijoicmh3b3JrcyIsImEiOiJjazBmZmE0bGIwNzh3M25wMjBhOHI2em56In0.317s4zEB48T9QC33pf6sVw#13';
     this.map = new mapboxgl.Map({
       container: 'map',
@@ -107,78 +99,9 @@ export default {
     });
     const nav = new mapboxgl.NavigationControl();
     this.map.addControl(nav, "bottom-right");
-    
+    this.handleGroups();
     this.map.on('load', () => {
-      // Add a new source from our GeoJSON data and
-      // set the 'cluster' option to true. GL-JS will
-      // add the point_count property to your source data.
-      this.map.addSource('earthquakes', {
-        type: 'geojson',
-        // Point to GeoJSON data. This example visualizes all M1.0+ earthquakes
-        // from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
-        data: clusters,
-        cluster: true,
-        clusterMaxZoom: 14, // Max zoom to cluster points on
-        clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
-      });
-      
-      this.map.addLayer({
-        id: 'clusters',
-        type: 'circle',
-        source: 'earthquakes',
-        filter: ['has', 'point_count'],
-          paint: {
-          // Use step expressions (https://docs.mapbox.com/style-spec/reference/expressions/#step)
-          // with three steps to implement three types of circles:
-          //   * Blue, 20px circles when point count is less than 100
-          //   * Yellow, 30px circles when point count is between 100 and 750
-          //   * Pink, 40px circles when point count is greater than or equal to 750
-          'circle-color': [
-          'step',
-          ['get', 'point_count'],
-          '#8cb63d',
-          100,
-          '#f1f075',
-          750,
-          '#f28cb1'
-          ],
-          'circle-radius': [
-              'step',
-              ['get', 'point_count'],
-              20,
-              100,
-              30,
-              750,
-              40
-            ]
-          }
-      });
-      
-      this.map.addLayer({
-        id: 'cluster-count',
-        type: 'symbol',
-        source: 'earthquakes',
-        filter: ['has', 'point_count'],
-        layout: {
-        'text-field': ['get', 'point_count_abbreviated'],
-        'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-        'text-size': 12
-        }
-      });
-      
-      this.map.addLayer({
-        id: 'unclustered-point',
-        type: 'circle',
-        source: 'earthquakes',
-        filter: ['!', ['has', 'point_count']],
-        paint: {
-        'circle-color': '#11b4da',
-        'circle-radius': 8,
-        'circle-stroke-width': 3,
-        'circle-stroke-color': '#fff'
-        }
-      });
-      
+      this.showClusters(clusters);
       // inspect a cluster on click
       this.map.on('click', 'clusters', (e) => {
         const features = this.map.queryRenderedFeatures(e.point, {
@@ -201,7 +124,6 @@ export default {
         this.map.getCanvas().style.cursor = 'pointer';
         const markerId = e.features[0].properties.id;
         const agentLinks = await this.handleAgentlinks(markerId);
-        console.log('Links', agentLinks);
 
         const popupElement = document.getElementById('no-connections-popup');
         const loader = document.getElementById('loader');
@@ -251,17 +173,126 @@ export default {
     this.map.setProjection('Mercator');
   },
   methods: {
-    async handleClusters() {
-      const respData = await fetchClusters();
+    async handleToggleGroup(groupId) {
+      console.log('Toggled group with ID:', groupId);
+      this.clearAll();
+      const loader = document.getElementById('loader');
+      loader.style.display = 'block';
+      await this.showClusters(await this.handleClusters(groupId));
+      this.drawLines(this.map, await this.handleSessions(groupId));
+      loader.style.display = 'none';
+    },
+    async handleClusters(groupId) {
+      const respData = await fetchClusters(groupId);
       return respData;
     },
-    async handleSessions() {
-      const respData = await fetchSessions();
+    async handleSessions(groupId) {
+      const respData = await fetchSessions(groupId);
       return respData;
     },
     async handleAgentlinks(id) {
       const respData = await fetchAgentlinks(id);
       return respData;
+    },
+    async handleGroups() {
+      try {
+        const response = await fetchGroups();
+        this.groups = response;
+      } catch (error) {
+        console.error('Error fetching groups:', error);
+      }
+    },
+    showClusters(clusters) {
+      // Add a new source from our GeoJSON data and
+      // set the 'cluster' option to true. GL-JS will
+      // add the point_count property to your source data.
+      this.map.addSource('earthquakes', {
+        type: 'geojson',
+        data: clusters,
+        cluster: true,
+        clusterMaxZoom: 14, // Max zoom to cluster points on
+        clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
+      });
+      
+      this.map.addLayer({
+        id: 'clusters',
+        type: 'circle',
+        source: 'earthquakes',
+        filter: ['has', 'point_count'],
+          paint: {
+          'circle-color': [
+          'step',
+          ['get', 'point_count'],
+          '#8cb63d',
+          100,
+          '#f1f075',
+          750,
+          '#f28cb1'
+          ],
+          'circle-radius': [
+              'step',
+              ['get', 'point_count'],
+              20,
+              100,
+              30,
+              750,
+              40
+            ]
+          }
+      });
+      
+      this.map.addLayer({
+        id: 'cluster-count',
+        type: 'symbol',
+        source: 'earthquakes',
+        filter: ['has', 'point_count'],
+        layout: {
+        'text-field': ['get', 'point_count_abbreviated'],
+        'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+        'text-size': 12
+        }
+      });
+      const organizationColors = {};
+      console.log(clusters, 'here');
+      clusters.features.forEach((feature) => {
+        const org = feature.properties.organization;
+        if (!(org in organizationColors)) {
+          // You can use your getColor function to dynamically set colors
+          organizationColors[org] = this.getColor(org);
+        }
+      });
+      // Add unclustered points layer with dynamically set colors
+      this.map.addLayer({
+        id: 'unclustered-point',
+        type: 'circle',
+        source: 'earthquakes',
+        filter: ['!', ['has', 'point_count']],
+        paint: {
+          'circle-color': [
+            'match',
+            ['get', 'organization'],
+            'GCP', '#8cb63d', // Green
+            'AZURE', '#f1f075', // Yellow
+            '#f28cb1' // Default color
+          ],
+          'circle-radius': 8,
+          'circle-stroke-width': 3,
+          'circle-stroke-color': '#fff'
+        }
+      });
+    },
+    getColor(organization) {
+      // Add your logic here to determine the color based on the organization
+      // For example, you can use a switch statement or if-else conditions
+      console.log(organization);
+      switch (organization) {
+        case 'GCP':
+          return '#8cb63d'; // Green
+        case 'AZURE':
+          return '#f1f075'; // Yellow
+        default:
+          return '#f28cb1'; // Default color
+      }
     },
     drawLines(map, lines) {
       lines.forEach((line, index) => {
@@ -285,7 +316,7 @@ export default {
           },
           paint: {
             'line-color': line.color,
-            'line-width': 2, // Adjust the line width as needed
+            'line-width': 1, // Adjust the line width as needed
           },
         });
 
@@ -305,6 +336,36 @@ export default {
       map.getStyle().layers.forEach((layer) => {
         if (layer.id.startsWith('line-')) {
           map.removeLayer(layer.id);
+        }
+      });
+    },
+    clearAll() {
+      const map = this.map;
+
+      // Remove cluster layers
+      map.getStyle().layers.forEach((layer) => {
+        if (layer.id.startsWith('clusters') || layer.id.startsWith('unclustered-point')) {
+          map.removeLayer(layer.id);
+        }
+      });
+
+      // Remove connection layers
+      map.getStyle().layers.forEach((layer) => {
+        if (layer.id.startsWith('line-')) {
+          map.removeLayer(layer.id);
+        }
+      });
+
+      // Remove cluster count layer
+      const clusterCountLayer = map.getLayer('cluster-count');
+      if (clusterCountLayer) {
+        map.removeLayer('cluster-count');
+      }
+
+      // Remove cluster sources
+      ['earthquakes'].forEach((source) => {
+        if (map.getSource(source)) {
+          map.removeSource(source);
         }
       });
     },
