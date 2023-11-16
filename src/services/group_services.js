@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios from "axios";
 
 let base_url = import.meta.env.VITE_BASE_URL
 
@@ -9,12 +9,21 @@ let HEADERS = {
     "Authorization": `Bearer ${TOKEN}`
 }
 
-export async function sessionsList(page=1) {
-    const resp = await axios.get(`${base_url}/api/sessions?page=${page}`, {headers: HEADERS})
+export async function getGroups(){
+    const resp = await axios.get(`${base_url}/api/groups`, {headers: HEADERS})
+    return resp.data
+}
+export async function GroupsData(id){
+    const resp = await axios.get(`${base_url}/api/get-group/${id}`, {headers: HEADERS})
     return resp.data
 }
 
-export async function getSessionsResults(id, page=1) {
-    const resp = await axios.get(`${base_url}/api/analytics?sid=${id}&page=${page}`, {headers: HEADERS})
+export async function createGroup(payload) {
+    const resp = await axios.post(`${base_url}/api/add-group`, payload, {headers: HEADERS})
+    return resp.data
+}
+
+export async function deleteGroup(id) {
+    const resp = await axios.post(`${base_url}/api/delete-group`,{id: id}, {headers: HEADERS})
     return resp.data
 }

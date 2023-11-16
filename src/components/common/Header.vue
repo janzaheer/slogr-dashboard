@@ -1,3 +1,76 @@
+
+<template>
+    <div class="header">
+        <nav class="navbar navbar-expand-lg bg-body-white">
+            <div class="container-fluid">
+                <RouterLink class="navbar-brand" to="/">
+                    <img src="../../assets/group-2420.svg" class="mx-xl-5" alt="" >
+                </RouterLink>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-xl-0">
+                        <li class="nav-item">
+                            <RouterLink class="nav-link" to="/">
+                                <img id="svglinks" src="../../assets/Home.svg" height="20" alt="" />
+                                <span class="mx-lg-1">Home</span>
+                            </RouterLink>
+                        </li>
+                        <li class="nav-item mx-xl-1">
+                            <RouterLink class="nav-link mx-lg-1" to="/sentinel">
+                                <img id="svglinks" src="../../assets/group-2456.svg" height="20" alt="" class="mr-4" />
+                                <span class="mx-lg-1">Sentinel</span>
+                            </RouterLink>
+                        </li>
+                        <li class="nav-item">
+                            <RouterLink class="nav-link" to="/sessions">
+                                <img id="svglinks" src="../../assets/group-24551.svg" height="20" alt="" />
+                                <span class="mx-lg-1">Sessions</span>
+                            </RouterLink>
+                        </li>
+                        <li class="nav-item mx-xl-1">
+                            <RouterLink class="nav-link mx-xl-1" to="/monitor">
+                                <i class="fa-regular fa-eye"></i>
+                                <span class="mx-lg-1">Monitor</span>
+                            </RouterLink>
+                        </li>
+                        <li class="nav-item">
+                            <RouterLink class="nav-link" style="color: var(--nav-color);" to="#">
+                                <img id="svglinks" src="../../assets/group-24571.svg" height="20" alt="" />
+                                <span class="mx-lg-1">Analytics</span>
+                            </RouterLink>
+                        </li>
+                        <li class="nav-item mx-xl-1">
+                            <RouterLink class="nav-link mx-lg-1 mx-xl-1" to="/groups">
+                                <img id="svglinks" src="../../assets/group-25271.svg" height="20" alt="" />
+                                <span class="mx-lg-1">Groups</span>
+                            </RouterLink>
+                        </li>
+                    </ul>
+                    <div class="search-container">
+                        <button class="search-button">All</button>
+                        <input type="text" class="search-bar" />
+                        <img src="../../assets/search.svg" height="20" alt="" class="searchIcon" />
+                    </div>
+                    <button class="btnn1 mx-lg-1 mx-xl-2">
+                        <img src="../../assets/group-17921.svg" height="40" alt="" />
+                    </button>
+                    <button class="btnn">
+                        <i class="fa-regular fa-bell" style="color: #e4eaee"></i>
+                    </button>
+                    <RouterLink to="/dashboard" class="btnn mx-lg-1 mx-xl-2">
+                        <i class="fa-solid fa-users text-secondary"></i>
+                    </RouterLink>
+                    <RouterLink class="btnn text-decoration-none text-secondary" to="/login">AB</RouterLink>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <RouterView />
+</template>
 <script>
 import { RouterLink, RouterView } from 'vue-router'
 export default {
@@ -155,75 +228,3 @@ a.router-link-exact-active {
 }
 
 </style>
-<template>
-    <div class="header">
-        <nav class="navbar navbar-expand-lg bg-body-white">
-            <div class="container-fluid">
-                <RouterLink class="navbar-brand" to="/">
-                    <img src="../../assets/group-2420.svg" class="mx-xl-5" alt="" >
-                </RouterLink>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-xl-0">
-                        <li class="nav-item">
-                            <RouterLink class="nav-link" to="/">
-                                <img id="svglinks" src="../../assets/Home.svg" height="20" alt="" />
-                                <span class="mx-lg-1">Home</span>
-                            </RouterLink>
-                        </li>
-                        <li class="nav-item mx-xl-1">
-                            <RouterLink class="nav-link mx-lg-1" to="/sentinel">
-                                <img id="svglinks" src="../../assets/group-2456.svg" height="20" alt="" class="mr-4" />
-                                <span class="mx-lg-1">Sentinel</span>
-                            </RouterLink>
-                        </li>
-                        <li class="nav-item">
-                            <RouterLink class="nav-link" to="/sessions">
-                                <img id="svglinks" src="../../assets/group-24551.svg" height="20" alt="" />
-                                <span class="mx-lg-1">Sessions</span>
-                            </RouterLink>
-                        </li>
-                        <li class="nav-item mx-xl-1">
-                            <RouterLink class="nav-link mx-xl-1" to="/monitor">
-                                <i class="fa-regular fa-eye"></i>
-                                <span class="mx-lg-1">Monitor</span>
-                            </RouterLink>
-                        </li>
-                        <li class="nav-item">
-                            <RouterLink class="nav-link" style="color: var(--nav-color);" to="#">
-                                <img id="svglinks" src="../../assets/group-24571.svg" height="20" alt="" />
-                                <span class="mx-lg-1">Analytics</span>
-                            </RouterLink>
-                        </li>
-                        <li class="nav-item mx-xl-1">
-                            <RouterLink class="nav-link mx-lg-1 mx-xl-1" style="color: var(--nav-color);" to="#">
-                                <img id="svglinks" src="../../assets/group-25271.svg" height="20" alt="" />
-                                <span class="mx-lg-1">Groups</span>
-                            </RouterLink>
-                        </li>
-                    </ul>
-                    <div class="search-container">
-                        <button class="search-button">All</button>
-                        <input type="text" class="search-bar" />
-                        <img src="../../assets/search.svg" height="20" alt="" class="searchIcon" />
-                    </div>
-                    <button class="btnn1 mx-lg-1 mx-xl-2">
-                        <img src="../../assets/group-17921.svg" height="40" alt="" />
-                    </button>
-                    <button class="btnn">
-                        <i class="fa-regular fa-bell" style="color: #e4eaee"></i>
-                    </button>
-                    <RouterLink to="/dashboard" class="btnn mx-lg-1 mx-xl-2">
-                        <i class="fa-solid fa-users text-secondary"></i>
-                    </RouterLink>
-                    <RouterLink class="btnn text-decoration-none text-secondary" to="/login">AB</RouterLink>
-                </div>
-            </div>
-        </nav>
-    </div>
-    <RouterView />
-</template>

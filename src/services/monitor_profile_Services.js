@@ -9,12 +9,17 @@ let HEADERS = {
     "Authorization": `Bearer ${TOKEN}`
 }
 
-export async function sessionsList(page=1) {
-    const resp = await axios.get(`${base_url}/api/sessions?page=${page}`, {headers: HEADERS})
+export async function ProfileList() {
+    const resp = await axios.get(`${base_url}/api/profiles`, {headers: HEADERS})
     return resp.data
 }
 
-export async function getSessionsResults(id, page=1) {
-    const resp = await axios.get(`${base_url}/api/analytics?sid=${id}&page=${page}`, {headers: HEADERS})
+export async function createMonitor(payload) {
+    const resp = await axios.post(`${base_url}/api/add-profile`, payload, {headers: HEADERS})
+    return resp.data
+}
+
+export async function deleteMonitor(id) {
+    const resp = await axios.post(`${base_url}/api/delete-profile`, {id: id}, {headers: HEADERS})
     return resp.data
 }

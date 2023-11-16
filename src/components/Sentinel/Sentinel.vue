@@ -382,7 +382,7 @@
 <script>
 import Header from '../common/Header.vue';
 import { createAgent, agentUpdate, agentList, agentRefSessions } from '../../services/agent_services';
-import { VueSpinner } from 'vue3-spinners'
+import { VueSpinner } from 'vue3-spinners';
 export default {
     name: 'Sentinel',
     components: {
@@ -415,6 +415,7 @@ export default {
     },
     async mounted() {
         await this.handleSentinelListing()
+  
 
     },
     methods: {
@@ -496,6 +497,7 @@ export default {
                 this.loading = false;
             }
         },
+
     }
 }
 </script>

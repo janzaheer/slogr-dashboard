@@ -18,7 +18,7 @@
                                 <h3 class="text-muted ms-3 mt-2">{{ serverData.name }} <i class="fa-solid fa-arrow-right mx-2"></i> {{ clientData.name }} </h3>
                             </div>
                             <div class="">
-                                <div class="mx-3"><i class="fa-solid fa-rotate-right fa-rotate-270 fa-2xl"></i></div>
+                                <div class="mx-3"><RouterLink to=""><i class="fa-solid fa-rotate-right fa-rotate-270 fa-2xl"></i></RouterLink></div>
                             </div>
                         </div>
                     </div>
@@ -219,8 +219,6 @@ export default {
             serverData: [],
             loading: false,
             loading2: false,
-            nextUrlPage: null,
-            preUrlPage: null,
             pages: {
                 currentPage: 1,
                 previousPage: 1,

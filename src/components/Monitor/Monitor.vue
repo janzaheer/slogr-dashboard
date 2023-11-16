@@ -18,8 +18,7 @@
                             <div class="d-flex align-items-center">
                                 <h6 class="mx-1 mt-2 text-muted">Home </h6>
                                 <h6 class="me-4 mt-2"> - Monitor</h6>
-                                <button class="addBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
-                                        class="fa-solid fa-plus fa-lg"></i> Create New Monitor Profile</button>
+                                <AddMonitor :handleMonitorList="handleMonitorList" />
                                 <div class="mx-3"><i class="fa-solid fa-ellipsis fa-2xl"></i></div>
                             </div>
                         </div>
@@ -29,284 +28,70 @@
             <div class="container-fluid tableDiv">
                 <div class="card mx-md-2 mt-4 mb-5">
                     <div class="card-body">
-                        <div class="table-responsive">
+                        <div class="text-center m-5" v-if="loading">
+                            <VueSpinner size="80" color="#8cb63d" />
+                        </div>
+                        <div class="table-responsive" v-else>
                             <table class="table table-striped table-hover text-center">
                                 <thead>
                                     <tr>
+                                        <th><a href="#" class="tableHead">Name</a></th>
                                         <th><a href="#" class="tableHead">Date</a></th>
-                                        <th><a href="#"
-                                                class="tableHead">Name</a></th>
-                                        <th><a href="#"
-                                                class="tableHead">Round Trip Jitter </a></th>
-                                        <th><a href="#"
-                                                class="tableHead">Packet Loss</a> </th>
-                                        <th><a href="#"
-                                                class="tableHead">Packet Recorder%</a></th>
-                                        <th><a href="#"
-                                                class="tableHead">Delay <br><p class="fw-light"> Min/ Max /Avg.</p></a>
-                                        </th>
+                                        <th><a href="#" class="tableHead">Max Jitter </a></th>
+                                        <th><a href="#" class="tableHead">Max Downlink</a> </th>
+                                        <th><a href="#" class="tableHead">Max Loss</a></th>
+                                        <th><a href="#" class="tableHead">Max RTT</a></th>
+                                        <th><a href="#" class="tableHead">Max Uplink</a></th>
+                                        <th><a href="#" class="tableHead">Number Packets</a></th>
+                                        <th><a href="#" class="tableHead">Packet Interval </a></th>
+                                        <th><a href="#" class="tableHead">Packet Size</a></th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <tr v-for="data in monitorData" :key="data.id">
                                         <td>
-                                            <p class="tableP">5/3/1997</p>
+                                            <p class="tableP">
+                                                {{ data.name }}
+                                            </p>
                                         </td>
                                         <td>
-                                            <p class="tableP">VOIP PROFILE</p>
+                                            <p class="tableP">{{ moment(data?.created_at).format('l') }}</p>
                                         </td>
                                         <td>
-                                            <p class="tableP">02</p>
+                                            <p class="tableP">{{ data.max_jitter }}</p>
                                         </td>
                                         <td>
-                                            <p class="tableP">02</p>
+                                            <p class="tableP">{{ data.max_downlink }}</p>
                                         </td>
                                         <td>
-                                            <p class="tableP">02</p>
+                                            <p class="tableP">{{ data.max_loss }}</p>
                                         </td>
                                         <td>
-                                            <p class="tableP css">1.0 MB</p>
-                                            <p class="css fw-lighter">300/ 150/ 250</p>
+                                            <p class="tableP">{{ data.max_rtt }}</p>
                                         </td>
-                                        <td class="fs-5 dropstart"><a href="#" class="text-decoration-none text-dark tableP" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <td>
+                                            <p class="tableP">{{ data.max_uplink }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="tableP">{{ data.n_packets }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="tableP">{{ data.p_interval }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="tableP">{{ data.p_size }}</p>
+                                        </td>
+                                        <td class="fs-5 dropstart"><a href="#" class="text-decoration-none text-dark tableP"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
                                                 <i class="fa-solid fa-ellipsis"></i></a>
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-pen-to-square"></i> Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-eye"></i> Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-trash-can"></i> Delete</a></li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">5/3/1997</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">VOIP PROFILE</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">02</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">02</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">02</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP css">1.0 MB</p>
-                                            <p class="css fw-lighter">300/ 150/ 250</p>
-                                        </td>
-                                        <td class="fs-5 dropstart"><a href="#" class="text-decoration-none text-dark tableP" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fa-solid fa-ellipsis"></i></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-pen-to-square"></i> Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-eye"></i> Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-trash-can"></i> Delete</a></li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">5/3/1997</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">VOIP PROFILE</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">02</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">02</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">02</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP css">1.0 MB</p>
-                                            <p class="css fw-lighter">300/ 150/ 250</p>
-                                        </td>
-                                        <td class="fs-5 dropstart"><a href="#" class="text-decoration-none text-dark tableP" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fa-solid fa-ellipsis"></i></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-pen-to-square"></i> Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-eye"></i> Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-trash-can"></i> Delete</a></li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">5/3/1997</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">VOIP PROFILE</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">02</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">02</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">02</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP css">1.0 MB</p>
-                                            <p class="css fw-lighter">300/ 150/ 250</p>
-                                        </td>
-                                        <td class="fs-5 dropstart"><a href="#" class="text-decoration-none text-dark tableP" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fa-solid fa-ellipsis"></i></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-pen-to-square"></i> Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-eye"></i> Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-trash-can"></i> Delete</a></li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">5/3/1997</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">VOIP PROFILE</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">02</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">02</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">02</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP css">1.0 MB</p>
-                                            <p class="css fw-lighter">300/ 150/ 250</p>
-                                        </td>
-                                        <td class="fs-5 dropstart"><a href="#" class="text-decoration-none text-dark tableP" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fa-solid fa-ellipsis"></i></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-pen-to-square"></i> Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-eye"></i> Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-trash-can"></i> Delete</a></li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">5/3/1997</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">VOIP PROFILE</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">02</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">02</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">02</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP css">1.0 MB</p>
-                                            <p class="css fw-lighter">300/ 150/ 250</p>
-                                        </td>
-                                        <td class="fs-5 dropstart"><a href="#" class="text-decoration-none text-dark tableP" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fa-solid fa-ellipsis"></i></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-pen-to-square"></i> Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-eye"></i> Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-trash-can"></i> Delete</a></li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">5/3/1997</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">VOIP PROFILE</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">02</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">02</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">02</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP css">1.0 MB</p>
-                                            <p class="css fw-lighter">300/ 150/ 250</p>
-                                        </td>
-                                        <td class="fs-5 dropstart"><a href="#" class="text-decoration-none text-dark tableP" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fa-solid fa-ellipsis"></i></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-pen-to-square"></i> Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-eye"></i> Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-trash-can"></i> Delete</a></li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">5/3/1997</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">VOIP PROFILE</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">02</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">02</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">02</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP css">1.0 MB</p>
-                                            <p class="css fw-lighter">300/ 150/ 250</p>
-                                        </td>
-                                        <td class="fs-5 dropstart"><a href="#" class="text-decoration-none text-dark tableP" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fa-solid fa-ellipsis"></i></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-pen-to-square"></i> Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-eye"></i> Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-trash-can"></i> Delete</a></li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">5/3/1997</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">VOIP PROFILE</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">02</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">02</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">02</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP css">1.0 MB</p>
-                                            <p class="css fw-lighter">300/ 150/ 250</p>
-                                        </td>
-                                        <td class="fs-5 dropstart"><a href="#" class="text-decoration-none text-dark tableP" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fa-solid fa-ellipsis"></i></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-pen-to-square"></i> Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-eye"></i> Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-trash-can"></i> Delete</a></li>
+                                                <li><a class="dropdown-item" href="#"><i
+                                                            class="fa-regular fa-pen-to-square"></i> Edit</a></li>
+                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-eye"></i>
+                                                        Details</a></li>
+                                                <li><a class="dropdown-item" href="#" v-on:click="handleDelete(data.id)"><i
+                                                            class="fa-regular fa-trash-can"></i> Delete</a></li>
                                             </ul>
                                         </td>
                                     </tr>
@@ -336,76 +121,55 @@
         </div>
     </div>
 
-    <!-- Modal  edit-->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header d-flex justify-content-center align-items-center">
-                    <div class="">
-                        <h2 class="text-dark">New Monitoring Profile</h2>
-                    </div>
-                </div>
-                <div class="modal-body">
-                    <div class="">
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label ms-1">Profile Name</label>
-                            <input type="text" class="form-control form-control-lg" placeholder="Type Name"
-                                        aria-label="First name">
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label ms-1">Round Trip Jitter (ms)</label>
-                            <input type="text" class="form-control form-control-lg" placeholder="Jitter (ms)"
-                                        aria-label="First name">
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label ms-1">Round Trip Packet Loss (%)</label>
-                            <input type="text" class="form-control form-control-lg" placeholder="Packet Loss"
-                                        aria-label="First name">
-                        </div>
-                        <div class="mb-3">
-                            <div class="">
-                                <label for="exampleFormControlInput1" class="form-label ms-1">Packet Re-order (%)</label>
-                            <input type="text" class="form-control form-control-lg" placeholder=" Re-order %"
-                                        aria-label="First name">
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="row g-2">
-                                <label for="exampleFormControlInput1" class="form-label ms-1">Round Trip</label>
-                                <div class="col-md-4">
-                                    <input type="text" class="form-control form-control-lg" placeholder="Min (ms)"
-                                        aria-label="First name">
-                                </div>
-                                <div class="col-md-4">
-                                    <input type="text" class="form-control form-control-lg" placeholder="Max (ms)"
-                                        aria-label="Text Messages (1-1000)">
-                                </div>
-                                <div class="col-md-4">
-                                    <input type="text" class="form-control form-control-lg" placeholder="Average (ms)"
-                                        aria-label="TPayload Length (40-1456)">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="d-flex justify-content-end">
-                        <button type="button" class="modelCancelBtn" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="modelSaveBtn ms-2">Create</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+   
 </template>
 
 <script>
+import AddMonitor from './AddMonitor.vue';
 import Header from '../common/Header.vue';
+import { ProfileList,deleteMonitor } from '../../services/monitor_profile_Services';
+import { VueSpinner } from 'vue3-spinners';
+import moment from 'moment'
 export default {
     name: 'Monitor',
     components: {
-        Header
+        Header,
+        VueSpinner,
+        AddMonitor
+    },
+    created: function () {
+        this.moment = moment;
+    },
+    data() {
+        return {
+            monitorData: [],
+            loading: false
+        }
+    },
+    mounted() {
+        this.handleMonitorList()
+    },
+    methods: {
+        async handleMonitorList() {
+            try {
+                this.loading = true
+                let res = await ProfileList()
+                this.monitorData = res.profiles
+            } catch (error) {
+                console.log(error)
+            } finally {
+                this.loading = false
+            }
+        },
+        async handleDelete(id){
+            console.log('delete',id)
+            try {
+                await deleteMonitor(id)
+                this.handleMonitorList()
+            } catch (error) {
+                console.log(error)
+            }
+        }
     }
 }
 </script>
@@ -422,7 +186,7 @@ export default {
 }
 
 .addBtn:hover {
-    background-color:  var(--primary_color_Hover);
+    background-color: var(--primary_color_Hover);
 }
 
 .modelSaveBtn {
@@ -436,7 +200,7 @@ export default {
 }
 
 .modelSaveBtn:hover {
-    background-color:  var(--primary_color_Hover);
+    background-color: var(--primary_color_Hover);
 }
 
 .modelCancelBtn {
@@ -451,8 +215,6 @@ export default {
     color: var(--primary_color_Hover);
 }
 
-.css{
+.css {
     line-height: 1.2;
-}
-
-</style>
+}</style>

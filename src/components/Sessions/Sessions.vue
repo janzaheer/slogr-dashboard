@@ -31,36 +31,27 @@
             <div class="container-fluid tableDiv">
                 <div class="card mx-md-2 mt-4 mb-5">
                     <div class="card-body">
-                        <div class="table-responsive">
+                        <div class="text-center m-5" v-if="loading">
+                            <VueSpinner size="80" color="#8cb63d" />
+                        </div>
+                        <div class="table-responsive" v-else>
                             <table class="table table-striped table-hover text-center">
                                 <thead>
                                     <tr>
-                                        <th scope="col"><a href="#" class="tableHead">End-Point A</a> <img src="../../assets/group.svg" alt=""></th>
-                                        <th scope="col"><a href="#"
-                                                class="tableHead">End-Point
-                                                B</a><img src="../../assets/group.svg" alt="">
+                                        <th scope="col"><a href="#" class="tableHead">Server Name</a></th>
+                                        <th scope="col"><a href="#" class="tableHead">Client Name</a>
                                         </th>
-                                        <th scope="col"><a href="#"
-                                                class="tableHead">Group </a>
-                                            <img src="../../assets/group.svg" alt="">
+                                        <th scope="col"><a href="#" class="tableHead">Packet Name</a>
+
                                         </th>
-                                        <th scope="col"><a href="#"
-                                                class="tableHead"> Number of
-                                                Sessions <br>
-                                                <span>Run in List</span>
-                                            </a> <img src="../../assets/group.svg" alt="">
+                                        <th scope="col"><a href="#" class="tableHead"> Number Packets</a>
                                         </th>
-                                        <th scope="col"><a href="#"
-                                                class="tableHead">Message
-                                                for Sessions</a>
+                                        <th scope="col"><a href="#" class="tableHead">Packet Interval</a>
                                         </th>
-                                        <th scope="col"><a href="#"
-                                                class="tableHead">Frequency</a>
+                                        <th scope="col"><a href="#" class="tableHead">W Time</a>
                                         </th>
-                                        <th scope="col"><a href="#"
-                                                class="tableHead">Payload Length</a> </th>
-                                        <th scope="col"><a href="#"
-                                                class="tableHead">DSCP</a> </th>
+                                        <th scope="col"><a href="#" class="tableHead">Packet Length</a> </th>
+                                        <th scope="col"><a href="#" class="tableHead">DSCP</a> </th>
                                         <th scope="col"> </th>
                                         <th scope="col"></th>
                                     </tr>
@@ -74,31 +65,35 @@
                                             <p class="tableP">{{ data?.c_name }}</p>
                                         </td>
                                         <td>
-                                            <p class="tableP">Demo PCo1P</p>
+                                            <p class="tableP">{{ data?.p_name }}</p>
                                         </td>
                                         <td>
-                                            <p class="tableP">{{ data?.count }}</p>
+                                            <p class="tableP">{{ data?.n_packets }}</p>
                                         </td>
                                         <td>
-                                            <p class="tableP">25.0</p>
+                                            <p class="tableP">{{ data?.p_interval }}</p>
                                         </td>
                                         <td>
-                                            <p class="tableP">1.0</p>
+                                            <p class="tableP">{{ data.w_time }}</p>
                                         </td>
                                         <td>
-                                            <p class="tableP">1.0</p>
+                                            <p class="tableP">{{ data.p_size }}</p>
                                         </td>
                                         <td>
-                                            <p class="tableP">1.0</p>
+                                            <p class="tableP">{{ data.dscp }}</p>
                                         </td>
                                         <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
                                                 <i class="fa-solid fa-circle-play"></i></a></td>
-                                        <td class="fs-5 dropstart"><a href="#" class="text-decoration-none text-dark tableP" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <td class="fs-5 dropstart"><a href="#" class="text-decoration-none text-dark tableP"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
                                                 <i class="fa-solid fa-ellipsis"></i></a>
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-pen-to-square"></i> Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-eye"></i> Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-trash-can"></i> Delete</a></li>
+                                                <li><a class="dropdown-item" href="#"><i
+                                                            class="fa-regular fa-pen-to-square"></i> Edit</a></li>
+                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-eye"></i>
+                                                        Details</a></li>
+                                                <li><a class="dropdown-item" href="#"><i
+                                                            class="fa-regular fa-trash-can"></i> Delete</a></li>
                                             </ul>
                                         </td>
                                     </tr>
@@ -369,14 +364,18 @@
                             </div>
                             <div>
                                 <div class="pagination">
-                                    <button class="prevBtn"><i class="fa-solid fa-angle-left"></i> Prev</button>
-                                    <div class="pageNumber">1</div>
-                                    <div class="pageNumber">2</div>
-                                    <div class="pageNumber pageBtn">3</div>
-                                    <div class="pageNumber">4</div>
-                                    <div class="pageNumber">5</div>
-                                    <button class="nextBtn">Next <i class="fa-solid fa-angle-right"></i></button>
-                                </div>
+                                            <button class="prevBtn" :disabled="pages.previousPage === 0"
+                                                v-on:click="getSessions(pages.previousPage)"><i
+                                                    class="fa-solid fa-angle-left"></i> Prev</button>
+                                            <div class="pageNumber">-</div>
+                                            <div class="pageNumber">-</div>
+                                            <div class="pageNumber pageBtn">{{ pages.currentPage }}</div>
+                                            <div class="pageNumber">-</div>
+                                            <div class="pageNumber">-</div>
+                                            <button class="nextBtn" :disabled="pages.nextPage === 0"
+                                                v-on:click="getSessions(pages.nextPage)">Next <i
+                                                    class="fa-solid fa-angle-right"></i></button>
+                                        </div>
                             </div>
                         </div>
                     </div>
@@ -538,37 +537,51 @@
 <script>
 import Header from '../common/Header.vue';
 import { sessionsList } from '../../services/sessions_services';
+import { VueSpinner } from 'vue3-spinners';
 export default {
     name: 'Sessions',
     components: {
-        Header
+        Header,
+        VueSpinner
     },
-    data(){
+    data() {
         return {
-            sessionsData: []
+            sessionsData: [],
+            loading: false,
+            pages: {
+                currentPage: 1,
+                previousPage: 1,
+                nextPage: 1
+            },
         }
     },
-    mounted(){
+    mounted() {
         this.getSessions();
     },
-    methods:{
-        async getSessions(){
-            let res = await sessionsList()
-            console.log('----------------------------')
-            // console.log('data',res.data.sessions)
-            this.sessionsData = res.data.sessions
-            console.log('----------------------------')
+    methods: {
+        async getSessions(page = 1) {
+            try {
+                this.loading = true
+                let res = await sessionsList(page)
+                this.sessionsData = res.data.sessions
+                this.pages.previousPage = res?.data?.prev || 0
+                this.pages.currentPage = this.pages.previousPage + 1
+                this.pages.nextPage = res?.data?.next || 0
+            } catch (error) {
+                console.log(error)
+            } finally {
+                this.loading = false
+            }
         }
     }
 }
 </script>
 
 <style>
-
 .addBtnSessions {
     background-color: var(--white_color);
     border-radius: 6px;
-    border: 1px solid  var(--primary_color);
+    border: 1px solid var(--primary_color);
     padding: 7px 15px;
     cursor: pointer;
     transition: background-color 0.3s ease;
