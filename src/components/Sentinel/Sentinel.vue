@@ -235,7 +235,7 @@
                                 <VueSpinner size="80" color="#8cb63d" />
                             </div>
                             <div class="text-center m-5" v-if="error">
-                                <h3 class="text-danger">Sentinel not found.</h3>
+                                <h3 class="text-danger">Sessions not found.</h3>
                             </div>
                             <div v-else>
                                 <div class="card-body" v-for="data in refSessions" :key="data.id">
