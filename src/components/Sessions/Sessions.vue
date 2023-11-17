@@ -18,10 +18,7 @@
                             <div class="d-flex align-items-center">
                                 <h6 class="mx-1 mt-2 text-muted">Home </h6>
                                 <h6 class="me-4 mt-2"> - Sessions</h6>
-                                <button class="addBtnSessions me-2"> <i class="fa-solid fa-plus fa-lg"></i> Add Schedule
-                                    Sessions</button>
-                                <button class="addBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
-                                        class="fa-solid fa-plus fa-lg"></i> Add New Sessions</button>
+                                <AddSessions :getSessions="getSessions" />
                                 <div class="mx-3"><i class="fa-solid fa-ellipsis fa-2xl"></i></div>
                             </div>
                         </div>
@@ -90,265 +87,16 @@
                                             <ul class="dropdown-menu">
                                                 <li><a class="dropdown-item" href="#"><i
                                                             class="fa-regular fa-pen-to-square"></i> Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-eye"></i>
-                                                        Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i
+                                                <li>
+                                                    <RouterLink :to="`/sentinelReports/` + data.id" class="dropdown-item"><i
+                                                            class="fa-regular fa-eye me-1 text-dark"></i>Details
+                                                    </RouterLink>
+                                                </li>
+                                                <li><a class="dropdown-item" href="#" v-on:click="handleDelete(data.id)"><i
                                                             class="fa-regular fa-trash-can"></i> Delete</a></li>
                                             </ul>
                                         </td>
                                     </tr>
-                                    <!-- <tr>
-                                        <td>
-                                            <p class="tableP">Demo-Sentinel-1</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">US west 2</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">Demo PCo1P</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">25.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                <i class="fa-solid fa-circle-play"></i></a></td>
-                                        <td class="fs-5 dropstart"><a href="#" class="text-decoration-none text-dark tableP" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fa-solid fa-ellipsis"></i></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-pen-to-square"></i> Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-eye"></i> Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-trash-can"></i> Delete</a></li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">Demo-Sentinel-1</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">US west 2</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">Demo PCo1P</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">25.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                <i class="fa-solid fa-circle-play"></i></a></td>
-                                        <td class="fs-5 dropstart"><a href="#" class="text-decoration-none text-dark tableP" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fa-solid fa-ellipsis"></i></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-pen-to-square"></i> Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-eye"></i> Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-trash-can"></i> Delete</a></li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">Demo-Sentinel-1</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">US west 2</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">Demo PCo1P</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">25.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                <i class="fa-solid fa-circle-play"></i></a></td>
-                                        <td class="fs-5 dropstart"><a href="#" class="text-decoration-none text-dark tableP" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fa-solid fa-ellipsis"></i></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-pen-to-square"></i> Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-eye"></i> Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-trash-can"></i> Delete</a></li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">Demo-Sentinel-1</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">US west 2</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">Demo PCo1P</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">25.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                <i class="fa-solid fa-circle-play"></i></a></td>
-                                        <td class="fs-5 dropstart"><a href="#" class="text-decoration-none text-dark tableP" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fa-solid fa-ellipsis"></i></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-pen-to-square"></i> Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-eye"></i> Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-trash-can"></i> Delete</a></li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">Demo-Sentinel-1</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">US west 2</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">Demo PCo1P</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">25.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                <i class="fa-solid fa-circle-play"></i></a></td>
-                                        <td class="fs-5 dropstart"><a href="#" class="text-decoration-none text-dark tableP" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fa-solid fa-ellipsis"></i></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-pen-to-square"></i> Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-eye"></i> Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-trash-can"></i> Delete</a></li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">Demo-Sentinel-1</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">US west 2</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">Demo PCo1P</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">25.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                <i class="fa-solid fa-circle-play"></i></a></td>
-                                        <td class="fs-5 dropstart"><a href="#" class="text-decoration-none text-dark tableP" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fa-solid fa-ellipsis"></i></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-pen-to-square"></i> Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-eye"></i> Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-trash-can"></i> Delete</a></li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">Demo-Sentinel-1</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">US west 2</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">Demo PCo1P</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">25.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                <i class="fa-solid fa-circle-play"></i></a></td>
-                                        <td class="fs-5 dropstart"><a href="#" class="text-decoration-none text-dark tableP" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fa-solid fa-ellipsis"></i></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-pen-to-square"></i> Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-eye"></i> Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-trash-can"></i> Delete</a></li>
-                                            </ul>
-                                        </td>
-                                    </tr> -->
                                 </tbody>
                             </table>
                         </div>
@@ -364,18 +112,18 @@
                             </div>
                             <div>
                                 <div class="pagination">
-                                            <button class="prevBtn" :disabled="pages.previousPage === 0"
-                                                v-on:click="getSessions(pages.previousPage)"><i
-                                                    class="fa-solid fa-angle-left"></i> Prev</button>
-                                            <div class="pageNumber">-</div>
-                                            <div class="pageNumber">-</div>
-                                            <div class="pageNumber pageBtn">{{ pages.currentPage }}</div>
-                                            <div class="pageNumber">-</div>
-                                            <div class="pageNumber">-</div>
-                                            <button class="nextBtn" :disabled="pages.nextPage === 0"
-                                                v-on:click="getSessions(pages.nextPage)">Next <i
-                                                    class="fa-solid fa-angle-right"></i></button>
-                                        </div>
+                                    <button class="prevBtn" :disabled="pages.previousPage === 0"
+                                        v-on:click="getSessions(pages.previousPage)"><i class="fa-solid fa-angle-left"></i>
+                                        Prev</button>
+                                    <div class="pageNumber">-</div>
+                                    <div class="pageNumber">-</div>
+                                    <div class="pageNumber pageBtn">{{ pages.currentPage }}</div>
+                                    <div class="pageNumber">-</div>
+                                    <div class="pageNumber">-</div>
+                                    <button class="nextBtn" :disabled="pages.nextPage === 0"
+                                        v-on:click="getSessions(pages.nextPage)">Next <i
+                                            class="fa-solid fa-angle-right"></i></button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -434,115 +182,22 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal  edit-->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="my-2 text-center">
-                        <h2 class="text-secondary">New Sessions</h2>
-                        <p class="modelText">Fill and select the new session Field</p>
-                    </div>
-                    <div class="">
-                        <div class="mb-4">
-                            <label for="exampleFormControlInput1" class="form-label ms-1">Form*</label>
-                            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                <option class="text-secondary" selected disabled>please select sender sentinel</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-                        </div>
-                        <div class="mb-4">
-                            <label for="exampleFormControlInput1" class="form-label ms-1">To*</label>
-                            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                <option class="text-secondary" selected disabled>please select receiver sentinel</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-                        </div>
-                        <div class="mb-4">
-                            <label for="exampleFormControlInput1" class="form-label ms-1">Monitoring Profile*</label>
-                            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                <option class="text-secondary" selected disabled>select here</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <div class="">
-                                <label for="exampleFormControlInput1" class="form-label">Scheduel</label>
-                                <input type="date" class="form-control form-control-lg" id="exampleFormControlInput1"
-                                    placeholder="00:00:00">
-                            </div>
-                        </div>
-                        <div class="mb-3 d-flex justify-content-around align-item-center py-3 rounded"
-                            style="background-color: #f3f3f3;">
-                            <div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                        id="flexRadioDefault11">
-                                    <label class="form-check-label" for="flexRadioDefault11">
-                                        VOIP
-                                    </label>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                        id="flexRadioDefault12">
-                                    <label class="form-check-label" for="flexRadioDefault12">
-                                        Streaming
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="row g-2">
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control form-control-lg" placeholder="Test Sessions*"
-                                        aria-label="First name">
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control form-control-lg" placeholder="Last name"
-                                        aria-label="Text Messages (1-1000)">
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control form-control-lg" placeholder="Last name"
-                                        aria-label="TPayload Length (40-1456)">
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control form-control-lg" placeholder="Last name"
-                                        aria-label="Intervel (0-1000ms)">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="d-flex justify-content-end">
-                        <button type="button" class="modelCancelBtn" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="modelSaveBtn ms-2">Create</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </template>
 
 <script>
 import Header from '../common/Header.vue';
-import { sessionsList } from '../../services/sessions_services';
+import { sessionsList, deleteSessions } from '../../services/sessions_services';
 import { VueSpinner } from 'vue3-spinners';
+import AddSessions from './AddSessions.vue';
+import { RouterLink } from 'vue-router';
+import { createToast } from 'mosha-vue-toastify';
+import 'mosha-vue-toastify/dist/style.css';
 export default {
     name: 'Sessions',
     components: {
         Header,
-        VueSpinner
+        VueSpinner,
+        AddSessions
     },
     data() {
         return {
@@ -571,6 +226,28 @@ export default {
                 console.log(error)
             } finally {
                 this.loading = false
+            }
+        },
+        async handleDelete(id) {
+            const payload = {
+                id: id
+            }
+            console.log(id)
+            try {
+                await deleteSessions(payload)
+                this.getSessions()
+                createToast(`session delete`, {
+                    type: 'danger',
+                    position: 'top-right',
+                    transition: 'zoom',
+                });
+            } catch (error) {
+                createToast(`delete error`, {
+                    type: 'danger',
+                    position: 'top-right',
+                    transition: 'zoom',
+                });
+                console.log(error)
             }
         }
     }

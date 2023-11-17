@@ -235,7 +235,7 @@
                                 <VueSpinner size="80" color="#8cb63d" />
                             </div>
                             <div class="text-center m-5" v-if="error">
-                                <h3 class="text-danger">Data not found.</h3>
+                                <h3 class="text-danger">Sentinel not found.</h3>
                             </div>
                             <div v-else>
                                 <div class="card-body" v-for="data in refSessions" :key="data.id">
@@ -485,7 +485,7 @@ export default {
                 this.error = null;
                 let res = await agentRefSessions(selectedId)
                 if (res.sessions.length === 0) {
-                    this.error = "Data not found.";
+                    this.error = "Sentinel not found.";
                     this.refSessions = []
                 } else {
                     this.refSessions = res.sessions

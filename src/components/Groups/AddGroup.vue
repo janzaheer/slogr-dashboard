@@ -102,7 +102,9 @@
 <script>
 import { sessionsList } from '../../services/sessions_services'
 import { VueSpinner } from 'vue3-spinners';
-import { createGroup, getGroups } from '../../services/group_services'
+import { createGroup } from '../../services/group_services';
+import { createToast } from 'mosha-vue-toastify';
+import 'mosha-vue-toastify/dist/style.css';
 export default {
     name: 'AddGroup',
     components: {
@@ -120,7 +122,7 @@ export default {
     },
     props: {
         handleGroupId: Function,
-        handleGroup:Function
+        handleGroup: Function
     },
     mounted() {
         this.handleSessions()
@@ -135,6 +137,11 @@ export default {
                 await createGroup(payload)
                 this.handleGroup()
                 this.handleGroupId()
+                createToast(`add Group successfully`, {
+                    type: 'success',
+                    position: 'top-right',
+                    transition: 'zoom',
+                });
             } catch (error) {
                 console.log(error)
             }
@@ -151,7 +158,7 @@ export default {
                 this.loading = false
             }
         },
-        async handleSessionsCheck($event, id){
+        async handleSessionsCheck($event, id) {
             if ($event.target.checked) {
                 this.form.sessions.push(id)
             } else {

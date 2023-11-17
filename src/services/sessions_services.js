@@ -18,3 +18,13 @@ export async function getSessionsResults(id, page=1) {
     const resp = await axios.get(`${base_url}/api/analytics?sid=${id}&page=${page}`, {headers: HEADERS})
     return resp.data
 }
+
+export async function addSessions(payload){
+    const resp = await axios.post(`${base_url}/api/add-session`, payload, {headers: HEADERS})
+    return resp.data
+}
+
+export async function deleteSessions(payload){
+    const resp = await axios.post(`${base_url}/api/delete-session`, payload, {headers: HEADERS})
+    return resp.data
+}

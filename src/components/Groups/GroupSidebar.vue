@@ -11,10 +11,24 @@
                         :key="filteredGroup.id">
                         <li class="nav-item d-flex justify-content-between align-items-center">
                             <button :class="activeGroup == filteredGroup.id ? 'activeBtn' : 'groupBtn'"
-                                v-on:click="handleGroup(filteredGroup.id)" aria-current="page">{{ filteredGroup?.name }}</button>
-                                
-                                <a href="#" class="text-decoration-none" v-on:click="handleDelete(filteredGroup.id)"><i class="fa-solid fa-delete-left"></i></a>
-                            </li>
+                                v-on:click="handleGroup(filteredGroup.id)" aria-current="page">{{ filteredGroup?.name
+                                }}</button>
+
+                            <!-- <a href="#" class="text-decoration-none" v-on:click="handleDelete(filteredGroup.id)"><i class="fa-solid fa-delete-left"></i></a> -->
+                            <div class="dropstart">
+                                <a href="#" class="text-decoration-none text-dark tableP" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <i class="fa-solid fa-ellipsis"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#"><i class="fa-regular fa-pen-to-square"></i>
+                                            Edit</a>
+                                    </li>
+
+                                    <li><a class="dropdown-item" href="#" v-on:click="handleDelete(filteredGroup.id)"><i
+                                                class="fa-regular fa-trash-can"></i> Delete</a></li>
+                                </ul>
+                            </div>
+                        </li>
                         <hr>
                     </ul>
                 </div>
@@ -25,7 +39,9 @@
 
 <script>
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
-import { deleteGroup } from '../../services/group_services'
+import { deleteGroup } from '../../services/group_services';
+import { createToast } from 'mosha-vue-toastify';
+import 'mosha-vue-toastify/dist/style.css';
 export default {
     name: 'GroupSidebar',
     components: {
@@ -34,7 +50,7 @@ export default {
     props: {
         groupData: Object,
         handleGroupId: Function,
-        handleGroup:Function
+        handleGroup: Function
     },
     data() {
         return {
@@ -69,12 +85,17 @@ export default {
             this.activeGroup = this.groupId
 
         },
-        async handleDelete(id){
-            console.log('delete',id)
+        async handleDelete(id) {
+            console.log('delete', id)
             try {
                 await deleteGroup(id)
                 this.handleGroup()
                 this.handleGroupId()
+                createToast(`Delete Group successfully`, {
+                    type: 'success',
+                    position: 'top-right',
+                    transition: 'zoom',
+                });
             } catch (error) {
                 console.log(error)
             }

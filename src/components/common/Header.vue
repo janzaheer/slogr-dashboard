@@ -37,12 +37,12 @@
                                 <span class="mx-lg-1">Monitor</span>
                             </RouterLink>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <RouterLink class="nav-link" style="color: var(--nav-color);" to="#">
                                 <img id="svglinks" src="../../assets/group-24571.svg" height="20" alt="" />
                                 <span class="mx-lg-1">Analytics</span>
                             </RouterLink>
-                        </li>
+                        </li> -->
                         <li class="nav-item mx-xl-1">
                             <RouterLink class="nav-link mx-lg-1 mx-xl-1" to="/groups">
                                 <img id="svglinks" src="../../assets/group-25271.svg" height="20" alt="" />

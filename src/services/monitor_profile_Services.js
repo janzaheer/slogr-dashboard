@@ -14,6 +14,11 @@ export async function ProfileList() {
     return resp.data
 }
 
+export async function ProfileListForm(size=1000) {
+    const resp = await axios.get(`${base_url}/api/profiles?size=${size}`, {headers: HEADERS})
+    return resp.data
+}
+
 export async function createMonitor(payload) {
     const resp = await axios.post(`${base_url}/api/add-profile`, payload, {headers: HEADERS})
     return resp.data
