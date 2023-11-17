@@ -6,17 +6,13 @@
         <!-- Modal  add-->
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Sessions // {{ this.selectedAgentId }}</h5>
+                        <h5 class="modal-title">Add New Session</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="my-2 text-center">
-                            <h2 class="text-secondary">New Sessions // {{ this.selectedClientId }}</h2>
-                            <p class="modelText">Fill and select the new session Field</p>
-                        </div>
                         <div class="">
                             <div class="mb-4">
                                 <label for="exampleFormControlInput1" class="form-label ms-1">Form*</label>
@@ -46,7 +42,6 @@
                                         profile.name }}</option>
                                 </select>
                             </div>
-                            <hr>
                             <div class="mb-3">
                                 <div class="row g-2">
                                     <div class="col-md-12">
