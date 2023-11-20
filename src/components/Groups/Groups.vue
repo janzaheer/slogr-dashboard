@@ -37,11 +37,13 @@
                     <div class="card-body">
                         <div class="row g-2">
                             <div class="col-2">
-                                <GroupSidebar @groupid="handleGroupId" :groupData="groupData" :handleGroup="handleGroup" :handleGroupId="handleGroupId" />
+                                <GroupSidebar @groupid="handleGroupId" :groupData="groupData" :handleGroup="handleGroup"
+                                    :handleGroupId="handleGroupId" />
                             </div>
                             <div class="col-10">
                                 <div class="card" style="height: 100vh;">
                                     <div class="card-body">
+
                                         <perfect-scrollbar style="height: 820px;">
                                             <div class="text-center m-5" v-if="loading">
                                                 <VueSpinner size="80" color="#8cb63d" />
@@ -100,7 +102,7 @@ import GroupSidebar from '../Groups/GroupSidebar.vue';
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar';
 import { VueSpinner } from 'vue3-spinners';
 import AddGroup from './AddGroup.vue';
-
+import InfiniteScroll from 'vue-infinite-scroll'
 export default {
     name: 'Groups',
     components: {
@@ -108,7 +110,8 @@ export default {
         GroupSidebar,
         PerfectScrollbar,
         VueSpinner,
-        AddGroup
+        AddGroup,
+        InfiniteScroll
     },
     data() {
         return {
@@ -116,7 +119,11 @@ export default {
             receivedGroupId: '',
             groupListData: [],
             loading: false,
+            sessionsData: [],
         }
+    },
+    directives: {
+        InfiniteScroll,
     },
     mounted() {
         this.handleGroup()
@@ -141,7 +148,8 @@ export default {
             } finally {
                 this.loading = false;
             }
-        }
+        },
+
     }
 }
 </script>

@@ -81,7 +81,8 @@
                                         </td>
                                         <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
                                                 <i class="fa-solid fa-circle-play"></i></a></td>
-                                        <td class="fs-5 dropstart"><a href="#" class="text-decoration-none text-dark tableP"
+                                        <td class="fs-5 dropstart">
+                                            <a href="#" class="text-decoration-none text-dark tableP"
                                                 data-bs-toggle="dropdown" aria-expanded="false">
                                                 <i class="fa-solid fa-ellipsis"></i></a>
                                             <ul class="dropdown-menu">
@@ -230,14 +231,14 @@ export default {
         },
         async handleDelete(id) {
             const payload = {
-                id: id
+                delete: id
             }
             console.log(id)
             try {
                 await deleteSessions(payload)
                 this.getSessions()
                 createToast(`session delete`, {
-                    type: 'danger',
+                    type: 'success',
                     position: 'top-right',
                     transition: 'zoom',
                 });
