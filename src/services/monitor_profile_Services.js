@@ -23,6 +23,10 @@ export async function createMonitor(payload) {
     const resp = await axios.post(`${base_url}/api/add-profile`, payload, {headers: HEADERS})
     return resp.data
 }
+export async function updateMonitor(payload) {
+    const resp = await axios.post(`${base_url}/api/add-profile`, payload, {headers: HEADERS})
+    return resp.data
+}
 
 export async function deleteMonitor(id) {
     const resp = await axios.post(`${base_url}/api/delete-profile`, {id: id}, {headers: HEADERS})

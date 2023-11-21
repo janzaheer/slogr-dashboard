@@ -11,6 +11,7 @@
                         <div class="">
                             <h2 class="text-dark">New Monitoring Profile</h2>
                         </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="">
@@ -103,7 +104,10 @@
 </template>
 
 <script>
-import { createMonitor, ProfileList } from '../../services/monitor_profile_Services'
+import { createMonitor } from '../../services/monitor_profile_Services';
+import { createToast } from 'mosha-vue-toastify';
+import 'mosha-vue-toastify/dist/style.css';
+
 export default {
     name: 'AddMonitor',
     props:{
@@ -150,6 +154,11 @@ export default {
                 await createMonitor(payload)
                 this.handleMonitorList()
                 // Reset the form
+                createToast(`add Profile successfully`, {
+                    type: 'success',
+                    position: 'top-right',
+                    transition: 'zoom',
+                });
                 this.form = {
                     name: '',
                     max_jitter: '',
@@ -166,6 +175,11 @@ export default {
                 };
             } catch (error) {
                 console.log(error)
+                createToast(`Profile something is wrong`, {
+                    type: 'danger',
+                    position: 'top-right',
+                    transition: 'zoom',
+                });
                 this.form = {
                     name: '',
                     max_jitter: '',

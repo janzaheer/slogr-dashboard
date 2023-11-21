@@ -153,7 +153,6 @@ export default {
             }
 
             try {
-                console.log('payload', payload)
                 await addSessions(payload)
                 this.getSessions()
                 this.form = {
@@ -171,13 +170,17 @@ export default {
                     transition: 'zoom',
                 });
             } catch (error) {
+                createToast(`sessions not save something is wrong`, {
+                    type: 'danger',
+                    position: 'top-right',
+                    transition: 'zoom',
+                });
                 console.log(error)
             }
         },
         async monitor(size = 1000) {
             try {
                 let res = await ProfileListForm(size)
-                // console.log('monitor', res.profiles)
                 this.profiles = res.profiles;
 
             } catch (error) {
@@ -187,7 +190,6 @@ export default {
         async server(size = 1000) {
             try {
                 let res = await agentListForm(size)
-                console.log('agentList', res)
                 this.agents = res.data.agents
                 this.clients = res.data.agents
             } catch (error) {

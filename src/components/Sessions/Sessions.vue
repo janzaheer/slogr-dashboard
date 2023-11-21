@@ -233,7 +233,6 @@ export default {
             const payload = {
                 delete: id
             }
-            console.log(id)
             try {
                 await deleteSessions(payload)
                 this.getSessions()

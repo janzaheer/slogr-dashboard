@@ -9,8 +9,8 @@ let HEADERS = {
     "Authorization": `Bearer ${TOKEN}`
 }
 
-export async function sessionsList(page=1) {
-    const resp = await axios.get(`${base_url}/api/sessions?page=${page}`, {headers: HEADERS})
+export async function sessionsList(page=1, size=10) {
+    const resp = await axios.get(`${base_url}/api/sessions?page=${page}&size=${size}`, {headers: HEADERS})
     return resp.data
 }
 
