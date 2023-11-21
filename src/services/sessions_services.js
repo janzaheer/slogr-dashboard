@@ -24,6 +24,11 @@ export async function addSessions(payload){
     return resp.data
 }
 
+export async function updateSessions(payload){
+    const resp = await axios.post(`${base_url}/api/add-session`, payload, {headers: HEADERS})
+    return resp.data
+}
+
 export async function deleteSessions(payload){
     const resp = await axios.post(`${base_url}/api/delete-session`, payload, {headers: HEADERS})
     return resp.data

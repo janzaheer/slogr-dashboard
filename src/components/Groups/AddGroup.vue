@@ -83,8 +83,12 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <div class="text-center">
-                                        <button class="modelSaveBtn" @click="handleLoadMore">load More</button>
+                                    <div class="text-center my-2" v-if="loadButton">
+                                        <VueSpinner size="30" color="#8cb63d" />
+                                    </div>
+                                    <div class="text-center" v-else>
+                                        <button class="modelSaveBtn" @click="handleLoadMore">
+                                            load More</button>
                                     </div>
                                 </div>
                             </div>
@@ -124,6 +128,8 @@ export default {
             },
             loading: false,
             sessionsData: [],
+            nextPage: null, // Initial page number
+            loadButton: false
         }
     },
     props: {
@@ -155,12 +161,26 @@ export default {
         async handleSessions() {
             try {
                 this.loading = true
-                let res = await sessionsList()
+                let res = await sessionsList(1, 200)
                 this.sessionsData = res.data.sessions
+                this.nextPage = res.data.next
+                // this.sessionsData = [...this.sessionsData, ...res.data.sessions];
             } catch (error) {
                 console.log(error)
             } finally {
                 this.loading = false
+            }
+        },
+        async handleLoadMore() {
+            try {
+                this.loadButton = true
+                let res = await sessionsList(this.nextPage, 200);
+                this.nextPage = res.data.next
+                this.sessionsData = [...this.sessionsData, ...res.data.sessions];
+            } catch (error) {
+                console.error(error);
+            } finally {
+                this.loadButton = false
             }
         },
 

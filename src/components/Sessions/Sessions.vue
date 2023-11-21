@@ -86,8 +86,14 @@
                                                 data-bs-toggle="dropdown" aria-expanded="false">
                                                 <i class="fa-solid fa-ellipsis"></i></a>
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i
-                                                            class="fa-regular fa-pen-to-square"></i> Edit</a></li>
+                                                <li>
+                                                    <a href="#" class="dropdown-item" data-bs-toggle="modal"
+                                                        data-bs-target="#staticBackdrop1"
+                                                        @click="handleEditModel(data.id, data.s_name, data.c_name, data.p_name, data.n_packets,
+                                                            data.p_interval, data.w_time, data.dscp, data.count, data.schedule, data.p_size)"><i
+                                                            class="fa-regular fa-pen-to-square"></i>
+                                                        Edit</a>
+                                                </li>
                                                 <li>
                                                     <RouterLink :to="`/sentinelReports/` + data.id" class="dropdown-item"><i
                                                             class="fa-regular fa-eye me-1 text-dark"></i>Details
@@ -183,11 +189,107 @@
             </div>
         </div>
     </div>
+    <!-- Modal  edit-->
+    <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdrop1Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header d-flex justify-content-center align-items-center">
+                    <div class="">
+                        <h2 class="text-dark">Edit Session {{ this.form.id }} {{ this.form.p_size }}</h2>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="">
+                        <div class="mb-4">
+                            <label for="exampleFormControlInput1" class="form-label ms-1">Form*</label>
+                            <select v-model="selectedAgentId" class="form-select form-select-lg mb-3 custom-select"
+                                aria-label=".form-select-lg example">
+                                <option class="text-secondary" selected disabled>please select sender sentinel</option>
+                                <option v-for="agent in agents" :key="agent.id" :value="agent.id">{{ agent.name }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label for="exampleFormControlInput1" class="form-label ms-1">To*</label>
+                            <select v-model="selectedClientId" class="form-select form-select-lg mb-3"
+                                aria-label=".form-select-lg example">
+                                <option class="text-secondary" disabled>please select receiver sentinel
+                                </option>
+                                <option v-for="client in clients" :key="client.id" :value="client.id">{{ client.name }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label for="exampleFormControlInput1" class="form-label ms-1">Monitoring Profile*</label>
+                            <select v-model="selectedProfile" class="form-select form-select-lg mb-3 custom-select"
+                                aria-label=".form-select-lg example">
+                                <option class="text-secondary" disabled>select here</option>
+                                <option v-for="profile in profiles" :key="profile.id" :value="profile.id">{{ profile.name }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <div class="row g-2">
+                                <div class="col-md-12">
+                                    <label for="exampleFormControlInput1" class="form-label ms-1">Schedule*</label>
+                                    <input type="number" class="form-control form-control-lg" placeholder="Enter Schedule"
+                                        v-model="this.form.schedule" name="schedule">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="exampleFormControlInput1" class="form-label ms-1">Count*</label>
+                                    <input type="number" class="form-control form-control-lg" placeholder="Enter Count"
+                                        v-model="this.form.count" name="count">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="exampleFormControlInput1" class="form-label ms-1">Number Of
+                                        Packets*</label>
+                                    <input type="number" class="form-control form-control-lg" placeholder="Enter No-packets"
+                                        v-model="this.form.n_packets" name="n_packets">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="exampleFormControlInput1" class="form-label ms-1">Packet
+                                        Interval*</label>
+                                    <input type="number" class="form-control form-control-lg" placeholder="Enter P-Interval"
+                                        v-model="this.form.p_interval" name="p_interval">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="exampleFormControlInput1" class="form-label ms-1">Wait Time*</label>
+                                    <input type="number" class="form-control form-control-lg" placeholder="Enter W Time"
+                                        v-model="this.form.w_time" name="w_time">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="exampleFormControlInput1" class="form-label ms-1">DSCP*</label>
+                                    <input type="number" class="form-control form-control-lg" placeholder="Enter Dscp"
+                                        v-model="this.form.dscp" name="dscp">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="exampleFormControlInput1" class="form-label ms-1">Packet Size*</label>
+                                    <input type="number" class="form-control form-control-lg" placeholder="Enter P_Size"
+                                        name="p_size" v-model="this.form.p_size">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="modelCancelBtn" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" data-bs-dismiss="modal" @click="handleEditSessions"
+                            class="modelSaveBtn ms-2">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
 import Header from '../common/Header.vue';
-import { sessionsList, deleteSessions } from '../../services/sessions_services';
+import { sessionsList, deleteSessions, updateSessions } from '../../services/sessions_services';
+import { ProfileListForm } from '../../services/monitor_profile_Services';
+import { agentListForm } from '../../services/agent_services';
 import { VueSpinner } from 'vue3-spinners';
 import AddSessions from './AddSessions.vue';
 import { RouterLink } from 'vue-router';
@@ -209,10 +311,27 @@ export default {
                 previousPage: 1,
                 nextPage: 1
             },
+            form: {
+                n_packets: null,
+                p_interval: null,
+                w_time: null,
+                dscp: null,
+                count: null,
+                schedule: null,
+                p_size: null,
+            },
+            selectedProfile: 'select here', // Will store the selected profile id
+            profiles: [],
+            agents: [],
+            selectedAgentId: 'please select sender sentinel',
+            clients: [],
+            selectedClientId: 'please select receiver sentinel'
         }
     },
     mounted() {
         this.getSessions();
+        this.monitor()
+        this.server()
     },
     methods: {
         async getSessions(page = 1) {
@@ -223,6 +342,7 @@ export default {
                 this.pages.previousPage = res?.data?.prev || 0
                 this.pages.currentPage = this.pages.previousPage + 1
                 this.pages.nextPage = res?.data?.next || 0
+                console.log('sessions', res.data.sessions)
             } catch (error) {
                 console.log(error)
             } finally {
@@ -247,6 +367,70 @@ export default {
                     position: 'top-right',
                     transition: 'zoom',
                 });
+                console.log(error)
+            }
+        },
+        handleEditModel(id, s_name, c_name, p_name, n_packets, p_interval, w_time, dscp, count, schedule, p_size) {
+            this.form.id = id
+            this.form.n_packets = n_packets
+            this.form.p_interval = p_interval
+            this.form.w_time = w_time
+            this.form.dscp = dscp
+            this.form.count = count
+            this.form.schedule = schedule
+            this.form.p_size = p_size
+            this.selectedProfile = this.profiles.find(profile => profile.name === p_name)?.id;
+            this.selectedClientId = this.clients.find(client => client.name === c_name)?.id;
+            this.selectedAgentId = this.agents.find(agent => agent.name === s_name)?.id;
+        },
+        async handleEditSessions() {
+            const payload = {
+                serve: this.selectedAgentId,
+                client: this.selectedClientId,
+                profile: this.selectedProfile,
+                schedule: this.form.schedule,
+                count: this.form.count,
+                n_packets: this.form.n_packets,
+                p_interval: this.form.p_interval,
+                w_time: this.form.w_time,
+                dscp: this.form.dscp,
+                p_size: this.form.p_size,
+                edit: true,
+                aid: this.form.id
+            }
+            try {
+                await updateSessions(payload)
+                this.getSessions();
+                createToast(`session update successfully`, {
+                    type: 'success',
+                    position: 'top-right',
+                    transition: 'zoom',
+                });
+            } catch (error) {
+                createToast(`session not update something is wrong`, {
+                    type: 'danger',
+                    position: 'top-right',
+                    transition: 'zoom',
+                });
+                console.log(error)
+            }
+            console.log('edit', payload)
+        },
+        async monitor(size = 1000) {
+            try {
+                let res = await ProfileListForm(size)
+                this.profiles = res.profiles;
+
+            } catch (error) {
+                console.log(error)
+            }
+        },
+        async server(size = 1000) {
+            try {
+                let res = await agentListForm(size)
+                this.agents = res.data.agents
+                this.clients = res.data.agents
+            } catch (error) {
                 console.log(error)
             }
         }
