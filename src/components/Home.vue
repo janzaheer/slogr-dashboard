@@ -16,7 +16,8 @@
           <div v-for="group in groups" :key="group.id" class="d-flex justify-content-between align-items-center">
             <label class="form-check-label" :for="'flexSwitchCheckDefault_' + group.id">{{ group.name }}</label>
             <div class="form-check form-switch">
-              <input class="form-check-input fs-4" type="checkbox" role="switch" :id="'flexSwitchCheckDefault_' + group.id" @change="handleToggleGroup(group.id)">
+              <!-- <input class="form-check-input fs-4" type="checkbox" role="switch" :id="'flexSwitchCheckDefault_' + group.id" @change="handleToggleGroup(group.id)"> -->
+              <input class="form-check-input fs-4" type="checkbox" role="switch" :id="'flexSwitchCheckDefault_' + group.id" v-model="groupSwitches[group.id]" @change="handleToggleGroup(group.id, groupSwitches[group.id])">
             </div>
           </div>
           <div class="d-flex justify-content-between align-items-center">
@@ -83,7 +84,8 @@ export default {
     return {
       map: null,
       groups: [],
-      clusters: []
+      clusters: [],
+      groupSwitches: {} 
     };
   },
   async mounted() {
@@ -173,11 +175,16 @@ export default {
     this.map.setProjection('Mercator');
   },
   methods: {
-    async handleToggleGroup(groupId) {
+    async handleToggleGroup(groupId, switchValue) {
       console.log('Toggled group with ID:', groupId);
       this.clearAll();
       const loader = document.getElementById('loader');
       loader.style.display = 'block';
+      if (!switchValue) {
+      this.clearLines();
+      loader.style.display = 'none';
+      return;
+    }
       await this.showClusters(await this.handleClusters(groupId));
       this.drawLines(this.map, await this.handleSessions(groupId));
       loader.style.display = 'none';
