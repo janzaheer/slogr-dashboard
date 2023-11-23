@@ -85,11 +85,12 @@ export default {
       map: null,
       groups: [],
       clusters: [],
-      groupSwitches: {} 
+      groupSwitches: {},
+      activeGroups: [],
     };
   },
   async mounted() {
-    
+    this.handleToggleGroup = this.handleToggleGroup.bind(this);
     var clusters = await this.handleClusters('');
     var sessions = await this.handleSessions('');
     mapboxgl.accessToken = 'pk.eyJ1Ijoicmh3b3JrcyIsImEiOiJjazBmZmE0bGIwNzh3M25wMjBhOHI2em56In0.317s4zEB48T9QC33pf6sVw#13';
@@ -176,23 +177,49 @@ export default {
   },
   methods: {
     async handleToggleGroup(groupId, switchValue) {
-      console.log('Toggled group with ID:', groupId);
-      this.clearAll();
-      const loader = document.getElementById('loader');
-      loader.style.display = 'block';
-      if (!switchValue) {
-      this.clearLines();
-      loader.style.display = 'none';
-      return;
+  console.log('Toggled group with ID:', groupId);
+  const loader = document.getElementById('loader');
+  loader.style.display = 'block';
+
+  // Update the list of active groups based on the switch state
+  if (switchValue) {
+    this.activeGroups.push(groupId);
+  } else {
+    // Remove the group from the list of active groups
+    const index = this.activeGroups.indexOf(groupId);
+    if (index !== -1) {
+      this.activeGroups.splice(index, 1);
     }
-      await this.showClusters(await this.handleClusters(groupId));
-      this.drawLines(this.map, await this.handleSessions(groupId));
-      loader.style.display = 'none';
-    },
-    async handleClusters(groupId) {
-      const respData = await fetchClusters(groupId);
-      return respData;
-    },
+  }
+
+
+  // Clear all layers and sources
+  this.clearAll();
+
+  // Show clusters and draw lines for each active group
+  for (const activeGroup of this.activeGroups) {
+    await this.showClusters(activeGroup, await this.handleClusters(activeGroup));
+    this.drawLines(this.map, await this.handleSessions(activeGroup));
+  }
+
+  loader.style.display = 'none';
+},
+async handleClusters(groupId) {
+  try {
+    const respData = await fetchClusters(groupId);
+
+    // Check if the fetched data is a valid GeoJSON object
+    if (!respData || !respData.features || !Array.isArray(respData.features)) {
+      console.error('Invalid clusters data:', respData);
+      return null; // Return null or handle the error accordingly
+    }
+
+    return respData;
+  } catch (error) {
+    console.error('Error fetching clusters:', error);
+    return null; // Return null or handle the error accordingly
+  }
+},
     async handleSessions(groupId) {
       const respData = await fetchSessions(groupId);
       return respData;
@@ -209,85 +236,94 @@ export default {
         console.error('Error fetching groups:', error);
       }
     },
-    showClusters(clusters) {
-      // Add a new source from our GeoJSON data and
-      // set the 'cluster' option to true. GL-JS will
-      // add the point_count property to your source data.
-      this.map.addSource('earthquakes', {
-        type: 'geojson',
-        data: clusters,
-        cluster: true,
-        clusterMaxZoom: 14, // Max zoom to cluster points on
-        clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
-      });
-      
-      this.map.addLayer({
-        id: 'clusters',
-        type: 'circle',
-        source: 'earthquakes',
-        filter: ['has', 'point_count'],
-          paint: {
-          'circle-color': [
-          'step',
-          ['get', 'point_count'],
-          '#8cb63d',
-          100,
-          '#f1f075',
-          750,
-          '#f28cb1'
-          ],
-          'circle-radius': [
-              'step',
-              ['get', 'point_count'],
-              20,
-              100,
-              30,
-              750,
-              40
-            ]
-          }
-      });
-      
-      this.map.addLayer({
-        id: 'cluster-count',
-        type: 'symbol',
-        source: 'earthquakes',
-        filter: ['has', 'point_count'],
-        layout: {
-        'text-field': ['get', 'point_count_abbreviated'],
-        'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-        'text-size': 12
-        }
-      });
-      const organizationColors = {};
-      console.log(clusters, 'here');
-      clusters.features.forEach((feature) => {
-        const org = feature.properties.organization;
-        if (!(org in organizationColors)) {
-          // You can use your getColor function to dynamically set colors
-          organizationColors[org] = this.getColor(org);
-        }
-      });
-      // Add unclustered points layer with dynamically set colors
-      this.map.addLayer({
-        id: 'unclustered-point',
-        type: 'circle',
-        source: 'earthquakes',
-        filter: ['!', ['has', 'point_count']],
-        paint: {
-          'circle-color': [
-            'match',
-            ['get', 'organization'],
-            'GCP', '#8cb63d', // Green
-            'AZURE', '#f1f075', // Yellow
-            '#f28cb1' // Default color
-          ],
-          'circle-radius': 8,
-          'circle-stroke-width': 3,
-          'circle-stroke-color': '#fff'
-        }
-      });
+    showClusters(clusters, groupId) {
+  // Use a unique source ID for each group
+  const sourceId = `earthquakes-${groupId}`;
+
+  // Remove existing source and layers if they exist
+  if (this.map.getSource(sourceId)) {
+    this.map.removeLayer(`clusters-${groupId}`);
+    this.map.removeLayer(`cluster-count-${groupId}`);
+    this.map.removeLayer(`unclustered-point-${groupId}`);
+    this.map.removeSource(sourceId);
+  }
+
+  // Ensure clusters is a valid GeoJSON object
+  if (!clusters || !clusters.features || !Array.isArray(clusters.features)) {
+    console.error('Invalid clusters data:', clusters);
+    return;
+  }
+
+  // Add a new source from our GeoJSON data and set the 'cluster' option to true.
+  // GL-JS will add the point_count property to your source data.
+  this.map.addSource(sourceId, {
+    type: 'geojson',
+    data: clusters,
+    cluster: true,
+    clusterMaxZoom: 14,
+    clusterRadius: 50,
+  });
+
+  this.map.addLayer({
+    id: `clusters-${groupId}`,
+    type: 'circle',
+    source: sourceId,
+    filter: ['has', 'point_count'],
+    paint: {
+      'circle-color': [
+        'step',
+        ['get', 'point_count'],
+        '#8cb63d',
+        100,
+        '#f1f075',
+        750,
+        '#f28cb1',
+      ],
+      'circle-radius': [
+        'step',
+        ['get', 'point_count'],
+        20,
+        100,
+        30,
+        750,
+        40,
+      ],
     },
+  });
+
+  this.map.addLayer({
+    id: `cluster-count-${groupId}`,
+    type: 'symbol',
+    source: sourceId,
+    filter: ['has', 'point_count'],
+    layout: {
+      'text-field': ['get', 'point_count_abbreviated'],
+      'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+      'text-size': 12,
+    },
+  });
+
+  // Add unclustered points layer with dynamically set colors
+  this.map.addLayer({
+    id: `unclustered-point-${groupId}`,
+    type: 'circle',
+    source: sourceId,
+    filter: ['!', ['has', 'point_count']],
+    paint: {
+      'circle-color': [
+        'match',
+        ['get', 'organization'],
+        'GCP', '#8cb63d',
+        'AZURE', '#f1f075',
+        '#f28cb1',
+      ],
+      'circle-radius': 8,
+      'circle-stroke-width': 3,
+      'circle-stroke-color': '#fff',
+    },
+  });
+},
+
     getColor(organization) {
       // Add your logic here to determine the color based on the organization
       // For example, you can use a switch statement or if-else conditions
@@ -302,40 +338,50 @@ export default {
       }
     },
     drawLines(map, lines) {
-      lines.forEach((line, index) => {
-        const uniqueId = `line-${Date.now()}-${index}`;
+  // Check if lines is an object with a features array
+  if (lines && lines.features && Array.isArray(lines.features)) {
+    // Extract the array of lines from the features property
+    lines = lines.features;
+  } else {
+    console.error('Invalid lines data:', lines);
+    return;
+  }
 
-        // Create a Bezier spline from the original line coordinates
-        const curvedLine = turf.bezierSpline({
-          type: 'Feature',
-          geometry: {
-            type: 'LineString',
-            coordinates: line.coordinates,
-          },
-        });
+  lines.forEach((line, index) => {
+    const uniqueId = `line-${Date.now()}-${index}`;
 
-        map.addLayer({
-          id: uniqueId,
-          type: 'line',
-          source: {
-            type: 'geojson',
-            data: curvedLine,
-          },
-          paint: {
-            'line-color': line.color,
-            'line-width': 1, // Adjust the line width as needed
-          },
-        });
+    // Create a Bezier spline from the original line coordinates
+    const curvedLine = turf.bezierSpline({
+      type: 'Feature',
+      geometry: {
+        type: 'LineString',
+        coordinates: line.geometry.coordinates,
+      },
+    });
 
-        // Add hover and mouse leave event listeners
-        map.on('mouseenter', uniqueId, (e) => {
-          this.handleLineHover(e);
-        });
-        map.on('mouseleave', uniqueId, (e) => {
-          this.resetLineHover(e);
-        });
-      });
-    },
+    map.addLayer({
+      id: uniqueId,
+      type: 'line',
+      source: {
+        type: 'geojson',
+        data: curvedLine,
+      },
+      paint: {
+        'line-color': line.properties.color,
+        'line-width': 1, // Adjust the line width as needed
+      },
+    });
+
+    // Add hover and mouse leave event listeners
+    map.on('mouseenter', uniqueId, (e) => {
+      this.handleLineHover(e);
+    });
+    map.on('mouseleave', uniqueId, (e) => {
+      this.resetLineHover(e);
+    });
+  });
+},
+
     clearLines() {
       const map = this.map;
 
@@ -347,34 +393,52 @@ export default {
       });
     },
     clearAll() {
-      const map = this.map;
+  const map = this.map;
 
-      // Remove cluster layers
-      map.getStyle().layers.forEach((layer) => {
-        if (layer.id.startsWith('clusters') || layer.id.startsWith('unclustered-point')) {
-          map.removeLayer(layer.id);
-        }
-      });
+  // Remove cluster layers and associated cluster count layers
+  this.activeGroups.forEach((groupId) => {
+    // Remove cluster layers
+    map.removeLayer(`clusters-${groupId}`);
+    map.removeLayer(`cluster-count-${groupId}`);
+    
+    // Remove unclustered-point layer
+    const unclusteredLayerId = `unclustered-point-${groupId}`;
+    if (map.getLayer(unclusteredLayerId)) {
+      map.removeLayer(unclusteredLayerId);
+    }
 
-      // Remove connection layers
-      map.getStyle().layers.forEach((layer) => {
-        if (layer.id.startsWith('line-')) {
-          map.removeLayer(layer.id);
-        }
-      });
+    // Remove cluster sources
+    const sourceId = `earthquakes-${groupId}`;
+    if (map.getSource(sourceId)) {
+      map.removeSource(sourceId);
+    }
 
-      // Remove cluster count layer
-      const clusterCountLayer = map.getLayer('cluster-count');
-      if (clusterCountLayer) {
-        map.removeLayer('cluster-count');
-      }
+    // Remove cluster count layer (if exists for the group)
+    const clusterCountLayer = map.getLayer(`cluster-count-${groupId}`);
+    if (clusterCountLayer) {
+      map.removeLayer(`cluster-count-${groupId}`);
+    }
+  });
 
-      // Remove cluster sources
-      ['earthquakes'].forEach((source) => {
-        if (map.getSource(source)) {
-          map.removeSource(source);
-        }
-      });
+  // Remove connection layers
+  map.getStyle().layers.forEach((layer) => {
+    if (layer.id.startsWith('line-')) {
+      map.removeLayer(layer.id);
+    }
+  });
+
+  // Remove cluster count layer (if exists globally)
+  const globalClusterCountLayer = map.getLayer('cluster-count');
+  if (globalClusterCountLayer) {
+    map.removeLayer('cluster-count');
+  }
+
+      // // Remove cluster sources
+      // ['earthquakes'].forEach((source) => {
+      //   if (map.getSource(source)) {
+      //     map.removeSource(source);
+      //   }
+      // });
     },
     handleLineHover(e) {
       const map = this.map;
