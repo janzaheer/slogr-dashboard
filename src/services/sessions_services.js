@@ -33,3 +33,8 @@ export async function deleteSessions(payload){
     const resp = await axios.post(`${base_url}/api/delete-session`, payload, {headers: HEADERS})
     return resp.data
 }
+
+export async function getSessionsNames() {
+    const resp = await axios.get(`${base_url}/api/sessionnames`, {headers: HEADERS})
+    return resp.data
+}

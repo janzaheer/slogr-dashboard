@@ -37,7 +37,7 @@
                                     <tr>
                                         <th><a href="#" class="tableHead">Name</a></th>
                                         <th><a href="#" class="tableHead">Date</a></th>
-                                        <th><a href="#" class="tableHead">Max Jitter </a></th>
+                                        <th><a href="#" class="tableHead"> JITTER <br> green /red</a></th>
                                         <th><a href="#" class="tableHead">Max Downlink</a> </th>
                                         <th><a href="#" class="tableHead">Max Loss</a></th>
                                         <th><a href="#" class="tableHead">Max RTT</a></th>
@@ -59,19 +59,19 @@
                                             <p class="tableP">{{ moment(data?.created_at).format('l') }}</p>
                                         </td>
                                         <td>
-                                            <p class="tableP">{{ data.max_jitter }}</p>
+                                            <p class="tableP">{{ data?.name }} / {{ data?.jitter-r }}</p>
                                         </td>
                                         <td>
-                                            <p class="tableP">{{ data.max_downlink }}</p>
+                                            <p class="tableP">-----------------</p>
                                         </td>
                                         <td>
-                                            <p class="tableP">{{ data.max_loss }}</p>
+                                            <p class="tableP">--------------</p>
                                         </td>
                                         <td>
-                                            <p class="tableP">{{ data.max_rtt }}</p>
+                                            <p class="tableP">------------</p>
                                         </td>
                                         <td>
-                                            <p class="tableP">{{ data.max_uplink }}</p>
+                                            <p class="tableP">-------</p>
                                         </td>
                                         <td>
                                             <p class="tableP">{{ data.n_packets }}</p>

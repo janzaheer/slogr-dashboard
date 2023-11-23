@@ -19,76 +19,54 @@
                                 <input type="text" class="form-control form-control-lg" placeholder="Enter Group Name"
                                     name="name" v-model="this.form.name">
                             </div>
-                            <div class="mb-3">
-                                <div class="text-center m-5" v-if="loading">
-                                    <VueSpinner size="80" color="#8cb63d" />
-                                </div>
-                                <div class="table-responsive" v-else>
-                                    <table class="table table-striped table-hover text-center">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col"><a href="#" class="tableHead"></a></th>
-                                                <th scope="col"><a href="#" class="tableHead">Server Name</a></th>
-                                                <th scope="col"><a href="#" class="tableHead">Client Name</a>
-                                                </th>
-                                                <th scope="col"><a href="#" class="tableHead">Packet Name</a>
-
-                                                </th>
-                                                <th scope="col"><a href="#" class="tableHead"> Number Packets</a>
-                                                </th>
-                                                <th scope="col"><a href="#" class="tableHead">Packet Interval</a>
-                                                </th>
-                                                <th scope="col"><a href="#" class="tableHead">W Time</a>
-                                                </th>
-                                                <th scope="col"><a href="#" class="tableHead">Packet Length</a> </th>
-                                                <th scope="col"><a href="#" class="tableHead">DSCP</a> </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr v-for="data in sessionsData" :key="data.id">
-                                                <td>
-                                                    <p class="tableP">
+                            <div class="row g-2 mt-1">
+                                <div class="col-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            List of Sessions
+                                        </div>
+                                        <div class="mt-1 mx-2">
+                                            <input type="text" class="form-control" id="exampleFormControlInput1"
+                                                v-model="searchQuery" placeholder="search by server name">
+                                        </div>
+                                        <perfect-scrollbar style="height: 240px;">
+                                            <div class="text-center m-5" v-if="filteredGroupData.length === 0">
+                                                <h3 class="text-danger"> No Sessions found.</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="d-flex align-items-center" v-for="data in filteredGroupData"
+                                                    :key="data.id">
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="checkbox"
-                                                            id="flexCheckDefault"
-                                                            v-on:click="handleSessionsCheck($event, data.id)">
+                                                            :id="'sessions-' + data.id"
+                                                            v-on:click="handleSessionsCheck($event, data.id, data.s_name, data.c_name)">
                                                     </div>
-                                                    </p>
-                                                </td>
-                                                <td>
-                                                    <p class="tableP">{{ data?.s_name }}</p>
-                                                </td>
-                                                <td>
-                                                    <p class="tableP">{{ data?.c_name }}</p>
-                                                </td>
-                                                <td>
-                                                    <p class="tableP">{{ data?.p_name }}</p>
-                                                </td>
-                                                <td>
-                                                    <p class="tableP">{{ data?.n_packets }}</p>
-                                                </td>
-                                                <td>
-                                                    <p class="tableP">{{ data?.p_interval }}</p>
-                                                </td>
-                                                <td>
-                                                    <p class="tableP">{{ data.w_time }}</p>
-                                                </td>
-                                                <td>
-                                                    <p class="tableP">{{ data.p_size }}</p>
-                                                </td>
-                                                <td>
-                                                    <p class="tableP">{{ data.dscp }}</p>
-                                                </td>
-
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <div class="text-center my-2" v-if="loadButton">
-                                        <VueSpinner size="30" color="#8cb63d" />
+                                                    <p class="sessionFormText me-1">{{ data?.s_name }}</p> |
+                                                    <p class="sessionFormText">{{ data?.c_name }}</p>
+                                                </div>
+                                            </div>
+                                        </perfect-scrollbar>
                                     </div>
-                                    <div class="text-center" v-else>
-                                        <button class="modelSaveBtn" @click="handleLoadMore">
-                                            load More</button>
+                                </div>
+                                <div class="col-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            Selected Sessions
+                                        </div>
+                                        <perfect-scrollbar style="height: 280px;">
+                                            <div class="text-center m-5" v-if="selectedSessions.length === 0">
+                                                <h3 class="text-danger"> No Selected Sessions.</h3>
+                                            </div>
+                                            <div class="card-body" v-else>
+                                                <div class="d-flex align-items-center" v-for="data in selectedSessions"
+                                                    :key="data.id">
+                                                    <a href="#" class="text-decoration-none" style="color: #b63d3d;"
+                                                        @click="handleCancel(data.id)"><i class="fa-solid fa-xmark"></i></a>
+                                                    <p class="sessionFormText me-1">{{ data?.s_name }}</p> |
+                                                    <p class="sessionFormText">{{ data?.c_name }}</p>
+                                                </div>
+                                            </div>
+                                        </perfect-scrollbar>
                                     </div>
                                 </div>
                             </div>
@@ -98,7 +76,7 @@
                         <div class="d-flex justify-content-end">
                             <button type="button" class="modelCancelBtn" data-bs-dismiss="modal">Cancel</button>
                             <button type="button" data-bs-dismiss="modal" @click="handleAddGroup"
-                                class="modelSaveBtn ms-2">Create</button>
+                                class="modelSaveBtn ms-2" :disabled="this.selectedSessions.length === 0">Create</button>
                         </div>
                     </div>
                 </div>
@@ -108,17 +86,17 @@
 </template>
 
 <script>
-import { sessionsList } from '../../services/sessions_services'
+import { getSessionsNames } from '../../services/sessions_services'
 import { VueSpinner } from 'vue3-spinners';
 import { createGroup } from '../../services/group_services';
 import { createToast } from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css';
-import InfiniteScroll from 'vue-infinite-scroll'
+import { PerfectScrollbar } from 'vue3-perfect-scrollbar';
 export default {
     name: 'AddGroup',
     components: {
         VueSpinner,
-        InfiniteScroll
+        PerfectScrollbar
     },
     data() {
         return {
@@ -126,18 +104,26 @@ export default {
                 name: '',
                 sessions: []
             },
-            loading: false,
             sessionsData: [],
-            nextPage: null, // Initial page number
-            loadButton: false
+            selectedSessions: [],
+            searchQuery: '',
         }
+    },
+    computed: {
+        filteredGroupData() {
+            if (!this.searchQuery) {
+                return this.sessionsData;
+            }
+            // Filter groupData based on searchQuery
+            return this.sessionsData.filter(group => group.s_name.toLowerCase().includes(this.searchQuery.toLowerCase()));
+        },
     },
     props: {
         handleGroupId: Function,
         handleGroup: Function
     },
     mounted() {
-        this.handleSessions()
+        this.handleSessionsName()
     },
     methods: {
         async handleAddGroup() {
@@ -158,42 +144,50 @@ export default {
                 console.log(error)
             }
         },
-        async handleSessions() {
+        async handleSessionsCheck($event, id, s_name, c_name) {
+            if ($event.target.checked) {
+                this.form.sessions.push(id);
+                this.selectedSessions.push({ id, s_name, c_name });
+            } else {
+                const index = this.form.sessions.indexOf(id);
+                if (index !== -1) {
+                    this.form.sessions.splice(index, 1);
+                }
+                const index2 = this.selectedSessions.findIndex(item => item.id === id);
+                if (index2 !== -1) {
+                    this.selectedSessions.splice(index2, 1);
+                }
+            }
+        },
+        handleCancel(id) {
+            console.log('cancel-id', id)
+            const index2 = this.selectedSessions.findIndex(item => item.id === id);
+            if (index2 !== -1) {
+                this.selectedSessions.splice(index2, 1);
+                document.getElementById(`sessions-${id}`).checked = false;
+            }
+            const index = this.form.sessions.indexOf(id);
+            if (index !== -1) {
+                this.form.sessions.splice(index, 1);
+            }
+        },
+        async handleSessionsName() {
             try {
-                this.loading = true
-                let res = await sessionsList(1, 200)
-                this.sessionsData = res.data.sessions
-                this.nextPage = res.data.next
-                // this.sessionsData = [...this.sessionsData, ...res.data.sessions];
+                let res = await getSessionsNames()
+                console.log('sessions-name', res)
+                this.sessionsData = res;
             } catch (error) {
                 console.log(error)
-            } finally {
-                this.loading = false
             }
-        },
-        async handleLoadMore() {
-            try {
-                this.loadButton = true
-                let res = await sessionsList(this.nextPage, 200);
-                this.nextPage = res.data.next
-                this.sessionsData = [...this.sessionsData, ...res.data.sessions];
-            } catch (error) {
-                console.error(error);
-            } finally {
-                this.loadButton = false
-            }
-        },
 
-        async handleSessionsCheck($event, id) {
-            if ($event.target.checked) {
-                this.form.sessions.push(id)
-            } else {
-                const index = this.form.sessions.indexOf(id)
-                delete this.form.sessions[index]
-            }
         }
     }
 }
 </script>
 
-<style></style>
+<style>
+.sessionFormText {
+    font-size: 12px;
+    margin-left: 10px;
+}
+</style>
