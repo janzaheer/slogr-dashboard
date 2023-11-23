@@ -77,6 +77,7 @@
 import Header from './common/Header.vue';
 import mapboxgl from 'mapbox-gl';
 import * as turf from '@turf/turf';
+import { v4 as uuidv4 } from 'uuid';
 import { fetchClusters, fetchSessions, fetchAgentlinks, fetchGroups } from '../services/agent_services';
 
 export default {
@@ -302,43 +303,71 @@ export default {
       }
     },
     drawLines(map, lines) {
-      lines.forEach((line, index) => {
-        const uniqueId = `line-${Date.now()}-${index}`;
+      let uniqueId =  "line-" + uuidv4();
+      map.addSource(uniqueId, {
+      
+      type: 'geojson',
 
-        // Create a Bezier spline from the original line coordinates
-        const curvedLine = turf.bezierSpline({
-          type: 'Feature',
-          geometry: {
-            type: 'LineString',
-            coordinates: line.coordinates,
-          },
-        });
+      data: {
+      type: 'FeatureCollection',
+      features: lines['features'],
+      },});
 
-        map.addLayer({
+      
+      console.log(uniqueId);
+      map.addLayer({
           id: uniqueId,
           type: 'line',
-          source: {
-            type: 'geojson',
-            data: curvedLine,
+          source: uniqueId,
+          layout: {
+            'line-join': 'round',
+            'line-cap': 'round',
           },
           paint: {
-            'line-color': line.color,
-            'line-width': 1, // Adjust the line width as needed
+            'line-color': ['get', 'color'],
+            'line-width': 0.2,// Maximum line width at higher zoom levels
+            
           },
         });
 
-        // Add hover and mouse leave event listeners
-        map.on('mouseenter', uniqueId, (e) => {
-          this.handleLineHover(e);
-        });
-        map.on('mouseleave', uniqueId, (e) => {
-          this.resetLineHover(e);
-        });
-      });
+      // lines.forEach((line, index) => {
+      //   const uniqueId = `line-${Date.now()}-${index}`;
+
+      //   // Create a Bezier spline from the original line coordinates
+      //   const curvedLine = turf.bezierSpline({
+      //     type: 'Feature',
+      //     geometry: {
+      //       type: 'LineString',
+      //       coordinates: line.coordinates,
+      //     },
+      //   });
+
+      //   map.addLayer({
+      //     id: uniqueId,
+      //     type: 'line',
+      //     source: {
+      //       type: 'geojson',
+      //       data: curvedLine,
+      //     },
+      //     paint: {
+      //       'line-color': line.color,
+      //       'line-width': 1, // Adjust the line width as needed
+      //     },
+      //   });
+
+      //   // Add hover and mouse leave event listeners
+      //   map.on('mouseenter', uniqueId, (e) => {
+      //     this.handleLineHover(e);
+      //   });
+      //   map.on('mouseleave', uniqueId, (e) => {
+      //     this.resetLineHover(e);
+      //   });
+      // });
     },
     clearLines() {
+    
       const map = this.map;
-
+      
       // Iterate through the layers to find and remove layers with 'line-' prefix
       map.getStyle().layers.forEach((layer) => {
         if (layer.id.startsWith('line-')) {
