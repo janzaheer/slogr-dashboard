@@ -43,3 +43,42 @@ export async function fetchGroups() {
     const resp = await axios.get(`${base_url}/api/groups`, {headers: HEADERS})
     return resp.data
 }
+export async function fetchGroupData() {
+    let resp = await axios.get(`${base_url}/api/groups`, {headers: HEADERS})
+    const linkData = {};
+    for (let i = 0; i < resp.data.length; i++) {
+        const group = resp.data[i];
+        try {
+          const linksResp = await axios.get(
+            `${base_url}/api/links?group=${group.id}`,
+            { headers: HEADERS }
+          );
+          linkData[group.id] = linksResp.data;
+        } catch (linksError) {
+          console.error('Error fetching links:', linksError);
+          throw linksError;
+        }
+      }
+    
+    return linkData
+}
+
+export async function fetchClustersData() {
+    let resp = await axios.get(`${base_url}/api/groups`, {headers: HEADERS})
+    const clusterdata = {};
+    for (let i = 0; i < resp.data.length; i++) {
+        const group = resp.data[i];
+        try {
+          const linksResp = await axios.get(
+            `${base_url}/api/cluster?group=${group.id}`,
+            { headers: HEADERS }
+          );
+          clusterdata[group.id] = linksResp.data;
+        } catch (linksError) {
+          console.error('Error fetching links:', linksError);
+          throw linksError;
+        }
+      }
+    
+    return clusterdata
+}

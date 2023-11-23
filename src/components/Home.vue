@@ -78,13 +78,15 @@ import Header from './common/Header.vue';
 import mapboxgl from 'mapbox-gl';
 import * as turf from '@turf/turf';
 import { v4 as uuidv4 } from 'uuid';
-import { fetchClusters, fetchSessions, fetchAgentlinks, fetchGroups } from '../services/agent_services';
+import { fetchClusters, fetchSessions, fetchAgentlinks, fetchGroups,fetchGroupData,fetchClustersData } from '../services/agent_services';
 
 export default {
   data() {
     return {
       map: null,
       groups: [],
+      groupdata:{},
+      clusterdata:{},
       clusters: [],
       groupSwitches: {} 
     };
@@ -103,7 +105,14 @@ export default {
     const nav = new mapboxgl.NavigationControl();
     this.map.addControl(nav, "bottom-right");
     this.handleGroups();
+    this.handleClusterData();
+    this.handleGroupData();
     this.map.on('load', () => {
+
+      
+
+     
+
       this.showClusters(clusters);
       // inspect a cluster on click
       this.map.on('click', 'clusters', (e) => {
@@ -191,19 +200,43 @@ export default {
       loader.style.display = 'none';
     },
     async handleClusters(groupId) {
-      const respData = await fetchClusters(groupId);
+      let respData;
+      if(groupId == ''){
+        respData = await fetchClusters('');
+      }else{
+         respData = this.clusterdata[groupId];
+      }
       return respData;
     },
     async handleSessions(groupId) {
-      const respData = await fetchSessions(groupId);
+      const respData = this.groupdata[groupId];
       return respData;
     },
     async handleAgentlinks(id) {
       const respData = await fetchAgentlinks(id);
       return respData;
     },
+    async handleGroupData() {
+      try {
+        const response = await fetchGroupData();
+        // const response = await fetchGroups();
+        this.groupdata = response;
+      } catch (error) {
+        console.error('Error fetching groups:', error);
+      }
+    },
+    async handleClusterData() {
+      try {
+        const response = await fetchClustersData();
+        // const response = await fetchGroups();
+        this.clusterdata = response;
+      } catch (error) {
+        console.error('Error fetching groups:', error);
+      }
+    },
     async handleGroups() {
       try {
+        // const response = await fetchGroupData();
         const response = await fetchGroups();
         this.groups = response;
       } catch (error) {
