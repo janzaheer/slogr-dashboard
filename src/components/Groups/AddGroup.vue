@@ -25,7 +25,7 @@
                                         <div class="card-header">
                                             List of Sessions
                                         </div>
-                                        <div class="mt-1 mx-2">
+                                        <div class="mt-1 mx-5">
                                             <input type="text" class="form-control" id="exampleFormControlInput1"
                                                 v-model="searchQuery" placeholder="search by server name">
                                         </div>
@@ -75,8 +75,8 @@
                     <div class="modal-footer">
                         <div class="d-flex justify-content-end">
                             <button type="button" class="modelCancelBtn" data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" data-bs-dismiss="modal" @click="handleAddGroup"
-                                class="modelSaveBtn ms-2" :disabled="this.selectedSessions.length === 0">Create</button>
+                            <button type="button" data-bs-dismiss="modal" @click="handleAddGroup" class="modelSaveBtn ms-2"
+                                :disabled="this.selectedSessions.length === 0">Create</button>
                         </div>
                     </div>
                 </div>
@@ -114,13 +114,12 @@ export default {
             if (!this.searchQuery) {
                 return this.sessionsData;
             }
-            // Filter groupData based on searchQuery
             return this.sessionsData.filter(group => group.s_name.toLowerCase().includes(this.searchQuery.toLowerCase()));
         },
     },
     props: {
-        handleGroupId: Function,
-        handleGroup: Function
+        handleGroupsSessionsData: Function,
+        handleGroupList: Function
     },
     mounted() {
         this.handleSessionsName()
@@ -133,16 +132,32 @@ export default {
             }
             try {
                 await createGroup(payload)
-                this.handleGroup()
-                this.handleGroupId()
+                this.form.name = '';
+                // this.form.sessions = [];
+
+                this.selectedSessions.forEach(session => {
+                    const id = session.id;
+
+                    // Assuming you have a checkbox with an id like 'sessions-1', 'sessions-2', etc.
+                    const checkboxElement = document.getElementById(`sessions-${id}`);
+
+                    if (checkboxElement) {
+                        checkboxElement.checked = false;
+                    }
+                });
+                this.selectedSessions = [];
+                this.handleGroupList()
+                this.handleGroupsSessionsData()
                 createToast(`add Group successfully`, {
                     type: 'success',
                     position: 'top-right',
                     transition: 'zoom',
                 });
+
             } catch (error) {
                 console.log(error)
             }
+
         },
         async handleSessionsCheck($event, id, s_name, c_name) {
             if ($event.target.checked) {
@@ -174,8 +189,8 @@ export default {
         async handleSessionsName() {
             try {
                 let res = await getSessionsNames()
-                console.log('sessions-name', res)
                 this.sessionsData = res;
+                console.log('sessionsName',res)
             } catch (error) {
                 console.log(error)
             }
