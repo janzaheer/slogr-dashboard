@@ -64,7 +64,7 @@ const router = createRouter({
       component: SignUp
     },
     {
-      path: '/sentinelReports',
+      path: '/sentinelReports/:id',
       name: 'SentinelReports',
       component: SentinelReports
     },

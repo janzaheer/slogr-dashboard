@@ -14,6 +14,11 @@ export async function agentList(page=1) {
     return resp.data
 }
 
+export async function agentListForm(size=1000) {
+    const resp = await axios.get(`${base_url}/api/agents?size=${size}`, {headers: HEADERS})
+    return resp.data
+}
+
 export async function createAgent(payload) {
     const resp = await axios.post(`${base_url}/api/add-agent`, payload, {headers: HEADERS})
     return resp.data
@@ -59,7 +64,7 @@ export async function fetchGroupData() {
           throw linksError;
         }
       }
-    
+
     return linkData
 }
 
@@ -79,6 +84,10 @@ export async function fetchClustersData() {
           throw linksError;
         }
       }
-    
+
     return clusterdata
+}
+export async function agentRefSessions(id){
+    const resp = await axios.get(`${base_url}/api/get-ref-sessions?aid=` + id, {headers: HEADERS})
+    return resp.data
 }

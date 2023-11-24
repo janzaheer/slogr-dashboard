@@ -74,6 +74,6 @@ a.router-link-exact-active.nav-linker{
     color: white;
     background-color: var(--primary_color); 
     font-size: 15px;
-    padding: 3px 25px;
+    padding: 3px 76px;
 }
 </style>

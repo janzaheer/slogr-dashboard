@@ -1,31 +1,3 @@
-<script>
-import Header from '../common/Header.vue';
-export default {
-    name: 'Sessions',
-    components: {
-        Header
-    }
-}
-</script>
-
-<style>
-
-.addBtnSessions {
-    background-color: var(--white_color);
-    border-radius: 6px;
-    border: 1px solid  var(--primary_color);
-    padding: 7px 15px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    color: var(--primary_color);
-}
-
-.addBtnSessions:hover {
-    background-color: var(--primary_color_Hover);
-    color: var(--white_color);
-}
-</style>
-
 <template>
     <!-- <Header/> -->
     <div class="pageHeight">
@@ -46,10 +18,7 @@ export default {
                             <div class="d-flex align-items-center">
                                 <h6 class="mx-1 mt-2 text-muted">Home </h6>
                                 <h6 class="me-4 mt-2"> - Sessions</h6>
-                                <button class="addBtnSessions me-2"> <i class="fa-solid fa-plus fa-lg"></i> Add Schedule
-                                    Sessions</button>
-                                <button class="addBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
-                                        class="fa-solid fa-plus fa-lg"></i> Add New Sessions</button>
+                                <AddSessions :getSessions="getSessions" />
                                 <div class="mx-3"><i class="fa-solid fa-ellipsis fa-2xl"></i></div>
                             </div>
                         </div>
@@ -59,326 +28,79 @@ export default {
             <div class="container-fluid tableDiv">
                 <div class="card mx-md-2 mt-4 mb-5">
                     <div class="card-body">
-                        <div class="table-responsive">
+                        <div class="text-center m-5" v-if="loading">
+                            <VueSpinner size="80" color="#8cb63d" />
+                        </div>
+                        <div class="table-responsive" v-else>
                             <table class="table table-striped table-hover text-center">
                                 <thead>
                                     <tr>
-                                        <th scope="col"><a href="#" class="tableHead">End-Point A</a> <img src="../../assets/group.svg" alt=""></th>
-                                        <th scope="col"><a href="#"
-                                                class="tableHead">End-Point
-                                                B</a><img src="../../assets/group.svg" alt="">
+                                        <th scope="col"><a href="#" class="tableHead">Server Name</a></th>
+                                        <th scope="col"><a href="#" class="tableHead">Client Name</a>
                                         </th>
-                                        <th scope="col"><a href="#"
-                                                class="tableHead">Group </a>
-                                            <img src="../../assets/group.svg" alt="">
+                                        <th scope="col"><a href="#" class="tableHead">Packet Name</a>
+
                                         </th>
-                                        <th scope="col"><a href="#"
-                                                class="tableHead"> Number of
-                                                Sessions <br>
-                                                <span>Run in List</span>
-                                            </a> <img src="../../assets/group.svg" alt="">
+                                        <th scope="col"><a href="#" class="tableHead"> Number Packets</a>
                                         </th>
-                                        <th scope="col"><a href="#"
-                                                class="tableHead">Message
-                                                for Sessions</a>
+                                        <th scope="col"><a href="#" class="tableHead">Packet Interval</a>
                                         </th>
-                                        <th scope="col"><a href="#"
-                                                class="tableHead">Frequency</a>
+                                        <th scope="col"><a href="#" class="tableHead">W Time</a>
                                         </th>
-                                        <th scope="col"><a href="#"
-                                                class="tableHead">Payload Length</a> </th>
-                                        <th scope="col"><a href="#"
-                                                class="tableHead">DSCP</a> </th>
+                                        <th scope="col"><a href="#" class="tableHead">Packet Length</a> </th>
+                                        <th scope="col"><a href="#" class="tableHead">DSCP</a> </th>
                                         <th scope="col"> </th>
                                         <th scope="col"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <tr v-for="data in sessionsData" :key="data.id">
                                         <td>
-                                            <p class="tableP">Demo-Sentinel-1</p>
+                                            <p class="tableP">{{ data?.s_name }}</p>
                                         </td>
                                         <td>
-                                            <p class="tableP">US west 2</p>
+                                            <p class="tableP">{{ data?.c_name }}</p>
                                         </td>
                                         <td>
-                                            <p class="tableP">Demo PCo1P</p>
+                                            <p class="tableP">{{ data?.p_name }}</p>
                                         </td>
                                         <td>
-                                            <p class="tableP">1.0</p>
+                                            <p class="tableP">{{ data?.n_packets }}</p>
                                         </td>
                                         <td>
-                                            <p class="tableP">25.0</p>
+                                            <p class="tableP">{{ data?.p_interval }}</p>
                                         </td>
                                         <td>
-                                            <p class="tableP">1.0</p>
+                                            <p class="tableP">{{ data.w_time }}</p>
                                         </td>
                                         <td>
-                                            <p class="tableP">1.0</p>
+                                            <p class="tableP">{{ data.p_size }}</p>
                                         </td>
                                         <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                <i class="fa-solid fa-circle-play"></i></a></td>
-                                        <td class="fs-5 dropstart"><a href="#" class="text-decoration-none text-dark tableP" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fa-solid fa-ellipsis"></i></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-pen-to-square"></i> Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-eye"></i> Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-trash-can"></i> Delete</a></li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">Demo-Sentinel-1</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">US west 2</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">Demo PCo1P</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">25.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
+                                            <p class="tableP">{{ data.dscp }}</p>
                                         </td>
                                         <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
                                                 <i class="fa-solid fa-circle-play"></i></a></td>
-                                        <td class="fs-5 dropstart"><a href="#" class="text-decoration-none text-dark tableP" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <td class="fs-5 dropstart">
+                                            <a href="#" class="text-decoration-none text-dark tableP"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
                                                 <i class="fa-solid fa-ellipsis"></i></a>
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-pen-to-square"></i> Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-eye"></i> Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-trash-can"></i> Delete</a></li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">Demo-Sentinel-1</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">US west 2</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">Demo PCo1P</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">25.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                <i class="fa-solid fa-circle-play"></i></a></td>
-                                        <td class="fs-5 dropstart"><a href="#" class="text-decoration-none text-dark tableP" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fa-solid fa-ellipsis"></i></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-pen-to-square"></i> Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-eye"></i> Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-trash-can"></i> Delete</a></li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">Demo-Sentinel-1</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">US west 2</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">Demo PCo1P</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">25.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                <i class="fa-solid fa-circle-play"></i></a></td>
-                                        <td class="fs-5 dropstart"><a href="#" class="text-decoration-none text-dark tableP" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fa-solid fa-ellipsis"></i></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-pen-to-square"></i> Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-eye"></i> Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-trash-can"></i> Delete</a></li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">Demo-Sentinel-1</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">US west 2</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">Demo PCo1P</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">25.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                <i class="fa-solid fa-circle-play"></i></a></td>
-                                        <td class="fs-5 dropstart"><a href="#" class="text-decoration-none text-dark tableP" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fa-solid fa-ellipsis"></i></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-pen-to-square"></i> Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-eye"></i> Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-trash-can"></i> Delete</a></li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">Demo-Sentinel-1</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">US west 2</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">Demo PCo1P</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">25.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                <i class="fa-solid fa-circle-play"></i></a></td>
-                                        <td class="fs-5 dropstart"><a href="#" class="text-decoration-none text-dark tableP" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fa-solid fa-ellipsis"></i></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-pen-to-square"></i> Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-eye"></i> Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-trash-can"></i> Delete</a></li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">Demo-Sentinel-1</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">US west 2</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">Demo PCo1P</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">25.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                <i class="fa-solid fa-circle-play"></i></a></td>
-                                        <td class="fs-5 dropstart"><a href="#" class="text-decoration-none text-dark tableP" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fa-solid fa-ellipsis"></i></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-pen-to-square"></i> Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-eye"></i> Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-trash-can"></i> Delete</a></li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="tableP">Demo-Sentinel-1</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">US west 2</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">Demo PCo1P</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">25.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">1.0</p>
-                                        </td>
-                                        <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                <i class="fa-solid fa-circle-play"></i></a></td>
-                                        <td class="fs-5 dropstart"><a href="#" class="text-decoration-none text-dark tableP" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fa-solid fa-ellipsis"></i></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-pen-to-square"></i> Edit</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-eye"></i> Details</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-trash-can"></i> Delete</a></li>
+                                                <li>
+                                                    <a href="#" class="dropdown-item" data-bs-toggle="modal"
+                                                        data-bs-target="#staticBackdrop1"
+                                                        @click="handleEditModel(data.id, data.s_name, data.c_name, data.p_name, data.n_packets,
+                                                            data.p_interval, data.w_time, data.dscp, data.count, data.schedule, data.p_size)"><i
+                                                            class="fa-regular fa-pen-to-square"></i>
+                                                        Edit</a>
+                                                </li>
+                                                <li>
+                                                    <RouterLink :to="`/sentinelReports/` + data.id" class="dropdown-item"><i
+                                                            class="fa-regular fa-eye me-1 text-dark"></i>Details
+                                                    </RouterLink>
+                                                </li>
+                                                <li><a class="dropdown-item" href="#" v-on:click="handleDelete(data.id)"><i
+                                                            class="fa-regular fa-trash-can"></i> Delete</a></li>
                                             </ul>
                                         </td>
                                     </tr>
@@ -397,13 +119,17 @@ export default {
                             </div>
                             <div>
                                 <div class="pagination">
-                                    <button class="prevBtn"><i class="fa-solid fa-angle-left"></i> Prev</button>
-                                    <div class="pageNumber">1</div>
-                                    <div class="pageNumber">2</div>
-                                    <div class="pageNumber pageBtn">3</div>
-                                    <div class="pageNumber">4</div>
-                                    <div class="pageNumber">5</div>
-                                    <button class="nextBtn">Next <i class="fa-solid fa-angle-right"></i></button>
+                                    <button class="prevBtn" :disabled="pages.previousPage === 0"
+                                        v-on:click="getSessions(pages.previousPage)"><i class="fa-solid fa-angle-left"></i>
+                                        Prev</button>
+                                    <div class="pageNumber">-</div>
+                                    <div class="pageNumber">-</div>
+                                    <div class="pageNumber pageBtn">{{ pages.currentPage }}</div>
+                                    <div class="pageNumber">-</div>
+                                    <div class="pageNumber">-</div>
+                                    <button class="nextBtn" :disabled="pages.nextPage === 0"
+                                        v-on:click="getSessions(pages.nextPage)">Next <i
+                                            class="fa-solid fa-angle-right"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -463,90 +189,85 @@ export default {
             </div>
         </div>
     </div>
-
     <!-- Modal  edit-->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdrop1Label" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-body">
-                    <div class="my-2 text-center">
-                        <h2 class="text-secondary">New Sessions</h2>
-                        <p class="modelText">Fill and select the new session Field</p>
+                <div class="modal-header d-flex justify-content-center align-items-center">
+                    <div class="">
+                        <h2 class="text-dark">Edit Session {{ this.form.id }} {{ this.form.p_size }}</h2>
                     </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
                     <div class="">
                         <div class="mb-4">
                             <label for="exampleFormControlInput1" class="form-label ms-1">Form*</label>
-                            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                            <select v-model="selectedAgentId" class="form-select form-select-lg mb-3 custom-select"
+                                aria-label=".form-select-lg example">
                                 <option class="text-secondary" selected disabled>please select sender sentinel</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                <option v-for="agent in agents" :key="agent.id" :value="agent.id">{{ agent.name }}
+                                </option>
                             </select>
                         </div>
                         <div class="mb-4">
                             <label for="exampleFormControlInput1" class="form-label ms-1">To*</label>
-                            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                <option class="text-secondary" selected disabled>please select receiver sentinel</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                            <select v-model="selectedClientId" class="form-select form-select-lg mb-3"
+                                aria-label=".form-select-lg example">
+                                <option class="text-secondary" disabled>please select receiver sentinel
+                                </option>
+                                <option v-for="client in clients" :key="client.id" :value="client.id">{{ client.name }}
+                                </option>
                             </select>
                         </div>
                         <div class="mb-4">
                             <label for="exampleFormControlInput1" class="form-label ms-1">Monitoring Profile*</label>
-                            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                <option class="text-secondary" selected disabled>select here</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                            <select v-model="selectedProfile" class="form-select form-select-lg mb-3 custom-select"
+                                aria-label=".form-select-lg example">
+                                <option class="text-secondary" disabled>select here</option>
+                                <option v-for="profile in profiles" :key="profile.id" :value="profile.id">{{ profile.name }}
+                                </option>
                             </select>
                         </div>
                         <div class="mb-3">
-                            <div class="">
-                                <label for="exampleFormControlInput1" class="form-label">Scheduel</label>
-                                <input type="date" class="form-control form-control-lg" id="exampleFormControlInput1"
-                                    placeholder="00:00:00">
-                            </div>
-                        </div>
-                        <div class="mb-3 d-flex justify-content-around align-item-center py-3 rounded"
-                            style="background-color: #f3f3f3;">
-                            <div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                        id="flexRadioDefault11">
-                                    <label class="form-check-label" for="flexRadioDefault11">
-                                        VOIP
-                                    </label>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                        id="flexRadioDefault12">
-                                    <label class="form-check-label" for="flexRadioDefault12">
-                                        Streaming
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
                             <div class="row g-2">
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control form-control-lg" placeholder="Test Sessions*"
-                                        aria-label="First name">
+                                <div class="col-md-12">
+                                    <label for="exampleFormControlInput1" class="form-label ms-1">Schedule*</label>
+                                    <input type="number" class="form-control form-control-lg" placeholder="Enter Schedule"
+                                        v-model="this.form.schedule" name="schedule">
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control form-control-lg" placeholder="Last name"
-                                        aria-label="Text Messages (1-1000)">
+                                    <label for="exampleFormControlInput1" class="form-label ms-1">Count*</label>
+                                    <input type="number" class="form-control form-control-lg" placeholder="Enter Count"
+                                        v-model="this.form.count" name="count">
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control form-control-lg" placeholder="Last name"
-                                        aria-label="TPayload Length (40-1456)">
+                                    <label for="exampleFormControlInput1" class="form-label ms-1">Number Of
+                                        Packets*</label>
+                                    <input type="number" class="form-control form-control-lg" placeholder="Enter No-packets"
+                                        v-model="this.form.n_packets" name="n_packets">
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control form-control-lg" placeholder="Last name"
-                                        aria-label="Intervel (0-1000ms)">
+                                    <label for="exampleFormControlInput1" class="form-label ms-1">Packet
+                                        Interval*</label>
+                                    <input type="number" class="form-control form-control-lg" placeholder="Enter P-Interval"
+                                        v-model="this.form.p_interval" name="p_interval">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="exampleFormControlInput1" class="form-label ms-1">Wait Time*</label>
+                                    <input type="number" class="form-control form-control-lg" placeholder="Enter W Time"
+                                        v-model="this.form.w_time" name="w_time">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="exampleFormControlInput1" class="form-label ms-1">DSCP*</label>
+                                    <input type="number" class="form-control form-control-lg" placeholder="Enter Dscp"
+                                        v-model="this.form.dscp" name="dscp">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="exampleFormControlInput1" class="form-label ms-1">Packet Size*</label>
+                                    <input type="number" class="form-control form-control-lg" placeholder="Enter P_Size"
+                                        name="p_size" v-model="this.form.p_size">
                                 </div>
                             </div>
                         </div>
@@ -555,10 +276,182 @@ export default {
                 <div class="modal-footer">
                     <div class="d-flex justify-content-end">
                         <button type="button" class="modelCancelBtn" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="modelSaveBtn ms-2">Create</button>
+                        <button type="button" data-bs-dismiss="modal" @click="handleEditSessions"
+                            class="modelSaveBtn ms-2">Save</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </template>
+
+<script>
+import Header from '../common/Header.vue';
+import { sessionsList, deleteSessions, updateSessions } from '../../services/sessions_services';
+import { ProfileListForm } from '../../services/monitor_profile_Services';
+import { agentListForm } from '../../services/agent_services';
+import { VueSpinner } from 'vue3-spinners';
+import AddSessions from './AddSessions.vue';
+import { RouterLink } from 'vue-router';
+import { createToast } from 'mosha-vue-toastify';
+import 'mosha-vue-toastify/dist/style.css';
+export default {
+    name: 'Sessions',
+    components: {
+        Header,
+        VueSpinner,
+        AddSessions
+    },
+    data() {
+        return {
+            sessionsData: [],
+            loading: false,
+            pages: {
+                currentPage: 1,
+                previousPage: 1,
+                nextPage: 1
+            },
+            form: {
+                n_packets: null,
+                p_interval: null,
+                w_time: null,
+                dscp: null,
+                count: null,
+                schedule: null,
+                p_size: null,
+            },
+            selectedProfile: 'select here', // Will store the selected profile id
+            profiles: [],
+            agents: [],
+            selectedAgentId: 'please select sender sentinel',
+            clients: [],
+            selectedClientId: 'please select receiver sentinel'
+        }
+    },
+    mounted() {
+        this.getSessions();
+        this.monitor()
+        this.server()
+    },
+    methods: {
+        async getSessions(page = 1) {
+            try {
+                this.loading = true
+                let res = await sessionsList(page)
+                this.sessionsData = res.data.sessions
+                this.pages.previousPage = res?.data?.prev || 0
+                this.pages.currentPage = this.pages.previousPage + 1
+                this.pages.nextPage = res?.data?.next || 0
+                console.log('sessions', res.data.sessions)
+            } catch (error) {
+                console.log(error)
+            } finally {
+                this.loading = false
+            }
+        },
+        async handleDelete(id) {
+            const payload = {
+                delete: id
+            }
+            try {
+                await deleteSessions(payload)
+                this.getSessions()
+                createToast(`session delete`, {
+                    type: 'success',
+                    position: 'top-right',
+                    transition: 'zoom',
+                });
+            } catch (error) {
+                createToast(`delete error`, {
+                    type: 'danger',
+                    position: 'top-right',
+                    transition: 'zoom',
+                });
+                console.log(error)
+            }
+        },
+        handleEditModel(id, s_name, c_name, p_name, n_packets, p_interval, w_time, dscp, count, schedule, p_size) {
+            this.form.id = id
+            this.form.n_packets = n_packets
+            this.form.p_interval = p_interval
+            this.form.w_time = w_time
+            this.form.dscp = dscp
+            this.form.count = count
+            this.form.schedule = schedule
+            this.form.p_size = p_size
+            this.selectedProfile = this.profiles.find(profile => profile.name === p_name)?.id;
+            this.selectedClientId = this.clients.find(client => client.name === c_name)?.id;
+            this.selectedAgentId = this.agents.find(agent => agent.name === s_name)?.id;
+        },
+        async handleEditSessions() {
+            const payload = {
+                serve: this.selectedAgentId,
+                client: this.selectedClientId,
+                profile: this.selectedProfile,
+                schedule: this.form.schedule,
+                count: this.form.count,
+                n_packets: this.form.n_packets,
+                p_interval: this.form.p_interval,
+                w_time: this.form.w_time,
+                dscp: this.form.dscp,
+                p_size: this.form.p_size,
+                edit: true,
+                aid: this.form.id
+            }
+            try {
+                await updateSessions(payload)
+                this.getSessions();
+                createToast(`session update successfully`, {
+                    type: 'success',
+                    position: 'top-right',
+                    transition: 'zoom',
+                });
+            } catch (error) {
+                createToast(`session not update something is wrong`, {
+                    type: 'danger',
+                    position: 'top-right',
+                    transition: 'zoom',
+                });
+                console.log(error)
+            }
+            console.log('edit', payload)
+        },
+        async monitor(size = 1000) {
+            try {
+                let res = await ProfileListForm(size)
+                this.profiles = res.profiles;
+
+            } catch (error) {
+                console.log(error)
+            }
+        },
+        async server(size = 1000) {
+            try {
+                let res = await agentListForm(size)
+                this.agents = res.data.agents
+                this.clients = res.data.agents
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    }
+}
+</script>
+
+<style>
+.addBtnSessions {
+    background-color: var(--white_color);
+    border-radius: 6px;
+    border: 1px solid var(--primary_color);
+    padding: 7px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: var(--primary_color);
+}
+
+.addBtnSessions:hover {
+    background-color: var(--primary_color_Hover);
+    color: var(--white_color);
+}
+</style>
+
