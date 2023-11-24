@@ -133,14 +133,9 @@ export default {
             try {
                 await createGroup(payload)
                 this.form.name = '';
-                // this.form.sessions = [];
-
                 this.selectedSessions.forEach(session => {
                     const id = session.id;
-
-                    // Assuming you have a checkbox with an id like 'sessions-1', 'sessions-2', etc.
                     const checkboxElement = document.getElementById(`sessions-${id}`);
-
                     if (checkboxElement) {
                         checkboxElement.checked = false;
                     }
@@ -190,7 +185,6 @@ export default {
             try {
                 let res = await getSessionsNames()
                 this.sessionsData = res;
-                console.log('sessionsName',res)
             } catch (error) {
                 console.log(error)
             }
