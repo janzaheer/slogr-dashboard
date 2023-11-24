@@ -220,20 +220,28 @@ export default {
             console.log('payload', payload)
         },
         async handleUpdateModel(id, name) {
-            console.log('update-id', id, name)
-            this.form.id = id,
-                this.form.name = name
-            const resp = await GroupsSessionsData(id)
+            this.form.id = id;
+            this.form.name = name;
+            const resp = await GroupsSessionsData(id);
+            const uniqueSessionIds = new Set(this.form.selectedData);
             resp.group.sessions.forEach(data => {
-                this.form.selectedData.push(data.id);
-                const id = data.id
-                const s_name = data.s_name
-                const c_name = data.c_name
-                this.selectedSessions.push({ id, s_name, c_name });
-                document.getElementById('edit-sessions-' + id).checked = true
-                
-            });
+                const sessionId = data.id;
 
+                if (!uniqueSessionIds.has(sessionId)) {
+                    uniqueSessionIds.add(sessionId);
+
+                    const s_name = data.s_name;
+                    const c_name = data.c_name;
+                    if (!this.selectedSessions.some(session => session.id === sessionId)) {
+                        this.selectedSessions.push({ id: sessionId, s_name, c_name });
+                    }
+                    const checkbox = document.getElementById('edit-sessions-' + sessionId);
+                    if (checkbox) {
+                        checkbox.checked = true;
+                    }
+                }
+            });
+            this.form.selectedData = Array.from(uniqueSessionIds);
         },
         async handleSessionsName() {
             try {

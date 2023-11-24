@@ -73,10 +73,10 @@
                                                             <td>
                                                                 <p class="tableP">{{ data?.p_size }}</p>
                                                             </td>
-                                                            <td class="fs-5 dropstart"><a href="#"
-                                                                    class="text-decoration-none text-dark tableP"
-                                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                                    <i class="fa-solid fa-chevron-right"></i></a>
+                                                            <td class="fs-5 dropstart">
+                                                                <RouterLink :to="`/sentinelReports/` + data.id" class="text-decoration-none text-dark tableP">
+                                                                    <i class="fa-solid fa-chevron-right"></i>
+                                                                </RouterLink>
                                                             </td>
                                                         </tr>
                                                     </tbody>
