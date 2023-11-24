@@ -2,7 +2,7 @@ import axios from "axios"
 
 let base_url = import.meta.env.VITE_BASE_URL
 
-let TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiODdiMjNjYTlhZmJkZDRhZWY5ZjQ4NmM4MzQwYzgxNTJjMzQ1MGM3MzJhOGFkMjQ4MWNlZTBiNGQ0OTNmYzM2YTIyMzY2NzE5MGVjYWZhZTUiLCJpYXQiOjE2OTc0MTUxMzEuOTQyMTAyLCJuYmYiOjE2OTc0MTUxMzEuOTQyMTA3LCJleHAiOjE3MjkwMzc1MzEuODk4OTc0LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.jpzcPuDShzJ0XziTSq1SxjtWsJPPU4Q3gM9uxATvKMKELPThEZKAzkknmhfwiE0B6bjwqU2Ne0AH4z5XY9cO2Cuj1c9cHtLFXj0fqS3mvssBY0OosOTYyybzc0QUqURHUTc6uY2MGbseR6JiBnnjSHRJpB1K-SUgAuFfJFQQDI35_N-5FYSaUclQYDduJr2s2JjWcuMXdO9tDz_BWW0Tj-QNGW-2JNxAJu8c5YE32S7Q6bq3ytPwWm31fBZQskNfoIwny8T1AM5eab4BIzSPAiOhsEEu3_JjHH12BSlt3sHFeYIJ9BMtoRJ5tzjSZtq5wRhVgWlYUB1SS1_teXQ5c8AJWMV0MMGGNwxegzefVa2DbZ-N-lDScttq28EuKx9JcKF3llpMm19zKtGTQaZ9c54iBmW3WRpfLLJxi8yjWC5pvkEExyDUdjrlT7lmvv4MB-LP7QtNATg2NqnzQ9GMoQjTpR3TKyJiMPIdKHe2FjmmVTB1nALyalKYx4IrnOKsCWbvEG6kgkBksFtXkACdAsTKF2TNsgWj392RJqchLpwYbAru5JRW77LiWN8ovhtUqHy5TdnPK8VBwinG1dQWKG6aDp0_3s6_yr5SPx_wne4KCOg4uNC4YnoKT1CVPuPLu_u_cj0ZH2zgTUid57D4uU3-JKqHqS2kFYxKiC0xMTE"
+let TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMDNmYjU2MWM3YmNmMzM4MDM4ZjU4OTMyMjhkZWMyMzAwMDNmMjczNTI5ZjY3OGIzMWMyYTBkNzRjNTllOTlkMmEzODE2NTRiYTYxZWI2N2IiLCJpYXQiOjE3MDA3Mzk3ODQuNzE3NzA1LCJuYmYiOjE3MDA3Mzk3ODQuNzE3NzA5LCJleHAiOjE3MzIzNjIxODQuNzE1MjM2LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.YxOZ0AkmGwp30daEGOs3S5NH6WjPRbXyKLnsEnkSlhTOwFTBe0LaG9bdHTJWHNNrvWVm_iAWEAZHoYN57S22BpVXAYm7lXHoPZvqxcZ5ui0GatwY2OXHd-F0YRGL-RX232epdYZ9rMjZIPiahwXpckv_6x7RFLu7DS9dRfGcMGWOySB9t1oI7Su6N2HHtY7frxzXe1v1-a862MHsyVxdDUEDVLY1qsu7nHciUg4d1NlFA4n6ux3BZb8_ur4i7ZYOsV5mz8Fvv2XD3qDYrjBs2b4AdOnpXXlbW7nC9VcdvDePAFTlGpi-p4NBJ8mjtYv67l5VQEQAAmIKR18RHEyWBxRkIWm_MKindGiVjTkOfSemOS6pZQ0fJAe4zV_70l4RPy3dacwal5e_xxAHFTkQqxYODRLcQDxOHIKcMKbOW7u2TnImVM2bDvtx7LuXiUHfwCDZYkQKMBmdjb6UNZ2O_mMe0oZL9Dk35oeA6JPo2hqlkCA4Z5yOR6zynv06Rb4GRozmHOO4AN4ueWiTyQ5KUPYR4WFLpXPxQIL3hV2gPM-1EOEQa88pkLUOoAldMXFnZwOBjgI6W_ZTBZA5fZGtRg14LRWnNovwCQii-JbbnxjgYWn8sfDLzLva8_P8z852G-zpaVZIYn8XJA8pfibggSRiv3m9-Ip0QyjPllEabFQ"
 
 
 let HEADERS = {
@@ -42,4 +42,43 @@ export async function fetchAgentlinks(id) {
 export async function fetchGroups() {
     const resp = await axios.get(`${base_url}/api/groups`, {headers: HEADERS})
     return resp.data
+}
+export async function fetchGroupData() {
+    let resp = await axios.get(`${base_url}/api/groups`, {headers: HEADERS})
+    const linkData = {};
+    for (let i = 0; i < resp.data.length; i++) {
+        const group = resp.data[i];
+        try {
+          const linksResp = await axios.get(
+            `${base_url}/api/links?group=${group.id}`,
+            { headers: HEADERS }
+          );
+          linkData[group.id] = linksResp.data;
+        } catch (linksError) {
+          console.error('Error fetching links:', linksError);
+          throw linksError;
+        }
+      }
+    
+    return linkData
+}
+
+export async function fetchClustersData() {
+    let resp = await axios.get(`${base_url}/api/groups`, {headers: HEADERS})
+    const clusterdata = {};
+    for (let i = 0; i < resp.data.length; i++) {
+        const group = resp.data[i];
+        try {
+          const linksResp = await axios.get(
+            `${base_url}/api/cluster?group=${group.id}`,
+            { headers: HEADERS }
+          );
+          clusterdata[group.id] = linksResp.data;
+        } catch (linksError) {
+          console.error('Error fetching links:', linksError);
+          throw linksError;
+        }
+      }
+    
+    return clusterdata
 }
