@@ -19,7 +19,7 @@
                             <div class="d-flex align-items-center">
                                 <h6 class="mx-1 mt-2 text-muted">Home </h6>
                                 <h6 class="me-4 mt-2"> - Groups</h6>
-                                <AddGroup :handleGroup="handleGroup" :handleGroupId="handleGroupId" />
+                                <AddGroup :handleGroupList="handleGroupList" :handleGroupsSessionsData="handleGroupsSessionsData" />
                                 <div class="mx-3"><i class="fa-solid fa-ellipsis fa-2xl"></i></div>
                             </div>
                         </div>
@@ -37,8 +37,8 @@
                     <div class="card-body">
                         <div class="row g-2">
                             <div class="col-2">
-                                <GroupSidebar @groupid="handleGroupId" :groupData="groupData" :handleGroup="handleGroup"
-                                    :handleGroupId="handleGroupId" />
+                                <GroupSidebar @groupid="handleGroupId" :groupData="groupData"
+                                    :handleGroupList="handleGroupList" :handleGroupsSessionsData="handleGroupsSessionsData" />
                             </div>
                             <div class="col-10">
                                 <div class="card" style="height: 100vh;">
@@ -60,7 +60,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="data in groupListData" :key="data.id">
+                                                        <tr v-for="data in groupListSessionsData" :key="data.id">
                                                             <td>
                                                                 <p class="tableP">{{ data?.c_name }}</p>
                                                             </td>
@@ -97,12 +97,12 @@
 <script>
 import { RouterLink } from 'vue-router';
 import Header from '../common/Header.vue';
-import { getGroups, GroupsData } from '../../services/group_services';
+import { getGroups, GroupsSessionsData } from '../../services/group_services';
 import GroupSidebar from '../Groups/GroupSidebar.vue';
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar';
 import { VueSpinner } from 'vue3-spinners';
 import AddGroup from './AddGroup.vue';
-import InfiniteScroll from 'vue-infinite-scroll'
+
 export default {
     name: 'Groups',
     components: {
@@ -111,44 +111,60 @@ export default {
         PerfectScrollbar,
         VueSpinner,
         AddGroup,
-        InfiniteScroll
+
     },
     data() {
         return {
             groupData: [],
             receivedGroupId: '',
-            groupListData: [],
+            groupListSessionsData: [],
             loading: false,
             sessionsData: [],
         }
     },
-    directives: {
-        InfiniteScroll,
-    },
+
     mounted() {
-        this.handleGroup()
-        this.handleGroupId()
+        this.handleGroupList()
+        // this.handleGroupId()
+        this.handleGroupsSessionsData()
     },
     methods: {
-        async handleGroup() {
+        async handleGroupList() {
             let res = await getGroups()
             this.groupData = res
+            console.log('groupData', res)
             if (this.groupData.length >= 1) {
-                this.handleGroupId(this.groupData[0].id)
+               await this.handleGroupId(this.groupData[0].id)
             }
         },
         async handleGroupId(data) {
             let id = this.receivedGroupId = data
+           await this.handleGroupsSessionsData(id)
+            // try {
+            //     this.loading = true
+            //     let res = await GroupsSessionsData(id)
+            //     this.groupListSessionsData = res.group.sessions
+            //     console.log('GroupListData', res.group.sessions)
+            // } catch (error) {
+            //     console.log(error)
+            // } finally {
+            //     this.loading = false;
+            // }
+        },
+        async handleGroupsSessionsData(id) {
+            
+            console.log('iddddd',id)
             try {
                 this.loading = true
-                let res = await GroupsData(id)
-                this.groupListData = res.group.sessions
+                let res = await GroupsSessionsData(id)
+                this.groupListSessionsData = res.group.sessions
+                console.log('GroupListData', res.group.sessions)
             } catch (error) {
                 console.log(error)
             } finally {
                 this.loading = false;
             }
-        },
+        }
 
     }
 }

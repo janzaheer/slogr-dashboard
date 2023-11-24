@@ -13,7 +13,7 @@ export async function getGroups(){
     const resp = await axios.get(`${base_url}/api/groups`, {headers: HEADERS})
     return resp.data
 }
-export async function GroupsData(id){
+export async function GroupsSessionsData(id){
     const resp = await axios.get(`${base_url}/api/get-group/${id}`, {headers: HEADERS})
     return resp.data
 }
