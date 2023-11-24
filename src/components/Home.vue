@@ -16,15 +16,11 @@
           <div v-for="group in groups" :key="group.id" class="d-flex justify-content-between align-items-center">
             <label class="form-check-label" :for="'flexSwitchCheckDefault_' + group.id">{{ group.name }}</label>
             <div class="form-check form-switch">
-              <!-- <input class="form-check-input fs-4" type="checkbox" role="switch" :id="'flexSwitchCheckDefault_' + group.id" @change="handleToggleGroup(group.id)"> -->
               <input class="form-check-input fs-4" type="checkbox" role="switch" :id="'flexSwitchCheckDefault_' + group.id" v-model="groupSwitches[group.id]" @change="handleToggleGroup(group.id, groupSwitches[group.id])">
             </div>
           </div>
           <div class="d-flex justify-content-between align-items-center">
-            <label class="form-check-label" for="flexSwitchCheckDefault3">Clear Connections</label>
-            <div class="form-check form-switch mb-0">
-              <button @click="clearLines">Clear Lines</button>
-            </div>
+            <label class="form-check-label" @click="clearLines">Clear Connections</label>
           </div>
         </div>
       </div>
@@ -65,7 +61,7 @@
             </div>
           </div>
           <hr class="hr1">
-            <h6 class="my-1">Monitoring</h6>
+          <h6 class="my-1">Monitoring</h6>
           <span><i class="fa-solid fa-gear" style="color: var(--primary_color); margin-top: 5px;"></i> Profile
             Setting</span>
         </div>
@@ -76,9 +72,7 @@
 <script>
 import Header from './common/Header.vue';
 import mapboxgl from 'mapbox-gl';
-import * as turf from '@turf/turf';
-import { v4 as uuidv4 } from 'uuid';
-import { fetchClusters, fetchSessions, fetchAgentlinks, fetchGroups,fetchGroupData,fetchClustersData } from '../services/agent_services';
+import { fetchClusters, fetchAgentlinks, fetchGroups,fetchGroupData,fetchClustersData } from '../services/agent_services';
 
 export default {
   data() {
@@ -88,11 +82,11 @@ export default {
       groupdata:{},
       clusterdata:{},
       clusters: [],
-      groupSwitches: {} 
+      groupSwitches: {}
     };
   },
   async mounted() {
-    
+
     var clusters = await this.handleClusters('');
     var sessions = await this.handleSessions('');
     mapboxgl.accessToken = 'pk.eyJ1Ijoicmh3b3JrcyIsImEiOiJjazBmZmE0bGIwNzh3M25wMjBhOHI2em56In0.317s4zEB48T9QC33pf6sVw#13';
@@ -108,26 +102,21 @@ export default {
     this.handleClusterData();
     this.handleGroupData();
     this.map.on('load', () => {
-
-      
-
-     
-
       this.showClusters(clusters);
       // inspect a cluster on click
       this.map.on('click', 'clusters', (e) => {
         const features = this.map.queryRenderedFeatures(e.point, {
-        layers: ['clusters']
-      });
-      const clusterId = features[0].properties.cluster_id;
-      this.map.getSource('earthquakes').getClusterExpansionZoom(
-          clusterId,
-          (err, zoom) => {
-            if (err) return;
-            
-            this.map.easeTo({
-              center: features[0].geometry.coordinates,
-              zoom: zoom
+          layers: ['clusters']
+        });
+        const clusterId = features[0].properties.cluster_id;
+        this.map.getSource('earthquakes').getClusterExpansionZoom(
+            clusterId,
+            (err, zoom) => {
+              if (err) return;
+
+              this.map.easeTo({
+                center: features[0].geometry.coordinates,
+                zoom: zoom
               });
             }
         );
@@ -167,7 +156,7 @@ export default {
       this.map.on('mouseleave', 'clusters', () => {
         this.map.getCanvas().style.cursor = '';
       });
-      
+
       // When a marker is clicked, call displayConnections
       this.map.on('click', 'markers', (e) => {
         const markerCoordinates = e.features[0].geometry.coordinates;
@@ -186,25 +175,22 @@ export default {
   },
   methods: {
     async handleToggleGroup(groupId, switchValue) {
-      console.log('Toggled group with ID:', groupId);
-      this.clearAll();
-      const loader = document.getElementById('loader');
-      loader.style.display = 'block';
-      if (!switchValue) {
-      this.clearLines();
-      loader.style.display = 'none';
-      return;
-    }
-      await this.showClusters(await this.handleClusters(groupId));
-      this.drawLines(this.map, await this.handleSessions(groupId));
-      loader.style.display = 'none';
+      if (switchValue) {
+        // Draw connected lines
+        const sessions = await this.handleSessions(groupId)
+        this.drawLines(this.map, sessions, groupId);
+      } else {
+        // Remove the group from the list of active groups
+        this.map.removeLayer(`line-${groupId}`);
+        this.map.removeSource(`line-${groupId}`);
+      }
     },
     async handleClusters(groupId) {
       let respData;
       if(groupId == ''){
         respData = await fetchClusters('');
       }else{
-         respData = this.clusterdata[groupId];
+        respData = this.clusterdata[groupId];
       }
       return respData;
     },
@@ -254,43 +240,43 @@ export default {
         clusterMaxZoom: 14, // Max zoom to cluster points on
         clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
       });
-      
+
       this.map.addLayer({
         id: 'clusters',
         type: 'circle',
         source: 'earthquakes',
         filter: ['has', 'point_count'],
-          paint: {
+        paint: {
           'circle-color': [
-          'step',
-          ['get', 'point_count'],
-          '#8cb63d',
-          100,
-          '#f1f075',
-          750,
-          '#f28cb1'
+            'step',
+            ['get', 'point_count'],
+            '#8cb63d',
+            100,
+            '#f1f075',
+            750,
+            '#f28cb1'
           ],
           'circle-radius': [
-              'step',
-              ['get', 'point_count'],
-              20,
-              100,
-              30,
-              750,
-              40
-            ]
-          }
+            'step',
+            ['get', 'point_count'],
+            20,
+            100,
+            30,
+            750,
+            40
+          ]
+        }
       });
-      
+
       this.map.addLayer({
         id: 'cluster-count',
         type: 'symbol',
         source: 'earthquakes',
         filter: ['has', 'point_count'],
         layout: {
-        'text-field': ['get', 'point_count_abbreviated'],
-        'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-        'text-size': 12
+          'text-field': ['get', 'point_count_abbreviated'],
+          'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+          'text-size': 12
         }
       });
       const organizationColors = {};
@@ -335,33 +321,29 @@ export default {
           return '#f28cb1'; // Default color
       }
     },
-    drawLines(map, lines) {
-      let uniqueId =  "line-" + uuidv4();
-      map.addSource(uniqueId, {
-      
-      type: 'geojson',
+    drawLines(map, lines, group_id) {
+      let uniqueId =  "line-" + group_id
+      this.map.addSource(uniqueId, {
+        type: 'geojson',
+        data: {
+          type: 'FeatureCollection',
+          features: lines['features'],
+        },});
 
-      data: {
-      type: 'FeatureCollection',
-      features: lines['features'],
-      },});
+      this.map.addLayer({
+        id: uniqueId,
+        type: 'line',
+        source: uniqueId,
+        layout: {
+          'line-join': 'round',
+          'line-cap': 'round',
+        },
+        paint: {
+          'line-color': ['get', 'color'],
+          'line-width': 0.2,// Maximum line width at higher zoom levels
 
-      
-      console.log(uniqueId);
-      map.addLayer({
-          id: uniqueId,
-          type: 'line',
-          source: uniqueId,
-          layout: {
-            'line-join': 'round',
-            'line-cap': 'round',
-          },
-          paint: {
-            'line-color': ['get', 'color'],
-            'line-width': 0.2,// Maximum line width at higher zoom levels
-            
-          },
-        });
+        },
+      });
 
       // lines.forEach((line, index) => {
       //   const uniqueId = `line-${Date.now()}-${index}`;
@@ -398,13 +380,14 @@ export default {
       // });
     },
     clearLines() {
-    
+
       const map = this.map;
-      
+
       // Iterate through the layers to find and remove layers with 'line-' prefix
       map.getStyle().layers.forEach((layer) => {
         if (layer.id.startsWith('line-')) {
           map.removeLayer(layer.id);
+          map.removeSource(layer.id);
         }
       });
     },
@@ -458,9 +441,9 @@ export default {
 
 <style scoped>
 #map {
-width: 100%;
-height: 90%;
-position: absolute;
+  width: 100%;
+  height: 90%;
+  position: absolute;
 }
 .popup {
   position: absolute;
@@ -490,15 +473,15 @@ position: absolute;
 }
 
 .map {
-position: relative;
-background-color: #c2c8ca;
-width: 100%;
-height: 1115px;
-overflow: hidden;
-text-align: left;
-font-size: var(--font-size-base);
-color: var(--color-black);
-font-family: var(--font-inter);
+  position: relative;
+  background-color: #c2c8ca;
+  width: 100%;
+  height: 1115px;
+  overflow: hidden;
+  text-align: left;
+  font-size: var(--font-size-base);
+  color: var(--color-black);
+  font-family: var(--font-inter);
 }
 
 .screenshot20210522At336 {
@@ -510,30 +493,30 @@ font-family: var(--font-inter);
 }
 
 .addIcon {
-position: absolute;
-height: 9.66%;
-width: 5.61%;
-top: 10.76%;
-right: 1.74%;
-bottom: 79.58%;
-left: 92.66%;
-max-width: 100%;
-overflow: hidden;
-max-height: 100%;
+  position: absolute;
+  height: 9.66%;
+  width: 5.61%;
+  top: 10.76%;
+  right: 1.74%;
+  bottom: 79.58%;
+  left: 92.66%;
+  max-width: 100%;
+  overflow: hidden;
+  max-height: 100%;
 }
 
 .mapInner {
-position: absolute;
-top: 100px;
-left: 142px;
-width: 1330px;
-height: 900.43px;
+  position: absolute;
+  top: 100px;
+  left: 142px;
+  width: 1330px;
+  height: 900.43px;
 }
 .hr1 {
-    margin: 0.6rem 0;
-    color: inherit;
-    border: 0;
-    border-top: var(--bs-border-width) solid;
-    opacity: 0.25;
+  margin: 0.6rem 0;
+  color: inherit;
+  border: 0;
+  border-top: var(--bs-border-width) solid;
+  opacity: 0.25;
 }
 </style>
