@@ -28,7 +28,7 @@
                                     id="exampleInputPassword1">
                             </div>
                             <div class="">
-                                <button type="submit" class="signInBtn w-100 my-5">Sign In</button>
+                                <button type="submit" class="signInBtn w-100 my-5">Login In</button>
                             </div>
                         </form>
                         <div class="sideline mb-2">Or Sign In With</div>
