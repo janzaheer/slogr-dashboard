@@ -27,3 +27,8 @@ export async function deleteGroup(id) {
     const resp = await axios.post(`${base_url}/api/delete-group`,{id: id}, {headers: HEADERS})
     return resp.data
 }
+
+export async function updateGroup(payload) {
+    const resp = await axios.post(`${base_url}/api/edit-group`, payload, {headers: HEADERS})
+    return resp.data
+}

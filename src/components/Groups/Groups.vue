@@ -73,10 +73,10 @@
                                                             <td>
                                                                 <p class="tableP">{{ data?.p_size }}</p>
                                                             </td>
-                                                            <td class="fs-5 dropstart"><a href="#"
-                                                                    class="text-decoration-none text-dark tableP"
-                                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                                    <i class="fa-solid fa-chevron-right"></i></a>
+                                                            <td class="fs-5 dropstart">
+                                                                <RouterLink :to="`/sentinelReports/` + data.id" class="text-decoration-none text-dark tableP">
+                                                                    <i class="fa-solid fa-chevron-right"></i>
+                                                                </RouterLink>
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -125,14 +125,12 @@ export default {
 
     mounted() {
         this.handleGroupList()
-        // this.handleGroupId()
         this.handleGroupsSessionsData()
     },
     methods: {
         async handleGroupList() {
             let res = await getGroups()
             this.groupData = res
-            console.log('groupData', res)
             if (this.groupData.length >= 1) {
                await this.handleGroupId(this.groupData[0].id)
             }
@@ -140,25 +138,12 @@ export default {
         async handleGroupId(data) {
             let id = this.receivedGroupId = data
            await this.handleGroupsSessionsData(id)
-            // try {
-            //     this.loading = true
-            //     let res = await GroupsSessionsData(id)
-            //     this.groupListSessionsData = res.group.sessions
-            //     console.log('GroupListData', res.group.sessions)
-            // } catch (error) {
-            //     console.log(error)
-            // } finally {
-            //     this.loading = false;
-            // }
         },
         async handleGroupsSessionsData(id) {
-            
-            console.log('iddddd',id)
             try {
                 this.loading = true
                 let res = await GroupsSessionsData(id)
                 this.groupListSessionsData = res.group.sessions
-                console.log('GroupListData', res.group.sessions)
             } catch (error) {
                 console.log(error)
             } finally {

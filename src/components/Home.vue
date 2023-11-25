@@ -8,17 +8,27 @@
   <div id="loader" class="loader">Loading...</div>
   <div class="position-relative bg-secondary mt-md-2 ms-md-3 opacity-75">
     <div class="position-absolute p-2">
-      <div class="card bg-light" style="width: 190px; height: 180px;">
+      <div class="card bg-light" style="width: 190px; height: 200px;">
         <div class="card-body">
           <h6 class="card-title mb-0">Legend</h6>
           <hr class="hr1">
-          <!-- Use v-for to iterate over the groups -->
-          <div v-for="group in groups" :key="group.id" class="d-flex justify-content-between align-items-center">
-            <label class="form-check-label" :for="'flexSwitchCheckDefault_' + group.id">{{ group.name }}</label>
-            <div class="form-check form-switch">
-              <input class="form-check-input fs-4" type="checkbox" role="switch" :id="'flexSwitchCheckDefault_' + group.id" v-model="groupSwitches[group.id]" @change="handleToggleGroup(group.id, groupSwitches[group.id])">
+          <perfect-scrollbar style="height: 100px;">
+            <!-- Use v-for to iterate over the groups -->
+            <div class="text-center m-2" v-if="loading">
+              <VueSpinner size="60" color="#8cb63d" />
             </div>
-          </div>
+            <div v-else>
+              <div v-for="group in groups" :key="group.id" class="d-flex justify-content-between align-items-center">
+                <label class="form-check-label" :for="'flexSwitchCheckDefault_' + group.id">{{ group.name }}</label>
+                <div class="form-check form-switch">
+                  <input class="form-check-input fs-5" type="checkbox" role="switch"
+                    :id="'flexSwitchCheckDefault_' + group.id" v-model="groupSwitches[group.id]"
+                    @change="handleToggleGroup(group.id, groupSwitches[group.id])">
+                </div>
+              </div>
+            </div>
+          </perfect-scrollbar>
+          <hr class="hr">
           <div class="d-flex justify-content-between align-items-center">
             <label class="form-check-label" @click="clearLines">Clear Connections</label>
           </div>
@@ -27,39 +37,41 @@
     </div>
   </div>
 
-  <div class="position-relative bg-secondary mt-md-3 ms-md-3 opacity-75" style="width: 190px; top: 190px;">
+  <div class="position-relative bg-secondary mt-md-4 ms-md-3 opacity-75" style="width: 190px; top: 190px;">
     <div class="position-absolute p-2">
       <div class="card bg-light" style="width: 190px; height: 290px;">
         <div class="card-body">
           <h6 class="card-title mb-0">Monitoring Profile</h6>
           <hr class="hr1">
-          <div class="d-flex justify-content-between align-items-center">
-            <div>
-              <span class="" style="font-size: 14px;">Monitoring</span>
-              <label class="form-check-label" for="flexSwitchCheckDefault4">Profile 01</label>
+          <perfect-scrollbar style="height: 150px;">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <span class="" style="font-size: 14px;">Monitoring</span>
+                <label class="form-check-label" for="flexSwitchCheckDefault4">Profile 01</label>
+              </div>
+              <div class="form-check form-switch">
+                <input class="form-check-input fs-5" type="checkbox" role="switch" id="flexSwitchCheckDefault4">
+              </div>
             </div>
-            <div class="form-check form-switch">
-              <input class="form-check-input fs-4" type="checkbox" role="switch" id="flexSwitchCheckDefault4">
+            <div class="d-flex justify-content-between align-items-center my-2 my-lg-1">
+              <div>
+                <span class="" style="font-size: 14px;">Monitoring</span>
+                <label class="form-check-label" for="flexSwitchCheckDefault5">Profile 02</label>
+              </div>
+              <div class="form-check form-switch">
+                <input class="form-check-input fs-5" type="checkbox" role="switch" id="flexSwitchCheckDefault5">
+              </div>
             </div>
-          </div>
-          <div class="d-flex justify-content-between align-items-center my-2 my-lg-1">
-            <div>
-              <span class="" style="font-size: 14px;">Monitoring</span>
-              <label class="form-check-label" for="flexSwitchCheckDefault5">Profile 02</label>
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <span class="" style="font-size: 14px;">Monitoring</span>
+                <label class="form-check-label" for="flexSwitchCheckDefault6">Profile 03</label>
+              </div>
+              <div class="form-check form-switch">
+                <input class="form-check-input fs-5" type="checkbox" role="switch" id="flexSwitchCheckDefault6">
+              </div>
             </div>
-            <div class="form-check form-switch">
-              <input class="form-check-input fs-4" type="checkbox" role="switch" id="flexSwitchCheckDefault5">
-            </div>
-          </div>
-          <div class="d-flex justify-content-between align-items-center">
-            <div>
-              <span class="" style="font-size: 14px;">Monitoring</span>
-              <label class="form-check-label" for="flexSwitchCheckDefault6">Profile 03</label>
-            </div>
-            <div class="form-check form-switch">
-              <input class="form-check-input fs-4" type="checkbox" role="switch" id="flexSwitchCheckDefault6">
-            </div>
-          </div>
+          </perfect-scrollbar>
           <hr class="hr1">
           <h6 class="my-1">Monitoring</h6>
           <span><i class="fa-solid fa-gear" style="color: var(--primary_color); margin-top: 5px;"></i> Profile
@@ -70,20 +82,27 @@
   </div>
 </template>
 <script>
+import { VueSpinner } from 'vue3-spinners';
+import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
 import Header from './common/Header.vue';
 import mapboxgl from 'mapbox-gl';
-import { fetchClusters, fetchAgentlinks, fetchGroups,fetchGroupData,fetchClustersData } from '../services/agent_services';
+import { fetchClusters, fetchAgentlinks, fetchGroups, fetchGroupData, fetchClustersData } from '../services/agent_services';
 
 export default {
   data() {
     return {
       map: null,
       groups: [],
-      groupdata:{},
-      clusterdata:{},
+      groupdata: {},
+      clusterdata: {},
       clusters: [],
-      groupSwitches: {}
+      groupSwitches: {},
+      loading: false
     };
+  },
+  components: {
+    PerfectScrollbar,
+    VueSpinner
   },
   async mounted() {
 
@@ -110,15 +129,15 @@ export default {
         });
         const clusterId = features[0].properties.cluster_id;
         this.map.getSource('earthquakes').getClusterExpansionZoom(
-            clusterId,
-            (err, zoom) => {
-              if (err) return;
+          clusterId,
+          (err, zoom) => {
+            if (err) return;
 
-              this.map.easeTo({
-                center: features[0].geometry.coordinates,
-                zoom: zoom
-              });
-            }
+            this.map.easeTo({
+              center: features[0].geometry.coordinates,
+              zoom: zoom
+            });
+          }
         );
       });
       this.map.on('click', 'unclustered-point', async (e) => {
@@ -187,9 +206,9 @@ export default {
     },
     async handleClusters(groupId) {
       let respData;
-      if(groupId == ''){
+      if (groupId == '') {
         respData = await fetchClusters('');
-      }else{
+      } else {
         respData = this.clusterdata[groupId];
       }
       return respData;
@@ -222,11 +241,14 @@ export default {
     },
     async handleGroups() {
       try {
+        this.loading = true
         // const response = await fetchGroupData();
         const response = await fetchGroups();
         this.groups = response;
       } catch (error) {
         console.error('Error fetching groups:', error);
+      } finally {
+        this.loading = false
       }
     },
     showClusters(clusters) {
@@ -322,13 +344,14 @@ export default {
       }
     },
     drawLines(map, lines, group_id) {
-      let uniqueId =  "line-" + group_id
+      let uniqueId = "line-" + group_id
       this.map.addSource(uniqueId, {
         type: 'geojson',
         data: {
           type: 'FeatureCollection',
           features: lines['features'],
-        },});
+        },
+      });
 
       this.map.addLayer({
         id: uniqueId,
@@ -445,6 +468,7 @@ export default {
   height: 90%;
   position: absolute;
 }
+
 .popup {
   position: absolute;
   background: #fff;
@@ -454,8 +478,10 @@ export default {
   z-index: 10;
   display: none;
 }
+
 #loader {
-  display: none; /* Initially hide the loader */
+  display: none;
+  /* Initially hide the loader */
   position: fixed;
   top: 50%;
   left: 50%;
@@ -468,8 +494,13 @@ export default {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .map {
@@ -512,6 +543,7 @@ export default {
   width: 1330px;
   height: 900.43px;
 }
+
 .hr1 {
   margin: 0.6rem 0;
   color: inherit;
