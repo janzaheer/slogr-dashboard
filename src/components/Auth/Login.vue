@@ -13,19 +13,22 @@
                     <div class="my-5">
                         <span>Welcome to Back,</span>
                         <h3>Sign In to Slogr</h3>
+                        <p>Store value admin@slogr.io</p>
+                        <h2>User Token:</h2>
+                        <p>{{ userID }} {{ userName }}</p>
                     </div>
                     <div class="form-style">
-                        <form>
+                        <form @submit.prevent="login">
                             <div class="form-group pb-3">
                                 <label for="exampleInputEmail1">Email Address</label>
                                 <input type="email" placeholder="Benjaminrobert77@email.com"
-                                    class="form-control form-control-lg" id="exampleInputEmail1"
+                                    class="form-control form-control-lg" name="email" v-model="this.email"
                                     aria-describedby="emailHelp">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Password</label>
                                 <input type="password" placeholder="Password" class="form-control form-control-lg"
-                                    id="exampleInputPassword1">
+                                    name="password" v-model="this.password">
                             </div>
                             <div class="">
                                 <button type="submit" class="signInBtn w-100 my-5">Login In</button>
@@ -54,11 +57,34 @@ export default {
     name: 'Login',
     data() {
         return {
-
+            email: '',
+            password: ''
+        }
+    },
+    computed: {
+        userToken() {
+            return this.$store.getters.getToken;
+        },
+        userID(){
+            return this.$store.getters.getUserId
+        },
+        userName(){
+            return this.$store.getters.getUserName
         }
     },
     methods: {
+        async login(e) {
+            e.preventDefault()
+            const payload = {
+                email: this.email,
+                password: this.password
+            }
+            console.log('payload0', payload)
+            // Call the login action
+            await this.$store.dispatch('login', payload);
 
+            // Redirect or perform additional actions after login
+        },
     },
     mounted() {
 
