@@ -6,8 +6,7 @@ export default {
   async login(credentials) {
     return axios.post(`${base_url}/api/login`, credentials);
   },
-
-//   async signup(userData) {
-//     return axios.post(`${BASE_URL}/signup`, userData);
-//   },
+  async signup(credentials) {
+    return axios.post(`${base_url}/api/register`, credentials);
+  },
 };

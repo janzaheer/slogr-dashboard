@@ -64,7 +64,8 @@
                     <RouterLink to="/dashboard" class="btnn mx-lg-1 mx-xl-2">
                         <i class="fa-solid fa-users text-secondary"></i>
                     </RouterLink>
-                    <RouterLink class="btnn text-decoration-none text-secondary" to="/login">AB</RouterLink>
+                    <button class="btnn text-decoration-none text-secondary" @click="logout">{{ name.substring(0, 2) }}</button>
+                    <!-- <RouterLink class="btnn text-decoration-none text-secondary" to="/login">{{ name.substring(0, 2) }}</RouterLink> -->
                 </div>
             </div>
         </nav>
@@ -83,7 +84,18 @@ export default {
     components: {
 
     },
+    computed:{
+        name(){
+            return this.$store.state.name;
+        }
+    },
     mounted() {
+    },
+    methods:{
+        logout() {
+            // Call the logout action from the Vuex store
+            this.$store.dispatch('logout');
+        },
     }
 }
 </script>

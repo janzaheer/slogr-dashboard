@@ -13,9 +13,6 @@
                     <div class="my-5">
                         <span>Welcome to Back,</span>
                         <h3>Sign In to Slogr</h3>
-                        <p>Store value admin@slogr.io</p>
-                        <h2>User Token:</h2>
-                        <p>{{ userID }} {{ userName }}</p>
                     </div>
                     <div class="form-style">
                         <form @submit.prevent="login">
@@ -53,23 +50,13 @@
 
 <script>
 import { RouterLink } from 'vue-router';
+
 export default {
     name: 'Login',
     data() {
         return {
             email: '',
             password: ''
-        }
-    },
-    computed: {
-        userToken() {
-            return this.$store.getters.getToken;
-        },
-        userID(){
-            return this.$store.getters.getUserId
-        },
-        userName(){
-            return this.$store.getters.getUserName
         }
     },
     methods: {
@@ -81,9 +68,12 @@ export default {
             }
             console.log('payload0', payload)
             // Call the login action
-            await this.$store.dispatch('login', payload);
 
-            // Redirect or perform additional actions after login
+            try {
+                await this.$store.dispatch('login', payload);
+            } catch (error) {
+                console.log(error)
+            }
         },
     },
     mounted() {
