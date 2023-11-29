@@ -5,7 +5,7 @@
         <!-- Modal  add-->
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                     <div class="modal-header d-flex justify-content-center align-items-center">
                         <div class="">
@@ -21,19 +21,129 @@
                                     v-model="this.form.name" required>
                             </div>
                             <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label ms-1">Max Jitter</label>
-                                <input type="text" class="form-control form-control-lg" placeholder="Max Jitter"
-                                    name="max_jitter" v-model="this.form.max_jitter" required>
+                                <div class="row g-2">
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">RTT Green</label>
+                                        <input type="text" class="form-control form-control-lg" placeholder="RTT Green"
+                                            name="rtt_g" v-model="this.form.rtt_g">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">RTT Red</label>
+                                        <input type="text" class="form-control form-control-lg" placeholder="RTT Red"
+                                            name="rtt_r" v-model="this.form.rtt_r">
+                                    </div>
+                                </div>
                             </div>
                             <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label ms-1">Max Downlink</label>
-                                <input type="text" class="form-control form-control-lg" placeholder="Max Downlink"
-                                    name="max_downlink" v-model="this.form.max_downlink">
+                                <div class="row g-2">
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Jitter Green</label>
+                                        <input type="text" class="form-control form-control-lg" placeholder="Jitter Green"
+                                            name="jitter_g" v-model="this.form.jitter_g">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Jitter Red</label>
+                                        <input type="text" class="form-control form-control-lg" placeholder="Jitter Red"
+                                            name="jitter_r" v-model="this.form.jitter_r">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="row g-2">
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Downlink Green</label>
+                                        <input type="text" class="form-control form-control-lg" placeholder="Downlink Green"
+                                            name="downlink_g" v-model="this.form.downlink_g">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Downlink Red</label>
+                                        <input type="text" class="form-control form-control-lg" placeholder="Downlink Red"
+                                            name="downlink_r" v-model="this.form.downlink_r">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="row g-2">
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Downlink BandWidth
+                                            Green</label>
+                                        <input type="text" class="form-control form-control-lg"
+                                            placeholder="Downlink BandWidth Green" name="downlink_bw_g"
+                                            v-model="this.form.downlink_bw_g">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Downlink BandWidth
+                                            Red</label>
+                                        <input type="text" class="form-control form-control-lg"
+                                            placeholder="Downlink BandWidth Red" name="downlink_bw_r"
+                                            v-model="this.form.downlink_bw_r">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="row g-2">
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Uplink Green</label>
+                                        <input type="text" class="form-control form-control-lg" placeholder="Uplink Green"
+                                            name="uplink_g" v-model="this.form.uplink_g">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Uplink Red</label>
+                                        <input type="text" class="form-control form-control-lg" placeholder="Uplink Red"
+                                            name="uplink_r" v-model="this.form.uplink_r">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="row g-2">
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Uplink BandWidth
+                                            Green</label>
+                                        <input type="text" class="form-control form-control-lg"
+                                            placeholder="Uplink BandWidth Green" name="uplink_bw_g"
+                                            v-model="this.form.uplink_bw_g">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Uplink BandWidth
+                                            Red</label>
+                                        <input type="text" class="form-control form-control-lg"
+                                            placeholder="Uplink BandWidth Red" name="uplink_bw_r"
+                                            v-model="this.form.uplink_bw_r">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="row g-2">
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Loss Green</label>
+                                        <input type="text" class="form-control form-control-lg" placeholder="Loss Green"
+                                            name="loss_g" v-model="this.form.loss_g">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Loss Red</label>
+                                        <input type="text" class="form-control form-control-lg" placeholder="Loss Red"
+                                            name="loss_r" v-model="this.form.loss_r">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="row g-2">
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Delay Green</label>
+                                        <input type="text" class="form-control form-control-lg" placeholder="Delay Green"
+                                            name="delay_g" v-model="this.form.delay_g">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Delay Red</label>
+                                        <input type="text" class="form-control form-control-lg" placeholder="Delay Red"
+                                            name="delay_r" v-model="this.form.delay_r">
+                                    </div>
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <div class="row g-2">
                                     <div class="col-md-4">
-                                        <label for="exampleFormControlInput1" class="form-label ms-1">W Time</label>
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Wait Time</label>
                                         <input type="text" class="form-control form-control-lg" placeholder="W Time"
                                             name="w_time" v-model="this.form.w_time">
                                     </div>
@@ -69,25 +179,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <div class="row g-2">
-                                    <div class="col-md-4">
-                                        <label for="exampleFormControlInput1" class="form-label ms-1">Max RTT</label>
-                                        <input type="text" class="form-control form-control-lg" placeholder="Max RTT"
-                                            name="max_rtt" v-model="this.form.max_rtt">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="exampleFormControlInput1" class="form-label ms-1">Max Up</label>
-                                        <input type="text" class="form-control form-control-lg" placeholder="Max Up"
-                                            name="max_uplink" v-model="this.form.max_uplink">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="exampleFormControlInput1" class="form-label ms-1">Max Loss</label>
-                                        <input type="text" class="form-control form-control-lg" placeholder="Max Loss"
-                                            name="max_loss" v-model="this.form.max_loss">
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -110,24 +201,35 @@ import 'mosha-vue-toastify/dist/style.css';
 
 export default {
     name: 'AddMonitor',
-    props:{
-        handleMonitorList:Function
+    props: {
+        handleMonitorList: Function
     },
     data() {
         return {
             form: {
                 name: '',
-                max_jitter: '',
-                max_downlink: '',
                 w_time: '',
                 dscp: '',
                 count: '',
                 n_packets: '',
                 p_interval: '',
                 p_size: '',
-                max_rtt: '',
-                max_uplink: '',
-                max_loss: ''
+                jitter_g: '',
+                jitter_r: '',
+                downlink_g: '',
+                downlink_r: '',
+                downlink_bw_g: '',
+                downlink_bw_r: '',
+                loss_g: '',
+                loss_r: '',
+                rtt_g: '',
+                rtt_r: '',
+                uplink_g: '',
+                uplink_r: '',
+                uplink_bw_g: '',
+                uplink_bw_r: '',
+                delay_g: '',
+                delay_r: '',
             }
         }
     },
@@ -137,18 +239,29 @@ export default {
     methods: {
         async handleAddMonitor() {
             const payload = {
-                    name: this.form.name,
-                    count: this.form.count,
-                    n_packets: this.form.n_packets,
-                    p_interval: this.form.p_interval,
-                    w_time: this.form.w_time,
-                    dscp: this.form.dscp,
-                    max_loss: this.form.max_loss,
-                    max_up: this.form.max_uplink,
-                    p_size: this.form.p_size,
-                    max_down: this.form.max_downlink,
-                    max_rtt: this.form.max_rtt,
-                    max_jitter: this.form.max_jitter,
+                name: this.form.name,
+                count: this.form.count,
+                n_packets: this.form.n_packets,
+                p_interval: this.form.p_interval,
+                w_time: this.form.w_time,
+                dscp: this.form.dscp,
+                p_size: this.form.p_size,
+                rtt_g: this.form.rtt_g,
+                rtt_r: this.form.rtt_r,
+                uplink_g: this.form.uplink_g,
+                uplink_r: this.form.uplink_r,
+                downlink_g: this.form.downlink_g,
+                downlink_r: this.form.downlink_r,
+                delay_g: this.form.delay_g,
+                delay_r: this.form.delay_r,
+                downlink_bw_g: this.form.downlink_bw_g,
+                downlink_bw_r: this.form.downlink_bw_r,
+                uplink_bw_g: this.form.uplink_bw_g,
+                uplink_bw_r: this.form.uplink_bw_r,
+                jitter_g: this.form.jitter_g,
+                jitter_r: this.form.jitter_r,
+                loss_g: this.form.loss_g,
+                loss_r: this.form.loss_r,
             }
             try {
                 await createMonitor(payload)
@@ -161,17 +274,28 @@ export default {
                 });
                 this.form = {
                     name: '',
-                    max_jitter: '',
-                    max_downlink: '',
                     w_time: '',
                     dscp: '',
                     count: '',
                     n_packets: '',
                     p_interval: '',
                     p_size: '',
-                    max_rtt: '',
-                    max_uplink: '',
-                    max_loss: '',
+                    jitter_g: '',
+                    jitter_r: '',
+                    downlink_g: '',
+                    downlink_r: '',
+                    downlink_bw_g: '',
+                    downlink_bw_r: '',
+                    loss_g: '',
+                    loss_r: '',
+                    rtt_g: '',
+                    rtt_r: '',
+                    uplink_g: '',
+                    uplink_r: '',
+                    uplink_bw_g: '',
+                    uplink_bw_r: '',
+                    delay_g: '',
+                    delay_r: '',
                 };
             } catch (error) {
                 console.log(error)
@@ -182,17 +306,28 @@ export default {
                 });
                 this.form = {
                     name: '',
-                    max_jitter: '',
-                    max_downlink: '',
                     w_time: '',
                     dscp: '',
                     count: '',
                     n_packets: '',
                     p_interval: '',
                     p_size: '',
-                    max_rtt: '',
-                    max_uplink: '',
-                    max_loss: '',
+                    jitter_g: '',
+                    jitter_r: '',
+                    downlink_g: '',
+                    downlink_r: '',
+                    downlink_bw_g: '',
+                    downlink_bw_r: '',
+                    loss_g: '',
+                    loss_r: '',
+                    rtt_g: '',
+                    rtt_r: '',
+                    uplink_g: '',
+                    uplink_r: '',
+                    uplink_bw_g: '',
+                    uplink_bw_r: '',
+                    delay_g: '',
+                    delay_r: '',
                 };
             }
 

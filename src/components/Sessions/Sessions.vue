@@ -38,8 +38,7 @@
                                         <th scope="col"><a href="#" class="tableHead">Server Name</a></th>
                                         <th scope="col"><a href="#" class="tableHead">Client Name</a>
                                         </th>
-                                        <th scope="col"><a href="#" class="tableHead">Packet Name</a>
-
+                                        <th scope="col"><a href="#" class="tableHead">Profile Name</a>
                                         </th>
                                         <th scope="col"><a href="#" class="tableHead"> Number Packets</a>
                                         </th>
@@ -196,7 +195,7 @@
             <div class="modal-content">
                 <div class="modal-header d-flex justify-content-center align-items-center">
                     <div class="">
-                        <h2 class="text-dark">Edit Session {{ this.form.id }} {{ this.form.p_size }}</h2>
+                        <h2 class="text-dark">Edit Session</h2>
                     </div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -320,7 +319,7 @@ export default {
                 schedule: null,
                 p_size: null,
             },
-            selectedProfile: 'select here', // Will store the selected profile id
+            selectedProfile: null, // Will store the selected profile id
             profiles: [],
             agents: [],
             selectedAgentId: 'please select sender sentinel',
@@ -371,6 +370,8 @@ export default {
             }
         },
         handleEditModel(id, s_name, c_name, p_name, n_packets, p_interval, w_time, dscp, count, schedule, p_size) {
+            console.log(`p_name`,p_name)
+            console.log(`p_name`,this.selectedProfile)
             this.form.id = id
             this.form.n_packets = n_packets
             this.form.p_interval = p_interval
@@ -379,9 +380,10 @@ export default {
             this.form.count = count
             this.form.schedule = schedule
             this.form.p_size = p_size
-            this.selectedProfile = this.profiles.find(profile => profile.name === p_name)?.id;
+            
             this.selectedClientId = this.clients.find(client => client.name === c_name)?.id;
             this.selectedAgentId = this.agents.find(agent => agent.name === s_name)?.id;
+            this.selectedProfile = this.profiles.find(profile => profile.name === p_name)?.id;
         },
         async handleEditSessions() {
             const payload = {
