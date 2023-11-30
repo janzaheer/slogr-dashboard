@@ -29,23 +29,34 @@
                         <div class="card" style="height: 100vh;">
                             <div class="card-body">
                                 <div class="d-flex justify-content-start mt-5 ms-3">
-                                    <div class="d-flex justify-content-between align-items-center">
+                                    
+                                    <div class="d-flex justify-content-between align-items-center" v-if="OrganizationId">
                                         <div>
                                             <div class="card border-0" style="background-color: var(--icon-bg);">
                                                 <div class="card-body d-flex justify-content-center align-items-center">
-                                                    <h1><i class="fa-solid fa-user-plus fa-lg" style="color: var(--primary_color);"></i>
+                                                    <h1><i class="fa-solid fa-user-plus fa-lg"
+                                                            style="color: var(--primary_color);"></i>
                                                     </h1>
                                                 </div>
                                             </div>
                                         </div>
+                                        <div>
+                                            <p>Org-id: {{ OrganizationId }}</p>
+                                            <p>Name: {{ userName }}</p>
+                                        </div>
                                         <div class="mx-4">
-                                            <h4>John Doe</h4>
+                                            <h4>{{ organizationName }}</h4>
                                             <span>Organization</span>
                                         </div>
                                         <div>
                                             <p>Designation</p>
-                                            <button class="editBtn ms-4">Edit</button>
+                                            <EditOrg :name="organizationName" :phone="organizationPhone"
+                                                :address="organizationAddress"
+                                                :handleGetOrganization="handleGetOrganization" />
                                         </div>
+                                    </div>
+                                    <div class="" v-else>
+                                        <AddOrd :handleGetOrganization="handleGetOrganization" />
                                     </div>
                                 </div>
                                 <div class="boxTop">
@@ -60,7 +71,8 @@
                                                     <p>To enjoy the experience as a organization,
                                                         create new pro your employee</p>
                                                     <div class="d-flex justify-content-end align-items-center my-3">
-                                                       <h1><i class="fa-solid fa-user-plus fa-2xl" style="color: #e9efc6;"></i></h1> 
+                                                        <h1><i class="fa-solid fa-user-plus fa-2xl"
+                                                                style="color: #e9efc6;"></i></h1>
                                                     </div>
                                                 </div>
                                             </div>
@@ -74,8 +86,9 @@
                                                     <hr>
                                                     <p>To enjoy the experience as a organization,
                                                         create new pro your employee</p>
-                                                        <div class="d-flex justify-content-end align-items-center my-3">
-                                                       <h1><i class="fa-solid fa-shield-halved fa-2xl" style="color: #e9efc6;"></i></h1> 
+                                                    <div class="d-flex justify-content-end align-items-center my-3">
+                                                        <h1><i class="fa-solid fa-shield-halved fa-2xl"
+                                                                style="color: #e9efc6;"></i></h1>
                                                     </div>
                                                 </div>
                                             </div>
@@ -89,9 +102,10 @@
                                                     <hr>
                                                     <p>To enjoy the experience as a organization,
                                                         create new pro your employee</p>
-                                                        <div class="d-flex justify-content-end align-items-center my-3">
-                                                       <h1><i class="fa-solid fa-dollar-sign fa-2xl" style="color: #e9efc6;"></i>
-                                                    </h1> 
+                                                    <div class="d-flex justify-content-end align-items-center my-3">
+                                                        <h1><i class="fa-solid fa-dollar-sign fa-2xl"
+                                                                style="color: #e9efc6;"></i>
+                                                        </h1>
                                                     </div>
                                                 </div>
                                             </div>
@@ -105,8 +119,9 @@
                                                     <hr>
                                                     <p>To enjoy the experience as a organization,
                                                         create new pro your employee</p>
-                                                        <div class="d-flex justify-content-end align-items-center my-3">
-                                                       <h1><i class="fa-solid fa-file-lines fa-2xl" style="color: #e9efc6;"></i></h1> 
+                                                    <div class="d-flex justify-content-end align-items-center my-3">
+                                                        <h1><i class="fa-solid fa-file-lines fa-2xl"
+                                                                style="color: #e9efc6;"></i></h1>
                                                     </div>
                                                 </div>
                                             </div>
@@ -126,17 +141,51 @@
 import { RouterLink } from 'vue-router';
 import Header from '../../common/Header.vue';
 import Sidebar from '../Sidebar.vue';
+import { getOrganization } from '../../../services/organization_services';
+import EditOrg from '../Organization/EditOrg.vue';
+import AddOrd from '../Organization/AddOrd.vue';
+
 export default {
     name: 'Dashboard',
     components: {
         Header,
-        Sidebar
+        Sidebar,
+        EditOrg,
+        AddOrd,
     },
     data() {
+        return {
+            organizationName: '',
+            organizationPhone: '',
+            organizationAddress: ''
+        }
+    },
+    computed: {
+        OrganizationId() {
+            return this.$store.getters.getUserOrganizationId;
+        },
+        userName() {
+            return this.$store.getters.getUserName;
+        },
     },
     mounted() {
+        this.handleGetOrganization()
     },
     methods: {
+        async handleGetOrganization() {
+            let res = await getOrganization()
+            console.log('org', res.data.organizations)
+            if (res.data.organizations.length === 0) {
+                    this.organizationName = '',
+                    this.organizationPhone = '',
+                    this.organizationAddress = ''
+            } else {
+                this.organizationName = res.data.organizations[0].name
+                this.organizationPhone = res.data.organizations[0].phone
+                this.organizationAddress = res.data.organizations[0].address
+            }
+
+        }
     }
 }
 </script>
@@ -145,8 +194,9 @@ export default {
 .boxTop {
     margin-top: 120px !important;
 }
-.editBtn{
-    background-color:var(--white_color);
+
+.editBtn {
+    background-color: var(--white_color);
     border-radius: 6px;
     border: 1px solid var(--primary_color);
     padding: 2px 15px;
@@ -155,7 +205,8 @@ export default {
     transition: background-color 0.3s ease;
     margin-top: 5px;
 }
-.editBtn:hover{
+
+.editBtn:hover {
     color: var(--white_color);
     background-color: var(--primary_color_Hover);
 }

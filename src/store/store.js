@@ -19,6 +19,11 @@ const vuexPersist = new createPersist({
         token: state.token,
         name: state.name,
         id: state.id,
+        email: state.email,
+        email_verified_at: state.email_verified_at,
+        organization_id: state.organization_id,
+        created_at: state.created_at,
+        updated_at: state.updated_at,
     }),
 });
 
@@ -28,15 +33,25 @@ const store = new Store({
         token: null,
         name: null,
         id: null,
+        email: null,
+        email_verified_at: null,
+        organization_id: null,
+        created_at: null,
+        updated_at: null
+
     },
     getters: {
         getToken: state => state.token,
         getUserId: state => state.id,
-        getUserName: state => state.name
+        getUserName: state => state.name,
+        getUserEmail: state => state.email,
+        getUserEmailVerified: state => state.email_verified_at,
+        getUserOrganizationId: state => state.organization_id,
+        getUserCreated: state => state.created_at,
+        getUserUpdated: state => state.updated_at,
     },
     mutations: {
         setToken(state, token) {
-            console.log('Setting token:', token);
             state.token = token;
         },
         setUsername(state, name) {
@@ -45,10 +60,30 @@ const store = new Store({
         setUserId(state, id) {
             state.id = id;
         },
+        setEmail(state, email) {
+            state.email = email
+        },
+        setVerifiedEmail(state, email_verified_at) {
+            state.email_verified_at = email_verified_at
+        },
+        setOrganizationId(state, organization_id) {
+            state.organization_id = organization_id
+        },
+        setCreatedAt(state, created_at) {
+            state.created_at = created_at
+        },
+        setUpdatedAt(state, updated_at) {
+            state.updated_at = updated_at
+        },
         clearUserData(state) {
             state.token = null;
             state.name = null;
             state.id = null;
+            state.email = null;
+            state.email_verified_at = null;
+            state.organization_id = null;
+            state.created_at = null;
+            state.updated_at = null
         },
     },
     actions: {
@@ -62,6 +97,11 @@ const store = new Store({
                     commit('setToken', response.data.success.token);
                     commit('setUsername', response.data.success.user.name);
                     commit('setUserId', response.data.success.user.id);
+                    commit('setEmail', response.data.success.user.email);
+                    commit('setVerifiedEmail', response.data.success.user.email_verified_at);
+                    commit('setOrganizationId', response.data.success.user.organization_id);
+                    commit('setCreatedAt', response.data.success.user.created_at);
+                    commit('setUpdatedAt', response.data.success.user.updated_at);
                     createToast(`Login successfully`, {
                         type: 'success',
                         position: 'top-right',
@@ -81,7 +121,7 @@ const store = new Store({
                     }
                 }
                 // Handle login error
-                 console.error('Login failed', error);
+                console.error('Login failed', error);
             }
         },
         async signup({ commit }, credentials) {
@@ -119,7 +159,7 @@ const store = new Store({
         logout({ commit }) {
             // Clear user data in Vuex store
             router.push({
-                name:'Login'
+                name: 'Login'
             })
             commit('clearUserData');
         },
