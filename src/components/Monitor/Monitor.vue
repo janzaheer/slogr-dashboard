@@ -351,6 +351,11 @@ export default {
     created: function () {
         this.moment = moment;
     },
+    computed:{
+        getToken(){
+            return 
+        }
+    },
     data() {
         return {
             monitorData: [],

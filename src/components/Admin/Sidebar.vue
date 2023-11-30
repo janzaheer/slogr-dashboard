@@ -8,13 +8,13 @@
                             Dashboard
                         </RouterLink>
                     </li>
-                     <hr>
+                    <hr>
                     <li>
                         <RouterLink to="/createNewUser" class="nav-linker">
                             Create New User
                         </RouterLink>
                     </li>
-                     <hr>
+                    <hr>
                     <li>
                         <RouterLink to="/rightsProfiles" class="nav-linker">
                             Rights Profile
@@ -37,6 +37,12 @@
                         <a href="#" class="nav-linker">
                             Select Plan
                         </a>
+                    </li>
+                    <hr>
+                    <li>
+                        <RouterLink to="/alerts" class="nav-linker">
+                            Alerts
+                        </RouterLink>
                     </li>
                     <hr>
                 </ul>
@@ -64,16 +70,17 @@ export default {
 </script>
 
 <style>
-.nav-linker{
+.nav-linker {
     text-decoration: none;
     color: darkgray;
     font-size: 15px;
     border-radius: 5px;
 }
-a.router-link-exact-active.nav-linker{
-    color: white;
-    background-color: var(--primary_color); 
+
+a.router-link-exact-active.nav-linker {
+    color: var(--primary_color);
+    /* background-color: var(--primary_color); */
     font-size: 15px;
-    padding: 3px 76px;
+    /* padding: 3px 76px; */
 }
 </style>
