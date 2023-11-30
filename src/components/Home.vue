@@ -44,31 +44,16 @@
           <h6 class="card-title mb-0">Monitoring Profile</h6>
           <hr class="hr1">
           <perfect-scrollbar style="height: 150px;">
-            <div class="d-flex justify-content-between align-items-center">
-              <div>
-                <span class="" style="font-size: 14px;">Monitoring</span>
-                <label class="form-check-label" for="flexSwitchCheckDefault4">Profile 01</label>
-              </div>
-              <div class="form-check form-switch">
-                <input class="form-check-input fs-5" type="checkbox" role="switch" id="flexSwitchCheckDefault4">
-              </div>
+            <div class="text-center m-2" v-if="loading">
+              <VueSpinner size="60" color="#8cb63d" />
             </div>
-            <div class="d-flex justify-content-between align-items-center my-2 my-lg-1">
-              <div>
-                <span class="" style="font-size: 14px;">Monitoring</span>
-                <label class="form-check-label" for="flexSwitchCheckDefault5">Profile 02</label>
-              </div>
-              <div class="form-check form-switch">
-                <input class="form-check-input fs-5" type="checkbox" role="switch" id="flexSwitchCheckDefault5">
-              </div>
-            </div>
-            <div class="d-flex justify-content-between align-items-center">
-              <div>
-                <span class="" style="font-size: 14px;">Monitoring</span>
-                <label class="form-check-label" for="flexSwitchCheckDefault6">Profile 03</label>
-              </div>
-              <div class="form-check form-switch">
-                <input class="form-check-input fs-5" type="checkbox" role="switch" id="flexSwitchCheckDefault6">
+            <div v-else>
+              <div v-for="profile in profiles" :key="profile.id" class="d-flex justify-content-between align-items-center">
+                <label class="form-check-label" :for="'profileDefault' + profile.id">{{ profile.name }}</label>
+                <div class="form-check form-switch">
+                  <input class="form-check-input fs-5" type="checkbox" role="switch"
+                    :id="'profileDefault' + profile.id">
+                </div>
               </div>
             </div>
           </perfect-scrollbar>
@@ -96,6 +81,7 @@ export default {
       clusterdata: {},
       clusters: [],
       groupSwitches: {},
+      profiles: null,
       loading: false
     };
   },
@@ -112,13 +98,21 @@ export default {
       container: 'map',
       style: 'mapbox://styles/mapbox/light-v11',
       center: [0, 20],
-      zoom: 2,
+      zoom: 1.8,
+      minZoom: 1.8
     });
+
     const nav = new mapboxgl.NavigationControl();
     this.map.addControl(nav, "bottom-right");
+
+
     this.handleGroups();
+    this.handleProfiles();
     this.handleClusterData();
     this.handleGroupData();
+
+
+
     this.map.on('load', () => {
       this.showClusters(clusters);
       // inspect a cluster on click
@@ -314,6 +308,17 @@ export default {
         this.loading = false
       }
     },
+    async handleProfiles() {
+      try {
+        this.loading = true
+        const resp = await ProfileList()
+        this.profiles = resp.profiles;
+      } catch (errors) {
+        console.log(errors)
+      } finally {
+        this.loading = false
+      }
+    },
     showClusters(clusters) {
       // Add a new source from our GeoJSON data and
       // set the 'cluster' option to true. GL-JS will
@@ -408,6 +413,8 @@ export default {
     },
     drawLines(map, lines, group_id) {
       let uniqueId = "line-" + group_id
+      console.log(lines)
+      console.log('------------11--------------')
       this.map.addSource(uniqueId, {
         type: 'geojson',
         data: {

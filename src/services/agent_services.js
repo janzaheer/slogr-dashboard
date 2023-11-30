@@ -36,7 +36,7 @@ export async function agentUpdate(payload) {
 }
 
 export async function fetchClusters(id) {
-    const resp = await axios.get(`${base_url}/api/cluster?group=${id}`)
+    const resp = await axios.get(`${base_url}/api/cluster?profiles=true&group=${id}`)
     return resp.data
 }
 
@@ -80,7 +80,7 @@ export async function fetchClustersData() {
         const group = resp.data[i];
         try {
           const linksResp = await axios.get(
-            `${base_url}/api/cluster?group=${group.id}`
+            `${base_url}/api/cluster?group=${group.id}&profiles=true`
           );
           clusterdata[group.id] = linksResp.data;
         } catch (linksError) {
