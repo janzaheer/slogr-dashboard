@@ -84,7 +84,6 @@
 <script>
 import { VueSpinner } from 'vue3-spinners';
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
-import Header from './common/Header.vue';
 import mapboxgl from 'mapbox-gl';
 import { fetchClusters, fetchAgentlinks, fetchGroups, fetchGroupData, fetchClustersData } from '../services/agent_services';
 
@@ -132,13 +131,77 @@ export default {
           clusterId,
           (err, zoom) => {
             if (err) return;
-
             this.map.easeTo({
               center: features[0].geometry.coordinates,
               zoom: zoom
             });
           }
         );
+      });
+
+      let popup = new mapboxgl.Popup({ offset: [0, -15] });
+      this.map.on('mouseenter', 'clusters', async (e) => {
+        const features = this.map.queryRenderedFeatures(e.point, {
+          layers: ['clusters']
+        });
+
+        if (features.length > 0) {
+          var clusterId = features[0].properties.cluster_id;
+          let clusterPointCount = features[0].properties.point_count
+
+          let map = this.map
+          var allPointsInCluster = [];
+          async function getAllSubChildPoints(clusterId, callback) {
+            function querySubCluster(subClusterId) {
+              map.getSource('earthquakes').getClusterChildren(subClusterId, function (err, features) {
+                if (err) return callback(err);
+
+                features.forEach(async function (feature) {
+                  if (feature.properties.cluster) {
+                      // If it's another cluster, recursively query its children
+                      await querySubCluster(feature.properties.cluster_id);
+                  } else {
+                      // If it's a point, add it to the list
+                      allPointsInCluster.push(feature);
+                  }
+                });
+
+                if (features.length === 0) {
+                    // No more features in the current sub-cluster, callback with the result
+                    callback(null, allPointsInCluster);
+                }
+
+                if (allPointsInCluster.length === clusterPointCount) {
+                  let subPropObj = {}
+                  allPointsInCluster.forEach(function (sub) {
+                    if (!subPropObj[sub.properties.organization]) {
+                      subPropObj[sub.properties.organization] = 1
+                    } else {
+                      subPropObj[sub.properties.organization] += 1
+                    }
+                  })
+
+                  let nodesCount = '';
+                  for (const [key, value] of Object.entries(subPropObj)) {
+                    nodesCount += `<p>${key}: ${value}</p>`
+                  }
+
+                  popup.setLngLat(features[0].geometry.coordinates)
+                  .setHTML(`<h5>Cluster nodes: ${clusterPointCount}</h5> ${nodesCount}`)
+                  .setLngLat(features[0].geometry.coordinates).addTo(map);
+                }
+              });
+            }
+            // Start the recursive query
+            await querySubCluster(clusterId);
+          }
+
+          // Call the recursive function to get all sub-child points
+          await getAllSubChildPoints(clusterId, function (err, subChildPoints) {});
+        }
+      });
+      this.map.on('mouseleave', 'clusters', () => {
+        popup.remove();
       });
       this.map.on('click', 'unclustered-point', async (e) => {
         this.map.getCanvas().style.cursor = 'pointer';
