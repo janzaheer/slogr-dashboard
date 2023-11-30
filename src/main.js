@@ -7,8 +7,10 @@ import 'bootstrap/dist/css/bootstrap.css';
 import "bootstrap/dist/js/bootstrap.js";
 import 'font-awesome/css/font-awesome.css'
 import '@fortawesome/fontawesome-free/css/all.css';
+import store from '../src/store/store'
+
 const app = createApp(App)
 
 app.use(router)
-
+app.use(store)
 app.mount('#app')

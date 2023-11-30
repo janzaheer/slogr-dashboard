@@ -16,23 +16,27 @@
                         <span class="text-secondary">Enter your details below</span>
                     </div>
                     <div class="form-style">
-                        <form>
+                        <form @submit.prevent="signup">
                             <div class="form-group pb-3">
                                 <label for="exampleInputName1">Name</label>
-                                <input type="text" placeholder="Benjaminrobert77@email.com"
-                                    class="form-control form-control-lg" id="exampleInputName1"
-                                    aria-describedby="emailHelp">
+                                <input type="text" placeholder="enter yor name"
+                                    class="form-control form-control-lg" name="name" v-model="this.name">
                             </div>
                             <div class="form-group pb-3 my-3">
                                 <label for="exampleInputEmail1">Email Address</label>
                                 <input type="email" placeholder="Benjaminrobert77@email.com"
-                                    class="form-control form-control-lg" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp">
+                                    class="form-control form-control-lg" aria-describedby="emailHelp"
+                                    name="email" v-model="this.email">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group my-3">
                                 <label for="exampleInputPassword1">Password</label>
                                 <input type="password" placeholder="Password" class="form-control form-control-lg"
-                                    id="exampleInputPassword1">
+                                name="password" v-model="this.password">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Confirm Password</label>
+                                <input type="password" placeholder="Password" class="form-control form-control-lg"
+                                name="password_confirmation" v-model="this.password_confirmation">
                             </div>
                             <div class="">
                                 <button type="submit" class="signInBtn w-100 my-5">Sign Up</button>
@@ -54,11 +58,24 @@ export default {
     name: 'SignUp',
     data() {
         return {
-
+            name: '',
+            email: '',
+            password: '',
+            password_confirmation: ''
         }
     },
     methods: {
-
+        async signup(e) {
+            e.preventDefault();
+            const payload = {
+                name: this.name,
+                email: this.email,
+                password: this.password,
+                password_confirmation: this.password_confirmation
+            }
+            await this.$store.dispatch('signup', payload);
+            console.log('signup',payload)
+        }
     },
     mounted() {
 
