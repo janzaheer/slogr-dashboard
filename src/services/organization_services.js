@@ -26,3 +26,8 @@ export async function addOrganization(payload){
     const resp = await axios.post(`${base_url}/api/add-organization`,payload, {headers: HEADERS})
     return resp.data
 }
+
+export async function assignOrganization(payload){
+    const resp = await axios.post(`${base_url}/api/assign-organization`,payload, {headers: HEADERS})
+    return resp.data
+}

@@ -64,7 +64,7 @@
                     <RouterLink to="/dashboard" class="btnn mx-lg-1 mx-xl-2">
                         <i class="fa-solid fa-users text-secondary"></i>
                     </RouterLink>
-                    <button class="btnn text-decoration-none text-secondary" @click="logout">{{ name.substring(0, 2) }}</button>
+                    <button class="btnn text-decoration-none text-secondary" @click="logout">{{ userData.user.name.substring(0, 2) }}</button>
                     <!-- <RouterLink class="btnn text-decoration-none text-secondary" to="/login">{{ name.substring(0, 2) }}</RouterLink> -->
                 </div>
             </div>
@@ -85,9 +85,9 @@ export default {
 
     },
     computed:{
-        name(){
-            return this.$store.state.name;
-        }
+        userData() {
+            return this.$store.getters.getUserData;
+        },
     },
     mounted() {
     },

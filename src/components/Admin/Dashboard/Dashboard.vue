@@ -28,9 +28,14 @@
                     <div class="col-9">
                         <div class="card" style="height: 100vh;">
                             <div class="card-body">
+
+                                <!-- <div>
+                                    <h6>{{ userToken.user.organization_id }}</h6>
+                                </div> -->
+
                                 <div class="d-flex justify-content-start mt-5 ms-3">
-                                    
-                                    <div class="d-flex justify-content-between align-items-center" v-if="OrganizationId">
+                                    <!-- v-if="userData.user.organization_id " -->
+                                    <div class="d-flex justify-content-between align-items-center">
                                         <div>
                                             <div class="card border-0" style="background-color: var(--icon-bg);">
                                                 <div class="card-body d-flex justify-content-center align-items-center">
@@ -40,24 +45,42 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div>
-                                            <p>Org-id: {{ OrganizationId }}</p>
-                                            <p>Name: {{ userName }}</p>
-                                        </div>
                                         <div class="mx-4">
                                             <h4>{{ organizationName }}</h4>
                                             <span>Organization</span>
                                         </div>
                                         <div>
                                             <p>Designation</p>
-                                            <EditOrg :name="organizationName" :phone="organizationPhone"
-                                                :address="organizationAddress"
-                                                :handleGetOrganization="handleGetOrganization" />
+                                            <div
+                                                v-if="userData.user.roles.length > 0 && userData.user.roles[0].name === `superadmin`">
+                                                <div>
+                                                    <EditOrg :name="organizationName" :phone="organizationPhone"
+                                                        :address="organizationAddress"
+                                                        :handleGetOrganization="handleGetOrganization" />
+                                                </div>
+                                                <div>
+                                                    <AssignOrg :handleGetOrganization="handleGetOrganization" />
+                                                </div>
+                                            </div>
+                                            <div v-else>
+                                                <h6>No Roles</h6>
+                                            </div>
+
                                         </div>
                                     </div>
-                                    <div class="" v-else>
+                                    <!-- <div>
+                                        <AssignOrg />
+                                        <div
+                                            v-if="userData.user.roles[0].name === `superadmin` && userData.user.roles.length > 0">
+                                            <h6>role</h6>
+                                        </div>
+                                        <div v-else>
+                                            <h6>No Roles</h6>
+                                        </div>
+                                    </div> -->
+                                    <!-- <div class="" v-else>
                                         <AddOrd :handleGetOrganization="handleGetOrganization" />
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="boxTop">
                                     <div class="row g-2">
@@ -143,7 +166,8 @@ import Header from '../../common/Header.vue';
 import Sidebar from '../Sidebar.vue';
 import { getOrganization } from '../../../services/organization_services';
 import EditOrg from '../Organization/EditOrg.vue';
-import AddOrd from '../Organization/AddOrd.vue';
+// import AddOrd from '../Organization/AddOrd.vue';
+import AssignOrg from '../Organization/AssignOrg.vue';
 
 export default {
     name: 'Dashboard',
@@ -151,7 +175,8 @@ export default {
         Header,
         Sidebar,
         EditOrg,
-        AddOrd,
+        // AddOrd,
+        AssignOrg
     },
     data() {
         return {
@@ -161,11 +186,8 @@ export default {
         }
     },
     computed: {
-        OrganizationId() {
-            return this.$store.getters.getUserOrganizationId;
-        },
-        userName() {
-            return this.$store.getters.getUserName;
+        userData() {
+            return this.$store.getters.getUserData;
         },
     },
     mounted() {
@@ -176,7 +198,7 @@ export default {
             let res = await getOrganization()
             console.log('org', res.data.organizations)
             if (res.data.organizations.length === 0) {
-                    this.organizationName = '',
+                this.organizationName = '',
                     this.organizationPhone = '',
                     this.organizationAddress = ''
             } else {
@@ -184,7 +206,6 @@ export default {
                 this.organizationPhone = res.data.organizations[0].phone
                 this.organizationAddress = res.data.organizations[0].address
             }
-
         }
     }
 }
