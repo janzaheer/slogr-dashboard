@@ -26,7 +26,7 @@ export async function updateAlert(payload) {
     return resp.data
 }
 
-export async function deleteAlert(id) {
-    const resp = await axios.post(`${base_url}/api/delete-alert`, {id: id}, {headers: HEADERS})
+export async function deleteAlert(payload) {
+    const resp = await axios.post(`${base_url}/api/delete-alert`, payload, {headers: HEADERS})
     return resp.data
 }
