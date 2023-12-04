@@ -51,8 +51,8 @@
               <div v-for="profile in profiles" :key="profile.id" class="d-flex justify-content-between align-items-center">
                 <label class="form-check-label" :for="'profileDefault' + profile.id">{{ profile.name }}</label>
                 <div class="form-check form-switch">
-                  <input class="form-check-input fs-5" type="checkbox" role="switch"
-                    :id="'profileDefault' + profile.id">
+                  <input class="form-check-input fs-5" type="checkbox" role="switch" v-model="profileSwitches[profile.id]"
+                    :id="'profileDefault' + profile.id" @change="handleProfileToggle(profile.id, profile.name)">
                 </div>
               </div>
             </div>
@@ -71,6 +71,7 @@ import { VueSpinner } from 'vue3-spinners';
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
 import mapboxgl from 'mapbox-gl';
 import { fetchClusters, fetchAgentlinks, fetchGroups, fetchGroupData, fetchClustersData } from '../services/agent_services';
+import {ProfileList} from '../services/monitor_profile_Services'
 
 export default {
   data() {
@@ -81,8 +82,11 @@ export default {
       clusterdata: {},
       clusters: [],
       groupSwitches: {},
+      profileSwitches: {},
+      profileSwitchesData: {},
       profiles: null,
-      loading: false
+      loading: false,
+      initialGroupGeoJsonData: {}
     };
   },
   components: {
@@ -250,6 +254,31 @@ export default {
     this.map.setProjection('Mercator');
   },
   methods: {
+    async handleProfileToggle(profileId, profileName) {
+
+      let isProfile = this.profileSwitches[profileId]
+      let map = this.map
+      let sourceId = this.map.getLayer('line-1').source
+      let allLines = this.map.querySourceFeatures(sourceId, {sourceLayer: 'line-1'});
+      let initialData = this.initialGroupGeoJsonData
+      let profileSwitchesData = this.profileSwitchesData
+
+      if (isProfile) {
+        profileSwitchesData[profileId] = profileName
+      } else {
+        delete profileSwitchesData[profileId]
+      }
+
+      allLines.forEach(function (line) {
+        let lineFeature = initialData.features.find(feature => feature.properties.id === line.properties.id);
+        if (isProfile) {
+          lineFeature.properties.color = line.properties[profileName]
+        } else if (Object.keys(profileSwitchesData).length < 1) {
+          lineFeature.properties.color = 'blue'
+        }
+        map.getSource(sourceId).setData(initialData)
+      })
+    },
     async handleToggleGroup(groupId, switchValue) {
       if (switchValue) {
         // Draw connected lines
@@ -413,14 +442,28 @@ export default {
     },
     drawLines(map, lines, group_id) {
       let uniqueId = "line-" + group_id
-      console.log(lines)
-      console.log('------------11--------------')
+      let lineFeatures = []
+      let checkLineIds = []
+      lines['features'].forEach(function(line){
+        if (!checkLineIds.includes(line['properties']['session_id'])) {
+          const  obj = {
+            type: 'Feature',
+            geometry: line['geometry'],
+            properties: line['properties']
+          }
+          lineFeatures.push(obj)
+          checkLineIds.push(line['properties']['session_id'])
+        }
+      })
+
+      this.initialGroupGeoJsonData = {
+        type: 'FeatureCollection',
+        features: lineFeatures
+      }
+
       this.map.addSource(uniqueId, {
         type: 'geojson',
-        data: {
-          type: 'FeatureCollection',
-          features: lines['features'],
-        },
+        data: this.initialGroupGeoJsonData
       });
 
       this.map.addLayer({
@@ -433,44 +476,9 @@ export default {
         },
         paint: {
           'line-color': ['get', 'color'],
-          'line-width': 0.2,// Maximum line width at higher zoom levels
-
+          'line-width': 0.5, // Maximum line width at higher zoom levels
         },
       });
-
-      // lines.forEach((line, index) => {
-      //   const uniqueId = `line-${Date.now()}-${index}`;
-
-      //   // Create a Bezier spline from the original line coordinates
-      //   const curvedLine = turf.bezierSpline({
-      //     type: 'Feature',
-      //     geometry: {
-      //       type: 'LineString',
-      //       coordinates: line.coordinates,
-      //     },
-      //   });
-
-      //   map.addLayer({
-      //     id: uniqueId,
-      //     type: 'line',
-      //     source: {
-      //       type: 'geojson',
-      //       data: curvedLine,
-      //     },
-      //     paint: {
-      //       'line-color': line.color,
-      //       'line-width': 1, // Adjust the line width as needed
-      //     },
-      //   });
-
-      //   // Add hover and mouse leave event listeners
-      //   map.on('mouseenter', uniqueId, (e) => {
-      //     this.handleLineHover(e);
-      //   });
-      //   map.on('mouseleave', uniqueId, (e) => {
-      //     this.resetLineHover(e);
-      //   });
-      // });
     },
     clearLines() {
 
