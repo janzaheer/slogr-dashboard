@@ -1,8 +1,14 @@
 <template>
-    <div>
+    <div data-bs-toggle="modal" data-bs-target="#staticBackdrop2" class="card border-0" style="background-color: var(--icon-bg);">
+        <div class="card-body d-flex justify-content-center align-items-center">
+            <h1><i class="fa-solid fa-user-plus fa-lg" style="color: var(--primary_color); cursor: pointer;"></i>
+            </h1>
+        </div>
+    </div>
+    <!-- <div>
         <button class="editBtn ms-4" data-bs-toggle="modal" data-bs-target="#staticBackdrop2"><i
                 class="fa-solid fa-plus"></i> AssignOrganization</button>
-    </div>
+    </div> -->
     <!-- Modal  add-->
     <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdrop2Label" aria-hidden="true">
