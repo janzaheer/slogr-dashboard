@@ -86,7 +86,9 @@ export default {
       profileSwitchesData: {},
       profiles: null,
       loading: false,
-      initialGroupGeoJsonData: {}
+      initialGroupGeoJsonData: {},
+      GroupGeoJson: {},
+      mapLayers: []
     };
   },
   components: {
@@ -258,25 +260,28 @@ export default {
 
       let isProfile = this.profileSwitches[profileId]
       let map = this.map
-      let sourceId = this.map.getLayer('line-1').source
-      let allLines = this.map.querySourceFeatures(sourceId, {sourceLayer: 'line-1'});
-      let initialData = this.initialGroupGeoJsonData
       let profileSwitchesData = this.profileSwitchesData
+      let groupGeoJson = this.GroupGeoJson
 
-      if (isProfile) {
-        profileSwitchesData[profileId] = profileName
-      } else {
-        delete profileSwitchesData[profileId]
-      }
+      this.mapLayers.forEach(function (layer) {
+        let sourceId = map.getLayer(layer).source
+        let allLines = map.querySourceFeatures(sourceId, {sourceLayer: layer});
 
-      allLines.forEach(function (line) {
-        let lineFeature = initialData.features.find(feature => feature.properties.id === line.properties.id);
         if (isProfile) {
-          lineFeature.properties.color = line.properties[profileName]
-        } else if (Object.keys(profileSwitchesData).length < 1) {
-          lineFeature.properties.color = 'blue'
+          profileSwitchesData[profileId] = profileName
+        } else {
+          delete profileSwitchesData[profileId]
         }
-        map.getSource(sourceId).setData(initialData)
+
+        allLines.forEach(function (line) {
+          let lineFeature = groupGeoJson[layer].features.find(feature => feature.properties.id === line.properties.id);
+          if (isProfile) {
+            lineFeature.properties.color = line.properties[profileName]
+          } else if (Object.keys(profileSwitchesData).length < 1) {
+            lineFeature.properties.color = 'blue'
+          }
+          map.getSource(sourceId).setData(groupGeoJson[layer])
+        })
       })
     },
     async handleToggleGroup(groupId, switchValue) {
@@ -284,10 +289,17 @@ export default {
         // Draw connected lines
         const sessions = await this.handleSessions(groupId)
         this.drawLines(this.map, sessions, groupId);
+        this.mapLayers.push(`line-${groupId}`)
       } else {
         // Remove the group from the list of active groups
         this.map.removeLayer(`line-${groupId}`);
         this.map.removeSource(`line-${groupId}`);
+
+        let index = this.mapLayers.indexOf(`line-${groupId}`);
+        if (index >= 0) {
+          this.mapLayers.splice( index, 1 );
+        }
+        delete this.GroupGeoJson[`line-${groupId}`]
       }
     },
     async handleClusters(groupId) {
@@ -461,6 +473,7 @@ export default {
         features: lineFeatures
       }
 
+      this.GroupGeoJson[uniqueId] = this.initialGroupGeoJsonData
       this.map.addSource(uniqueId, {
         type: 'geojson',
         data: this.initialGroupGeoJsonData
