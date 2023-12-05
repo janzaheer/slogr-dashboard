@@ -28,19 +28,19 @@
                     <div class="col-9">
                         <div class="card" style="height: 100vh;">
                             <div class="card-body">
-
-                                <!-- <div>
-                                    <h6>{{ userToken.user.organization_id }}</h6>
-                                </div> -->
-
                                 <div class="d-flex justify-content-start mt-5 ms-3">
-                                    <!-- v-if="userData.user.organization_id " -->
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <div>
+                                        <div
+                                            v-if="userData.user.roles.length > 0 && userData.user.roles[0].name === `superadmin`">
+                                            <div>
+                                                <AssignOrg :handleGetOrganization="handleGetOrganization" />
+                                            </div>
+                                        </div>
+                                        <div v-else>
                                             <div class="card border-0" style="background-color: var(--icon-bg);">
                                                 <div class="card-body d-flex justify-content-center align-items-center">
-                                                    <h1><i class="fa-solid fa-user-plus fa-lg"
-                                                            style="color: var(--primary_color);"></i>
+                                                    <h1><i class="fa-solid fa-building-flag fa-lg"
+                                                            style="color: var(--primary_color); cursor: pointer;"></i>
                                                     </h1>
                                                 </div>
                                             </div>
@@ -50,37 +50,19 @@
                                             <span>Organization</span>
                                         </div>
                                         <div>
-                                            <p>Designation</p>
-                                            <div
-                                                v-if="userData.user.roles.length > 0 && userData.user.roles[0].name === `superadmin`">
-                                                <div>
-                                                    <EditOrg :name="organizationName" :phone="organizationPhone"
-                                                        :address="organizationAddress"
-                                                        :handleGetOrganization="handleGetOrganization" />
-                                                </div>
-                                                <div>
-                                                    <AssignOrg :handleGetOrganization="handleGetOrganization" />
-                                                </div>
+                                            <div>Designation </div>
+                                            <div>
+                                                <div>Phone: {{ organizationPhone }}</div>
+                                                <div>Address: {{ organizationAddress }}</div>
                                             </div>
-                                            <div v-else>
-                                                <h6>No Roles</h6>
-                                            </div>
-
+                                        </div>
+                                        <div
+                                            v-if="userData.user.roles.length > 0 && userData.user.roles[0].name === `superadmin`">
+                                            <EditOrg :name="organizationName" :phone="organizationPhone"
+                                                :address="organizationAddress"
+                                                :handleGetOrganization="handleGetOrganization" />
                                         </div>
                                     </div>
-                                    <!-- <div>
-                                        <AssignOrg />
-                                        <div
-                                            v-if="userData.user.roles[0].name === `superadmin` && userData.user.roles.length > 0">
-                                            <h6>role</h6>
-                                        </div>
-                                        <div v-else>
-                                            <h6>No Roles</h6>
-                                        </div>
-                                    </div> -->
-                                    <!-- <div class="" v-else>
-                                        <AddOrd :handleGetOrganization="handleGetOrganization" />
-                                    </div> -->
                                 </div>
                                 <div class="boxTop">
                                     <div class="row g-2">
@@ -182,7 +164,7 @@ export default {
         return {
             organizationName: '',
             organizationPhone: '',
-            organizationAddress: ''
+            organizationAddress: '',
         }
     },
     computed: {
