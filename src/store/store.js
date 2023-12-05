@@ -17,8 +17,7 @@ const vuexPersist = new createPersist({
     reducer: state => ({
         // Specify which state properties you want to persist
         token: state.token,
-        name: state.name,
-        id: state.id,
+        userData:state.userData
     }),
 });
 
@@ -26,29 +25,22 @@ const vuexPersist = new createPersist({
 const store = new Store({
     state: {
         token: null,
-        name: null,
-        id: null,
+        userData: {}
     },
     getters: {
         getToken: state => state.token,
-        getUserId: state => state.id,
-        getUserName: state => state.name
+        getUserData: state => state.userData
     },
     mutations: {
         setToken(state, token) {
-            console.log('Setting token:', token);
             state.token = token;
         },
-        setUsername(state, name) {
-            state.name = name;
-        },
-        setUserId(state, id) {
-            state.id = id;
+        setUserData(state, userData) {
+            state.userData = userData
         },
         clearUserData(state) {
             state.token = null;
-            state.name = null;
-            state.id = null;
+            state.userData = {}
         },
     },
     actions: {
@@ -60,8 +52,7 @@ const store = new Store({
                 if (response.status === 200) {
                     // Update Vuex store with user data
                     commit('setToken', response.data.success.token);
-                    commit('setUsername', response.data.success.user.name);
-                    commit('setUserId', response.data.success.user.id);
+                    commit('setUserData', response.data.success);
                     createToast(`Login successfully`, {
                         type: 'success',
                         position: 'top-right',
@@ -81,7 +72,7 @@ const store = new Store({
                     }
                 }
                 // Handle login error
-                 console.error('Login failed', error);
+                console.error('Login failed', error);
             }
         },
         async signup({ commit }, credentials) {
@@ -119,7 +110,7 @@ const store = new Store({
         logout({ commit }) {
             // Clear user data in Vuex store
             router.push({
-                name:'Login'
+                name: 'Login'
             })
             commit('clearUserData');
         },
