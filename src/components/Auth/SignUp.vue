@@ -4,7 +4,7 @@
         <div class="container">
             <div class="row m-5 no-gutters rounded shadow-lg">
                 <div class="col-md-6 d-none d-md-block">
-                    <img src="../../assets//SlogrWhiteboard.png" class="img-fluid shadow-sm" style="min-height:100%;" />
+                    <img src="../../assets//SlogrLogin.png" class="img-fluid shadow-sm" style="min-height:100%;" />
                 </div>
                 <div class="col-md-6 bg-white p-5">
                     <h1 class="pb-3">
@@ -19,29 +19,33 @@
                         <form @submit.prevent="signup">
                             <div class="form-group pb-3">
                                 <label for="exampleInputName1">Name</label>
-                                <input type="text" placeholder="enter yor name"
-                                    class="form-control form-control-lg" name="name" v-model="this.name">
+                                <input type="text" placeholder="enter yor name" class="form-control form-control-lg"
+                                    name="name" v-model="this.name">
                             </div>
                             <div class="form-group pb-3 my-3">
                                 <label for="exampleInputEmail1">Email Address</label>
                                 <input type="email" placeholder="Benjaminrobert77@email.com"
-                                    class="form-control form-control-lg" aria-describedby="emailHelp"
-                                    name="email" v-model="this.email">
+                                    class="form-control form-control-lg" aria-describedby="emailHelp" name="email"
+                                    v-model="this.email">
                             </div>
                             <div class="form-group my-3">
                                 <label for="exampleInputPassword1">Password</label>
                                 <input type="password" placeholder="Password" class="form-control form-control-lg"
-                                name="password" v-model="this.password">
+                                    name="password" v-model="this.password">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Confirm Password</label>
                                 <input type="password" placeholder="Password" class="form-control form-control-lg"
-                                name="password_confirmation" v-model="this.password_confirmation">
+                                    name="password_confirmation" v-model="this.password_confirmation">
                             </div>
                             <div class="">
                                 <button type="submit" class="signInBtn w-100 my-5">Sign Up</button>
                             </div>
                         </form>
+                        <div class="sideline mb-2">Or Sign In With</div>
+                        <button class="socialBtn w-100 me-2" @click="login"><i class="fa-brands fa-linkedin-in fa-2xl me-1"
+                                style="color: var(--primary_color);"></i>
+                            Continue With Linkedin</button>
                         <div class="pt-4 text-center text-secondary">
                             Already have Account Please. <RouterLink to="/login">Sign In</RouterLink>
                         </div>
@@ -54,8 +58,35 @@
 
 <script>
 import { RouterLink } from 'vue-router';
+import { useAuth0 } from '@auth0/auth0-vue';
 export default {
     name: 'SignUp',
+    setup() {
+        const { loginWithPopup, user, isAuthenticated, idTokenClaims, logout } = useAuth0()
+        // Log user data to console when the component is mounted
+        console.log('User on mount:', user);
+        // console.log('Token on mount:', idTokenClaims.__raw);
+
+
+
+        return {
+            login: () => {
+                loginWithPopup()
+            },
+            logout: () => {
+                logout()
+            },
+            user,
+            isAuthenticated,
+            idTokenClaims,
+        }
+    },
+    watch: {
+        // Log user data whenever it changes
+        user: function (newUser) {
+            console.log('User updated:', newUser);
+        }
+    },
     data() {
         return {
             name: '',
@@ -74,7 +105,7 @@ export default {
                 password_confirmation: this.password_confirmation
             }
             await this.$store.dispatch('signup', payload);
-            console.log('signup',payload)
+            console.log('signup', payload)
         }
     },
     mounted() {

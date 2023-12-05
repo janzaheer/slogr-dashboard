@@ -53,11 +53,6 @@ const store = new Store({
                     // Update Vuex store with user data
                     commit('setToken', response.data.success.token);
                     commit('setUserData', response.data.success);
-                    createToast(`Login successfully`, {
-                        type: 'success',
-                        position: 'top-right',
-                        transition: 'zoom',
-                    });
                     router.push('/');
                 }
             } catch (error) {

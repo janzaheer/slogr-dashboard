@@ -4,7 +4,7 @@
         <nav class="navbar navbar-expand-lg bg-body-white">
             <div class="container-fluid">
                 <RouterLink class="navbar-brand" to="/">
-                    <img src="../../assets/group-2420.svg" class="mx-xl-5" alt="" >
+                    <img src="../../assets/group-2420.svg" class="mx-xl-5" alt="">
                 </RouterLink>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -64,8 +64,20 @@
                     <RouterLink to="/dashboard" class="btnn mx-lg-1 mx-xl-2">
                         <i class="fa-solid fa-users text-secondary"></i>
                     </RouterLink>
-                    <button class="btnn text-decoration-none text-secondary" @click="logout">{{ userData.user.name.substring(0, 2) }}</button>
-                    <!-- <RouterLink class="btnn text-decoration-none text-secondary" to="/login">{{ name.substring(0, 2) }}</RouterLink> -->
+                    <div class="btn-group">
+                        <button class="btnn text-decoration-none text-secondary" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            {{ userData.user.name.substring(0, 2) }}</button>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-starts">
+                            <li>
+                                <h6 class="dropdown-header"><i class="fa-regular fa-user"></i>
+                                    {{ userData.user.name }}</h6>
+                            </li>
+                            <li>
+                                <button class="dropdown-item" @click="logoutUser"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -73,9 +85,18 @@
     <RouterView />
 </template>
 <script>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink, RouterView } from 'vue-router';
+import { useAuth0 } from '@auth0/auth0-vue';
 export default {
     name: 'Header',
+    setup() {
+        const {logout } = useAuth0()
+        return {
+            logout: () => {
+                logout()
+            },
+        }
+    },
     data() {
         return {
 
@@ -84,24 +105,24 @@ export default {
     components: {
 
     },
-    computed:{
+    computed: {
         userData() {
             return this.$store.getters.getUserData;
         },
     },
     mounted() {
     },
-    methods:{
-        logout() {
+    methods: {
+        logoutUser() {
             // Call the logout action from the Vuex store
             this.$store.dispatch('logout');
+            this.logout()
         },
     }
 }
 </script>
 
 <style>
-
 a {
     color: var(--dark_color);
 }
@@ -198,11 +219,13 @@ a.router-link-exact-active {
 .nav-item {
     cursor: pointer;
 }
+
 @media screen and (max-width: 1539px) {
     .nav-link {
         font-size: 15px !important;
     }
 }
+
 @media screen and (max-width: 1370px) {
     .nav-link {
         font-size: 12px !important;
@@ -238,5 +261,4 @@ a.router-link-exact-active {
         right: 200px;
     }
 }
-
 </style>
