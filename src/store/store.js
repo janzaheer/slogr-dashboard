@@ -48,7 +48,6 @@ const store = new Store({
             try {
                 // Make API call to authenticate user
                 const response = await authServices.login(credentials);
-                console.log('---------------111----------------')
                 if (response.status === 200) {
                     // Update Vuex store with user data
                     commit('setToken', response.data.success.token);
@@ -100,6 +99,29 @@ const store = new Store({
                     });
                 }
                 console.error('Signup failed', error);
+            }
+        },
+        async socialLogin({ commit }, credentials){
+            try {
+                const resp = await authServices.socialLogin(credentials)
+                if (resp.status === 200) {
+                    console.log('success', resp.data.success)
+                    commit('setToken', resp.data.success.token);
+                    commit('setUserData', resp.data.success);
+                    router.push('/');
+                }
+            } catch (error) {
+                if (error.resp) {
+                    if (error.resp.status === 422) {
+                        // console.log('Unauthenticated')
+                        createToast(`Unauthenticated`, {
+                            type: 'danger',
+                            position: 'top-right',
+                            transition: 'zoom',
+                        });
+                    }
+                }
+                console.log(error)
             }
         },
         logout({ commit }) {

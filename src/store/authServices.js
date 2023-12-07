@@ -9,4 +9,7 @@ export default {
   async signup(credentials) {
     return axios.post(`${base_url}/api/register`, credentials);
   },
+  async socialLogin(credentials) {
+    return axios.post(`${base_url}/api/social`, credentials);
+  },
 };

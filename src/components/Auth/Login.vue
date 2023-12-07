@@ -33,11 +33,7 @@
                             </div>
                         </form>
                         <div class="sideline mb-2">Or Sign In With</div>
-                        <div v-if="isAuthenticated">
-                            <button @click="logout">logout</button>
-                            <h1>{{ user.name }}</h1>
-                        </div>
-                        <div v-else>
+                        <div>
                             <button class="socialBtn w-100 me-2" @click="login"><i
                                     class="fa-brands fa-linkedin-in fa-2xl me-1" style="color: var(--primary_color);"></i>
                                 Continue With Linkedin</button>
@@ -60,12 +56,6 @@ export default {
     name: 'Login',
     setup() {
         const { loginWithPopup, user, isAuthenticated, idTokenClaims, logout } = useAuth0()
-        // Log user data to console when the component is mounted
-        console.log('User on mount:', user);
-        // console.log('Token on mount:', idTokenClaims.__raw);
-
-
-
         return {
             login: () => {
                 loginWithPopup()
@@ -74,22 +64,24 @@ export default {
                 logout()
             },
             user,
-            isAuthenticated,
-            idTokenClaims,
         }
     },
     watch: {
         // Log user data whenever it changes
         user: function (newUser) {
-            console.log('User updated:', newUser);
+            this.social.name = newUser.name
+            this.social.sub = newUser.sub
+            this.socialLogin()
         }
     },
     data() {
         return {
             email: '',
             password: '',
-            // linkedInClientId: '77fwe8ov6j4xbm',
-            // linkedInRedirectUri: 'http://localhost:5173/login',
+            social: {
+                name: '',
+                sub: ''
+            }
         }
     },
     methods: {
@@ -108,6 +100,17 @@ export default {
                 console.log(error)
             }
         },
+        async socialLogin(){
+            const payload = {
+                name: this.social.name,
+                sub: this.social.sub
+            }
+            try {
+                await this.$store.dispatch('socialLogin', payload)
+            } catch (error) {
+                console.log(error)
+            }
+        }
     },
     mounted() {
 
