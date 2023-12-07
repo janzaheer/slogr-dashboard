@@ -77,14 +77,14 @@ export default {
                 logout()
             },
             user,
-            isAuthenticated,
-            idTokenClaims,
         }
     },
     watch: {
         // Log user data whenever it changes
         user: function (newUser) {
-            console.log('User updated:', newUser);
+            this.social.name = newUser.name
+            this.social.sub = newUser.sub
+            this.socialLogin()
         }
     },
     data() {
@@ -92,7 +92,11 @@ export default {
             name: '',
             email: '',
             password: '',
-            password_confirmation: ''
+            password_confirmation: '',
+            social: {
+                name: '',
+                sub: ''
+            }
         }
     },
     methods: {
@@ -106,6 +110,17 @@ export default {
             }
             await this.$store.dispatch('signup', payload);
             console.log('signup', payload)
+        },
+        async socialLogin(){
+            const payload = {
+                name: this.social.name,
+                sub: this.social.sub
+            }
+            try {
+                await this.$store.dispatch('socialLogin', payload)
+            } catch (error) {
+                console.log(error)
+            }
         }
     },
     mounted() {
