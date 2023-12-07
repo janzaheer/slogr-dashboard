@@ -4,7 +4,7 @@
         <div class="container">
             <div class="row m-5 no-gutters rounded shadow-lg">
                 <div class="col-md-6 d-none d-md-block">
-                    <img src="../../assets//SlogrWhiteboard.png" class="img-fluid shadow-sm" style="min-height:100%;" />
+                    <img src="../../assets//SlogrLogin.png" class="img-fluid shadow-sm" style="min-height:100%;" />
                 </div>
                 <div class="col-md-6 bg-white p-5">
 
@@ -16,7 +16,7 @@
                         <h3>Sign In to Slogr</h3>
                     </div>
                     <div class="form-style">
-                        <form @submit.prevent="login">
+                        <form @submit.prevent="loginUser">
                             <div class="form-group pb-3">
                                 <label for="exampleInputEmail1">Email Address</label>
                                 <input type="email" placeholder="Benjaminrobert77@email.com"
@@ -33,16 +33,10 @@
                             </div>
                         </form>
                         <div class="sideline mb-2">Or Sign In With</div>
-                        <div class="d-flex justify-content-between align-items-center ">
-                            <button class="socialBtn w-100 me-2"><i class="fa-brands fa-google fa-2xl"
-                                    style="color: var(--primary_color);"></i> Google</button>
-                            <button class="socialBtn w-100"><i class="fa-brands fa-facebook-f fa-2xl"
-                                    style="color: var(--primary_color);"></i> Facebook</button>
-                            <!-- <button @click="loginWithLinkedIn" class="socialBtn w-100 me-2">
-                                <i class="fa-brands fa-linkedin-in fa-2xl" style="color: var(--primary_color);"></i>
-                                LinkedIn
-                            </button> -->
-                            <!-- <button @click="linkedInLogin">test</button> -->
+                        <div>
+                            <button class="socialBtn w-100 me-2" @click="login"><i
+                                    class="fa-brands fa-linkedin-in fa-2xl me-1" style="color: var(--primary_color);"></i>
+                                Continue With Linkedin</button>
                         </div>
                         <div class="pt-4 text-center">
                             Create Account. <RouterLink to="/signUp">Sign Up</RouterLink>
@@ -56,19 +50,42 @@
     
 <script >
 import { RouterLink } from 'vue-router';
+import { useAuth0 } from '@auth0/auth0-vue';
 
 export default {
     name: 'Login',
+    setup() {
+        const { loginWithPopup, user, isAuthenticated, idTokenClaims, logout } = useAuth0()
+        return {
+            login: () => {
+                loginWithPopup()
+            },
+            logout: () => {
+                logout()
+            },
+            user,
+        }
+    },
+    watch: {
+        // Log user data whenever it changes
+        user: function (newUser) {
+            this.social.name = newUser.name
+            this.social.sub = newUser.sub
+            this.socialLogin()
+        }
+    },
     data() {
         return {
             email: '',
             password: '',
-            // linkedInClientId: '77fwe8ov6j4xbm',
-            // linkedInRedirectUri: 'http://localhost:5173/login',
+            social: {
+                name: '',
+                sub: ''
+            }
         }
     },
     methods: {
-        async login(e) {
+        async loginUser(e) {
             e.preventDefault()
             const payload = {
                 email: this.email,
@@ -83,6 +100,17 @@ export default {
                 console.log(error)
             }
         },
+        async socialLogin(){
+            const payload = {
+                name: this.social.name,
+                sub: this.social.sub
+            }
+            try {
+                await this.$store.dispatch('socialLogin', payload)
+            } catch (error) {
+                console.log(error)
+            }
+        }
     },
     mounted() {
 
