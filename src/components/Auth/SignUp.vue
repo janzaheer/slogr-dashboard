@@ -10,30 +10,30 @@
                     <h1 class="pb-3">
                         <RouterLink to="/"><img src="../../assets/group-2420.svg" alt=""></RouterLink>
                     </h1>
-                    <div class="my-5">
+                    <div class="my-4">
                         <span>Welcome.</span>
                         <h3>Sign Up for an Account</h3>
                         <span class="text-secondary">Enter your details below</span>
                     </div>
                     <div class="form-style">
                         <form @submit.prevent="signup">
-                            <div class="form-group pb-3">
+                            <div class="form-group ">
                                 <label for="exampleInputName1">Name</label>
                                 <input type="text" placeholder="enter yor name" class="form-control form-control-lg"
                                     name="name" v-model="this.name">
                             </div>
-                            <div class="form-group pb-3 my-3">
+                            <div class="form-group my-3">
                                 <label for="exampleInputEmail1">Email Address</label>
                                 <input type="email" placeholder="Benjaminrobert77@email.com"
                                     class="form-control form-control-lg" aria-describedby="emailHelp" name="email"
                                     v-model="this.email">
                             </div>
-                            <div class="form-group my-3">
+                            <div class="form-group">
                                 <label for="exampleInputPassword1">Password</label>
                                 <input type="password" placeholder="Password" class="form-control form-control-lg"
                                     name="password" v-model="this.password">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group mt-3">
                                 <label for="exampleInputPassword1">Confirm Password</label>
                                 <input type="password" placeholder="Password" class="form-control form-control-lg"
                                     name="password_confirmation" v-model="this.password_confirmation">
@@ -42,8 +42,8 @@
                                 <button type="submit" class="signInBtn w-100 my-5">Sign Up</button>
                             </div>
                         </form>
-                        <div class="sideline mb-2">Or Sign In With</div>
-                        <button class="socialBtn w-100 me-2" @click="login"><i class="fa-brands fa-linkedin-in fa-2xl me-1"
+                        <div class="sideline mb-1">Or Sign In With</div>
+                        <button class="socialBtn w-100 me-2 text-secondary" @click="login"><i class="fa-brands fa-linkedin-in fa-2xl me-1"
                                 style="color: var(--primary_color);"></i>
                             Continue With Linkedin</button>
                         <div class="pt-4 text-center text-secondary">
