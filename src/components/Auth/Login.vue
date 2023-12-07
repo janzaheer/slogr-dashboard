@@ -7,12 +7,11 @@
                     <img src="../../assets//SlogrLogin.png" class="img-fluid shadow-sm" style="min-height:100%;" />
                 </div>
                 <div class="col-md-6 bg-white p-5">
-
                     <h1 class="pb-3">
                         <RouterLink to="/"><img src="../../assets/group-2420.svg" alt=""></RouterLink>
                     </h1>
                     <div class="my-5">
-                        <span>Welcome to Back,</span>
+                        <span>Welcome to Back</span>
                         <h3>Sign In to Slogr</h3>
                     </div>
                     <div class="form-style">
@@ -34,11 +33,11 @@
                         </form>
                         <div class="sideline mb-2">Or Sign In With</div>
                         <div>
-                            <button class="socialBtn w-100 me-2" @click="login"><i
+                            <button class="socialBtn w-100 me-2 text-secondary" @click="login"><i
                                     class="fa-brands fa-linkedin-in fa-2xl me-1" style="color: var(--primary_color);"></i>
                                 Continue With Linkedin</button>
                         </div>
-                        <div class="pt-4 text-center">
+                        <div class="pt-4 text-center text-secondary">
                             Create Account. <RouterLink to="/signUp">Sign Up</RouterLink>
                         </div>
                     </div>
