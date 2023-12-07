@@ -63,12 +63,6 @@ export default {
     name: 'SignUp',
     setup() {
         const { loginWithPopup, user, isAuthenticated, idTokenClaims, logout } = useAuth0()
-        // Log user data to console when the component is mounted
-        console.log('User on mount:', user);
-        // console.log('Token on mount:', idTokenClaims.__raw);
-
-
-
         return {
             login: () => {
                 loginWithPopup()
