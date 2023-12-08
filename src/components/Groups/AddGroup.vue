@@ -170,7 +170,6 @@ export default {
             }
         },
         handleCancel(id) {
-            console.log('cancel-id', id)
             const index2 = this.selectedSessions.findIndex(item => item.id === id);
             if (index2 !== -1) {
                 this.selectedSessions.splice(index2, 1);

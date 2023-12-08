@@ -170,12 +170,12 @@
                                 <div class="row g-2">
                                     <div class="col-md-6">
                                         <label for="exampleFormControlInput1" class="form-label ms-1">RTT Green</label>
-                                        <input type="text" class="form-control form-control-lg" placeholder="RTT Green"
+                                        <input type="number" class="form-control form-control-lg" placeholder="RTT Green"
                                             name="rtt_g" v-model="this.form.rtt_g">
                                     </div>
                                     <div class="col-md-6">
                                         <label for="exampleFormControlInput1" class="form-label ms-1">RTT Red</label>
-                                        <input type="text" class="form-control form-control-lg" placeholder="RTT Red"
+                                        <input type="number" class="form-control form-control-lg" placeholder="RTT Red"
                                             name="rtt_r" v-model="this.form.rtt_r">
                                     </div>
                                 </div>
@@ -184,12 +184,12 @@
                                 <div class="row g-2">
                                     <div class="col-md-6">
                                         <label for="exampleFormControlInput1" class="form-label ms-1">Jitter Green</label>
-                                        <input type="text" class="form-control form-control-lg" placeholder="Jitter Green"
+                                        <input type="number" class="form-control form-control-lg" placeholder="Jitter Green"
                                             name="jitter_g" v-model="this.form.jitter_g">
                                     </div>
                                     <div class="col-md-6">
                                         <label for="exampleFormControlInput1" class="form-label ms-1">Jitter Red</label>
-                                        <input type="text" class="form-control form-control-lg" placeholder="Jitter Red"
+                                        <input type="number" class="form-control form-control-lg" placeholder="Jitter Red"
                                             name="jitter_r" v-model="this.form.jitter_r">
                                     </div>
                                 </div>
@@ -198,12 +198,12 @@
                                 <div class="row g-2">
                                     <div class="col-md-6">
                                         <label for="exampleFormControlInput1" class="form-label ms-1">Downlink Green</label>
-                                        <input type="text" class="form-control form-control-lg" placeholder="Downlink Green"
+                                        <input type="number" class="form-control form-control-lg" placeholder="Downlink Green"
                                             name="downlink_g" v-model="this.form.downlink_g">
                                     </div>
                                     <div class="col-md-6">
                                         <label for="exampleFormControlInput1" class="form-label ms-1">Downlink Red</label>
-                                        <input type="text" class="form-control form-control-lg" placeholder="Downlink Red"
+                                        <input type="number" class="form-control form-control-lg" placeholder="Downlink Red"
                                             name="downlink_r" v-model="this.form.downlink_r">
                                     </div>
                                 </div>
@@ -212,12 +212,12 @@
                                 <div class="row g-2">
                                     <div class="col-md-6">
                                         <label for="exampleFormControlInput1" class="form-label ms-1">Downlink BandWidth Green</label>
-                                        <input type="text" class="form-control form-control-lg" placeholder="Downlink BandWidth Green"
+                                        <input type="number" class="form-control form-control-lg" placeholder="Downlink BandWidth Green"
                                             name="downlink_bw_g" v-model="this.form.downlink_bw_g">
                                     </div>
                                     <div class="col-md-6">
                                         <label for="exampleFormControlInput1" class="form-label ms-1">Downlink BandWidth Red</label>
-                                        <input type="text" class="form-control form-control-lg" placeholder="Downlink BandWidth Red"
+                                        <input type="number" class="form-control form-control-lg" placeholder="Downlink BandWidth Red"
                                             name="downlink_bw_r" v-model="this.form.downlink_bw_r">
                                     </div>
                                 </div>
@@ -226,12 +226,12 @@
                                 <div class="row g-2">
                                     <div class="col-md-6">
                                         <label for="exampleFormControlInput1" class="form-label ms-1">Uplink Green</label>
-                                        <input type="text" class="form-control form-control-lg" placeholder="Uplink Green"
+                                        <input type="number" class="form-control form-control-lg" placeholder="Uplink Green"
                                             name="uplink_g" v-model="this.form.uplink_g">
                                     </div>
                                     <div class="col-md-6">
                                         <label for="exampleFormControlInput1" class="form-label ms-1">Uplink Red</label>
-                                        <input type="text" class="form-control form-control-lg" placeholder="Uplink Red"
+                                        <input type="number" class="form-control form-control-lg" placeholder="Uplink Red"
                                             name="uplink_r" v-model="this.form.uplink_r">
                                     </div>
                                 </div>
@@ -240,12 +240,12 @@
                                 <div class="row g-2">
                                     <div class="col-md-6">
                                         <label for="exampleFormControlInput1" class="form-label ms-1">Uplink BandWidth Green</label>
-                                        <input type="text" class="form-control form-control-lg" placeholder="Uplink BandWidth Green"
+                                        <input type="number" class="form-control form-control-lg" placeholder="Uplink BandWidth Green"
                                             name="uplink_bw_g" v-model="this.form.uplink_bw_g">
                                     </div>
                                     <div class="col-md-6">
                                         <label for="exampleFormControlInput1" class="form-label ms-1">Uplink BandWidth Red</label>
-                                        <input type="text" class="form-control form-control-lg" placeholder="Uplink BandWidth Red"
+                                        <input type="number" class="form-control form-control-lg" placeholder="Uplink BandWidth Red"
                                             name="uplink_bw_r" v-model="this.form.uplink_bw_r">
                                     </div>
                                 </div>
@@ -254,12 +254,12 @@
                                 <div class="row g-2">
                                     <div class="col-md-6">
                                         <label for="exampleFormControlInput1" class="form-label ms-1">Loss Green</label>
-                                        <input type="text" class="form-control form-control-lg" placeholder="Loss Green"
+                                        <input type="number" class="form-control form-control-lg" placeholder="Loss Green"
                                             name="loss_g" v-model="this.form.loss_g">
                                     </div>
                                     <div class="col-md-6">
                                         <label for="exampleFormControlInput1" class="form-label ms-1">Loss Red</label>
-                                        <input type="text" class="form-control form-control-lg" placeholder="Loss Red"
+                                        <input type="number" class="form-control form-control-lg" placeholder="Loss Red"
                                             name="loss_r" v-model="this.form.loss_r">
                                     </div>
                                 </div>
@@ -268,12 +268,12 @@
                                 <div class="row g-2">
                                     <div class="col-md-6">
                                         <label for="exampleFormControlInput1" class="form-label ms-1">Delay Green</label>
-                                        <input type="text" class="form-control form-control-lg" placeholder="Delay Green"
+                                        <input type="number" class="form-control form-control-lg" placeholder="Delay Green"
                                             name="delay_g" v-model="this.form.delay_g">
                                     </div>
                                     <div class="col-md-6">
                                         <label for="exampleFormControlInput1" class="form-label ms-1">Delay Red</label>
-                                        <input type="text" class="form-control form-control-lg" placeholder="Delay Red"
+                                        <input type="number" class="form-control form-control-lg" placeholder="Delay Red"
                                             name="delay_r" v-model="this.form.delay_r">
                                     </div>
                                 </div>
@@ -282,17 +282,17 @@
                                 <div class="row g-2">
                                     <div class="col-md-4">
                                         <label for="exampleFormControlInput1" class="form-label ms-1">Wait Time</label>
-                                        <input type="text" class="form-control form-control-lg" placeholder="W Time"
+                                        <input type="number" class="form-control form-control-lg" placeholder="W Time"
                                             name="w_time" v-model="this.form.w_time">
                                     </div>
                                     <div class="col-md-4">
                                         <label for="exampleFormControlInput1" class="form-label ms-1">Dscp</label>
-                                        <input type="text" class="form-control form-control-lg" placeholder="Dscp"
+                                        <input type="number" class="form-control form-control-lg" placeholder="Dscp"
                                             name="dscp" v-model="this.form.dscp">
                                     </div>
                                     <div class="col-md-4">
                                         <label for="exampleFormControlInput1" class="form-label ms-1">Count</label>
-                                        <input type="text" class="form-control form-control-lg" placeholder="Count"
+                                        <input type="number" class="form-control form-control-lg" placeholder="Count"
                                             name="count" v-model="this.form.count">
                                     </div>
                                 </div>
@@ -301,18 +301,18 @@
                                 <div class="row g-2">
                                     <div class="col-md-4">
                                         <label for="exampleFormControlInput1" class="form-label ms-1">Number Packets</label>
-                                        <input type="text" class="form-control form-control-lg" placeholder="No Packets"
+                                        <input type="number" class="form-control form-control-lg" placeholder="No Packets"
                                             name="n_packets" v-model="this.form.n_packets">
                                     </div>
                                     <div class="col-md-4">
                                         <label for="exampleFormControlInput1" class="form-label ms-1">Packets
                                             Interval</label>
-                                        <input type="text" class="form-control form-control-lg" placeholder="P Interval"
+                                        <input type="number" class="form-control form-control-lg" placeholder="P Interval"
                                             name="p_interval" v-model="this.form.p_interval">
                                     </div>
                                     <div class="col-md-4">
                                         <label for="exampleFormControlInput1" class="form-label ms-1">Packets Size</label>
-                                        <input type="text" class="form-control form-control-lg" placeholder="Packets Size"
+                                        <input type="number" class="form-control form-control-lg" placeholder="Packets Size"
                                             name="p_size" v-model="this.form.p_size">
                                     </div>
                                 </div>
@@ -397,7 +397,6 @@ export default {
                 this.loading = true
                 let res = await ProfileList()
                 this.monitorData = res.profiles
-                console.log('profile', res.profiles)
             } catch (error) {
                 console.log(error)
             } finally {
@@ -405,7 +404,6 @@ export default {
             }
         },
         async handleDelete(id) {
-            console.log('delete', id)
             try {
                 await deleteMonitor(id)
                 createToast(`delete successfully`, {

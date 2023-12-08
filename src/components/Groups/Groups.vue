@@ -43,7 +43,6 @@
                             <div class="col-10">
                                 <div class="card" style="height: 100vh;">
                                     <div class="card-body">
-
                                         <perfect-scrollbar style="height: 820px;">
                                             <div class="text-center m-5" v-if="loading">
                                                 <VueSpinner size="80" color="#8cb63d" />
@@ -150,7 +149,6 @@ export default {
                 this.loading = false;
             }
         }
-
     }
 }
 </script>

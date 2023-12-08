@@ -341,7 +341,6 @@ export default {
                 this.pages.previousPage = res?.data?.prev || 0
                 this.pages.currentPage = this.pages.previousPage + 1
                 this.pages.nextPage = res?.data?.next || 0
-                console.log('sessions', res.data.sessions)
             } catch (error) {
                 console.log(error)
             } finally {
@@ -422,7 +421,6 @@ export default {
             try {
                 let res = await ProfileListForm(size)
                 this.profiles = res.profiles;
-
             } catch (error) {
                 console.log(error)
             }
