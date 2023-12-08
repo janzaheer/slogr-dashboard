@@ -19,33 +19,33 @@
                         <form @submit.prevent="signup">
                             <div class="form-group ">
                                 <label for="exampleInputName1">Name</label>
-                                <input type="text" placeholder="enter yor name" class="form-control form-control-lg"
-                                    name="name" v-model="this.name">
+                                <input type="text" placeholder="enter your name" class="form-control form-control-lg"
+                                    name="name" v-model="this.name" required>
                             </div>
                             <div class="form-group my-3">
                                 <label for="exampleInputEmail1">Email Address</label>
                                 <input type="email" placeholder="Benjaminrobert77@email.com"
                                     class="form-control form-control-lg" aria-describedby="emailHelp" name="email"
-                                    v-model="this.email">
+                                    v-model="this.email" autocomplete="new-email" required>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Password</label>
                                 <input type="password" placeholder="Password" class="form-control form-control-lg"
-                                    name="password" v-model="this.password">
+                                    name="password" v-model="this.password" autocomplete="new-password" required>
                             </div>
                             <div class="form-group mt-3">
-                                <label for="exampleInputPassword1">Confirm Password</label>
-                                <input type="password" placeholder="Password" class="form-control form-control-lg"
-                                    name="password_confirmation" v-model="this.password_confirmation">
+                                <label for="exampleInputPassword2">Confirm Password</label>
+                                <input type="password" placeholder="Confirm Password" class="form-control form-control-lg"
+                                    name="password_confirmation" autocomplete="new-password" v-model="this.password_confirmation" required>
                             </div>
                             <div class="">
-                                <button type="submit" class="signInBtn w-100 my-5">Sign Up</button>
+                                <button type="submit" class="signInBtn w-100 my-4">Sign Up</button>
                             </div>
                         </form>
                         <div class="sideline mb-1">Or Sign In With</div>
-                        <button class="socialBtn w-100 me-2 text-secondary" @click="login"><i class="fa-brands fa-linkedin-in fa-2xl me-1"
-                                style="color: var(--primary_color);"></i>
-                            Continue With Linkedin</button>
+                        <div>
+                            <Linkedin />
+                        </div>
                         <div class="pt-4 text-center text-secondary">
                             Already have Account Please. <RouterLink to="/login">Sign In</RouterLink>
                         </div>
@@ -58,28 +58,11 @@
 
 <script>
 import { RouterLink } from 'vue-router';
-import { useAuth0 } from '@auth0/auth0-vue';
+import Linkedin from './Linkedin.vue';
 export default {
     name: 'SignUp',
-    setup() {
-        const { loginWithPopup, user, isAuthenticated, idTokenClaims, logout } = useAuth0()
-        return {
-            login: () => {
-                loginWithPopup()
-            },
-            logout: () => {
-                logout()
-            },
-            user,
-        }
-    },
-    watch: {
-        // Log user data whenever it changes
-        user: function (newUser) {
-            this.social.name = newUser.name
-            this.social.sub = newUser.sub
-            this.socialLogin()
-        }
+    components: {
+        Linkedin
     },
     data() {
         return {
@@ -87,11 +70,10 @@ export default {
             email: '',
             password: '',
             password_confirmation: '',
-            social: {
-                name: '',
-                sub: ''
-            }
         }
+    },
+    mounted() {
+
     },
     methods: {
         async signup(e) {
@@ -103,22 +85,7 @@ export default {
                 password_confirmation: this.password_confirmation
             }
             await this.$store.dispatch('signup', payload);
-            console.log('signup', payload)
-        },
-        async socialLogin(){
-            const payload = {
-                name: this.social.name,
-                sub: this.social.sub
-            }
-            try {
-                await this.$store.dispatch('socialLogin', payload)
-            } catch (error) {
-                console.log(error)
-            }
         }
-    },
-    mounted() {
-
     }
 }
 </script>

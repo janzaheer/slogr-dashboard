@@ -20,12 +20,12 @@
                                 <label for="exampleInputEmail1">Email Address</label>
                                 <input type="email" placeholder="Benjaminrobert77@email.com"
                                     class="form-control form-control-lg" name="email" v-model="this.email"
-                                    aria-describedby="emailHelp">
+                                    aria-describedby="emailHelp" autocomplete="new-email" required>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Password</label>
                                 <input type="password" placeholder="Password" class="form-control form-control-lg"
-                                    name="password" v-model="this.password">
+                                    name="password" autocomplete="new-password" v-model="this.password" required>
                             </div>
                             <div class="">
                                 <button type="submit" class="signInBtn w-100 my-5">Login In</button>
@@ -33,9 +33,7 @@
                         </form>
                         <div class="sideline mb-2">Or Sign In With</div>
                         <div>
-                            <button class="socialBtn w-100 me-2 text-secondary" @click="login"><i
-                                    class="fa-brands fa-linkedin-in fa-2xl me-1" style="color: var(--primary_color);"></i>
-                                Continue With Linkedin</button>
+                            <Linkedin />
                         </div>
                         <div class="pt-4 text-center text-secondary">
                             Create Account. <RouterLink to="/signUp">Sign Up</RouterLink>
@@ -49,39 +47,21 @@
     
 <script >
 import { RouterLink } from 'vue-router';
-import { useAuth0 } from '@auth0/auth0-vue';
+import Linkedin from './Linkedin.vue';
 
 export default {
     name: 'Login',
-    setup() {
-        const { loginWithPopup, user, isAuthenticated, idTokenClaims, logout } = useAuth0()
-        return {
-            login: () => {
-                loginWithPopup()
-            },
-            logout: () => {
-                logout()
-            },
-            user,
-        }
-    },
-    watch: {
-        // Log user data whenever it changes
-        user: function (newUser) {
-            this.social.name = newUser.name
-            this.social.sub = newUser.sub
-            this.socialLogin()
-        }
+    components: {
+        Linkedin
     },
     data() {
         return {
             email: '',
             password: '',
-            social: {
-                name: '',
-                sub: ''
-            }
         }
+    },
+    mounted() {
+
     },
     methods: {
         async loginUser(e) {
@@ -90,29 +70,13 @@ export default {
                 email: this.email,
                 password: this.password
             }
-            console.log('payload0', payload)
             // Call the login action
-
             try {
                 await this.$store.dispatch('login', payload);
             } catch (error) {
                 console.log(error)
             }
-        },
-        async socialLogin(){
-            const payload = {
-                name: this.social.name,
-                sub: this.social.sub
-            }
-            try {
-                await this.$store.dispatch('socialLogin', payload)
-            } catch (error) {
-                console.log(error)
-            }
         }
-    },
-    mounted() {
-
     }
 }
 </script>
