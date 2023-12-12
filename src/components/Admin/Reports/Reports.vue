@@ -49,7 +49,6 @@
                                                 <th scope="col"><a href="#" class="tableHead">Email</a></th>
                                                 <th scope="col"><a href="#" class="tableHead">Time</a> </th>
                                                 <th scope="col"></th>
-
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -70,12 +69,9 @@
                                                             <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#staticBackdrop1" @click="handleEditModel(data.id, data.name, data.email, data.time)"><i class="fa-regular fa-pen-to-square"></i>
                                                                 Edit</a>
                                                         </li>
-                                                        <li><a class="dropdown-item" href="#"><i class="fa-regular fa-eye"></i>
-                                                                Details</a></li>
                                                         <li><a class="dropdown-item" href="#" v-on:click="handleDelete(data.id)"><i class="fa-regular fa-trash-can"></i> Delete</a></li>
                                                     </ul>
                                                 </td>
-
                                             </tr>
                                         </tbody>
                                     </table>
