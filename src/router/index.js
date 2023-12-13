@@ -14,7 +14,8 @@ import Dashboard from '../components/Admin/Dashboard/Dashboard.vue'
 import CreateNewUser from '../components/Admin/CreateUser/CreateNewUser.vue'
 import RightsProfiles from '../components/Admin/RightsProfile/RightsProfile.vue';
 import EditRightsProfile from '../components/Admin/RightsProfile/EditRightsProfile.vue';
-import Alerts from '../components/Admin/Alerts/Alerts.vue'
+import Alerts from '../components/Admin/Alerts/Alerts.vue';
+import Reports from '../components/Admin/Reports/Reports.vue';
 
 import store from '../store/store';
 
@@ -107,6 +108,12 @@ const router = createRouter({
       path: '/alerts',
       name: 'Alerts',
       component: Alerts,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/reports',
+      name: 'Reports',
+      component: Reports,
       meta: { requiresAuth: true },
     },
     {

@@ -45,6 +45,12 @@
                         </RouterLink>
                     </li>
                     <hr>
+                    <li>
+                        <RouterLink to="/reports" class="nav-linker">
+                            Reports
+                        </RouterLink>
+                    </li>
+                    <hr>
                 </ul>
             </div>
         </div>
