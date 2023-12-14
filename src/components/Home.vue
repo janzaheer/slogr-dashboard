@@ -19,7 +19,8 @@
             </div>
             <div v-else>
               <div v-for="group in groups" :key="group.id" class="d-flex justify-content-between align-items-center">
-                <label class="form-check-label" :for="'flexSwitchCheckDefault_' + group.id">{{ group.name }}</label>
+                <label class="form-check-label" :for="'flexSwitchCheckDefault_' + group.id" data-bs-toggle="popover" :title=group.name :data-content="group.name">
+                  {{ group.name.length > 9 ? group.name.substring(0,9) + "..." : group.name}}</label>
                 <div class="form-check form-switch">
                   <input class="form-check-input fs-5" type="checkbox" role="switch"
                     :id="'flexSwitchCheckDefault_' + group.id" v-model="groupSwitches[group.id]"
@@ -49,7 +50,9 @@
             </div>
             <div v-else>
               <div v-for="profile in profiles" :key="profile.id" class="d-flex justify-content-between align-items-center">
-                <label class="form-check-label" :for="'profileDefault' + profile.id">{{ profile.name }}</label>
+                <label class="form-check-label" :for="'profileDefault' + profile.id" data-bs-toggle="popover" :title=profile.name :data-content="profile.name">
+                  {{ profile.name.length > 9 ? profile.name.substring(0,9) + '...' : profile.name}}
+                </label>
                 <div class="form-check form-switch">
                   <input class="form-check-input fs-5" type="checkbox" role="switch" v-model="profileSwitches[profile.id]"
                     :id="'profileDefault' + profile.id" @change="handleProfileToggle(profile.id, profile.name)">
@@ -105,9 +108,13 @@ export default {
       style: 'mapbox://styles/mapbox/light-v11',
       center: [0, 20],
       zoom: 1.8,
-      minZoom: 1.8
+      minZoom: 1.8,
     });
-
+ // Hide the Mapbox logo
+    const logoContainer = document.querySelector('.mapboxgl-ctrl-logo');
+    if (logoContainer) {
+        logoContainer.style.display = 'none';
+    }
     const nav = new mapboxgl.NavigationControl();
     this.map.addControl(nav, "bottom-right");
 
@@ -556,8 +563,9 @@ export default {
 <style scoped>
 #map {
   width: 100%;
-  height: 90%;
+  height: 91%;
   position: absolute;
+  margin-top: 6px;
 }
 
 .popup {

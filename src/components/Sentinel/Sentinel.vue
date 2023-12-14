@@ -41,133 +41,24 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col"><a href="#" class="tableHead" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">Home
-                                                         <!-- <i class="fa-solid fa-filter"
-                                                            style="color: var(--dark_gray_color);"></i> -->
-                                                        </a>
-                                                    <!-- <ul class="dropdown-menu shadow px-2">
-                                                        <li lass="dropdown-item">
-                                                            <div class="my-2">
-                                                                <div class="d-flex justify-content-between">
-                                                                    <p>Name</p>
-                                                                    <p class="pointer">X</p>
-                                                                </div>
-
-                                                                <input type="text" class="form-control form-control-sm"
-                                                                    placeholder="search name...">
-                                                            </div>
-                                                            <button class="ApplyBtn w-100 mb-2">Apply</button>
-                                                        </li>
-                                                    </ul> -->
+                                                        aria-expanded="false">Name </a>
                                                 </th>
                                                 <th scope="col"><a href="#" class="tableHead" data-bs-toggle="dropdown"
                                                         aria-expanded="false">Ip
                                                         Address</a>
-                                                    <!-- <ul class="dropdown-menu shadow px-2">
-                                                        <li lass="dropdown-item">
-                                                            <div class="my-2">
-                                                                <div class="d-flex justify-content-between">
-                                                                    <p>Ip Address Form:</p>
-                                                                    <p class="pointer">X</p>
-                                                                </div>
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="66655443222">
-                                                            </div>
-                                                        </li>
-                                                        <li lass="dropdown-item">
-                                                            <div class="my-3">
-                                                                <label for="exampleFormControlInput1" class="form-label">Ip
-                                                                    Address
-                                                                    To:</label>
-                                                                <input type="text" class="form-control"
-                                                                    id="exampleFormControlInput1" placeholder="12345677776">
-                                                            </div>
-                                                            <button class="ApplyBtn w-100 mb-2">Apply</button>
-                                                        </li>
-                                                    </ul> -->
                                                 </th>
                                                 <th scope="col"><a href="#" class="tableHead" data-bs-toggle="dropdown"
                                                         aria-expanded="false">Organization</a>
-                                                    <!-- <ul class="dropdown-menu shadow px-2">
-                                                        <li lass="dropdown-item">
-                                                            <div class="my-2">
-                                                                <div class="d-flex justify-content-between">
-                                                                    <label for="exampleFormControlInput1"
-                                                                        class="form-label">System
-                                                                        Information</label>
-                                                                    <p class="pointer">X</p>
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <input type="text" class="form-control"
-                                                                        id="exampleFormControlInput1"
-                                                                        placeholder="search System Information...">
-                                                                </div>
-                                                            </div>
-                                                            <button class="ApplyBtn w-100 mb-2">Apply</button>
-                                                        </li>
-                                                    </ul> -->
                                                 </th>
                                                 <th scope="col"><a href="#" class="tableHead" data-bs-toggle="dropdown"
                                                         aria-expanded="false">
                                                         Machine</a>
-                                                    <!-- <ul class="dropdown-menu shadow px-2">
-                                                        <li lass="dropdown-item">
-                                                            <div class="my-2">
-                                                                <div class="d-flex justify-content-between">
-                                                                    <label for="exampleFormControlInput1"
-                                                                        class="form-label">Deployed at:</label>
-                                                                    <p class="pointer">X</p>
-                                                                </div>
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="search here...">
-                                                            </div>
-                                                            <button class="ApplyBtn w-100 mb-2">Apply</button>
-                                                        </li>
-                                                    </ul> -->
                                                 </th>
                                                 <th scope="col"><a href="#" class="tableHead" data-bs-toggle="dropdown"
                                                         aria-expanded="false">Location</a>
-                                                    <!-- <ul class="dropdown-menu shadow px-2">
-                                                        <li lass="dropdown-item">
-                                                            <div class="my-2">
-                                                                <div class="d-flex justify-content-between">
-                                                                    <label for="exampleFormControlInput1"
-                                                                        class="form-label">City</label>
-                                                                    <p class="pointer">X</p>
-                                                                </div>
-                                                                <select class="form-select form-select-sm"
-                                                                    aria-label=".form-select-sm example">
-                                                                    <option selected>City</option>
-                                                                    <option value="1">Quetta</option>
-                                                                    <option value="2">Nushki</option>
-                                                                    <option value="3">Sialkot</option>
-                                                                </select>
-                                                            </div>
-                                                            <button class="ApplyBtn w-100 mb-2">Apply</button>
-                                                        </li>
-                                                    </ul> -->
                                                 </th>
                                                 <th scope="col"><a href="#" class="tableHead" data-bs-toggle="dropdown"
                                                         aria-expanded="false">Country</a>
-                                                    <!-- <ul class="dropdown-menu shadow px-2">
-                                                        <li lass="dropdown-item">
-                                                            <div class="my-2">
-                                                                <div class="d-flex justify-content-between">
-                                                                    <label for="exampleFormControlInput1"
-                                                                        class="form-label">Country</label>
-                                                                    <p class="pointer">X</p>
-                                                                </div>
-                                                                <select class="form-select form-select-sm"
-                                                                    aria-label=".form-select-sm example">
-                                                                    <option selected>Country</option>
-                                                                    <option value="1">Pakistan</option>
-                                                                    <option value="2">Australia</option>
-                                                                    <option value="3">England</option>
-                                                                </select>
-                                                            </div>
-                                                            <button class="ApplyBtn w-100 mb-2">Apply</button>
-                                                        </li>
-                                                    </ul> -->
                                                 </th>
                                                 <th scope="col"></th>
                                                 <th scope="col"></th>
@@ -208,11 +99,11 @@
                                     <div>
                                         <button class="addBtn2"><i class="fa-solid fa-chevron-down fa-lg"></i> Go to
                                             Page</button>
-                                        <button class="addBtn2 mx-2" data-bs-toggle="modal" data-bs-target="#groupModal"><i
+                                        <!-- <button class="addBtn2 mx-2" data-bs-toggle="modal" data-bs-target="#groupModal"><i
                                                 class="fa-solid fa-plus fa-lg"></i> Add to
                                             Group</button>
                                         <button class="addBtn2"><i class="fa-solid fa-plus fa-lg"></i> Create
-                                            Report</button>
+                                            Report</button> -->
                                     </div>
                                     <div>
                                         <div class="pagination">
@@ -252,16 +143,6 @@
                                         </div>
                                     </div>
                                     <hr class="">
-                                    <!-- <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <p class="card-text ms-2">Minio-SJC1</p>
-                                        <span class="text-secondary ms-2" style="font-size: 13px;">SJC-1C-node </span> <br>
-                                        <span class="text-secondary ms-2" style="font-size: 13px;">Data</span>
-                                    </div>
-                                    <div>
-                                        <RouterLink to="/sentinelReports"><i class="fa-solid fa-chevron-right me-1 text-secondary"></i></RouterLink>
-                                    </div>
-                                </div> -->
                                 </div>
                             </div>
                         </div>
@@ -271,7 +152,7 @@
         </div>
     </div>
     <!-- go to Modal -->
-    <div class="modal fade" id="groupModal" tabindex="-1" aria-labelledby="groupModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="groupModal" tabindex="-1" aria-labelledby="groupModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-body">
@@ -320,7 +201,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Modal  Add new sentinel-->
     <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -338,6 +219,12 @@
                             <input type="text" class="form-control form-control-lg" id="exampleFormControlInput1"
                                 placeholder="Enter Name" v-model="addSentinel.name">
                             <span class="text-danger" v-if="!addSentinel.name">This field is required.</span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput2" class="form-label ms-1">Agent Code</label>
+                            <input type="text" class="form-control form-control-lg" id="exampleFormControlInput2"
+                                placeholder="Enter Agent Code" v-model="addSentinel.agent_code">
+                            <span class="text-danger" v-if="!addSentinel.agent_code">This field is required.</span>
                         </div>
                         <div class="d-flex justify-content-end">
                             <button type="button" id="AddCancelButton" class="modelCancelBtn"
@@ -392,7 +279,8 @@ export default {
     data() {
         return {
             addSentinel: {
-                name: null
+                name: null,
+                agent_code: null,
             },
             updateData: {
                 id: null,
@@ -427,6 +315,7 @@ export default {
                 this.pages.previousPage = respData.data.prev || 0
                 this.pages.currentPage = this.pages.previousPage + 1
                 this.pages.nextPage = respData.data.next || 1
+                console.log('agent',respData.data.agents)
             } catch (error) {
                 console.log(error)
             } finally {
@@ -435,13 +324,14 @@ export default {
 
         },
         async handleSentinelCreation() {
-            if (this.addSentinel.name) {
-                const payload = { name: this.addSentinel.name }
+            if (this.addSentinel.name && this.addSentinel.agent_code) {
+                const payload = { name: this.addSentinel.name, agent_code: this.addSentinel.agent_code }
                 await createAgent(payload)
                 await this.handleSentinelListing()
 
                 document.getElementById('AddCancelButton').click();
                 this.addSentinel.name = null;
+                this.addSentinel.agent_code = null;
             }
         },
         handleUpdateModalData(id, name) {
