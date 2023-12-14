@@ -53,8 +53,7 @@
                                                         <tr>
                                                             <th><a href="#" class="tableHead">Client Name</a></th>
                                                             <th><a href="#" class="tableHead">Server Name</a></th>
-                                                            <th><a href="#" class="tableHead">Packet Name </a></th>
-                                                            <th><a href="#" class="tableHead">Packet Size</a> </th>
+                                                            <th><a href="#" class="tableHead">Profile Name </a></th>
                                                             <th></th>
                                                         </tr>
                                                     </thead>
@@ -68,9 +67,6 @@
                                                             </td>
                                                             <td>
                                                                 <p class="tableP">{{ data?.p_name }}</p>
-                                                            </td>
-                                                            <td>
-                                                                <p class="tableP">{{ data?.p_size }}</p>
                                                             </td>
                                                             <td class="fs-5 dropstart">
                                                                 <RouterLink :to="`/sentinelReports/` + data.id" class="text-decoration-none text-dark tableP">

@@ -13,11 +13,11 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center ">
                             <div>
-                                <h3 class="text-secondary ms-3 mt-2">Monitor</h3>
+                                <h3 class="text-secondary ms-3 mt-2">Monitor Profile</h3>
                             </div>
                             <div class="d-flex align-items-center">
                                 <h6 class="mx-1 mt-2 text-muted">Home </h6>
-                                <h6 class="me-4 mt-2"> - Monitor</h6>
+                                <h6 class="me-4 mt-2"> - Monitor Profile</h6>
                                 <AddMonitor :handleMonitorList="handleMonitorList" />
                                 <div class="mx-3"><i class="fa-solid fa-ellipsis fa-2xl"></i></div>
                             </div>
@@ -35,7 +35,7 @@
                             <table class="table table-striped table-hover text-center">
                                 <thead>
                                     <tr>
-                                        <th><a href="#" class="tableHead">Name</a></th>
+                                        <th><a href="#" class="tableHead">Profile Name</a></th>
                                         <th><a href="#" class="tableHead">Date</a></th>
                                         <th><a href="#" class="tableHead">JITTER <br> green /red</a></th>
                                         <th><a href="#" class="tableHead">Downlink <br> green /red</a> </th>

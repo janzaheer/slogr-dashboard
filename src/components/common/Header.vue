@@ -34,7 +34,7 @@
                         <li class="nav-item mx-xl-1">
                             <RouterLink class="nav-link mx-xl-1" to="/monitor">
                                 <i class="fa-regular fa-eye"></i>
-                                <span class="mx-lg-1">Monitor</span>
+                                <span class="mx-lg-1">Profile</span>
                             </RouterLink>
                         </li>
                         <!-- <li class="nav-item">
@@ -243,7 +243,7 @@ a.router-link-exact-active {
 
 @media screen and (max-width: 1280px) {
     .nav-link {
-        font-size: 10px !important;
+        font-size: 13px !important;
     }
 
     .search-button {
