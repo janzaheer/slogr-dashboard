@@ -115,6 +115,10 @@ export default {
     if (logoContainer) {
         logoContainer.style.display = 'none';
     }
+    const attrib = document.querySelector('.mapboxgl-ctrl.mapboxgl-ctrl-attrib')
+    if (attrib) {
+      attrib.style.display = "none"
+    }
     const nav = new mapboxgl.NavigationControl();
     this.map.addControl(nav, "bottom-right");
 
