@@ -21,3 +21,8 @@ export async function UpdateReport(payload) {
     const resp = await axios.post(`${base_url}/api/edit-report`,payload)
     return resp.data
 }
+
+export async function DeleteReport(payload) {
+    const resp = await axios.post(`${base_url}/api/delete-report`,payload)
+    return resp.data
+}

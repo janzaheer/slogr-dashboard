@@ -106,7 +106,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <input type="time" class="form-control form-control-lg" placeholder="Enter Time" name="time" v-model="this.time">
+                                    <input type="time" pattern="(?:[01]\d|2[0-3]):(?:[0-5]\d)" class="form-control form-control-lg" placeholder="Enter Time" name="time" v-model="this.time">
                                 </div>
                             </div>
                         </div>
@@ -176,7 +176,8 @@ import Sidebar from '../Sidebar.vue';
 import AddReports from './AddReports.vue';
 // import EditReport from './EditReport.vue';
 import {
-    ReportDetail, UpdateReport
+    ReportDetail,
+    UpdateReport, DeleteReport
 } from '../../../services/reports_services'
 import {
     VueSpinner
@@ -184,7 +185,9 @@ import {
 import {
     ReportsList
 } from '.././../../services/reports_services';
-import { createToast } from 'mosha-vue-toastify';
+import {
+    createToast
+} from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css';
 import {
     PerfectScrollbar
@@ -253,7 +256,13 @@ export default {
             this.id = id;
             this.report_name = name;
             this.email = email;
-            this.time = time;
+
+            const parts = time.split(':');
+
+                const hours = parts[0];
+                const minutes = parts[1];
+                this.time = hours + ':' + minutes;
+
             let res = await ReportDetail(id)
             console.log('detail', res)
             const uniqueSessionIds = new Set(this.alertId);
@@ -328,6 +337,22 @@ export default {
                 this.alertId.splice(index, 1);
             }
         },
+        async handleDelete(id){
+            const payload = {
+                id: id
+            }
+            try {
+                await DeleteReport(payload)
+                createToast(`Delete Report Successfully`, {
+                    type: 'success',
+                    position: 'top-right',
+                    transition: 'zoom',
+                });
+                this.handleGetReports()
+            } catch (error) {
+                console.log('error', error)
+            }
+        }
     }
 }
 </script>

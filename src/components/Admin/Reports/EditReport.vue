@@ -25,7 +25,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <input type="time" class="form-control form-control-lg" placeholder="Enter Time" name="time" v-model="this.time">
+                                    <input type="time" pattern="(?:[01]\d|2[0-3]):(?:[0-5]\d)" class="form-control form-control-lg" placeholder="Enter Time" name="time" v-model="this.time">
                                 </div>
                             </div>
                         </div>
