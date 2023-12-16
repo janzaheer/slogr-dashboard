@@ -270,6 +270,8 @@
 import Header from '../common/Header.vue';
 import { createAgent, agentUpdate, agentList, agentRefSessions } from '../../services/agent_services';
 import { VueSpinner } from 'vue3-spinners';
+import { createToast } from 'mosha-vue-toastify';
+import 'mosha-vue-toastify/dist/style.css';
 export default {
     name: 'Sentinel',
     components: {
@@ -315,7 +317,6 @@ export default {
                 this.pages.previousPage = respData.data.prev || 0
                 this.pages.currentPage = this.pages.previousPage + 1
                 this.pages.nextPage = respData.data.next || 1
-                console.log('agent',respData.data.agents)
             } catch (error) {
                 console.log(error)
             } finally {
@@ -326,12 +327,24 @@ export default {
         async handleSentinelCreation() {
             if (this.addSentinel.name && this.addSentinel.agent_code) {
                 const payload = { name: this.addSentinel.name, agent_code: this.addSentinel.agent_code }
-                await createAgent(payload)
-                await this.handleSentinelListing()
-
-                document.getElementById('AddCancelButton').click();
-                this.addSentinel.name = null;
-                this.addSentinel.agent_code = null;
+                try {
+                    await createAgent(payload)
+                    await this.handleSentinelListing()
+                    document.getElementById('AddCancelButton').click();
+                    this.addSentinel.name = null;
+                    this.addSentinel.agent_code = null;
+                } catch (error) {
+                    console.log('add-error',error)
+                    let newError = error.response.data.error
+                    if (newError) {
+                        console.log('res-error',newError)
+                        createToast(newError, {
+                    type: 'success',
+                    position: 'top-right',
+                    transition: 'zoom',
+                });
+                    }
+                }
             }
         },
         handleUpdateModalData(id, name) {
