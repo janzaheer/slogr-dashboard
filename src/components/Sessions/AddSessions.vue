@@ -35,7 +35,7 @@
                                         </option>
                                     </select>
                                 </div>
-                                <!-- <div class="mb-4">
+                                <div class="mb-4">
                                     <label for="exampleFormControlInput1" class="form-label ms-1">Monitoring
                                         Profile*</label>
                                     <select v-model="selectedProfile" class="form-select form-select-lg mb-3 custom-select"
@@ -44,10 +44,10 @@
                                         <option v-for="profile in profiles" :key="profile.id" :value="profile.id">{{
                                             profile.name }}</option>
                                     </select>
-                                </div> -->
+                                </div>
                                 <div class="mb-3">
                                     <div class="row g-2">
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <label for="exampleFormControlInput1" class="form-label ms-1">Schedule*</label>
                                             <input type="number" class="form-control form-control-lg"
                                                 placeholder="Enter Schedule" v-model="this.form.schedule" name="schedule"
@@ -78,11 +78,11 @@
                                                 placeholder="Enter W Time" v-model="this.form.w_time" name="w_time"
                                                 required>
                                         </div>
-                                        <!-- <div class="col-md-6">
+                                        <div class="col-md-6">
                                             <label for="exampleFormControlInput1" class="form-label ms-1">DSCP*</label>
                                             <input type="number" class="form-control form-control-lg"
                                                 placeholder="Enter Dscp" v-model="this.form.dscp" name="dscp" required>
-                                        </div> -->
+                                        </div>
                                         <div class="col-md-6">
                                             <label for="exampleFormControlInput1" class="form-label ms-1">Packet
                                                 Size*</label>
@@ -119,7 +119,7 @@
 
 <script>
 import { agentListForm } from '../../services/agent_services';
-// import { ProfileListForm } from '../../services/monitor_profile_Services';
+import { ProfileListForm } from '../../services/monitor_profile_Services';
 import { addSessions } from '../../services/sessions_services';
 import { createToast } from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css';
@@ -141,11 +141,11 @@ export default {
                 n_packets: null,
                 p_interval: null,
                 w_time: null,
-                // dscp: null,
+                dscp: null,
                 p_size: null,
             },
-            // selectedProfile: 'please select profile',
-            // profiles: [],
+            selectedProfile: 'please select profile',
+            profiles: [],
             selectedAgentId: `please select sender sentinel`,
             agents: [],
             selectedClientId: 'please select receiver sentinel',
@@ -153,7 +153,7 @@ export default {
         }
     },
     async mounted() {
-        // await this.monitor()
+        await this.monitor()
         await this.server()
     },
     methods: {
@@ -162,13 +162,13 @@ export default {
             const payload = {
                 serve: this.selectedAgentId,
                 client: this.selectedClientId,
-                // profile: this.selectedProfile,
+                profile: this.selectedProfile,
                 schedule: this.form.schedule,
                 count: this.form.count,
                 n_packets: this.form.n_packets,
                 p_interval: this.form.p_interval,
                 w_time: this.form.w_time,
-                // dscp: this.form.dscp,
+                dscp: this.form.dscp,
                 p_size: this.form.p_size,
                 edit: false
             }
@@ -183,12 +183,12 @@ export default {
                     n_packets: null,
                     p_interval: null,
                     w_time: null,
-                    // dscp: null,
+                    dscp: null,
                     p_size: null,
                 }
                 this.selectedAgentId = null,
                     this.selectedClientId = null,
-                    // this.selectedProfile = null
+                    this.selectedProfile = null
 
                 createToast(`add sessions successfully`, {
                     type: 'success',
@@ -205,15 +205,15 @@ export default {
                 console.log(error)
             }
         },
-        // async monitor(size = 1000) {
-        //     try {
-        //         let res = await ProfileListForm(size)
-        //         this.profiles = res.profiles;
+        async monitor(size = 1000) {
+            try {
+                let res = await ProfileListForm(size)
+                this.profiles = res.profiles;
 
-        //     } catch (error) {
-        //         console.log(error)
-        //     }
-        // },
+            } catch (error) {
+                console.log(error)
+            }
+        },
         async server(size = 1000) {
             try {
                 let res = await agentListForm(size)
