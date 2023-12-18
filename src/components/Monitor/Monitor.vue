@@ -13,11 +13,11 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center ">
                             <div>
-                                <h3 class="text-secondary ms-3 mt-2">Monitor Profile</h3>
+                                <h3 class="text-secondary ms-3 mt-2"> Profile</h3>
                             </div>
                             <div class="d-flex align-items-center">
                                 <h6 class="mx-1 mt-2 text-muted">Home </h6>
-                                <h6 class="me-4 mt-2"> - Monitor Profile</h6>
+                                <h6 class="me-4 mt-2"> - Profile</h6>
                                 <AddMonitor :handleMonitorList="handleMonitorList" />
                                 <div class="mx-3"><i class="fa-solid fa-ellipsis fa-2xl"></i></div>
                             </div>
@@ -135,11 +135,11 @@
                             <div>
                                 <div class="pagination">
                                     <button class="prevBtn"><i class="fa-solid fa-angle-left"></i> Prev</button>
-                                    <div class="pageNumber">1</div>
-                                    <div class="pageNumber">2</div>
-                                    <div class="pageNumber pageBtn">3</div>
-                                    <div class="pageNumber">4</div>
-                                    <div class="pageNumber">5</div>
+                                    <div class="pageNumber">-</div>
+                                    <div class="pageNumber">-</div>
+                                    <div class="pageNumber pageBtn">1</div>
+                                    <div class="pageNumber">-</div>
+                                    <div class="pageNumber">-</div>
                                     <button class="nextBtn">Next <i class="fa-solid fa-angle-right"></i></button>
                                 </div>
                             </div>
@@ -155,7 +155,7 @@
                 <div class="modal-content">
                     <div class="modal-header d-flex justify-content-center align-items-center">
                         <div class="">
-                            <h2 class="text-dark">Edit Monitoring Profile</h2>
+                            <h2 class="text-dark">Edit Profile</h2>
                         </div>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>

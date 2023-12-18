@@ -36,18 +36,11 @@
                                 <thead>
                                     <tr>
                                         <th scope="col"><a href="#" class="tableHead">Server Name</a></th>
-                                        <th scope="col"><a href="#" class="tableHead">Client Name</a>
-                                        </th>
-                                        <th scope="col"><a href="#" class="tableHead">Profile Name</a>
-                                        </th>
-                                        <th scope="col"><a href="#" class="tableHead"> Number Packets</a>
-                                        </th>
-                                        <th scope="col"><a href="#" class="tableHead">Packet Interval</a>
-                                        </th>
-                                        <th scope="col"><a href="#" class="tableHead">W Time</a>
-                                        </th>
+                                        <th scope="col"><a href="#" class="tableHead">Client Name</a> </th>
+                                        <th scope="col"><a href="#" class="tableHead"> Number Packets</a> </th>
+                                        <th scope="col"><a href="#" class="tableHead">Packet Interval</a> </th>
+                                        <th scope="col"><a href="#" class="tableHead">Wait Time</a>  </th>
                                         <th scope="col"><a href="#" class="tableHead">Packet Length</a> </th>
-                                        <th scope="col"><a href="#" class="tableHead">DSCP</a> </th>
                                         <th scope="col"> </th>
                                         <th scope="col"></th>
                                     </tr>
@@ -61,9 +54,6 @@
                                             <p class="tableP">{{ data?.c_name }}</p>
                                         </td>
                                         <td>
-                                            <p class="tableP">{{ data?.p_name }}</p>
-                                        </td>
-                                        <td>
                                             <p class="tableP">{{ data?.n_packets }}</p>
                                         </td>
                                         <td>
@@ -74,9 +64,6 @@
                                         </td>
                                         <td>
                                             <p class="tableP">{{ data.p_size }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">{{ data.dscp }}</p>
                                         </td>
                                         <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
                                                 <i class="fa-solid fa-circle-play"></i></a></td>
@@ -110,11 +97,11 @@
                             <div>
                                 <button class="addBtn2"><i class="fa-solid fa-chevron-down fa-lg"></i> Go to
                                     Page</button>
-                                <button class="addBtn2 mx-2" data-bs-toggle="modal" data-bs-target="#groupModal"><i
+                                <!-- <button class="addBtn2 mx-2" data-bs-toggle="modal" data-bs-target="#groupModal"><i
                                         class="fa-solid fa-plus fa-lg"></i> Add to
                                     Group</button>
                                 <button class="addBtn2"><i class="fa-solid fa-plus fa-lg"></i> Create
-                                    Report</button>
+                                    Report</button> -->
                             </div>
                             <div>
                                 <div class="pagination">
@@ -191,7 +178,7 @@
     <!-- Modal  edit-->
     <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdrop1Label" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header d-flex justify-content-center align-items-center">
                     <div class="">
@@ -220,7 +207,7 @@
                                 </option>
                             </select>
                         </div>
-                        <div class="mb-4">
+                        <!-- <div class="mb-4">
                             <label for="exampleFormControlInput1" class="form-label ms-1">Monitoring Profile*</label>
                             <select v-model="selectedProfile" class="form-select form-select-lg mb-3 custom-select"
                                 aria-label=".form-select-lg example">
@@ -228,10 +215,10 @@
                                 <option v-for="profile in profiles" :key="profile.id" :value="profile.id">{{ profile.name }}
                                 </option>
                             </select>
-                        </div>
+                        </div> -->
                         <div class="mb-3">
                             <div class="row g-2">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <label for="exampleFormControlInput1" class="form-label ms-1">Schedule*</label>
                                     <input type="number" class="form-control form-control-lg" placeholder="Enter Schedule"
                                         v-model="this.form.schedule" name="schedule">
@@ -258,11 +245,11 @@
                                     <input type="number" class="form-control form-control-lg" placeholder="Enter W Time"
                                         v-model="this.form.w_time" name="w_time">
                                 </div>
-                                <div class="col-md-6">
+                                <!-- <div class="col-md-6">
                                     <label for="exampleFormControlInput1" class="form-label ms-1">DSCP*</label>
                                     <input type="number" class="form-control form-control-lg" placeholder="Enter Dscp"
                                         v-model="this.form.dscp" name="dscp">
-                                </div>
+                                </div> -->
                                 <div class="col-md-6">
                                     <label for="exampleFormControlInput1" class="form-label ms-1">Packet Size*</label>
                                     <input type="number" class="form-control form-control-lg" placeholder="Enter P_Size"
@@ -287,7 +274,7 @@
 <script>
 import Header from '../common/Header.vue';
 import { sessionsList, deleteSessions, updateSessions } from '../../services/sessions_services';
-import { ProfileListForm } from '../../services/monitor_profile_Services';
+// import { ProfileListForm } from '../../services/monitor_profile_Services';
 import { agentListForm } from '../../services/agent_services';
 import { VueSpinner } from 'vue3-spinners';
 import AddSessions from './AddSessions.vue';
@@ -314,13 +301,13 @@ export default {
                 n_packets: null,
                 p_interval: null,
                 w_time: null,
-                dscp: null,
+                // dscp: null,
                 count: null,
                 schedule: null,
                 p_size: null,
             },
-            selectedProfile: null, // Will store the selected profile id
-            profiles: [],
+            // selectedProfile: null, // Will store the selected profile id
+            // profiles: [],
             agents: [],
             selectedAgentId: 'please select sender sentinel',
             clients: [],
@@ -329,7 +316,7 @@ export default {
     },
     mounted() {
         this.getSessions();
-        this.monitor()
+        // this.monitor()
         this.server()
     },
     methods: {
@@ -375,26 +362,26 @@ export default {
             this.form.n_packets = n_packets
             this.form.p_interval = p_interval
             this.form.w_time = w_time
-            this.form.dscp = dscp
+            // this.form.dscp = dscp
             this.form.count = count
             this.form.schedule = schedule
             this.form.p_size = p_size
             
             this.selectedClientId = this.clients.find(client => client.name === c_name)?.id;
             this.selectedAgentId = this.agents.find(agent => agent.name === s_name)?.id;
-            this.selectedProfile = this.profiles.find(profile => profile.name === p_name)?.id;
+            // this.selectedProfile = this.profiles.find(profile => profile.name === p_name)?.id;
         },
         async handleEditSessions() {
             const payload = {
                 serve: this.selectedAgentId,
                 client: this.selectedClientId,
-                profile: this.selectedProfile,
+                // profile: this.selectedProfile,
                 schedule: this.form.schedule,
                 count: this.form.count,
                 n_packets: this.form.n_packets,
                 p_interval: this.form.p_interval,
                 w_time: this.form.w_time,
-                dscp: this.form.dscp,
+                // dscp: this.form.dscp,
                 p_size: this.form.p_size,
                 edit: true,
                 aid: this.form.id
@@ -417,14 +404,14 @@ export default {
             }
             console.log('edit', payload)
         },
-        async monitor(size = 1000) {
-            try {
-                let res = await ProfileListForm(size)
-                this.profiles = res.profiles;
-            } catch (error) {
-                console.log(error)
-            }
-        },
+        // async monitor(size = 1000) {
+        //     try {
+        //         let res = await ProfileListForm(size)
+        //         this.profiles = res.profiles;
+        //     } catch (error) {
+        //         console.log(error)
+        //     }
+        // },
         async server(size = 1000) {
             try {
                 let res = await agentListForm(size)
