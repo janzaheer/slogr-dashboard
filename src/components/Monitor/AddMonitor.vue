@@ -1,7 +1,7 @@
 <template>
     <div>
         <button class="addBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
-                class="fa-solid fa-plus fa-lg"></i> Create New Monitor Profile</button>
+                class="fa-solid fa-plus fa-lg"></i> Create New Profile</button>
         <!-- Modal  add-->
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="staticBackdropLabel" aria-hidden="true">
