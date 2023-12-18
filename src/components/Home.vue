@@ -341,6 +341,13 @@ export default {
       let profileSwitchesData = this.profileSwitchesData;
       let groupGeoJson = this.GroupGeoJson;
 
+      Object.keys(profileSwitchesData).forEach(function(k) {
+        if (k !== isProfile) {
+          delete profileSwitchesData[k]
+          document.getElementById('profileDefault' + k).checked = false
+        }
+      })
+
       this.mapLayers.forEach(function (layer) {
         let sourceId = map.getLayer(layer).source;
         let allLines = map.querySourceFeatures(sourceId, {
@@ -349,8 +356,6 @@ export default {
 
         if (isProfile) {
           profileSwitchesData[profileId] = profileName;
-        } else {
-          delete profileSwitchesData[profileId];
         }
 
         allLines.forEach(function (line) {
