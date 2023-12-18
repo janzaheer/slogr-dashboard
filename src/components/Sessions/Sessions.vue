@@ -38,9 +38,11 @@
                                         <th scope="col"><a href="#" class="tableHead">Server Name</a></th>
                                         <th scope="col"><a href="#" class="tableHead">Client Name</a> </th>
                                         <th scope="col"><a href="#" class="tableHead"> Number Packets</a> </th>
+                                        <th scope="col"><a href="#" class="tableHead"> Profile Name</a> </th>
                                         <th scope="col"><a href="#" class="tableHead">Packet Interval</a> </th>
                                         <th scope="col"><a href="#" class="tableHead">Wait Time</a>  </th>
                                         <th scope="col"><a href="#" class="tableHead">Packet Length</a> </th>
+                                        <th scope="col"><a href="#" class="tableHead">DSCP</a> </th>
                                         <th scope="col"> </th>
                                         <th scope="col"></th>
                                     </tr>
@@ -57,6 +59,9 @@
                                             <p class="tableP">{{ data?.n_packets }}</p>
                                         </td>
                                         <td>
+                                            <p class="tableP">{{ data?.p_name }}</p>
+                                        </td>
+                                        <td>
                                             <p class="tableP">{{ data?.p_interval }}</p>
                                         </td>
                                         <td>
@@ -64,6 +69,9 @@
                                         </td>
                                         <td>
                                             <p class="tableP">{{ data.p_size }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="tableP">{{ data.dscp }}</p>
                                         </td>
                                         <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
                                                 <i class="fa-solid fa-circle-play"></i></a></td>
@@ -218,7 +226,7 @@
                         </div>
                         <div class="mb-3">
                             <div class="row g-2">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <label for="exampleFormControlInput1" class="form-label ms-1">Schedule*</label>
                                     <input type="number" class="form-control form-control-lg" placeholder="Enter Schedule"
                                         v-model="this.form.schedule" name="schedule">
@@ -245,11 +253,11 @@
                                     <input type="number" class="form-control form-control-lg" placeholder="Enter W Time"
                                         v-model="this.form.w_time" name="w_time">
                                 </div>
-                                <!-- <div class="col-md-6">
+                                <div class="col-md-6">
                                     <label for="exampleFormControlInput1" class="form-label ms-1">DSCP*</label>
                                     <input type="number" class="form-control form-control-lg" placeholder="Enter Dscp"
                                         v-model="this.form.dscp" name="dscp">
-                                </div> -->
+                                </div>
                                 <div class="col-md-6">
                                     <label for="exampleFormControlInput1" class="form-label ms-1">Packet Size*</label>
                                     <input type="number" class="form-control form-control-lg" placeholder="Enter P_Size"
@@ -301,7 +309,7 @@ export default {
                 n_packets: null,
                 p_interval: null,
                 w_time: null,
-                // dscp: null,
+                dscp: null,
                 count: null,
                 schedule: null,
                 p_size: null,
@@ -362,7 +370,7 @@ export default {
             this.form.n_packets = n_packets
             this.form.p_interval = p_interval
             this.form.w_time = w_time
-            // this.form.dscp = dscp
+            this.form.dscp = dscp
             this.form.count = count
             this.form.schedule = schedule
             this.form.p_size = p_size
@@ -381,7 +389,7 @@ export default {
                 n_packets: this.form.n_packets,
                 p_interval: this.form.p_interval,
                 w_time: this.form.w_time,
-                // dscp: this.form.dscp,
+                dscp: this.form.dscp,
                 p_size: this.form.p_size,
                 edit: true,
                 aid: this.form.id

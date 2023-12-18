@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <div class="row g-2">
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <label for="exampleFormControlInput1" class="form-label ms-1">Schedule*</label>
                                             <input type="number" class="form-control form-control-lg"
                                                 placeholder="Enter Schedule" v-model="this.form.schedule" name="schedule"
@@ -78,11 +78,11 @@
                                                 placeholder="Enter W Time" v-model="this.form.w_time" name="w_time"
                                                 required>
                                         </div>
-                                        <!-- <div class="col-md-6">
+                                        <div class="col-md-6">
                                             <label for="exampleFormControlInput1" class="form-label ms-1">DSCP*</label>
                                             <input type="number" class="form-control form-control-lg"
                                                 placeholder="Enter Dscp" v-model="this.form.dscp" name="dscp" required>
-                                        </div> -->
+                                        </div>
                                         <div class="col-md-6">
                                             <label for="exampleFormControlInput1" class="form-label ms-1">Packet
                                                 Size*</label>
@@ -141,7 +141,7 @@ export default {
                 n_packets: null,
                 p_interval: null,
                 w_time: null,
-                // dscp: null,
+                dscp: null,
                 p_size: null,
             },
             selectedProfile: 'please select profile',
@@ -168,7 +168,7 @@ export default {
                 n_packets: this.form.n_packets,
                 p_interval: this.form.p_interval,
                 w_time: this.form.w_time,
-                // dscp: this.form.dscp,
+                dscp: this.form.dscp,
                 p_size: this.form.p_size,
                 edit: false
             }
@@ -183,7 +183,7 @@ export default {
                     n_packets: null,
                     p_interval: null,
                     w_time: null,
-                    // dscp: null,
+                    dscp: null,
                     p_size: null,
                 }
                 this.selectedAgentId = null,
