@@ -545,11 +545,29 @@ export default {
       let uniqueId = "line-" + group_id;
       let lineFeatures = [];
       let checkLineIds = [];
+
+      function drawCurved(startCoords, endCoords) {
+        var controlPoint = [(startCoords[0] + endCoords[0]) / 2, startCoords[1] - 0.1];
+        var curvePoints = [];
+        for (var t = 0; t <= 1; t += 0.01) {
+          var x = Math.pow(1 - t, 2) * startCoords[0] + 2 * (1 - t) * t * controlPoint[0] + Math.pow(t, 2) * endCoords[0];
+          var y = Math.pow(1 - t, 2) * startCoords[1] + 3 * (1 - t) * t * controlPoint[1] + Math.pow(t, 2) * endCoords[1];
+          curvePoints.push([x, y]);
+        }
+        return curvePoints;
+      }
+
       lines["features"].forEach(function (line) {
         if (!checkLineIds.includes(line["properties"]["session_id"])) {
+          console.log(line["geometry"])
+          let cur = drawCurved(line["geometry"]["coordinates"][0], line["geometry"]["coordinates"][1])
           const obj = {
             type: "Feature",
-            geometry: line["geometry"],
+            geometry: {  // zaheer: comment this out, if you don't need curved lines
+              type: 'LineString',
+              coordinates: cur
+            },
+            // geometry: line["geometry"],
             properties: line["properties"],
           };
           lineFeatures.push(obj);
@@ -578,7 +596,7 @@ export default {
         },
         paint: {
           "line-color": ["get", "color"],
-          "line-width": 0.5, // Maximum line width at higher zoom levels
+          "line-width": 1, // Maximum line width at higher zoom levels
         },
       });
     },
