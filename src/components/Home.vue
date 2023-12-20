@@ -142,6 +142,7 @@ export default {
       map: null,
       groups: [],
       groupdata: {},
+      groupMarkers: {},
       clusterdata: {},
       clusters: [],
       groupSwitches: {},
@@ -371,7 +372,17 @@ export default {
         });
       });
     },
-    async handleToggleGroup(groupId, switchValue) {
+    async handleToggleGroup(groupId, switchValue) {   
+      let map = this.map
+      console.log(this.groupMarkers, 'groupMarkers')
+      let myGroupMarkers = this.groupMarkers[groupId];
+      if (this.mapLayers.length == 0) {
+        let clusterLayers = ['clusters', 'cluster-count'];
+        clusterLayers.forEach(function (layerId) {
+            map.setLayoutProperty(layerId, 'visibility', 'visible');
+        });
+      }
+
       if (switchValue) {
         // Draw connected lines
         const sessions = await this.handleSessions(groupId);
@@ -387,7 +398,28 @@ export default {
           this.mapLayers.splice(index, 1);
         }
         delete this.GroupGeoJson[`line-${groupId}`];
+
+        if (myGroupMarkers) {
+          myGroupMarkers.forEach(function(marker) {
+            marker.remove()
+          })
+        }
+        delete this.groupMarkers[groupId];
       }
+      
+      // Show and Hide clusters on group toggle
+      if (this.mapLayers.length > 0) {
+        let clusterLayers = ['clusters', 'cluster-count'];
+        clusterLayers.forEach(function (layerId) {
+            map.setLayoutProperty(layerId, 'visibility', 'none');
+        });
+      } else {
+        let clusterLayers = ['clusters', 'cluster-count'];
+        clusterLayers.forEach(function (layerId) {
+            map.setLayoutProperty(layerId, 'visibility', 'visible');
+        });
+      }
+
     },
     async handleClusters(groupId) {
       let respData;
@@ -498,7 +530,6 @@ export default {
         },
       });
       const organizationColors = {};
-      console.log(clusters, "here");
       clusters.features.forEach((feature) => {
         const org = feature.properties.organization;
         if (!(org in organizationColors)) {
@@ -557,10 +588,41 @@ export default {
         return curvePoints;
       }
 
+      function addMarker(properties, coordinates) {
+        let el = document.createElement('div');
+        el.className = 'my-marker-icon';
+        let marker = new mapboxgl.Marker(el)
+          .setLngLat(coordinates)
+          .addTo(map);
+
+        console.log(properties)
+
+
+        /*
+        marker.getElement().addEventListener('mouseenter', function () {
+          new mapboxgl.Popup()
+            .setLngLat(coordinates)
+            .setHTML('<h3>' + title + '</h3><p>' + coordinates[0].toFixed(6) + ', ' + coordinates[1].toFixed(6) + '</p>')
+            .addTo(map);
+        });
+        */
+
+        marker.getElement().addEventListener('mouseleave', function () {
+          // Close the popup on mouse leave
+          map.getPopup().remove();
+        });
+        return marker;
+      }
+      
+      let groupMarkersList = []
       lines["features"].forEach(function (line) {
         if (!checkLineIds.includes(line["properties"]["session_id"])) {
-          console.log(line["geometry"])
           let cur = drawCurved(line["geometry"]["coordinates"][0], line["geometry"]["coordinates"][1])
+          let m1 = addMarker(line["properties"], line["geometry"]["coordinates"][0]);
+          let m2 = addMarker(line["properties"], line["geometry"]["coordinates"][1]);
+          groupMarkersList.push(m1)
+          groupMarkersList.push(m2)
+          
           const obj = {
             type: "Feature",
             geometry: {  // zaheer: comment this out, if you don't need curved lines
@@ -574,6 +636,7 @@ export default {
           checkLineIds.push(line["properties"]["session_id"]);
         }
       });
+      this.groupMarkers[group_id] = groupMarkersList
 
       this.initialGroupGeoJsonData = {
         type: "FeatureCollection",
@@ -714,6 +777,14 @@ export default {
   color: var(--color-black);
   font-family: var(--font-inter);
 }
+
+.marker {
+      background-image: url('https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png');
+      background-size: cover;
+      width: 20px;
+      height: 30px;
+      cursor: pointer;
+    }
 
 .screenshot20210522At336 {
   position: absolute;
