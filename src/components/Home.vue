@@ -337,7 +337,7 @@ export default {
   },
   methods: {
     async handleProfileToggle(profileId, profileName) {
-      let isProfile = this.profileSwitches[profileId];
+      let isProfile = this.profileSwitches[profileId];  // profile test
       let map = this.map;
       let profileSwitchesData = this.profileSwitchesData;
       let groupGeoJson = this.GroupGeoJson;
