@@ -108,7 +108,11 @@
           </perfect-scrollbar>
           <hr class="hr1" />
           <h6 class="my-1">Monitoring</h6>
-          <RouterLink to="/monitor" class="text-decoration-none" style="color: var(--primary_color);">
+          <RouterLink
+            to="/monitor"
+            class="text-decoration-none"
+            style="color: var(--primary_color)"
+          >
             <span
               ><i
                 class="fa-solid fa-gear"
@@ -185,9 +189,10 @@ export default {
     const nav = new mapboxgl.NavigationControl();
     this.map.addControl(nav, "bottom-right");
 
-    this.handleGroups();
+    this.handleData();
+    // this.handleGroups();
     this.handleProfiles();
-    this.handleClusterData();
+    // this.handleClusterData();
     this.handleGroupData();
 
     this.map.on("load", () => {
@@ -342,12 +347,12 @@ export default {
       let profileSwitchesData = this.profileSwitchesData;
       let groupGeoJson = this.GroupGeoJson;
 
-      Object.keys(profileSwitchesData).forEach(function(k) {
+      Object.keys(profileSwitchesData).forEach(function (k) {
         if (k !== isProfile) {
-          delete profileSwitchesData[k]
-          document.getElementById('profileDefault' + k).checked = false
+          delete profileSwitchesData[k];
+          document.getElementById("profileDefault" + k).checked = false;
         }
-      })
+      });
 
       this.mapLayers.forEach(function (layer) {
         let sourceId = map.getLayer(layer).source;
@@ -372,14 +377,14 @@ export default {
         });
       });
     },
-    async handleToggleGroup(groupId, switchValue) {   
-      let map = this.map
-      console.log(this.groupMarkers, 'groupMarkers')
+    async handleToggleGroup(groupId, switchValue) {
+      let map = this.map;
+      console.log(this.groupMarkers, "groupMarkers");
       let myGroupMarkers = this.groupMarkers[groupId];
       if (this.mapLayers.length == 0) {
-        let clusterLayers = ['clusters', 'cluster-count'];
+        let clusterLayers = ["clusters", "cluster-count"];
         clusterLayers.forEach(function (layerId) {
-            map.setLayoutProperty(layerId, 'visibility', 'visible');
+          map.setLayoutProperty(layerId, "visibility", "visible");
         });
       }
 
@@ -400,35 +405,40 @@ export default {
         delete this.GroupGeoJson[`line-${groupId}`];
 
         if (myGroupMarkers) {
-          myGroupMarkers.forEach(function(marker) {
-            marker.remove()
-          })
+          myGroupMarkers.forEach(function (marker) {
+            marker.remove();
+          });
         }
         delete this.groupMarkers[groupId];
       }
-      
+
       // Show and Hide clusters on group toggle
       if (this.mapLayers.length > 0) {
-        let clusterLayers = ['clusters', 'cluster-count'];
+        let clusterLayers = ["clusters", "cluster-count"];
         clusterLayers.forEach(function (layerId) {
-            map.setLayoutProperty(layerId, 'visibility', 'none');
+          map.setLayoutProperty(layerId, "visibility", "none");
         });
       } else {
-        let clusterLayers = ['clusters', 'cluster-count'];
+        let clusterLayers = ["clusters", "cluster-count"];
         clusterLayers.forEach(function (layerId) {
-            map.setLayoutProperty(layerId, 'visibility', 'visible');
+          map.setLayoutProperty(layerId, "visibility", "visible");
         });
       }
-
     },
     async handleClusters(groupId) {
-      let respData;
-      if (groupId == "") {
-        respData = await fetchClusters("");
-      } else {
-        respData = this.clusterdata[groupId];
+      try {
+        let respData;
+        if (groupId === "") {
+          respData = await fetchClusters("");
+          console.log("clusters", respData);
+        } else {
+          respData = this.clusterdata[groupId];
+          console.log("clusterssss", respData);
+        }
+        return respData;
+      } catch (error) {
+        console.error("Error handling clusters:", error);
       }
-      return respData;
     },
     async handleSessions(groupId) {
       const respData = this.groupdata[groupId];
@@ -449,25 +459,45 @@ export default {
     },
     async handleClusterData() {
       try {
+        // this.loading = true;
         const response = await fetchClustersData();
         // const response = await fetchGroups();
         this.clusterdata = response;
+        console.log("Cluster data", response);
       } catch (error) {
         console.error("Error fetching groups:", error);
       }
     },
     async handleGroups() {
       try {
-        this.loading = true;
+        // this.loading = true;
         // const response = await fetchGroupData();
         const response = await fetchGroups();
         this.groups = response;
       } catch (error) {
         console.error("Error fetching groups:", error);
       } finally {
+        // this.loading = false;
+      }
+    },
+    async handleData() {
+      try {
+        this.loading = true;
+
+        const [groupResponse, clusterResponse] = await Promise.all([
+          fetchGroups(),
+          fetchClustersData(),
+        ]);
+
+        this.groups = groupResponse;
+        this.clusterdata = clusterResponse;
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
         this.loading = false;
       }
     },
+
     async handleProfiles() {
       try {
         this.loading = true;
@@ -578,25 +608,31 @@ export default {
       let checkLineIds = [];
 
       function drawCurved(startCoords, endCoords) {
-        var controlPoint = [(startCoords[0] + endCoords[0]) / 2, startCoords[1] - 0.1];
+        var controlPoint = [
+          (startCoords[0] + endCoords[0]) / 2,
+          startCoords[1] - 0.1,
+        ];
         var curvePoints = [];
         for (var t = 0; t <= 1; t += 0.01) {
-          var x = Math.pow(1 - t, 2) * startCoords[0] + 2 * (1 - t) * t * controlPoint[0] + Math.pow(t, 2) * endCoords[0];
-          var y = Math.pow(1 - t, 2) * startCoords[1] + 3 * (1 - t) * t * controlPoint[1] + Math.pow(t, 2) * endCoords[1];
+          var x =
+            Math.pow(1 - t, 2) * startCoords[0] +
+            2 * (1 - t) * t * controlPoint[0] +
+            Math.pow(t, 2) * endCoords[0];
+          var y =
+            Math.pow(1 - t, 2) * startCoords[1] +
+            3 * (1 - t) * t * controlPoint[1] +
+            Math.pow(t, 2) * endCoords[1];
           curvePoints.push([x, y]);
         }
         return curvePoints;
       }
 
       function addMarker(properties, coordinates) {
-        let el = document.createElement('div');
-        el.className = 'my-marker-icon';
-        let marker = new mapboxgl.Marker(el)
-          .setLngLat(coordinates)
-          .addTo(map);
+        let el = document.createElement("div");
+        el.className = "my-marker-icon";
+        let marker = new mapboxgl.Marker(el).setLngLat(coordinates).addTo(map);
 
-        console.log(properties)
-
+        console.log(properties);
 
         /*
         marker.getElement().addEventListener('mouseenter', function () {
@@ -607,27 +643,37 @@ export default {
         });
         */
 
-        marker.getElement().addEventListener('mouseleave', function () {
+        marker.getElement().addEventListener("mouseleave", function () {
           // Close the popup on mouse leave
           map.getPopup().remove();
         });
         return marker;
       }
-      
-      let groupMarkersList = []
+
+      let groupMarkersList = [];
       lines["features"].forEach(function (line) {
         if (!checkLineIds.includes(line["properties"]["session_id"])) {
-          let cur = drawCurved(line["geometry"]["coordinates"][0], line["geometry"]["coordinates"][1])
-          let m1 = addMarker(line["properties"], line["geometry"]["coordinates"][0]);
-          let m2 = addMarker(line["properties"], line["geometry"]["coordinates"][1]);
-          groupMarkersList.push(m1)
-          groupMarkersList.push(m2)
-          
+          let cur = drawCurved(
+            line["geometry"]["coordinates"][0],
+            line["geometry"]["coordinates"][1]
+          );
+          let m1 = addMarker(
+            line["properties"],
+            line["geometry"]["coordinates"][0]
+          );
+          let m2 = addMarker(
+            line["properties"],
+            line["geometry"]["coordinates"][1]
+          );
+          groupMarkersList.push(m1);
+          groupMarkersList.push(m2);
+
           const obj = {
             type: "Feature",
-            geometry: {  // zaheer: comment this out, if you don't need curved lines
-              type: 'LineString',
-              coordinates: cur
+            geometry: {
+              // zaheer: comment this out, if you don't need curved lines
+              type: "LineString",
+              coordinates: cur,
             },
             // geometry: line["geometry"],
             properties: line["properties"],
@@ -636,7 +682,7 @@ export default {
           checkLineIds.push(line["properties"]["session_id"]);
         }
       });
-      this.groupMarkers[group_id] = groupMarkersList
+      this.groupMarkers[group_id] = groupMarkersList;
 
       this.initialGroupGeoJsonData = {
         type: "FeatureCollection",
@@ -779,12 +825,12 @@ export default {
 }
 
 .marker {
-      background-image: url('https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png');
-      background-size: cover;
-      width: 20px;
-      height: 30px;
-      cursor: pointer;
-    }
+  background-image: url("https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png");
+  background-size: cover;
+  width: 20px;
+  height: 30px;
+  cursor: pointer;
+}
 
 .screenshot20210522At336 {
   position: absolute;
