@@ -171,6 +171,13 @@ export default {
       zoom: 1.8,
       minZoom: 1.8,
     });
+
+    // Change water color to blue
+    let myMap = this.map
+    myMap.on("style.load", function () {
+      // Find the water layer in the style
+      myMap.setPaintProperty("water", "fill-color", "#CEEAF2")
+    });
     // Hide the Mapbox logo
     const logoContainer = document.querySelector(".mapboxgl-ctrl-logo");
     if (logoContainer) {
@@ -374,7 +381,6 @@ export default {
     },
     async handleToggleGroup(groupId, switchValue) {   
       let map = this.map
-      console.log(this.groupMarkers, 'groupMarkers')
       let myGroupMarkers = this.groupMarkers[groupId];
       if (this.mapLayers.length == 0) {
         let clusterLayers = ['clusters', 'cluster-count'];
@@ -562,7 +568,6 @@ export default {
     getColor(organization) {
       // Add your logic here to determine the color based on the organization
       // For example, you can use a switch statement or if-else conditions
-      console.log(organization);
       switch (organization) {
         case "GCP":
           return "#8cb63d"; // Green
@@ -590,26 +595,34 @@ export default {
 
       function addMarker(properties, coordinates) {
         let el = document.createElement('div');
-        el.className = 'my-marker-icon';
+        const org = properties.client.Organization;
+        const server = properties.server.machine_name;
+        const client = properties.client.machine_name;
+
+        if (org === 'GCP') {
+          el.className = 'gcp-marker';
+        } else  if (org === 'Azure') {
+          el.className = 'azure-marker';
+        } else {
+         el.className = 'default-marker';
+        }
+
         let marker = new mapboxgl.Marker(el)
           .setLngLat(coordinates)
           .addTo(map);
 
-        console.log(properties)
-
-
-        /*
+        let popupHTML = `<h5>${org}</h5><p>server: ${server}</p><p>client: ${client}</p>`
+        let markerPopup = new mapboxgl.Popup()
         marker.getElement().addEventListener('mouseenter', function () {
-          new mapboxgl.Popup()
+          markerPopup
             .setLngLat(coordinates)
-            .setHTML('<h3>' + title + '</h3><p>' + coordinates[0].toFixed(6) + ', ' + coordinates[1].toFixed(6) + '</p>')
+            .setHTML(popupHTML)
             .addTo(map);
         });
-        */
 
         marker.getElement().addEventListener('mouseleave', function () {
           // Close the popup on mouse leave
-          map.getPopup().remove();
+         markerPopup.remove();
         });
         return marker;
       }
@@ -642,6 +655,8 @@ export default {
         type: "FeatureCollection",
         features: lineFeatures,
       };
+
+      console.log('lineFeature', lineFeatures)
 
       this.GroupGeoJson[uniqueId] = this.initialGroupGeoJsonData;
       this.map.addSource(uniqueId, {
