@@ -24,16 +24,8 @@
                 </div>
             </div>
             <div class="container-fluid tableDiv">
-                <div class="row g-2 mx-md-2 mt-4 mb-4">
-                    <div class="col-3">
-                        <Sidebar />
-                    </div>
-                    <div class="col-9">
-                        <div class="card" style="height: 100vh;">
+                        <div class="card mx-md-2 mt-4 mb-5" style="height: 100vh;" >
                             <div class="card-body">
-                                <div class="mt-3 p-3 bg-warning bg-opacity-10 border border-warning rounded">
-                                    Alerts
-                                </div>
                                 <div class="mt-3">
                                     <div class="text-center m-5" v-if="loading">
                                         <VueSpinner size="80" color="#8cb63d" />
@@ -94,8 +86,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
             </div>
             <!-- Modal  add-->
             <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -187,7 +177,6 @@
 <script>
 import { RouterLink } from 'vue-router';
 import Header from '../../common/Header.vue';
-import Sidebar from '../Sidebar.vue';
 import AddAlerts from './AddAlerts.vue';
 import { getAlerts, updateAlert, deleteAlert } from '../../../services/alerts_services';
 import { createToast } from 'mosha-vue-toastify';
@@ -199,7 +188,6 @@ export default {
     name: 'Alerts',
     components: {
         Header,
-        Sidebar,
         AddAlerts,
         VueSpinner
     },

@@ -38,10 +38,10 @@
                                 <div class="mb-4">
                                     <label for="exampleFormControlInput1" class="form-label ms-1">Monitoring
                                         Profile*</label>
-                                    <select v-model="selectedProfile" class="form-select form-select-lg mb-3 custom-select"
+                                    <select v-model="selectedProfile" @change="updateSelectedProfileId" class="form-select form-select-lg mb-3 custom-select"
                                         aria-label=".form-select-lg example" required>
                                         <option class="text-secondary" disabled>select here</option>
-                                        <option v-for="profile in profiles" :key="profile.id" :value="profile.id">{{
+                                        <option v-for="profile in profiles" :key="profile.id" :value="profile">{{
                                             profile.name }}</option>
                                     </select>
                                 </div>
@@ -144,7 +144,8 @@ export default {
                 dscp: null,
                 p_size: null,
             },
-            selectedProfile: 'please select profile',
+            selectedProfileId: null,
+            selectedProfile: null,
             profiles: [],
             selectedAgentId: `please select sender sentinel`,
             agents: [],
@@ -162,7 +163,7 @@ export default {
             const payload = {
                 serve: this.selectedAgentId,
                 client: this.selectedClientId,
-                profile: this.selectedProfile,
+                profile: this.selectedProfileId,
                 schedule: this.form.schedule,
                 count: this.form.count,
                 n_packets: this.form.n_packets,
@@ -174,7 +175,6 @@ export default {
             }
 
             try {
-
                 await addSessions(payload)
                 this.getSessions()
                 this.form = {
@@ -188,8 +188,7 @@ export default {
                 }
                 this.selectedAgentId = null,
                     this.selectedClientId = null,
-                    this.selectedProfile = null
-
+                    this.selectedProfileId = null
                 createToast(`add sessions successfully`, {
                     type: 'success',
                     position: 'top-right',
@@ -209,11 +208,23 @@ export default {
             try {
                 let res = await ProfileListForm(size)
                 this.profiles = res.profiles;
-
+                console.log('profile',res.profiles)
             } catch (error) {
                 console.log(error)
             }
         },
+        updateSelectedProfileId() {
+      // Update selectedProfileId when the selection changes
+            this.selectedProfile = this.selectedProfile;
+            console.log('single',this.selectedProfile)
+            this.selectedProfileId = this.selectedProfile.id
+            this.form.count = this.selectedProfile.count
+            this.form.n_packets = this.selectedProfile.n_packets
+            this.form.p_interval = this.selectedProfile.p_interval
+            this.form.w_time = this.selectedProfile.w_time
+            this.form.dscp = this.selectedProfile.dscp
+            this.form.p_size = this.selectedProfile.p_size
+    },
         async server(size = 1000) {
             try {
                 let res = await agentListForm(size)

@@ -24,16 +24,8 @@
             </div>
         </div>
         <div class="container-fluid tableDiv">
-            <div class="row g-2 mx-md-2 mt-4 mb-4">
-                <div class="col-3">
-                    <Sidebar />
-                </div>
-                <div class="col-9">
-                    <div class="card" style="height: 100vh;">
+                    <div class="card  mx-md-2 mt-4 mb-5" style="height: 100vh;">
                         <div class="card-body">
-                            <div class="mt-3 p-3 bg-warning bg-opacity-10 border border-warning rounded">
-                                Reports
-                            </div>
                             <div class="mt-3">
                                 <div class="text-center m-5" v-if="loading">
                                     <VueSpinner size="80" color="#8cb63d" />
@@ -79,8 +71,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
         </div>
     </div>
     <!-- Modal  edit-->
@@ -101,11 +91,13 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
+                                    <label for="exampleFormControlInput3" class="form-label ms-1">Enter Email*</label>
                                     <input type="email" class="form-control form-control-lg" placeholder="abc@email.com" name="email" v-model="this.email">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
+                                    <label for="exampleFormControlInput2" class="form-label ms-1">Select Time (?) Generating  report on daily basis</label>
                                     <input type="time" pattern="(?:[01]\d|2[0-3]):(?:[0-5]\d)" class="form-control form-control-lg" placeholder="Enter Time" name="time" v-model="this.time">
                                 </div>
                             </div>
@@ -172,7 +164,6 @@ import {
     RouterLink
 } from 'vue-router';
 import Header from '../../common/Header.vue';
-import Sidebar from '../Sidebar.vue';
 import AddReports from './AddReports.vue';
 // import EditReport from './EditReport.vue';
 import {
@@ -196,7 +187,6 @@ export default {
     name: 'Reports',
     components: {
         Header,
-        Sidebar,
         AddReports,
         VueSpinner,
         // EditReport
