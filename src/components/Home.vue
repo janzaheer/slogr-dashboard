@@ -505,7 +505,6 @@ export default {
         this.loading = false;
       }
     },
-
     async handleProfiles() {
       try {
         // this.loading = true;
