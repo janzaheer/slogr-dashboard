@@ -91,7 +91,7 @@
                   :data-content="profile.name"
                 >
                   {{
-                    profile.name.length > 9
+                    profile?.name.length > 9
                       ? profile.name.substring(0, 9) + "..."
                       : profile.name
                   }}
@@ -493,12 +493,10 @@ export default {
     async handleData() {
       try {
         this.loading = true;
-
         const [groupResponse, clusterResponse] = await Promise.all([
           fetchGroups(),
           fetchClustersData(),
         ]);
-
         this.groups = groupResponse;
         this.clusterdata = clusterResponse;
       } catch (error) {
@@ -510,14 +508,15 @@ export default {
 
     async handleProfiles() {
       try {
-        this.loading = true;
+        // this.loading = true;
         const resp = await ProfileList();
         this.profiles = resp.profiles;
       } catch (errors) {
         console.log(errors);
-      } finally {
-        this.loading = false;
       }
+      // finally {
+      //   this.loading = false;
+      // }
     },
     showClusters(clusters) {
       // Add a new source from our GeoJSON data and
@@ -767,7 +766,6 @@ export default {
     },
     clearLines() {
       const map = this.map;
-
       // Iterate through the layers to find and remove layers with 'line-' prefix
       map.getStyle().layers.forEach((layer) => {
         if (layer.id.startsWith("line-")) {
@@ -775,7 +773,6 @@ export default {
           map.removeSource(layer.id);
           // Extract groupId from the layer id
           const groupId = layer.id.replace("line-", "");
-
           // Remove markers associated with the group
           const myGroupMarkers = this.groupMarkers[groupId];
           if (myGroupMarkers) {
@@ -785,10 +782,20 @@ export default {
         }
       });
       this.groupSwitches = {};
+      // Reset profile switches and associated UI elements
+      this.clearProfileSwitches();
       // Show clusters after clearing lines
       const clusterLayers = ["clusters", "cluster-count"];
       clusterLayers.forEach((layerId) => {
         map.setLayoutProperty(layerId, "visibility", "visible");
+      });
+    },
+    clearProfileSwitches() {
+      const profileSwitchesData = this.profileSwitchesData;
+      // Clear profile switches and associated UI elements
+      Object.keys(profileSwitchesData).forEach((profileId) => {
+        delete profileSwitchesData[profileId];
+        document.getElementById("profileDefault" + profileId).checked = false;
       });
     },
     clearAll() {
