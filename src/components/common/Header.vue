@@ -21,7 +21,8 @@
                         </li>
                         <li class="nav-item mx-xl-1">
                             <RouterLink class="nav-link mx-lg-1" to="/sentinel">
-                                <img id="svglinks" src="../../assets/group-2456.svg" height="20" alt="" class="mr-4" />
+                            <i class="fa-solid fa-location-dot"></i>
+                                <!-- <img id="svglinks" src="../../assets/group-2456.svg" height="20" alt="" class="mr-4" /> -->
                                 <span class="mx-lg-1">Sentinel</span>
                             </RouterLink>
                         </li>
@@ -37,27 +38,33 @@
                                 <span class="mx-lg-1">Profile</span>
                             </RouterLink>
                         </li>
-                        <!-- <li class="nav-item">
-                            <RouterLink class="nav-link" style="color: var(--nav-color);" to="#">
-                                <img id="svglinks" src="../../assets/group-24571.svg" height="20" alt="" />
-                                <span class="mx-lg-1">Analytics</span>
-                            </RouterLink>
-                        </li> -->
                         <li class="nav-item mx-xl-1">
                             <RouterLink class="nav-link mx-lg-1 mx-xl-1" to="/groups">
                                 <img id="svglinks" src="../../assets/group-25271.svg" height="20" alt="" />
                                 <span class="mx-lg-1">Groups</span>
                             </RouterLink>
                         </li>
+                        <li class="nav-item mx-xl-1">
+                            <RouterLink class="nav-link mx-lg-1 mx-xl-1" to="/alerts">
+                                <i class="fa-regular fa-bell"></i>
+                                <span class="mx-lg-1">Alerts</span>
+                            </RouterLink>
+                        </li>
+                        <li class="nav-item mx-xl-1">
+                            <RouterLink class="nav-link mx-lg-1 mx-xl-1" to="/reports">
+                                <i class="fa-solid fa-chart-gantt"></i>
+                                <span class="mx-lg-1">Reports</span>
+                            </RouterLink>
+                        </li>
                     </ul>
-                    <div class="search-container">
+                    <!-- <div class="search-container">
                         <button class="search-button">All</button>
                         <input type="text" class="search-bar" />
                         <img src="../../assets/search.svg" height="20" alt="" class="searchIcon" />
                     </div>
                     <button class="btnn1 mx-lg-1 mx-xl-2">
                         <img src="../../assets/group-17921.svg" height="40" alt="" />
-                    </button>
+                    </button> -->
                     <button class="btnn">
                         <i class="fa-regular fa-bell" style="color: #e4eaee"></i>
                     </button>
@@ -87,6 +94,7 @@
 <script>
 import { RouterLink, RouterView } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
+
 export default {
     name: 'Header',
     setup() {

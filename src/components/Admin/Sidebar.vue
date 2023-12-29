@@ -39,7 +39,7 @@
                         </a>
                     </li>
                     <hr>
-                    <li>
+                    <!-- <li>
                         <RouterLink to="/alerts" class="nav-linker">
                             Alerts
                         </RouterLink>
@@ -50,7 +50,7 @@
                             Reports
                         </RouterLink>
                     </li>
-                    <hr>
+                    <hr> -->
                 </ul>
             </div>
         </div>

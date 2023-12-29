@@ -19,11 +19,13 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
+                                    <label for="exampleFormControlInput3" class="form-label ms-1">Enter Email*</label>
                                     <input type="email" class="form-control form-control-lg" placeholder="abc@email.com" name="email" v-model="this.email">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
+                                    <label for="exampleFormControlInput2" class="form-label ms-1">Select Time (?) Generating  report on daily basis</label>
                                     <input type="time" class="form-control form-control-lg" placeholder="Enter Time" name="time" v-model="this.time">
                                 </div>
                             </div>
