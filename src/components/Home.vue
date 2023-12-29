@@ -52,7 +52,10 @@
           </perfect-scrollbar>
           <hr class="hr" />
           <div class="d-flex justify-content-between align-items-center">
-            <label class="form-check-label" @click="clearLines" style="color: var(--primary_color); cursor:pointer;"
+            <label
+              class="form-check-label"
+              @click="clearLines"
+              style="color: var(--primary_color); cursor: pointer"
               >Clear Connections</label
             >
           </div>
@@ -174,6 +177,13 @@ export default {
       center: [0, 20],
       zoom: 1.8,
       minZoom: 1.8,
+    });
+
+    // Change water color to blue
+    let myMap = this.map;
+    myMap.on("style.load", function () {
+      // Find the water layer in the style
+      myMap.setPaintProperty("water", "fill-color", "#CEEAF2");
     });
     // Hide the Mapbox logo
     const logoContainer = document.querySelector(".mapboxgl-ctrl-logo");
@@ -342,7 +352,7 @@ export default {
   },
   methods: {
     async handleProfileToggle(profileId, profileName) {
-      let isProfile = this.profileSwitches[profileId];
+      let isProfile = this.profileSwitches[profileId]; // profile test
       let map = this.map;
       let profileSwitchesData = this.profileSwitchesData;
       let groupGeoJson = this.GroupGeoJson;
@@ -592,7 +602,6 @@ export default {
     getColor(organization) {
       // Add your logic here to determine the color based on the organization
       // For example, you can use a switch statement or if-else conditions
-      console.log(organization);
       switch (organization) {
         case "GCP":
           return "#8cb63d"; // Green
@@ -627,25 +636,70 @@ export default {
         return curvePoints;
       }
 
+      // function addMarker(properties, coordinates) {
+      //   let el = document.createElement("div");
+      //   el.className = "my-marker-icon";
+      //   let marker = new mapboxgl.Marker(el).setLngLat(coordinates).addTo(map);
+
+      //   console.log(properties);
+
+      //   let el = document.createElement('div');
+      //   const org = properties.client.Organization;
+      //   const server = properties.server.machine_name;
+      //   const client = properties.client.machine_name; */
+
+      //   if (org === 'GCP') {
+      //     el.className = 'gcp-marker';
+      //   } else  if (org === 'Azure') {
+      //     el.className = 'azure-marker';
+      //   } else {
+      //    el.className = 'default-marker';
+      //   }
+
+      //   let marker = new mapboxgl.Marker(el)
+      //     .setLngLat(coordinates)
+      //     .addTo(map);
+
+      //   let popupHTML = `<h5>${org}</h5><p>server: ${server}</p><p>client: ${client}</p>`
+      //   let markerPopup = new mapboxgl.Popup()
+      //   marker.getElement().addEventListener('mouseenter', function () {
+      //     markerPopup
+      //       .setLngLat(coordinates)
+      //       .setHTML(popupHTML)
+      //       .addTo(map);
+      //   });
+
+      //   marker.getElement().addEventListener("mouseleave", function () {
+      //     // Close the popup on mouse leave
+      //    markerPopup.remove();
+      //   });
+      //   return marker;
+      // }
       function addMarker(properties, coordinates) {
         let el = document.createElement("div");
-        el.className = "my-marker-icon";
+        const org = properties.client.Organization;
+        const server = properties.server.machine_name;
+        const client = properties.client.machine_name;
+
+        if (org === "GCP") {
+          el.className = "gcp-marker";
+        } else if (org === "Azure") {
+          el.className = "azure-marker";
+        } else {
+          el.className = "default-marker";
+        }
+
         let marker = new mapboxgl.Marker(el).setLngLat(coordinates).addTo(map);
 
-        console.log(properties);
-
-        /*
-        marker.getElement().addEventListener('mouseenter', function () {
-          new mapboxgl.Popup()
-            .setLngLat(coordinates)
-            .setHTML('<h3>' + title + '</h3><p>' + coordinates[0].toFixed(6) + ', ' + coordinates[1].toFixed(6) + '</p>')
-            .addTo(map);
+        let popupHTML = `<h5>${org}</h5><p>server: ${server}</p><p>client: ${client}</p>`;
+        let markerPopup = new mapboxgl.Popup();
+        marker.getElement().addEventListener("mouseenter", function () {
+          markerPopup.setLngLat(coordinates).setHTML(popupHTML).addTo(map);
         });
-        */
 
         marker.getElement().addEventListener("mouseleave", function () {
           // Close the popup on mouse leave
-          map.getPopup().remove();
+          markerPopup.remove();
         });
         return marker;
       }
@@ -689,6 +743,8 @@ export default {
         features: lineFeatures,
       };
 
+      console.log("lineFeature", lineFeatures);
+
       this.GroupGeoJson[uniqueId] = this.initialGroupGeoJsonData;
       this.map.addSource(uniqueId, {
         type: "geojson",
@@ -717,23 +773,23 @@ export default {
         if (layer.id.startsWith("line-")) {
           map.removeLayer(layer.id);
           map.removeSource(layer.id);
-           // Extract groupId from the layer id
-      const groupId = layer.id.replace("line-", "");
+          // Extract groupId from the layer id
+          const groupId = layer.id.replace("line-", "");
 
-      // Remove markers associated with the group
-      const myGroupMarkers = this.groupMarkers[groupId];
-      if (myGroupMarkers) {
-        myGroupMarkers.forEach(marker => marker.remove());
-        delete this.groupMarkers[groupId];
-      }
+          // Remove markers associated with the group
+          const myGroupMarkers = this.groupMarkers[groupId];
+          if (myGroupMarkers) {
+            myGroupMarkers.forEach((marker) => marker.remove());
+            delete this.groupMarkers[groupId];
+          }
         }
       });
-  this.groupSwitches = {};
-       // Show clusters after clearing lines
-  const clusterLayers = ["clusters", "cluster-count"];
-  clusterLayers.forEach(layerId => {
-    map.setLayoutProperty(layerId, "visibility", "visible");
-  });
+      this.groupSwitches = {};
+      // Show clusters after clearing lines
+      const clusterLayers = ["clusters", "cluster-count"];
+      clusterLayers.forEach((layerId) => {
+        map.setLayoutProperty(layerId, "visibility", "visible");
+      });
     },
     clearAll() {
       const map = this.map;
