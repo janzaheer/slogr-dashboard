@@ -52,7 +52,7 @@
           </perfect-scrollbar>
           <hr class="hr" />
           <div class="d-flex justify-content-between align-items-center">
-            <label class="form-check-label" @click="clearLines"
+            <label class="form-check-label" @click="clearLines" style="color: var(--primary_color); cursor:pointer;"
               >Clear Connections</label
             >
           </div>
@@ -717,8 +717,23 @@ export default {
         if (layer.id.startsWith("line-")) {
           map.removeLayer(layer.id);
           map.removeSource(layer.id);
+           // Extract groupId from the layer id
+      const groupId = layer.id.replace("line-", "");
+
+      // Remove markers associated with the group
+      const myGroupMarkers = this.groupMarkers[groupId];
+      if (myGroupMarkers) {
+        myGroupMarkers.forEach(marker => marker.remove());
+        delete this.groupMarkers[groupId];
+      }
         }
       });
+  this.groupSwitches = {};
+       // Show clusters after clearing lines
+  const clusterLayers = ["clusters", "cluster-count"];
+  clusterLayers.forEach(layerId => {
+    map.setLayoutProperty(layerId, "visibility", "visible");
+  });
     },
     clearAll() {
       const map = this.map;
