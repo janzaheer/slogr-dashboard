@@ -4,7 +4,7 @@
     </div>
     <div v-else>
         <button class="socialBtn w-100 me-2 text-secondary" @click="login"><i class="fa-brands fa-linkedin-in fa-2xl me-1"
-                style="color: var(--primary_color);"></i>
+                style="color: #0B65C2;"></i>
             Continue With Linkedin</button>
     </div>
 </template>
