@@ -7,7 +7,7 @@
   <div id="loader" class="loader">Loading...</div>
   <div class="position-relative bg-secondary mt-md-2 ms-md-3 opacity-75">
     <div class="position-absolute p-2">
-      <div class="card bg-light" style="width: 190px; height: 200px">
+      <div class="card bg-light" style="width: 190px; height: 260px">
         <div class="card-body">
           <h6 class="card-title mb-0">Legend</h6>
           <hr class="hr1" />
@@ -35,7 +35,7 @@
                       : group.name
                   }}</label
                 >
-                <div class="form-check form-switch">
+                <div class="form-check form-switch" v-if="!loading">
                   <input
                     class="form-check-input fs-5"
                     type="checkbox"
@@ -50,10 +50,21 @@
               </div>
             </div>
           </perfect-scrollbar>
-          <hr class="hr" />
-          <div class="d-flex justify-content-between align-items-center">
-            <label class="form-check-label" @click="clearLines"
-              >Clear Connections</label
+          <!-- <hr class="hr" /> -->
+          <hr class="hr1" />
+          <h6 class="my-1">Map Settings</h6>
+          <div class="">
+            <label
+              class="form-check-label"
+              @click="clearLines"
+              style="color: var(--primary_color); cursor: pointer"
+              ><i class="fa-solid fa-circle-xmark" style="color: var(--primary_color); margin-top: 5px"></i> Clear Connections</label
+            >
+            <label
+              class="form-check-label"
+              @click="zoomDeafault"
+              style="color: var(--primary_color); cursor: pointer"
+              ><i class="fa-solid fa-down-left-and-up-right-to-center" style="color: var(--primary_color); margin-top: 5px"></i> Deafaut View</label
             >
           </div>
         </div>
@@ -63,7 +74,7 @@
 
   <div
     class="position-relative bg-secondary mt-md-4 ms-md-3 opacity-75"
-    style="width: 190px; top: 190px"
+    style="width: 190px; top: 260px"
   >
     <div class="position-absolute p-2">
       <div class="card bg-light" style="width: 190px; height: 290px">
@@ -88,7 +99,7 @@
                   :data-content="profile.name"
                 >
                   {{
-                    profile.name.length > 9
+                    profile?.name.length > 9
                       ? profile.name.substring(0, 9) + "..."
                       : profile.name
                   }}
@@ -108,7 +119,11 @@
           </perfect-scrollbar>
           <hr class="hr1" />
           <h6 class="my-1">Monitoring</h6>
-          <RouterLink to="/monitor" class="text-decoration-none" style="color: var(--primary_color);">
+          <RouterLink
+            to="/monitor"
+            class="text-decoration-none"
+            style="color: var(--primary_color)"
+          >
             <span
               ><i
                 class="fa-solid fa-gear"
@@ -173,10 +188,10 @@ export default {
     });
 
     // Change water color to blue
-    let myMap = this.map
+    let myMap = this.map;
     myMap.on("style.load", function () {
       // Find the water layer in the style
-      myMap.setPaintProperty("water", "fill-color", "#CEEAF2")
+      myMap.setPaintProperty("water", "fill-color", "#CEEAF2");
     });
     // Hide the Mapbox logo
     const logoContainer = document.querySelector(".mapboxgl-ctrl-logo");
@@ -192,9 +207,10 @@ export default {
     const nav = new mapboxgl.NavigationControl();
     this.map.addControl(nav, "bottom-right");
 
-    this.handleGroups();
+    this.handleData();
+    // this.handleGroups();
     this.handleProfiles();
-    this.handleClusterData();
+    // this.handleClusterData();
     this.handleGroupData();
 
     this.map.on("load", () => {
@@ -344,17 +360,17 @@ export default {
   },
   methods: {
     async handleProfileToggle(profileId, profileName) {
-      let isProfile = this.profileSwitches[profileId];  // profile test
+      let isProfile = this.profileSwitches[profileId]; // profile test
       let map = this.map;
       let profileSwitchesData = this.profileSwitchesData;
       let groupGeoJson = this.GroupGeoJson;
 
-      Object.keys(profileSwitchesData).forEach(function(k) {
+      Object.keys(profileSwitchesData).forEach(function (k) {
         if (k !== isProfile) {
-          delete profileSwitchesData[k]
-          document.getElementById('profileDefault' + k).checked = false
+          delete profileSwitchesData[k];
+          document.getElementById("profileDefault" + k).checked = false;
         }
-      })
+      });
 
       this.mapLayers.forEach(function (layer) {
         let sourceId = map.getLayer(layer).source;
@@ -373,19 +389,20 @@ export default {
           if (isProfile) {
             lineFeature.properties.color = line.properties[profileName];
           } else if (Object.keys(profileSwitchesData).length < 1) {
-            lineFeature.properties.color = "blue";
+            lineFeature.properties.color = "grey";
           }
           map.getSource(sourceId).setData(groupGeoJson[layer]);
         });
       });
     },
-    async handleToggleGroup(groupId, switchValue) {   
-      let map = this.map
+    async handleToggleGroup(groupId, switchValue) {
+      let map = this.map;
+      console.log(this.groupMarkers, "groupMarkers");
       let myGroupMarkers = this.groupMarkers[groupId];
       if (this.mapLayers.length == 0) {
-        let clusterLayers = ['clusters', 'cluster-count'];
+        let clusterLayers = ["clusters", "cluster-count"];
         clusterLayers.forEach(function (layerId) {
-            map.setLayoutProperty(layerId, 'visibility', 'visible');
+          map.setLayoutProperty(layerId, "visibility", "visible");
         });
       }
 
@@ -406,35 +423,40 @@ export default {
         delete this.GroupGeoJson[`line-${groupId}`];
 
         if (myGroupMarkers) {
-          myGroupMarkers.forEach(function(marker) {
-            marker.remove()
-          })
+          myGroupMarkers.forEach(function (marker) {
+            marker.remove();
+          });
         }
         delete this.groupMarkers[groupId];
       }
-      
+
       // Show and Hide clusters on group toggle
       if (this.mapLayers.length > 0) {
-        let clusterLayers = ['clusters', 'cluster-count'];
+        let clusterLayers = ["clusters", "cluster-count"];
         clusterLayers.forEach(function (layerId) {
-            map.setLayoutProperty(layerId, 'visibility', 'none');
+          map.setLayoutProperty(layerId, "visibility", "none");
         });
       } else {
-        let clusterLayers = ['clusters', 'cluster-count'];
+        let clusterLayers = ["clusters", "cluster-count"];
         clusterLayers.forEach(function (layerId) {
-            map.setLayoutProperty(layerId, 'visibility', 'visible');
+          map.setLayoutProperty(layerId, "visibility", "visible");
         });
       }
-
     },
     async handleClusters(groupId) {
-      let respData;
-      if (groupId == "") {
-        respData = await fetchClusters("");
-      } else {
-        respData = this.clusterdata[groupId];
+      try {
+        let respData;
+        if (groupId === "") {
+          respData = await fetchClusters("");
+          console.log("clusters", respData);
+        } else {
+          respData = this.clusterdata[groupId];
+          console.log("clusterssss", respData);
+        }
+        return respData;
+      } catch (error) {
+        console.error("Error handling clusters:", error);
       }
-      return respData;
     },
     async handleSessions(groupId) {
       const respData = this.groupdata[groupId];
@@ -455,35 +477,56 @@ export default {
     },
     async handleClusterData() {
       try {
+        this.loading = true;
         const response = await fetchClustersData();
         // const response = await fetchGroups();
         this.clusterdata = response;
+        console.log("Cluster data", response);
       } catch (error) {
         console.error("Error fetching groups:", error);
-      }
+      } finally {
+        this.loading = false; // Reset loading after API request completion
+  }
     },
     async handleGroups() {
       try {
-        this.loading = true;
+        // this.loading = true;
         // const response = await fetchGroupData();
         const response = await fetchGroups();
         this.groups = response;
       } catch (error) {
         console.error("Error fetching groups:", error);
       } finally {
+          this.loading = false;
+      }
+    },
+    async handleData() {
+      try {
+        this.loading = true;
+        const [groupResponse, clusterResponse] = await Promise.all([
+          fetchGroups(),
+          fetchClustersData(),
+        ]);
+        this.groups = groupResponse;
+        this.clusterdata = clusterResponse;
+
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
         this.loading = false;
       }
     },
     async handleProfiles() {
       try {
-        this.loading = true;
+        // this.loading = true;
         const resp = await ProfileList();
         this.profiles = resp.profiles;
       } catch (errors) {
         console.log(errors);
-      } finally {
-        this.loading = false;
       }
+      // finally {
+      //   this.loading = false;
+      // }
     },
     showClusters(clusters) {
       // Add a new source from our GeoJSON data and
@@ -583,64 +626,117 @@ export default {
       let checkLineIds = [];
 
       function drawCurved(startCoords, endCoords) {
-        var controlPoint = [(startCoords[0] + endCoords[0]) / 2, startCoords[1] - 0.1];
+        var controlPoint = [
+          (startCoords[0] + endCoords[0]) / 2,
+          startCoords[1] - 0.1,
+        ];
         var curvePoints = [];
         for (var t = 0; t <= 1; t += 0.01) {
-          var x = Math.pow(1 - t, 2) * startCoords[0] + 2 * (1 - t) * t * controlPoint[0] + Math.pow(t, 2) * endCoords[0];
-          var y = Math.pow(1 - t, 2) * startCoords[1] + 3 * (1 - t) * t * controlPoint[1] + Math.pow(t, 2) * endCoords[1];
+          var x =
+            Math.pow(1 - t, 2) * startCoords[0] +
+            2 * (1 - t) * t * controlPoint[0] +
+            Math.pow(t, 2) * endCoords[0];
+          var y =
+            Math.pow(1 - t, 2) * startCoords[1] +
+            3 * (1 - t) * t * controlPoint[1] +
+            Math.pow(t, 2) * endCoords[1];
           curvePoints.push([x, y]);
         }
         return curvePoints;
       }
 
+      // function addMarker(properties, coordinates) {
+      //   let el = document.createElement("div");
+      //   el.className = "my-marker-icon";
+      //   let marker = new mapboxgl.Marker(el).setLngLat(coordinates).addTo(map);
+
+      //   console.log(properties);
+
+      //   let el = document.createElement('div');
+      //   const org = properties.client.Organization;
+      //   const server = properties.server.machine_name;
+      //   const client = properties.client.machine_name; */
+
+      //   if (org === 'GCP') {
+      //     el.className = 'gcp-marker';
+      //   } else  if (org === 'Azure') {
+      //     el.className = 'azure-marker';
+      //   } else {
+      //    el.className = 'default-marker';
+      //   }
+
+      //   let marker = new mapboxgl.Marker(el)
+      //     .setLngLat(coordinates)
+      //     .addTo(map);
+
+      //   let popupHTML = `<h5>${org}</h5><p>server: ${server}</p><p>client: ${client}</p>`
+      //   let markerPopup = new mapboxgl.Popup()
+      //   marker.getElement().addEventListener('mouseenter', function () {
+      //     markerPopup
+      //       .setLngLat(coordinates)
+      //       .setHTML(popupHTML)
+      //       .addTo(map);
+      //   });
+
+      //   marker.getElement().addEventListener("mouseleave", function () {
+      //     // Close the popup on mouse leave
+      //    markerPopup.remove();
+      //   });
+      //   return marker;
+      // }
       function addMarker(properties, coordinates) {
-        let el = document.createElement('div');
+        let el = document.createElement("div");
         const org = properties.client.Organization;
         const server = properties.server.machine_name;
         const client = properties.client.machine_name;
 
-        if (org === 'GCP') {
-          el.className = 'gcp-marker';
-        } else  if (org === 'Azure') {
-          el.className = 'azure-marker';
+        if (org === "GCP") {
+          el.className = "gcp-marker";
+        } else if (org === "Azure") {
+          el.className = "azure-marker";
         } else {
-         el.className = 'default-marker';
+          el.className = "default-marker";
         }
 
-        let marker = new mapboxgl.Marker(el)
-          .setLngLat(coordinates)
-          .addTo(map);
+        let marker = new mapboxgl.Marker(el).setLngLat(coordinates).addTo(map);
 
-        let popupHTML = `<h5>${org}</h5><p>server: ${server}</p><p>client: ${client}</p>`
-        let markerPopup = new mapboxgl.Popup()
-        marker.getElement().addEventListener('mouseenter', function () {
-          markerPopup
-            .setLngLat(coordinates)
-            .setHTML(popupHTML)
-            .addTo(map);
+        let popupHTML = `<h5>${org}</h5><p>server: ${server}</p><p>client: ${client}</p>`;
+        let markerPopup = new mapboxgl.Popup();
+        marker.getElement().addEventListener("mouseenter", function () {
+          markerPopup.setLngLat(coordinates).setHTML(popupHTML).addTo(map);
         });
 
-        marker.getElement().addEventListener('mouseleave', function () {
+        marker.getElement().addEventListener("mouseleave", function () {
           // Close the popup on mouse leave
-         markerPopup.remove();
+          markerPopup.remove();
         });
         return marker;
       }
-      
-      let groupMarkersList = []
+
+      let groupMarkersList = [];
       lines["features"].forEach(function (line) {
         if (!checkLineIds.includes(line["properties"]["session_id"])) {
-          let cur = drawCurved(line["geometry"]["coordinates"][0], line["geometry"]["coordinates"][1])
-          let m1 = addMarker(line["properties"], line["geometry"]["coordinates"][0]);
-          let m2 = addMarker(line["properties"], line["geometry"]["coordinates"][1]);
-          groupMarkersList.push(m1)
-          groupMarkersList.push(m2)
-          
+          let cur = drawCurved(
+            line["geometry"]["coordinates"][0],
+            line["geometry"]["coordinates"][1]
+          );
+          let m1 = addMarker(
+            line["properties"],
+            line["geometry"]["coordinates"][0]
+          );
+          let m2 = addMarker(
+            line["properties"],
+            line["geometry"]["coordinates"][1]
+          );
+          groupMarkersList.push(m1);
+          groupMarkersList.push(m2);
+
           const obj = {
             type: "Feature",
-            geometry: {  // zaheer: comment this out, if you don't need curved lines
-              type: 'LineString',
-              coordinates: cur
+            geometry: {
+              // zaheer: comment this out, if you don't need curved lines
+              type: "LineString",
+              coordinates: cur,
             },
             // geometry: line["geometry"],
             properties: line["properties"],
@@ -649,14 +745,14 @@ export default {
           checkLineIds.push(line["properties"]["session_id"]);
         }
       });
-      this.groupMarkers[group_id] = groupMarkersList
+      this.groupMarkers[group_id] = groupMarkersList;
 
       this.initialGroupGeoJsonData = {
         type: "FeatureCollection",
         features: lineFeatures,
       };
 
-      console.log('lineFeature', lineFeatures)
+      console.log("lineFeature", lineFeatures);
 
       this.GroupGeoJson[uniqueId] = this.initialGroupGeoJsonData;
       this.map.addSource(uniqueId, {
@@ -680,13 +776,36 @@ export default {
     },
     clearLines() {
       const map = this.map;
-
       // Iterate through the layers to find and remove layers with 'line-' prefix
       map.getStyle().layers.forEach((layer) => {
         if (layer.id.startsWith("line-")) {
           map.removeLayer(layer.id);
           map.removeSource(layer.id);
+          // Extract groupId from the layer id
+          const groupId = layer.id.replace("line-", "");
+          // Remove markers associated with the group
+          const myGroupMarkers = this.groupMarkers[groupId];
+          if (myGroupMarkers) {
+            myGroupMarkers.forEach((marker) => marker.remove());
+            delete this.groupMarkers[groupId];
+          }
         }
+      });
+      this.groupSwitches = {};
+      // Reset profile switches and associated UI elements
+      this.clearProfileSwitches();
+      // Show clusters after clearing lines
+      const clusterLayers = ["clusters", "cluster-count"];
+      clusterLayers.forEach((layerId) => {
+        map.setLayoutProperty(layerId, "visibility", "visible");
+      });
+    },
+    clearProfileSwitches() {
+      const profileSwitchesData = this.profileSwitchesData;
+      // Clear profile switches and associated UI elements
+      Object.keys(profileSwitchesData).forEach((profileId) => {
+        delete profileSwitchesData[profileId];
+        document.getElementById("profileDefault" + profileId).checked = false;
       });
     },
     clearAll() {
@@ -734,6 +853,15 @@ export default {
       const lineId = e.features[0].layer.id;
       // Reset the line color to its original color when the mouse leaves
       map.setPaintProperty(lineId, "#11b4da", "white");
+    },
+    zoomDeafault() {
+      // Define the default zoom level
+      const defaultZoomLevel = 1.8;
+      // Ease the map to the default center and zoom level
+      this.map.easeTo({
+        center: [0, 20],
+        zoom: defaultZoomLevel,
+      });
     },
   },
 };
@@ -794,12 +922,12 @@ export default {
 }
 
 .marker {
-      background-image: url('https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png');
-      background-size: cover;
-      width: 20px;
-      height: 30px;
-      cursor: pointer;
-    }
+  background-image: url("https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png");
+  background-size: cover;
+  width: 20px;
+  height: 30px;
+  cursor: pointer;
+}
 
 .screenshot20210522At336 {
   position: absolute;
