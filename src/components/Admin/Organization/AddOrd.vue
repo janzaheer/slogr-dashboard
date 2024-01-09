@@ -1,16 +1,16 @@
 <template>
     <div>
         <div class="d-flex align-items-center">
-            <div>
+            <!-- <div>
                 <h6>To create your own organization use this button </h6>
-            </div>
+            </div> -->
             <div>
-                <button class="editBtn ms-4" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"><i
+                <button class="editBtn ms-4" data-bs-toggle="modal" data-bs-target="#staticBackdrop3"><i
                         class="fa-solid fa-plus"></i> Add New Organization</button>
             </div>
         </div>
         <!-- Modal  add-->
-        <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        <div class="modal fade" id="staticBackdrop3" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="staticBackdrop1Label" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered  modal-lg">
                 <div class="modal-content">
@@ -31,7 +31,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <label for="exampleFormControlInput1" class="form-label ms-1">Phone</label>
-                                        <input type="number" class="form-control form-control-lg" placeholder="Phone"
+                                        <input type="text" class="form-control form-control-lg" placeholder="Phone"
                                             name="phone" v-model="this.form.phone">
                                     </div>
                                     <div class="col-md-4">

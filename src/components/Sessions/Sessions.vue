@@ -364,8 +364,6 @@ export default {
             }
         },
         handleEditModel(id, s_name, c_name, p_name, n_packets, p_interval, w_time, dscp, count, schedule, p_size) {
-            console.log(`p_name`,p_name)
-            console.log(`p_name`,this.selectedProfile)
             this.form.id = id
             this.form.n_packets = n_packets
             this.form.p_interval = p_interval
@@ -403,12 +401,23 @@ export default {
                     transition: 'zoom',
                 });
             } catch (error) {
-                createToast(`session not update something is wrong`, {
-                    type: 'danger',
+                if (error.response.status === 400) {
+                    createToast(error.response.data.error, {
+                        type: 'danger',
+                        position: 'top-right',
+                        transition: 'zoom',
+                    });
+                }
+                else if (error.response.status === 401) {
+                    createToast(error.response.data.Unauthorized, {
+                    type: 'warning',
                     position: 'top-right',
                     transition: 'zoom',
                 });
-                console.log(error)
+                    console.log('401',error.response.data.Unauthorized)
+                } else {
+                    console.log('main-error-1',error)
+                }
             }
             console.log('edit', payload)
         },
