@@ -58,13 +58,13 @@
               class="form-check-label"
               @click="clearLines"
               style="color: var(--primary_color); cursor: pointer"
-              ><i class="fa-solid fa-trash-can" style="color: var(--primary_color); margin-top: 5px"></i> Clear Connections</label
+              ><i class="fa-solid fa-circle-xmark" style="color: var(--primary_color); margin-top: 5px"></i> Clear Connections</label
             >
             <label
               class="form-check-label"
               @click="zoomDeafault"
               style="color: var(--primary_color); cursor: pointer"
-              ><i class="fa-solid fa-arrows-to-eye" style="color: var(--primary_color); margin-top: 5px"></i> Deafaut View</label
+              ><i class="fa-solid fa-down-left-and-up-right-to-center" style="color: var(--primary_color); margin-top: 5px"></i> Deafaut View</label
             >
           </div>
         </div>
