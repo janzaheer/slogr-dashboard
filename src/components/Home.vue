@@ -7,7 +7,7 @@
   <div id="loader" class="loader">Loading...</div>
   <div class="position-relative bg-secondary mt-md-2 ms-md-3 opacity-75">
     <div class="position-absolute p-2">
-      <div class="card bg-light" style="width: 190px; height: 200px">
+      <div class="card bg-light" style="width: 190px; height: 230px">
         <div class="card-body">
           <h6 class="card-title mb-0">Legend</h6>
           <hr class="hr1" />
@@ -35,7 +35,7 @@
                       : group.name
                   }}</label
                 >
-                <div class="form-check form-switch">
+                <div class="form-check form-switch" v-if="!loading">
                   <input
                     class="form-check-input fs-5"
                     type="checkbox"
@@ -51,12 +51,18 @@
             </div>
           </perfect-scrollbar>
           <hr class="hr" />
-          <div class="d-flex justify-content-between align-items-center">
+          <div class="">
             <label
               class="form-check-label"
               @click="clearLines"
               style="color: var(--primary_color); cursor: pointer"
               >Clear Connections</label
+            >
+            <label
+              class="form-check-label"
+              @click="zoomDeafault"
+              style="color: var(--primary_color); cursor: pointer"
+              >Zoom by Deafaut</label
             >
           </div>
         </div>
@@ -66,7 +72,7 @@
 
   <div
     class="position-relative bg-secondary mt-md-4 ms-md-3 opacity-75"
-    style="width: 190px; top: 190px"
+    style="width: 190px; top: 230px"
   >
     <div class="position-absolute p-2">
       <div class="card bg-light" style="width: 190px; height: 290px">
@@ -469,14 +475,16 @@ export default {
     },
     async handleClusterData() {
       try {
-        // this.loading = true;
+        this.loading = true;
         const response = await fetchClustersData();
         // const response = await fetchGroups();
         this.clusterdata = response;
         console.log("Cluster data", response);
       } catch (error) {
         console.error("Error fetching groups:", error);
-      }
+      } finally {
+        this.loading = false; // Reset loading after API request completion
+  }
     },
     async handleGroups() {
       try {
@@ -487,7 +495,7 @@ export default {
       } catch (error) {
         console.error("Error fetching groups:", error);
       } finally {
-        // this.loading = false;
+          this.loading = false;
       }
     },
     async handleData() {
@@ -499,6 +507,7 @@ export default {
         ]);
         this.groups = groupResponse;
         this.clusterdata = clusterResponse;
+
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -842,6 +851,15 @@ export default {
       const lineId = e.features[0].layer.id;
       // Reset the line color to its original color when the mouse leaves
       map.setPaintProperty(lineId, "#11b4da", "white");
+    },
+    zoomDeafault() {
+      // Define the default zoom level
+      const defaultZoomLevel = 1.8;
+      // Ease the map to the default center and zoom level
+      this.map.easeTo({
+        center: [0, 20],
+        zoom: defaultZoomLevel,
+      });
     },
   },
 };
