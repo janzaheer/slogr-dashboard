@@ -7,7 +7,7 @@
   <div id="loader" class="loader">Loading...</div>
   <div class="position-relative bg-secondary mt-md-2 ms-md-3 opacity-75">
     <div class="position-absolute p-2">
-      <div class="card bg-light" style="width: 190px; height: 230px">
+      <div class="card bg-light" style="width: 190px; height: 260px">
         <div class="card-body">
           <h6 class="card-title mb-0">Legend</h6>
           <hr class="hr1" />
@@ -50,19 +50,21 @@
               </div>
             </div>
           </perfect-scrollbar>
-          <hr class="hr" />
+          <!-- <hr class="hr" /> -->
+          <hr class="hr1" />
+          <h6 class="my-1">Map Settings</h6>
           <div class="">
             <label
               class="form-check-label"
               @click="clearLines"
               style="color: var(--primary_color); cursor: pointer"
-              >Clear Connections</label
+              ><i class="fa-solid fa-trash-can" style="color: var(--primary_color); margin-top: 5px"></i> Clear Connections</label
             >
             <label
               class="form-check-label"
               @click="zoomDeafault"
               style="color: var(--primary_color); cursor: pointer"
-              >Zoom by Deafaut</label
+              ><i class="fa-solid fa-arrows-to-eye" style="color: var(--primary_color); margin-top: 5px"></i> Deafaut View</label
             >
           </div>
         </div>
@@ -72,7 +74,7 @@
 
   <div
     class="position-relative bg-secondary mt-md-4 ms-md-3 opacity-75"
-    style="width: 190px; top: 230px"
+    style="width: 190px; top: 260px"
   >
     <div class="position-absolute p-2">
       <div class="card bg-light" style="width: 190px; height: 290px">
