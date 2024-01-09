@@ -389,7 +389,7 @@ export default {
           if (isProfile) {
             lineFeature.properties.color = line.properties[profileName];
           } else if (Object.keys(profileSwitchesData).length < 1) {
-            lineFeature.properties.color = "blue";
+            lineFeature.properties.color = "grey";
           }
           map.getSource(sourceId).setData(groupGeoJson[layer]);
         });
