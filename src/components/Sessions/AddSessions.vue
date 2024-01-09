@@ -1,109 +1,91 @@
 <template>
-    <div>
-        <button class="addBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i
-                class="fa-solid fa-plus fa-lg"></i> Add New Sessions</button>
-        <!-- Modal  add-->
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Add New Session</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form @submit.prevent="handleAddSessions">
-                            <div class="">
-                                <div class="mb-4">
-                                    <label for="exampleFormControlInput1" class="form-label ms-1">Form*</label>
-                                    <select v-model="selectedAgentId" class="form-select form-select-lg mb-3 custom-select"
-                                        aria-label=".form-select-lg example" required>
-                                        <option class="text-secondary" disabled>please select sender sentinel
-                                        </option>
-                                        <option v-for="agent in agents" :key="agent.id" :value="agent.id">{{ agent.name }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="mb-4">
-                                    <label for="exampleFormControlInput1" class="form-label ms-1">To*</label>
-                                    <select v-model="selectedClientId" class="form-select form-select-lg mb-3"
-                                        aria-label=".form-select-lg example" required>
-                                        <option class="text-secondary" disabled>please select receiver sentinel
-                                        </option>
-                                        <option v-for="client in clients" :key="client.id" :value="client.id">{{ client.name
+<div>
+    <button class="addBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> <i class="fa-solid fa-plus fa-lg"></i> Add New Sessions</button>
+    <!-- Modal  add-->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Session</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form @submit.prevent="handleAddSessions">
+                        <div class="">
+                            <div class="mb-4">
+                                <label for="exampleFormControlInput1" class="form-label ms-1">Form*</label>
+                                <select v-model="selectedAgentId" class="form-select form-select-lg mb-3 custom-select" aria-label=".form-select-lg example" required>
+                                    <option class="text-secondary" disabled>please select sender sentinel
+                                    </option>
+                                    <option v-for="agent in agents" :key="agent.id" :value="agent.id">{{ agent.name }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="mb-4">
+                                <label for="exampleFormControlInput1" class="form-label ms-1">To*</label>
+                                <select v-model="selectedClientId" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" required>
+                                    <option class="text-secondary" disabled>please select receiver sentinel
+                                    </option>
+                                    <option v-for="client in clients" :key="client.id" :value="client.id">{{ client.name
                                         }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="mb-4">
-                                    <label for="exampleFormControlInput1" class="form-label ms-1">Monitoring
-                                        Profile*</label>
-                                    <select v-model="selectedProfile" @change="updateSelectedProfileId" class="form-select form-select-lg mb-3 custom-select"
-                                        aria-label=".form-select-lg example" required>
-                                        <option class="text-secondary" disabled>select here</option>
-                                        <option v-for="profile in profiles" :key="profile.id" :value="profile">{{
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="mb-4">
+                                <label for="exampleFormControlInput1" class="form-label ms-1">Monitoring
+                                    Profile*</label>
+                                <select v-model="selectedProfile" @change="updateSelectedProfileId" class="form-select form-select-lg mb-3 custom-select" aria-label=".form-select-lg example" required>
+                                    <option class="text-secondary" disabled>select here</option>
+                                    <option v-for="profile in profiles" :key="profile.id" :value="profile">{{
                                             profile.name }}</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <div class="row g-2">
-                                        <div class="col-md-12">
-                                            <label for="exampleFormControlInput1" class="form-label ms-1">Schedule*</label>
-                                            <input type="number" class="form-control form-control-lg"
-                                                placeholder="Enter Schedule" v-model="this.form.schedule" name="schedule"
-                                                required>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="exampleFormControlInput1" class="form-label ms-1">Count*</label>
-                                            <input type="number" class="form-control form-control-lg"
-                                                placeholder="Enter Count" v-model="this.form.count" name="count" required>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="exampleFormControlInput1" class="form-label ms-1">Number Of
-                                                Packets*</label>
-                                            <input type="number" class="form-control form-control-lg"
-                                                placeholder="Enter No-packets" v-model="this.form.n_packets"
-                                                name="n_packets" required>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="exampleFormControlInput1" class="form-label ms-1">Packet
-                                                Interval*</label>
-                                            <input type="number" class="form-control form-control-lg"
-                                                placeholder="Enter P-Interval" v-model="this.form.p_interval"
-                                                name="p_interval" required>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="exampleFormControlInput1" class="form-label ms-1">Wait Time*</label>
-                                            <input type="number" class="form-control form-control-lg"
-                                                placeholder="Enter W Time" v-model="this.form.w_time" name="w_time"
-                                                required>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="exampleFormControlInput1" class="form-label ms-1">DSCP*</label>
-                                            <input type="number" class="form-control form-control-lg"
-                                                placeholder="Enter Dscp" v-model="this.form.dscp" name="dscp" required>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="exampleFormControlInput1" class="form-label ms-1">Packet
-                                                Size*</label>
-                                            <input type="number" class="form-control form-control-lg"
-                                                placeholder="Enter P_Size" name="p_size" v-model="this.form.p_size"
-                                                required>
-                                        </div>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <div class="row g-2">
+                                    <div class="col-md-12">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Schedule*</label>
+                                        <input type="number" class="form-control form-control-lg" placeholder="Enter Schedule" v-model="this.form.schedule" name="schedule" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Count*</label>
+                                        <input type="number" class="form-control form-control-lg" placeholder="Enter Count" v-model="this.form.count" name="count" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Number Of
+                                            Packets*</label>
+                                        <input type="number" class="form-control form-control-lg" placeholder="Enter No-packets" v-model="this.form.n_packets" name="n_packets" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Packet
+                                            Interval*</label>
+                                        <input type="number" class="form-control form-control-lg" placeholder="Enter P-Interval" v-model="this.form.p_interval" name="p_interval" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Wait Time*</label>
+                                        <input type="number" class="form-control form-control-lg" placeholder="Enter W Time" v-model="this.form.w_time" name="w_time" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">DSCP*</label>
+                                        <input type="number" class="form-control form-control-lg" placeholder="Enter Dscp" v-model="this.form.dscp" name="dscp" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Packet
+                                            Size*</label>
+                                        <input type="number" class="form-control form-control-lg" placeholder="Enter P_Size" name="p_size" v-model="this.form.p_size" required>
                                     </div>
                                 </div>
                             </div>
-                            <hr>
-                            <div>
-                                <div class="d-flex justify-content-end">
-                                    <button type="button" class="modelCancelBtn" id="EditCancelButton"
-                                        data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="modelSaveBtn ms-2">Create</button>
-                                </div>
+                        </div>
+                        <hr>
+                        <div>
+                            <div class="d-flex justify-content-end">
+                                <button type="button" class="modelCancelBtn" id="EditCancelButton" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="modelSaveBtn ms-2">Create</button>
                             </div>
-                        </form>
-                    </div>
-                    <!-- <div class="modal-footer">
+                        </div>
+                    </form>
+                </div>
+                <!-- <div class="modal-footer">
                         <div class="d-flex justify-content-end">
                             <button type="button" class="modelCancelBtn" id="EditCancelButton"
                                 data-bs-dismiss="modal">Cancel</button>
@@ -111,17 +93,25 @@
                                 :disabled="isCreateButtonDisabled">Create</button>
                         </div>
                     </div> -->
-                </div>
             </div>
         </div>
     </div>
+</div>
 </template>
 
 <script>
-import { agentListForm } from '../../services/agent_services';
-import { ProfileListForm } from '../../services/monitor_profile_Services';
-import { addSessions } from '../../services/sessions_services';
-import { createToast } from 'mosha-vue-toastify';
+import {
+    agentListForm
+} from '../../services/agent_services';
+import {
+    ProfileListForm
+} from '../../services/monitor_profile_Services';
+import {
+    addSessions
+} from '../../services/sessions_services';
+import {
+    createToast
+} from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css';
 
 export default {
@@ -196,27 +186,38 @@ export default {
                 });
                 document.getElementById('EditCancelButton').click();
             } catch (error) {
-                createToast(`sessions not save something is wrong`, {
-                    type: 'danger',
+                if (error.response.status === 400) {
+                    createToast(error.response.data.error, {
+                        type: 'danger',
+                        position: 'top-right',
+                        transition: 'zoom',
+                    });
+                }
+                else if (error.response.status === 401) {
+                    createToast(error.response.data.Unauthorized, {
+                    type: 'warning',
                     position: 'top-right',
                     transition: 'zoom',
                 });
-                console.log(error)
+                    console.log('401',error.response.data.Unauthorized)
+                } else {
+                    console.log('main-error-1',error)
+                }
+                console.log('main-error', error)
             }
         },
         async monitor(size = 1000) {
             try {
                 let res = await ProfileListForm(size)
                 this.profiles = res.profiles;
-                console.log('profile',res.profiles)
             } catch (error) {
                 console.log(error)
             }
         },
         updateSelectedProfileId() {
-      // Update selectedProfileId when the selection changes
+            // Update selectedProfileId when the selection changes
             this.selectedProfile = this.selectedProfile;
-            console.log('single',this.selectedProfile)
+            console.log('single', this.selectedProfile)
             this.selectedProfileId = this.selectedProfile.id
             this.form.count = this.selectedProfile.count
             this.form.n_packets = this.selectedProfile.n_packets
@@ -224,7 +225,7 @@ export default {
             this.form.w_time = this.selectedProfile.w_time
             this.form.dscp = this.selectedProfile.dscp
             this.form.p_size = this.selectedProfile.p_size
-    },
+        },
         async server(size = 1000) {
             try {
                 let res = await agentListForm(size)
