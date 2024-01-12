@@ -215,6 +215,14 @@
                                 </option>
                             </select>
                         </div>
+                        <!-- Advanced button -->
+                <RouterLink to="#"
+                  @click="toggleAdvancedFields"
+                  class="ms-2 mt-2"
+                >
+                  {{ showAdvancedFields ? "Hide Advanced -" : "Show Advanced +" }}
+                </RouterLink>
+                        <div v-if="showAdvancedFields">
                         <div class="mb-4">
                             <label for="exampleFormControlInput1" class="form-label ms-1">Monitoring Profile*</label>
                             <select v-model="selectedProfile" class="form-select form-select-lg mb-3 custom-select"
@@ -264,6 +272,7 @@
                                         name="p_size" v-model="this.form.p_size">
                                 </div>
                             </div>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -319,7 +328,8 @@ export default {
             agents: [],
             selectedAgentId: 'please select sender sentinel',
             clients: [],
-            selectedClientId: 'please select receiver sentinel'
+            selectedClientId: 'please select receiver sentinel',
+            showAdvancedFields: false,
         }
     },
     mounted() {
@@ -437,6 +447,9 @@ export default {
             } catch (error) {
                 console.log(error)
             }
+        },
+        toggleAdvancedFields() {
+         this.showAdvancedFields = !this.showAdvancedFields;
         }
     }
 }
@@ -458,4 +471,3 @@ export default {
     color: var(--white_color);
 }
 </style>
-
