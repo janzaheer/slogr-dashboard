@@ -12,44 +12,38 @@
           <h6 class="card-title mb-0">Legend</h6>
           <hr class="hr1" />
           <perfect-scrollbar style="height: 100px">
-            <!-- Use v-for to iterate over the groups -->
-            <div class="text-center m-2" v-if="loading">
-              <VueSpinner size="60" color="#8cb63d" />
-            </div>
-            <div v-else>
-              <div
-                v-for="group in groups"
-                :key="group.id"
-                class="d-flex justify-content-between align-items-center"
-              >
-                <label
-                  class="form-check-label"
-                  :for="'flexSwitchCheckDefault_' + group.id"
-                  data-bs-toggle="popover"
-                  :title="group.name"
-                  :data-content="group.name"
-                >
-                  {{
-                    group.name.length > 9
-                      ? group.name.substring(0, 9) + "..."
-                      : group.name
-                  }}</label
-                >
-                <div class="form-check form-switch" v-if="!loading">
-                  <input
-                    class="form-check-input fs-5"
-                    type="checkbox"
-                    role="switch"
-                    :id="'flexSwitchCheckDefault_' + group.id"
-                    v-model="groupSwitches[group.id]"
-                    @change="
-                      handleToggleGroup(group.id, groupSwitches[group.id])
-                    "
-                  />
-                </div>
+              <div v-if="loading" class="text-center m-2">
+                <VueSpinner size="60" color="#8cb63d" />
               </div>
+            <div v-else>
+              <div v-for="group in groups" :key="group.id" class="d-flex justify-content-between align-items-center">
+                  <label
+                    class="form-check-label"
+                    :for="'flexSwitchCheckDefault_' + group.id"
+                    data-bs-toggle="popover"
+                    :title="group.name"
+                    :data-content="group.name"
+                  >
+                    {{
+                      group.name.length > 9
+                        ? group.name.substring(0, 9) + "..."
+                        : group.name
+                    }}
+                  </label>
+                  <div class="form-check form-switch">
+                    <input
+                      class="form-check-input fs-5"
+                      type="checkbox"
+                      role="switch"
+                      :id="'flexSwitchCheckDefault_' + group.id"
+                      v-model="groupSwitches[group.id]"
+                      @change="handleToggleGroup(group.id, groupSwitches[group.id])"
+                    />
+                  </div>
+                </div>
             </div>
           </perfect-scrollbar>
+
           <!-- <hr class="hr" /> -->
           <hr class="hr1" />
           <h6 class="my-1">Map Settings</h6>
@@ -64,7 +58,7 @@
               class="form-check-label"
               @click="zoomDeafault"
               style="color: var(--primary_color); cursor: pointer"
-              ><i class="fa-solid fa-down-left-and-up-right-to-center" style="color: var(--primary_color); margin-top: 5px"></i> Deafaut View</label
+              ><i class="fa-solid fa-down-left-and-up-right-to-center" style="color: var(--primary_color); margin-top: 5px"></i> Default View</label
             >
           </div>
         </div>
@@ -72,10 +66,7 @@
     </div>
   </div>
 
-  <div
-    class="position-relative bg-secondary mt-md-4 ms-md-3 opacity-75"
-    style="width: 190px; top: 260px"
-  >
+  <div class="position-relative bg-secondary mt-md-4 ms-md-3 opacity-75" style="width: 190px; top: 260px">
     <div class="position-absolute p-2">
       <div class="card bg-light" style="width: 190px; height: 290px">
         <div class="card-body">
@@ -207,12 +198,11 @@ export default {
     const nav = new mapboxgl.NavigationControl();
     this.map.addControl(nav, "bottom-right");
 
-    this.handleData();
-    // this.handleGroups();
+    // this.handleData();
+    this.handleGroups();
     this.handleProfiles();
-    // this.handleClusterData();
+    this.handleClusterData();
     this.handleGroupData();
-
     this.map.on("load", () => {
       this.showClusters(clusters);
       // inspect a cluster on click
@@ -396,53 +386,117 @@ export default {
       });
     },
     async handleToggleGroup(groupId, switchValue) {
-      let map = this.map;
-      console.log(this.groupMarkers, "groupMarkers");
-      let myGroupMarkers = this.groupMarkers[groupId];
-      if (this.mapLayers.length == 0) {
-        let clusterLayers = ["clusters", "cluster-count"];
-        clusterLayers.forEach(function (layerId) {
-          map.setLayoutProperty(layerId, "visibility", "visible");
-        });
-      }
+  try {
+    this.loading = true;
+ console.log("Toggle start:", groupId, switchValue);
+    let map = this.map;
+    let myGroupMarkers = this.groupMarkers[groupId];
 
-      if (switchValue) {
-        // Draw connected lines
-        const sessions = await this.handleSessions(groupId);
-        this.drawLines(this.map, sessions, groupId);
-        this.mapLayers.push(`line-${groupId}`);
-      } else {
-        // Remove the group from the list of active groups
-        this.map.removeLayer(`line-${groupId}`);
-        this.map.removeSource(`line-${groupId}`);
+    if (this.mapLayers.length === 0) {
+      this.showClusterLayers();
+    }
 
-        let index = this.mapLayers.indexOf(`line-${groupId}`);
-        if (index >= 0) {
-          this.mapLayers.splice(index, 1);
-        }
-        delete this.GroupGeoJson[`line-${groupId}`];
+    if (switchValue) {
+      const sessions = await this.handleSessions(groupId);
+      this.drawLines(map, sessions, groupId);
+      this.mapLayers.push(`line-${groupId}`);
+    } else {
+      this.removeGroupLayers(groupId);
+    }
 
-        if (myGroupMarkers) {
-          myGroupMarkers.forEach(function (marker) {
-            marker.remove();
-          });
-        }
-        delete this.groupMarkers[groupId];
-      }
-
-      // Show and Hide clusters on group toggle
-      if (this.mapLayers.length > 0) {
-        let clusterLayers = ["clusters", "cluster-count"];
-        clusterLayers.forEach(function (layerId) {
-          map.setLayoutProperty(layerId, "visibility", "none");
-        });
-      } else {
-        let clusterLayers = ["clusters", "cluster-count"];
-        clusterLayers.forEach(function (layerId) {
-          map.setLayoutProperty(layerId, "visibility", "visible");
-        });
-      }
+    this.toggleClusterVisibility();
+  } catch (error) {
+    console.error("Error handling toggle:", error);
+  } finally {
+    this.loading = false;
+  }
     },
+    showClusterLayers() {
+    let clusterLayers = ["clusters", "cluster-count"];
+    clusterLayers.forEach((layerId) => {
+      this.map.setLayoutProperty(layerId, "visibility", "visible");
+    });
+    },
+    removeGroupLayers(groupId) {
+    this.map.removeLayer(`line-${groupId}`);
+    this.map.removeSource(`line-${groupId}`);
+
+    let index = this.mapLayers.indexOf(`line-${groupId}`);
+    if (index >= 0) {
+      this.mapLayers.splice(index, 1);
+    }
+    delete this.GroupGeoJson[`line-${groupId}`];
+
+    let myGroupMarkers = this.groupMarkers[groupId];
+    if (myGroupMarkers) {
+      myGroupMarkers.forEach((marker) => {
+        marker.remove();
+      });
+    }
+    delete this.groupMarkers[groupId];
+    },
+    toggleClusterVisibility() {
+    let clusterLayers = ["clusters", "cluster-count"];
+    if (this.mapLayers.length > 0) {
+      clusterLayers.forEach((layerId) => {
+        this.map.setLayoutProperty(layerId, "visibility", "none");
+      });
+    } else {
+      clusterLayers.forEach((layerId) => {
+        this.map.setLayoutProperty(layerId, "visibility", "visible");
+      });
+    }
+    },
+    // async handleToggleGroup(groupId, switchValue) {
+    //   let map = this.map;
+    //   console.log(this.groupMarkers, "groupMarkers");
+    //   let myGroupMarkers = this.groupMarkers[groupId];
+    //   if (this.mapLayers.length == 0) {
+    //     let clusterLayers = ["clusters", "cluster-count"];
+    //     clusterLayers.forEach(function (layerId) {
+    //       map.setLayoutProperty(layerId, "visibility", "visible");
+    //     });
+    //   }
+
+    //   if (switchValue) {
+    //     // Draw connected lines
+    //     const sessions = await this.handleSessions(groupId);
+    //     this.drawLines(this.map, sessions, groupId);
+    //     this.mapLayers.push(`line-${groupId}`);
+    //   } else {
+    //     // Remove the group from the list of active groups
+    //     this.map.removeLayer(`line-${groupId}`);
+    //     this.map.removeSource(`line-${groupId}`);
+
+    //     let index = this.mapLayers.indexOf(`line-${groupId}`);
+    //     if (index >= 0) {
+    //       this.mapLayers.splice(index, 1);
+    //     }
+    //     delete this.GroupGeoJson[`line-${groupId}`];
+
+    //     if (myGroupMarkers) {
+    //       myGroupMarkers.forEach(function (marker) {
+    //         marker.remove();
+    //       });
+    //     }
+    //     delete this.groupMarkers[groupId];
+    //   }
+
+    //   // Show and Hide clusters on group toggle
+    //   if (this.mapLayers.length > 0) {
+    //     let clusterLayers = ["clusters", "cluster-count"];
+    //     clusterLayers.forEach(function (layerId) {
+    //       map.setLayoutProperty(layerId, "visibility", "none");
+    //     });
+    //   } else {
+    //     let clusterLayers = ["clusters", "cluster-count"];
+    //     clusterLayers.forEach(function (layerId) {
+    //       map.setLayoutProperty(layerId, "visibility", "visible");
+    //     });
+    //   }
+    // },
+
+
     async handleClusters(groupId) {
       try {
         let respData;
@@ -486,11 +540,11 @@ export default {
         console.error("Error fetching groups:", error);
       } finally {
         this.loading = false; // Reset loading after API request completion
-  }
+      }
     },
     async handleGroups() {
       try {
-        // this.loading = true;
+        this.loading = true;
         // const response = await fetchGroupData();
         const response = await fetchGroups();
         this.groups = response;
@@ -500,22 +554,22 @@ export default {
           this.loading = false;
       }
     },
-    async handleData() {
-      try {
-        this.loading = true;
-        const [groupResponse, clusterResponse] = await Promise.all([
-          fetchGroups(),
-          fetchClustersData(),
-        ]);
-        this.groups = groupResponse;
-        this.clusterdata = clusterResponse;
+    // async handleData() {
+    //   try {
+    //     this.loading = true;
+    //     const [groupResponse, clusterResponse] = await Promise.all([
+    //       fetchGroups(),
+    //       fetchClustersData(),
+    //     ]);
+    //     this.groups = groupResponse;
+    //     this.clusterdata = clusterResponse;
 
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        this.loading = false;
-      }
-    },
+    //   } catch (error) {
+    //     console.error("Error fetching data:", error);
+    //   } finally {
+    //     this.loading = false;
+    //   }
+    // },
     async handleProfiles() {
       try {
         // this.loading = true;
