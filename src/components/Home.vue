@@ -64,7 +64,7 @@
               class="form-check-label"
               @click="zoomDeafault"
               style="color: var(--primary_color); cursor: pointer"
-              ><i class="fa-solid fa-down-left-and-up-right-to-center" style="color: var(--primary_color); margin-top: 5px"></i> Deafaut View</label
+              ><i class="fa-solid fa-down-left-and-up-right-to-center" style="color: var(--primary_color); margin-top: 5px"></i> Default View</label
             >
           </div>
         </div>
