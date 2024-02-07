@@ -40,9 +40,10 @@
                                         <th scope="col"><a href="#" class="tableHead"> Number Packets</a> </th>
                                         <th scope="col"><a href="#" class="tableHead"> Profile Name</a> </th>
                                         <th scope="col"><a href="#" class="tableHead">Packet Interval</a> </th>
-                                        <th scope="col"><a href="#" class="tableHead">Wait Time</a>  </th>
+                                        <th scope="col"><a href="#" class="tableHead">Wait Time</a> </th>
                                         <th scope="col"><a href="#" class="tableHead">Packet Length</a> </th>
                                         <th scope="col"><a href="#" class="tableHead">DSCP</a> </th>
+                                        <th scope="col"><a href="#" class="tableHead">Last Run</a> </th>
                                         <th scope="col"> </th>
                                         <th scope="col"></th>
                                     </tr>
@@ -72,6 +73,10 @@
                                         </td>
                                         <td>
                                             <p class="tableP">{{ data.dscp }}</p>
+                                        </td>
+
+                                        <td>
+                                            <p class="tableP">{{ calculateTimeDifference(data.updated_at) }} minutes ago</p>
                                         </td>
                                         <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
                                                 <i class="fa-solid fa-circle-play"></i></a></td>
@@ -216,63 +221,61 @@
                             </select>
                         </div>
                         <!-- Advanced button -->
-                <RouterLink to="#"
-                  @click="toggleAdvancedFields"
-                  class="ms-2 mt-2"
-                >
-                  {{ showAdvancedFields ? "Hide Advanced -" : "Show Advanced +" }}
-                </RouterLink>
+                        <RouterLink to="#" @click="toggleAdvancedFields" class="ms-2 mt-2">
+                            {{ showAdvancedFields ? "Hide Advanced -" : "Show Advanced +" }}
+                        </RouterLink>
                         <div v-if="showAdvancedFields">
-                        <div class="mb-4">
-                            <label for="exampleFormControlInput1" class="form-label ms-1">Monitoring Profile*</label>
-                            <select v-model="selectedProfile" class="form-select form-select-lg mb-3 custom-select"
-                                aria-label=".form-select-lg example">
-                                <option class="text-secondary" disabled>select here</option>
-                                <option v-for="profile in profiles" :key="profile.id" :value="profile.id">{{ profile.name }}
-                                </option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <div class="row g-2">
-                                <div class="col-md-12">
-                                    <label for="exampleFormControlInput1" class="form-label ms-1">Schedule*</label>
-                                    <input type="number" class="form-control form-control-lg" placeholder="Enter Schedule"
-                                        v-model="this.form.schedule" name="schedule">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="exampleFormControlInput1" class="form-label ms-1">Count*</label>
-                                    <input type="number" class="form-control form-control-lg" placeholder="Enter Count"
-                                        v-model="this.form.count" name="count">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="exampleFormControlInput1" class="form-label ms-1">Number Of
-                                        Packets*</label>
-                                    <input type="number" class="form-control form-control-lg" placeholder="Enter No-packets"
-                                        v-model="this.form.n_packets" name="n_packets">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="exampleFormControlInput1" class="form-label ms-1">Packet
-                                        Interval*</label>
-                                    <input type="number" class="form-control form-control-lg" placeholder="Enter P-Interval"
-                                        v-model="this.form.p_interval" name="p_interval">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="exampleFormControlInput1" class="form-label ms-1">Wait Time*</label>
-                                    <input type="number" class="form-control form-control-lg" placeholder="Enter W Time"
-                                        v-model="this.form.w_time" name="w_time">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="exampleFormControlInput1" class="form-label ms-1">DSCP*</label>
-                                    <input type="number" class="form-control form-control-lg" placeholder="Enter Dscp"
-                                        v-model="this.form.dscp" name="dscp">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="exampleFormControlInput1" class="form-label ms-1">Packet Size*</label>
-                                    <input type="number" class="form-control form-control-lg" placeholder="Enter P_Size"
-                                        name="p_size" v-model="this.form.p_size">
+                            <div class="mb-4">
+                                <label for="exampleFormControlInput1" class="form-label ms-1">Monitoring Profile*</label>
+                                <select v-model="selectedProfile" class="form-select form-select-lg mb-3 custom-select"
+                                    aria-label=".form-select-lg example">
+                                    <option class="text-secondary" disabled>select here</option>
+                                    <option v-for="profile in profiles" :key="profile.id" :value="profile.id">{{
+                                        profile.name }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <div class="row g-2">
+                                    <div class="col-md-12">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Schedule*</label>
+                                        <input type="number" class="form-control form-control-lg"
+                                            placeholder="Enter Schedule" v-model="this.form.schedule" name="schedule">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Count*</label>
+                                        <input type="number" class="form-control form-control-lg" placeholder="Enter Count"
+                                            v-model="this.form.count" name="count">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Number Of
+                                            Packets*</label>
+                                        <input type="number" class="form-control form-control-lg"
+                                            placeholder="Enter No-packets" v-model="this.form.n_packets" name="n_packets">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Packet
+                                            Interval*</label>
+                                        <input type="number" class="form-control form-control-lg"
+                                            placeholder="Enter P-Interval" v-model="this.form.p_interval" name="p_interval">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Wait Time*</label>
+                                        <input type="number" class="form-control form-control-lg" placeholder="Enter W Time"
+                                            v-model="this.form.w_time" name="w_time">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">DSCP*</label>
+                                        <input type="number" class="form-control form-control-lg" placeholder="Enter Dscp"
+                                            v-model="this.form.dscp" name="dscp">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Packet Size*</label>
+                                        <input type="number" class="form-control form-control-lg" placeholder="Enter P_Size"
+                                            name="p_size" v-model="this.form.p_size">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         </div>
                     </div>
                 </div>
@@ -338,6 +341,7 @@ export default {
         this.server()
     },
     methods: {
+
         async getSessions(page = 1) {
             try {
                 this.loading = true
@@ -373,6 +377,21 @@ export default {
                 console.log(error)
             }
         },
+        calculateTimeDifference(updatedAt) {
+            // Convert 'updatedAt' to a Date object
+            const updatedDate = new Date(updatedAt);
+
+            // Get the current date and time
+            const currentDate = new Date();
+
+            // Calculate the time difference in milliseconds
+            const timeDifference = currentDate - updatedDate;
+
+            // Convert the time difference to minutes
+            const minutesDifference = Math.floor(timeDifference / (1000 * 60));
+
+            return minutesDifference;
+        },
         handleEditModel(id, s_name, c_name, p_name, n_packets, p_interval, w_time, dscp, count, schedule, p_size) {
             this.form.id = id
             this.form.n_packets = n_packets
@@ -382,7 +401,7 @@ export default {
             this.form.count = count
             this.form.schedule = schedule
             this.form.p_size = p_size
-            
+
             this.selectedClientId = this.clients.find(client => client.name === c_name)?.id;
             this.selectedAgentId = this.agents.find(agent => agent.name === s_name)?.id;
             this.selectedProfile = this.profiles.find(profile => profile.name === p_name)?.id;
@@ -420,13 +439,13 @@ export default {
                 }
                 else if (error.response.status === 401) {
                     createToast(error.response.data.Unauthorized, {
-                    type: 'warning',
-                    position: 'top-right',
-                    transition: 'zoom',
-                });
-                    console.log('401',error.response.data.Unauthorized)
+                        type: 'warning',
+                        position: 'top-right',
+                        transition: 'zoom',
+                    });
+                    console.log('401', error.response.data.Unauthorized)
                 } else {
-                    console.log('main-error-1',error)
+                    console.log('main-error-1', error)
                 }
             }
             console.log('edit', payload)
@@ -449,7 +468,7 @@ export default {
             }
         },
         toggleAdvancedFields() {
-         this.showAdvancedFields = !this.showAdvancedFields;
+            this.showAdvancedFields = !this.showAdvancedFields;
         }
     }
 }
