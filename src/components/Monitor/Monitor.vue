@@ -36,19 +36,18 @@
                                 <thead>
                                     <tr>
                                         <th><a href="#" class="tableHead">Profile Name</a></th>
-                                        <th><a href="#" class="tableHead">Date</a></th>
-                                        <th><a href="#" class="tableHead">JITTER <br> green /red</a></th>
-                                        <th><a href="#" class="tableHead">Downlink <br> green /red</a> </th>
-                                        <th><a href="#" class="tableHead">Downlink Bandwidth<br> green /red</a> </th>
-                                        <th><a href="#" class="tableHead">Loss <br> green /red</a></th>
-                                        <th><a href="#" class="tableHead">RTT <br> green /red</a></th>
-                                        <th><a href="#" class="tableHead">Uplink <br> green /red</a></th>
-                                        <th><a href="#" class="tableHead">Uplink Bandwidth<br> green /red</a></th>
+                                        <th><a href="#" class="tableHead">JITTER <br>(ms)</a></th>
+                                        <th><a href="#" class="tableHead">Downlink <br>(ms)</a> </th>
+                                        <th><a href="#" class="tableHead">Downlink Bandwidth<br>(mbps)</a> </th>
+                                        <th><a href="#" class="tableHead">Loss <br>(Percentage)</a></th>
+                                        <th><a href="#" class="tableHead">RTT <br>(ms)</a></th>
+                                        <th><a href="#" class="tableHead">Uplink <br>(ms)</a></th>
+                                        <th><a href="#" class="tableHead">Uplink Bandwidth<br>(mbps)</a></th>
                                         <th><a href="#" class="tableHead">Number Packets</a></th>
-                                        <th><a href="#" class="tableHead">Packet Interval </a></th>
-                                        <th><a href="#" class="tableHead">Packet Size</a></th>
-                                        <th><a href="#" class="tableHead">Delay <br> green /red</a></th>
-                                        <th><a href="#" class="tableHead">Wait Time</a></th>
+                                        <th><a href="#" class="tableHead">Packet Interval<br>(ms)</a></th>
+                                        <th><a href="#" class="tableHead">Packet Size<br>(bytes)</a></th>
+                                        <th><a href="#" class="tableHead">Delay <br>(ms)</a></th>
+                                        <th><a href="#" class="tableHead">Wait Time<br>(ms)</a></th>
                                         <th><a href="#" class="tableHead">Dscp</a></th>
 
                                         <th></th>
@@ -61,29 +60,27 @@
                                                 {{ data.name }}
                                             </p>
                                         </td>
+                                     
                                         <td>
-                                            <p class="tableP">{{ moment(data?.created_at).format('l') }}</p>
+                                            <p class="tableP"> <span style="background-color: rgb(144, 245, 144);">{{ data?.jitter_g }}</span> - <span style="background-color: rgb(255, 128, 128);">{{ data?.jitter_r }}</span></p>
                                         </td>
                                         <td>
-                                            <p class="tableP">{{ data?.jitter_g }} / {{ data?.jitter_r }}</p>
+                                            <p class="tableP"><span style="background-color: rgb(144, 245, 144);">{{ data.downlink_g }} </span> - <span style="background-color: rgb(255, 128, 128);">{{ data.downlink_r }}</span></p>
                                         </td>
                                         <td>
-                                            <p class="tableP">{{ data.downlink_g }} / {{ data.downlink_r }}</p>
+                                            <p class="tableP"><span style="background-color: rgb(144, 245, 144);">{{ data.downlink_bw_g }}</span> - <span style="background-color: rgb(255, 128, 128);">{{ data.downlink_bw_r }}</span></p>
                                         </td>
                                         <td>
-                                            <p class="tableP">{{ data.downlink_bw_g }} / {{ data.downlink_bw_r }}</p>
+                                            <p class="tableP"><span style="background-color: rgb(144, 245, 144);">{{ data.loss_g }}</span> - <span style="background-color: rgb(255, 128, 128);">{{ data.loss_r }}</span></p>
                                         </td>
                                         <td>
-                                            <p class="tableP">{{ data.loss_g }} / {{ data.loss_r }}</p>
+                                            <p class="tableP"><span style="background-color: rgb(144, 245, 144);">{{ data.rtt_g }}</span> - <span style="background-color: rgb(255, 128, 128);">{{ data.rtt_r }}</span></p>
                                         </td>
                                         <td>
-                                            <p class="tableP">{{ data.rtt_g }} / {{ data.rtt_r }}</p>
+                                            <p class="tableP"><span style="background-color: rgb(144, 245, 144);">{{ data.uplink_g }}</span> - <span style="background-color: rgb(255, 128, 128);">{{ data.uplink_r }}</span></p>
                                         </td>
                                         <td>
-                                            <p class="tableP">{{ data.uplink_g }} / {{ data.uplink_r }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">{{ data.uplink_bw_g }} / {{ data.uplink_bw_r }}</p>
+                                            <p class="tableP"><span style="background-color: rgb(144, 245, 144);">{{ data.uplink_bw_g }}</span> - <span style="background-color: rgb(255, 128, 128);">{{ data.uplink_bw_r }}</span></p>
                                         </td>
                                         <td>
                                             <p class="tableP">{{ data.n_packets }}</p>
@@ -95,7 +92,7 @@
                                             <p class="tableP">{{ data.p_size }}</p>
                                         </td>
                                         <td>
-                                            <p class="tableP">{{ data.delay_g }} / {{ data.delay_r }}</p>
+                                            <p class="tableP"><span style="background-color: rgb(144, 245, 144);">{{ data.delay_g }}</span> - <span style="background-color: rgb(255, 128, 128);">{{ data.delay_r }}</span></p>
                                         </td>
                                         <td>
                                             <p class="tableP">{{ data.w_time }}</p>

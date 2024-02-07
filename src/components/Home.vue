@@ -9,7 +9,7 @@
     <div class="position-absolute p-2">
       <div class="card bg-light" style="width: 190px; height: 260px">
         <div class="card-body">
-          <h6 class="card-title mb-0">Legend</h6>
+          <h6 class="card-title mb-0">Groups</h6>
           <hr class="hr1" />
           <perfect-scrollbar style="height: 100px">
             <!-- Use v-for to iterate over the groups -->
