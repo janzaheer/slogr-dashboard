@@ -331,6 +331,7 @@ export default {
             agents: [],
             selectedAgentId: 'please select sender sentinel',
             clients: [],
+            current_time:null,
             selectedClientId: 'please select receiver sentinel',
             showAdvancedFields: false,
         }
@@ -346,6 +347,7 @@ export default {
             try {
                 this.loading = true
                 let res = await sessionsList(page)
+                this.current_time = res.data.current_time
                 this.sessionsData = res.data.sessions
                 this.pages.previousPage = res?.data?.prev || 0
                 this.pages.currentPage = this.pages.previousPage + 1
@@ -380,9 +382,7 @@ export default {
         calculateTimeDifference(updatedAt) {
             // Convert 'updatedAt' to a Date object
             const updatedDate = new Date(updatedAt);
-
-            // Get the current date and time
-            const currentDate = new Date();
+            const currentDate = new Date(this.current_time);
 
             // Calculate the time difference in milliseconds
             const timeDifference = currentDate - updatedDate;
