@@ -107,13 +107,15 @@
                                     </div>
                                     <div>
                                         <div class="pagination">
-                                            <button class="prevBtn" @click="handleSentinelListing(pages.previousPage)"><i class="fa-solid fa-angle-left"></i> Prev</button>
+                                            <button class="prevBtn" @click="handleSentinelListing(pages.previousPage)"><i
+                                                    class="fa-solid fa-angle-left"></i> Prev</button>
                                             <div class="pageNumber">-</div>
                                             <div class="pageNumber">-</div>
                                             <div class="pageNumber pageBtn">{{ pages.currentPage }}</div>
                                             <div class="pageNumber">-</div>
                                             <div class="pageNumber">-</div>
-                                            <button class="nextBtn" @click="handleSentinelListing(pages.nextPage)">Next <i class="fa-solid fa-angle-right"></i></button>
+                                            <button class="nextBtn" @click="handleSentinelListing(pages.nextPage)">Next <i
+                                                    class="fa-solid fa-angle-right"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -133,7 +135,8 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
                                             <p class="card-text ms-2">{{ data?.name }}</p>
-                                            <span class="text-secondary ms-2" style="font-size: 13px;">{{ data?.machine_name }}
+                                            <span class="text-secondary ms-2" style="font-size: 13px;">{{ data?.machine_name
+                                            }}
                                             </span> <br>
                                             <span class="text-secondary ms-2" style="font-size: 13px;">Data</span>
                                         </div>
@@ -231,6 +234,28 @@
                                 data-bs-dismiss="modal">Cancel</button>
                             <button type="button" class="modelSaveBtn ms-2" @click="handleSentinelCreation">Save</button>
                         </div>
+                        <hr>
+                        <br>
+                        <div class="d-flex justify-content-center">
+                            <a href="https://storage.googleapis.com/cdn-web0bucket/installer-slogr.exe"><button
+                                    type="button" class="modelSaveBtn ms-2"
+                                    style="background-color: rgba(85, 253, 253, 0.39); color: black; border: none; font-weight: 500;">Download
+                                    Windows Agent</button></a>
+                        </div>
+                        <br>
+                        <strong  class="d-flex justify-content-center">OR</strong>
+                        <br>
+                        <div class="d-flex justify-content-center">
+                            <label for="exampleFormControlInput2" class="form-label ms-1">Paste Script for linux Installation</label>
+                        </div>
+                        
+                        <div class="d-flex justify-content-center">
+                            
+                            <div class="copy-text">
+                                <input type="text" class="text" ref="textInput" value="curl -sL https://storage.googleapis.com/cdn-web0bucket/install.sh | sudo bash -"  disabled/>
+                                <button @click="copyText"><i class="fa fa-clone"></i></button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -272,6 +297,8 @@ import { createAgent, agentUpdate, agentList, agentRefSessions } from '../../ser
 import { VueSpinner } from 'vue3-spinners';
 import { createToast } from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css';
+
+
 export default {
     name: 'Sentinel',
     components: {
@@ -305,11 +332,23 @@ export default {
     },
     async mounted() {
         await this.handleSentinelListing()
-  
+
 
     },
     methods: {
-        async handleSentinelListing(page=1) {
+
+        copyText() {
+            const input = this.$refs.textInput;
+            input.select();
+            document.execCommand("copy");
+            this.$el.classList.add("active");
+            window.getSelection().removeAllRanges();
+
+            setTimeout(() => {
+                this.$el.classList.remove("active");
+            }, 2500);
+        },
+        async handleSentinelListing(page = 1) {
             try {
                 this.loading2 = true
                 const respData = await agentList(page)
@@ -334,15 +373,15 @@ export default {
                     this.addSentinel.name = null;
                     this.addSentinel.agent_code = null;
                 } catch (error) {
-                    console.log('add-error',error)
+                    console.log('add-error', error)
                     let newError = error.response.data.error
                     if (newError) {
-                        console.log('res-error',newError)
+                        console.log('res-error', newError)
                         createToast(newError, {
-                    type: 'success',
-                    position: 'top-right',
-                    transition: 'zoom',
-                });
+                            type: 'success',
+                            position: 'top-right',
+                            transition: 'zoom',
+                        });
                     }
                 }
             }
@@ -392,7 +431,7 @@ export default {
                     this.refSessions = []
                 } else {
                     this.refSessions = res.sessions
-                    console.log('ref-sessions',res.sessions)
+                    console.log('ref-sessions', res.sessions)
                 }
             } catch (error) {
                 console.log(error)
@@ -403,6 +442,8 @@ export default {
 
     }
 }
+
+
 </script>
 
 <style>
@@ -587,5 +628,66 @@ p {
     /* Change the background color when checked */
     border: 1px solid #8CB63D !important;
     /* Change the border color when checked */
+}
+
+.copy-text {
+    position: relative;
+    padding: 5px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    display: flex;
+}
+
+.copy-text input.text {
+    padding: 10px;
+    font-size: 18px;
+    color: #555;
+    border: none;
+    outline: none;
+}
+
+.copy-text button {
+    padding: 10px;
+    background: #3d0834;
+    color: #fff;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.copy-text button:active {
+    background: #809ce2;
+}
+
+.copy-text button:before {
+    content: "Copied";
+    position: absolute;
+    top: -45px;
+    right: 0px;
+    background: #5c81dc;
+    padding: 8px 10px;
+    border-radius: 20px;
+    font-size: 15px;
+    display: none;
+}
+
+.copy-text button:after {
+    content: "";
+    position: absolute;
+    top: -20px;
+    right: 25px;
+    width: 10px;
+    height: 10px;
+    background: #5c81dc;
+    transform: rotate(45deg);
+    display: none;
+}
+
+.copy-text.active button:before,
+.copy-text.active button:after {
+    display: block;
 }
 </style>
