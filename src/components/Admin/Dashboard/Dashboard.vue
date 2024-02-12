@@ -28,7 +28,8 @@
                 <div class="col-9">
                     <div class="card" style="height: 100vh;">
                         <div class="card-body">
-                            <div v-if="userData.user.organization_id == 'null'">
+                            
+                            <div v-if="userData.user.organization_id == null">
                                 <AddOrd />
                             </div>
                             <div v-else>
@@ -186,6 +187,7 @@ export default {
     },
     mounted() {
         this.handleGetOrganization()
+        
     },
     methods: {
         async handleGetOrganization() {
@@ -194,6 +196,7 @@ export default {
                 let res = await getOrganization()
                 console.log('org', res.data.organizations)
                 this.organizationData = res.data.organizations
+                console.log('userData',this.$store.getters.getUserData)
             } catch (error) {
                 console.log('error', error)
             } finally {
