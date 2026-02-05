@@ -7,6 +7,7 @@ import authServices from './authServices';
 import { createToast } from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css';
 import router from '@/router/index'
+import Toast from '../components/Toast';
 
 const { Store } = Vuex;
 
@@ -52,21 +53,17 @@ const store = new Store({
                     // Update Vuex store with user data
                     commit('setToken', response.data.success.token);
                     commit('setUserData', response.data.success);
+                    Toast.fire({ icon: "success", title: "Login Successfully!" });
                     router.push('/');
                 }
             } catch (error) {
                 if (error.response) {
                     if (error.response.status === 422) {
-                        // console.log('Unauthenticated')
-                        createToast(`Unauthenticated`, {
-                            type: 'danger',
-                            position: 'top-right',
-                            transition: 'zoom',
-                        });
+                        Toast.fire({ icon: "error", title: 'Unauthenticated' });
                     }
                 }
                 // Handle login error
-                console.error('Login failed', error);
+                Toast.fire({ icon: "error", title: error.message });
             }
         },
         async signup({ commit }, credentials) {
@@ -74,30 +71,19 @@ const store = new Store({
                 const response = await authServices.signup(credentials)
                 commit('setToken', response.data.success.token);
                 commit('setUsername', response.data.success.name);
-                // commit('setUserId', response.data.success.id);
-                createToast(`SignUp successfully`, {
-                    type: 'success',
-                    position: 'top-right',
-                    transition: 'zoom',
-                });
+                commit('setUserId', response.data.success.id);
+                Toast.fire({ icon: "success", title: "SignUp Successfully!" });
                 router.push('/login');
 
             } catch (error) {
                 // Handle signup error
                 if (error.response.data.errors.email) {
-                    createToast(`The email has already been taken.`, {
-                        type: 'danger',
-                        position: 'top-right',
-                        transition: 'zoom',
-                    });
+                    Toast.fire({ icon: "error", title: 'The email has already been taken' });
                 }
                 if (error.response.data.errors.password) {
-                    createToast(`The password confirmation does not match.`, {
-                        type: 'danger',
-                        position: 'top-right',
-                        transition: 'zoom',
-                    });
+                    Toast.fire({ icon: "error", title: 'The password confirmation does not match.' });
                 }
+                Toast.fire({ icon: "error", title: error.message });
                 console.error('Signup failed', error);
             }
         },
