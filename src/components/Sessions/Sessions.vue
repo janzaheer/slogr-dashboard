@@ -31,6 +31,34 @@
                         <div class="text-center m-5" v-if="loading">
                             <VueSpinner size="80" color="#8cb63d" />
                         </div>
+                        <div class="m-5" v-else-if="!loading && (!sessionsData || sessionsData.length === 0)">
+                            <!-- <h3 class="text-danger">Alerts not found Add new Alert</h3> -->
+                            <div class="empty-state-container">
+                                <div class="empty-state-card text-center p-5 rounded-4 shadow-sm">
+                                    <!-- Icon -->
+                                    <div class="empty-state-icon mb-4">
+                                        <div class="icon-circle mx-auto">
+                                            <!-- <i class="fa-solid fa-location-dot"></i> -->
+                                              <img src="../../assets/group-24551.svg" class="icon-img" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Message - EXACTLY YOUR CODE -->
+                                    <div class="empty-state-message mb-4">
+                                        <h3 class="fw-semibold mb-2" style="color: #1f2937; font-size: 1.5rem;">
+                                            No Sessions Found
+                                        </h3>
+                                        <p class="text-muted mb-0"
+                                            style="font-size: 1rem; max-width: 500px; margin: 0 auto;">
+                                            You haven't set up any Sessions yet. Create your first Session to stay
+                                            updated.
+                                        </p>
+                                    </div>
+                                    <!-- Action Button -->
+                                    <AddSessions :getSessions="getSessions" />
+                                </div>
+                            </div>
+                        </div>
                         <div class="table-responsive" v-else>
                             <table class="table table-striped table-hover text-center">
                                 <thead>
@@ -40,7 +68,7 @@
                                         <th scope="col"><a href="#" class="tableHead"> Number Packets</a> </th>
                                         <th scope="col"><a href="#" class="tableHead"> Profile Name</a> </th>
                                         <th scope="col"><a href="#" class="tableHead">Packet Interval</a> </th>
-                                        <th scope="col"><a href="#" class="tableHead">Wait Time</a>  </th>
+                                        <th scope="col"><a href="#" class="tableHead">Wait Time</a> </th>
                                         <th scope="col"><a href="#" class="tableHead">Packet Length</a> </th>
                                         <th scope="col"><a href="#" class="tableHead">DSCP</a> </th>
                                         <th scope="col"> </th>
@@ -89,11 +117,13 @@
                                                         Edit</a>
                                                 </li>
                                                 <li>
-                                                    <RouterLink :to="`/sentinelReports/` + data.id" class="dropdown-item"><i
+                                                    <RouterLink :to="`/sentinelReports/` + data.id"
+                                                        class="dropdown-item"><i
                                                             class="fa-regular fa-eye me-1 text-dark"></i>Details
                                                     </RouterLink>
                                                 </li>
-                                                <li><a class="dropdown-item" href="#" v-on:click="handleDelete(data.id)"><i
+                                                <li><a class="dropdown-item" href="#"
+                                                        v-on:click="handleDelete(data.id)"><i
                                                             class="fa-regular fa-trash-can"></i> Delete</a></li>
                                             </ul>
                                         </td>
@@ -101,7 +131,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-between" v-if="loading">
                             <div>
                                 <button class="addBtn2"><i class="fa-solid fa-chevron-down fa-lg"></i> Go to
                                     Page</button>
@@ -114,7 +144,8 @@
                             <div>
                                 <div class="pagination">
                                     <button class="prevBtn" :disabled="pages.previousPage === 0"
-                                        v-on:click="getSessions(pages.previousPage)"><i class="fa-solid fa-angle-left"></i>
+                                        v-on:click="getSessions(pages.previousPage)"><i
+                                            class="fa-solid fa-angle-left"></i>
                                         Prev</button>
                                     <div class="pageNumber">-</div>
                                     <div class="pageNumber">-</div>
@@ -216,63 +247,65 @@
                             </select>
                         </div>
                         <!-- Advanced button -->
-                <RouterLink to="#"
-                  @click="toggleAdvancedFields"
-                  class="ms-2 mt-2"
-                >
-                  {{ showAdvancedFields ? "Hide Advanced -" : "Show Advanced +" }}
-                </RouterLink>
+                        <RouterLink to="#" @click="toggleAdvancedFields" class="ms-2 mt-2">
+                            {{ showAdvancedFields ? "Hide Advanced -" : "Show Advanced +" }}
+                        </RouterLink>
                         <div v-if="showAdvancedFields">
-                        <div class="mb-4">
-                            <label for="exampleFormControlInput1" class="form-label ms-1">Monitoring Profile*</label>
-                            <select v-model="selectedProfile" class="form-select form-select-lg mb-3 custom-select"
-                                aria-label=".form-select-lg example">
-                                <option class="text-secondary" disabled>select here</option>
-                                <option v-for="profile in profiles" :key="profile.id" :value="profile.id">{{ profile.name }}
-                                </option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <div class="row g-2">
-                                <div class="col-md-12">
-                                    <label for="exampleFormControlInput1" class="form-label ms-1">Schedule*</label>
-                                    <input type="number" class="form-control form-control-lg" placeholder="Enter Schedule"
-                                        v-model="this.form.schedule" name="schedule">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="exampleFormControlInput1" class="form-label ms-1">Count*</label>
-                                    <input type="number" class="form-control form-control-lg" placeholder="Enter Count"
-                                        v-model="this.form.count" name="count">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="exampleFormControlInput1" class="form-label ms-1">Number Of
-                                        Packets*</label>
-                                    <input type="number" class="form-control form-control-lg" placeholder="Enter No-packets"
-                                        v-model="this.form.n_packets" name="n_packets">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="exampleFormControlInput1" class="form-label ms-1">Packet
-                                        Interval*</label>
-                                    <input type="number" class="form-control form-control-lg" placeholder="Enter P-Interval"
-                                        v-model="this.form.p_interval" name="p_interval">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="exampleFormControlInput1" class="form-label ms-1">Wait Time*</label>
-                                    <input type="number" class="form-control form-control-lg" placeholder="Enter W Time"
-                                        v-model="this.form.w_time" name="w_time">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="exampleFormControlInput1" class="form-label ms-1">DSCP*</label>
-                                    <input type="number" class="form-control form-control-lg" placeholder="Enter Dscp"
-                                        v-model="this.form.dscp" name="dscp">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="exampleFormControlInput1" class="form-label ms-1">Packet Size*</label>
-                                    <input type="number" class="form-control form-control-lg" placeholder="Enter P_Size"
-                                        name="p_size" v-model="this.form.p_size">
+                            <div class="mb-4">
+                                <label for="exampleFormControlInput1" class="form-label ms-1">Monitoring
+                                    Profile*</label>
+                                <select v-model="selectedProfile" class="form-select form-select-lg mb-3 custom-select"
+                                    aria-label=".form-select-lg example">
+                                    <option class="text-secondary" disabled>select here</option>
+                                    <option v-for="profile in profiles" :key="profile.id" :value="profile.id">{{
+                                        profile.name }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <div class="row g-2">
+                                    <div class="col-md-12">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Schedule*</label>
+                                        <input type="number" class="form-control form-control-lg"
+                                            placeholder="Enter Schedule" v-model="this.form.schedule" name="schedule">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Count*</label>
+                                        <input type="number" class="form-control form-control-lg"
+                                            placeholder="Enter Count" v-model="this.form.count" name="count">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Number Of
+                                            Packets*</label>
+                                        <input type="number" class="form-control form-control-lg"
+                                            placeholder="Enter No-packets" v-model="this.form.n_packets"
+                                            name="n_packets">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Packet
+                                            Interval*</label>
+                                        <input type="number" class="form-control form-control-lg"
+                                            placeholder="Enter P-Interval" v-model="this.form.p_interval"
+                                            name="p_interval">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Wait Time*</label>
+                                        <input type="number" class="form-control form-control-lg"
+                                            placeholder="Enter W Time" v-model="this.form.w_time" name="w_time">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">DSCP*</label>
+                                        <input type="number" class="form-control form-control-lg"
+                                            placeholder="Enter Dscp" v-model="this.form.dscp" name="dscp">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="exampleFormControlInput1" class="form-label ms-1">Packet
+                                            Size*</label>
+                                        <input type="number" class="form-control form-control-lg"
+                                            placeholder="Enter P_Size" name="p_size" v-model="this.form.p_size">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         </div>
                     </div>
                 </div>
@@ -382,7 +415,7 @@ export default {
             this.form.count = count
             this.form.schedule = schedule
             this.form.p_size = p_size
-            
+
             this.selectedClientId = this.clients.find(client => client.name === c_name)?.id;
             this.selectedAgentId = this.agents.find(agent => agent.name === s_name)?.id;
             this.selectedProfile = this.profiles.find(profile => profile.name === p_name)?.id;
@@ -420,13 +453,13 @@ export default {
                 }
                 else if (error.response.status === 401) {
                     createToast(error.response.data.Unauthorized, {
-                    type: 'warning',
-                    position: 'top-right',
-                    transition: 'zoom',
-                });
-                    console.log('401',error.response.data.Unauthorized)
+                        type: 'warning',
+                        position: 'top-right',
+                        transition: 'zoom',
+                    });
+                    console.log('401', error.response.data.Unauthorized)
                 } else {
-                    console.log('main-error-1',error)
+                    console.log('main-error-1', error)
                 }
             }
             console.log('edit', payload)
@@ -449,7 +482,7 @@ export default {
             }
         },
         toggleAdvancedFields() {
-         this.showAdvancedFields = !this.showAdvancedFields;
+            this.showAdvancedFields = !this.showAdvancedFields;
         }
     }
 }

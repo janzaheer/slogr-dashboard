@@ -1,5 +1,4 @@
 <template>
-    <!-- <Header/> -->
     <div class="pageHeight">
         <div class="bg">
             <Header />
@@ -28,302 +27,204 @@
             <div class="container-fluid tableDiv">
                 <div class="card mx-md-2 mt-4 mb-5">
                     <div class="card-body">
-                        <div class="text-center m-5" v-if="loading">
-                            <VueSpinner size="80" color="#8cb63d" />
+                        <div class="m-5" v-if="loading">
+                            <Skeleton />
                         </div>
                         <div class="table-responsive" v-else>
-                            <table class="table table-striped table-hover text-center">
+                            <table class="table table-striped table-hover text-center custom-table">
                                 <thead>
                                     <tr>
-                                        <th><a href="#" class="tableHead">Profile Name</a></th>
-                                        <th><a href="#" class="tableHead">Date</a></th>
-                                        <th><a href="#" class="tableHead">JITTER <br> green /red</a></th>
-                                        <th><a href="#" class="tableHead">Downlink <br> green /red</a> </th>
-                                        <th><a href="#" class="tableHead">Downlink Bandwidth<br> green /red</a> </th>
-                                        <th><a href="#" class="tableHead">Loss <br> green /red</a></th>
-                                        <th><a href="#" class="tableHead">RTT <br> green /red</a></th>
-                                        <th><a href="#" class="tableHead">Uplink <br> green /red</a></th>
-                                        <th><a href="#" class="tableHead">Uplink Bandwidth<br> green /red</a></th>
-                                        <th><a href="#" class="tableHead">Number Packets</a></th>
-                                        <th><a href="#" class="tableHead">Packet Interval </a></th>
-                                        <th><a href="#" class="tableHead">Packet Size</a></th>
-                                        <th><a href="#" class="tableHead">Delay <br> green /red</a></th>
-                                        <th><a href="#" class="tableHead">Wait Time</a></th>
-                                        <th><a href="#" class="tableHead">Dscp</a></th>
+                                        <th><span class="tableHead">Profile Name</span></th>
+                                        <th><span class="tableHead">Date</span></th>
 
-                                        <th></th>
+                                        <th>
+                                            <span class="tableHead head-green" data-bs-toggle="tooltip" title="Jitter">
+                                                JITTER
+                                            </span>
+                                            <br>
+                                            <div class="d-flex justify-content-center">
+                                                <span class="badge text-bg-success me-1" data-bs-toggle="tooltip"
+                                                    title="Green">G</span>
+                                                <span class="badge text-bg-danger" data-bs-toggle="tooltip"
+                                                    title="Red">R</span>
+                                            </div>
+                                        </th>
+
+                                        <th>
+                                            <span class="tableHead">Downlink</span><br>
+                                            <div class="d-flex justify-content-center">
+                                                <span class="badge text-bg-success me-1" data-bs-toggle="tooltip"
+                                                    title="Green">G</span>
+                                                <span class="badge text-bg-danger" data-bs-toggle="tooltip"
+                                                    title="Red">R</span>
+                                            </div>
+                                        </th>
+
+                                        <th>
+                                            <span class="tableHead">Downlink Bandwidth</span>
+                                            <div class="d-flex justify-content-center">
+                                                <span class="badge text-bg-success me-1" data-bs-toggle="tooltip"
+                                                    title="Green">G</span>
+                                                <span class="badge text-bg-danger" data-bs-toggle="tooltip"
+                                                    title="Red">R</span>
+                                            </div>
+                                        </th>
+
+                                        <th>
+                                            <span class="tableHead">Loss</span><br>
+                                            <div class="d-flex justify-content-center">
+                                                <span class="badge text-bg-success me-1" data-bs-toggle="tooltip"
+                                                    title="Green">G</span>
+                                                <span class="badge text-bg-danger" data-bs-toggle="tooltip"
+                                                    title="Red">R</span>
+                                            </div>
+                                        </th>
+
+                                        <th>
+                                            <span class="tableHead">RTT</span><br>
+                                            <div class="d-flex justify-content-center">
+                                                <span class="badge text-bg-success me-1" data-bs-toggle="tooltip"
+                                                    title="Green">G</span>
+                                                <span class="badge text-bg-danger" data-bs-toggle="tooltip"
+                                                    title="Red">R</span>
+                                            </div>
+                                        </th>
+
+                                        <th>
+                                            <span class="tableHead">Uplink</span><br>
+                                            <div class="d-flex justify-content-center">
+                                                <span class="badge text-bg-success me-1" data-bs-toggle="tooltip"
+                                                    title="Green">G</span>
+                                                <span class="badge text-bg-danger" data-bs-toggle="tooltip"
+                                                    title="Red">R</span>
+                                            </div>
+                                        </th>
+
+                                        <th>
+                                            <span class="tableHead">Uplink Bandwidth</span><br>
+                                            <div class="d-flex justify-content-center">
+                                                <span class="badge text-bg-success me-1" data-bs-toggle="tooltip"
+                                                    title="Green">G</span>
+                                                <span class="badge text-bg-danger" data-bs-toggle="tooltip"
+                                                    title="Red">R</span>
+                                            </div>
+                                        </th>
+
+                                        <th><span class="tableHead">Number Packets</span></th>
+                                        <th><span class="tableHead">Packet Interval</span></th>
+                                        <th><span class="tableHead">Packet Size</span></th>
+
+                                        <th>
+                                            <span class="tableHead">Delay</span><br>
+                                            <div class="d-flex justify-content-center">
+                                                <span class="badge text-bg-success me-1" data-bs-toggle="tooltip"
+                                                    title="Green">G</span>
+                                                <span class="badge text-bg-danger" data-bs-toggle="tooltip"
+                                                    title="Red">R</span>
+                                            </div>
+                                        </th>
+
+                                        <th><span class="tableHead">Wait Time</span></th>
+                                        <th><span class="tableHead">Dscp</span></th>
+                                        <th><span class="tableHead">Actions</span></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for="data in monitorData" :key="data.id">
+
+                                        <td>{{ data.name }}</td>
+                                        <td>{{ moment(data.created_at).format('l') }}</td>
+
                                         <td>
-                                            <p class="tableP">
-                                                {{ data.name }}
-                                            </p>
+                                            <span class="value-green" title="Good Jitter">{{ data.jitter_g }}</span>
+                                            <span class="value-red" title="Bad Jitter">{{ data.jitter_r }}</span>
                                         </td>
+
                                         <td>
-                                            <p class="tableP">{{ moment(data?.created_at).format('l') }}</p>
+                                            <span class="value-green">{{ data.downlink_g }}</span>
+                                            <span class="value-red">{{ data.downlink_r }}</span>
                                         </td>
+
                                         <td>
-                                            <p class="tableP">{{ data?.jitter_g }} / {{ data?.jitter_r }}</p>
+                                            <span class="value-green">{{ data.downlink_bw_g }}</span>
+                                            <span class="value-red">{{ data.downlink_bw_r }}</span>
                                         </td>
+
                                         <td>
-                                            <p class="tableP">{{ data.downlink_g }} / {{ data.downlink_r }}</p>
+                                            <span class="value-green">{{ data.loss_g }}</span>
+                                            <span class="value-red">{{ data.loss_r }}</span>
                                         </td>
+
                                         <td>
-                                            <p class="tableP">{{ data.downlink_bw_g }} / {{ data.downlink_bw_r }}</p>
+                                            <span class="value-green">{{ data.rtt_g }}</span>
+                                            <span class="value-red">{{ data.rtt_r }}</span>
                                         </td>
+
                                         <td>
-                                            <p class="tableP">{{ data.loss_g }} / {{ data.loss_r }}</p>
+                                            <span class="value-green">{{ data.uplink_g }}</span>
+                                            <span class="value-red">{{ data.uplink_r }}</span>
                                         </td>
+
                                         <td>
-                                            <p class="tableP">{{ data.rtt_g }} / {{ data.rtt_r }}</p>
+                                            <span class="value-green">{{ data.uplink_bw_g }}</span>
+                                            <span class="value-red">{{ data.uplink_bw_r }}</span>
                                         </td>
+
+                                        <td>{{ data.n_packets }}</td>
+                                        <td>{{ data.p_interval }}</td>
+                                        <td>{{ data.p_size }}</td>
+
                                         <td>
-                                            <p class="tableP">{{ data.uplink_g }} / {{ data.uplink_r }}</p>
+                                            <span class="value-green">{{ data.delay_g }}</span>
+                                            <span class="value-red">{{ data.delay_r }}</span>
                                         </td>
-                                        <td>
-                                            <p class="tableP">{{ data.uplink_bw_g }} / {{ data.uplink_bw_r }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">{{ data.n_packets }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">{{ data.p_interval }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">{{ data.p_size }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">{{ data.delay_g }} / {{ data.delay_r }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">{{ data.w_time }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="tableP">{{ data.dscp }}</p>
-                                        </td>
-                                        <td class="fs-5 dropstart"><a href="#" class="text-decoration-none text-dark tableP"
+
+                                        <td>{{ data.w_time }}</td>
+                                        <td>{{ data.dscp }}</td>
+                                        <td class="fs-5 dropstart">
+                                            <a href="#" class="text-decoration-none text-dark tableP"
                                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fa-solid fa-ellipsis"></i></a>
+                                                <i class="fa-solid fa-ellipsis"></i>
+                                            </a>
+
                                             <ul class="dropdown-menu">
-                                                <li>
-                                                    <a href="#" class="dropdown-item" data-bs-toggle="modal"
-                                                        data-bs-target="#staticBackdrop1" @click="handleEditModel(data.id, data.name, data.p_size, data.count, data.n_packets,
-                                                            data.p_interval, data.w_time, data.dscp,
-                                                            data.jitter_g, data.jitter_r, data.downlink_g, data.downlink_r, data.downlink_bw_g, data.downlink_bw_r,
-                                                            data.loss_g, data.loss_r, data.rtt_g, data.rtt_r, data.uplink_g, data.uplink_r, data.uplink_bw_g,
-                                                            data.uplink_bw_r, data.delay_g, data.delay_r)"><i
-                                                            class="fa-regular fa-pen-to-square"></i>
-                                                        Edit</a>
+                                                <li class="dropdown-item">
+                                                    <EditModel :monitor="data" :modalId="'editModal' + data.id"
+                                                        :handleMonitorList="handleMonitorList" />
                                                 </li>
-                                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-eye"></i>
-                                                        Details</a></li>
-                                                <li><a class="dropdown-item" href="#" v-on:click="handleDelete(data.id)"><i
-                                                            class="fa-regular fa-trash-can"></i> Delete</a></li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">
+                                                        👁 Details
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item text-danger" href="#"
+                                                        @click="handleDelete(data.id, data.name)">
+                                                        🗑 Delete
+                                                    </a>
+                                                </li>
                                             </ul>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <button class="addBtn2"><i class="fa-solid fa-chevron-down fa-lg"></i> Go to
-                                    Page</button>
-                            </div>
-                            <div>
-                                <div class="pagination">
-                                    <button class="prevBtn"><i class="fa-solid fa-angle-left"></i> Prev</button>
-                                    <div class="pageNumber">-</div>
-                                    <div class="pageNumber">-</div>
-                                    <div class="pageNumber pageBtn">1</div>
-                                    <div class="pageNumber">-</div>
-                                    <div class="pageNumber">-</div>
-                                    <button class="nextBtn">Next <i class="fa-solid fa-angle-right"></i></button>
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <button class="addBtn2"><i class="fa-solid fa-chevron-down fa-lg"></i> Go to
+                                        Page</button>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Modal  edit-->
-        <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="staticBackdrop1Label" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered  modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header d-flex justify-content-center align-items-center">
-                        <div class="">
-                            <h2 class="text-dark">Edit Profile</h2>
-                        </div>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="">
-                            <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label ms-1">Profile Name</label>
-                                <input type="text" class="form-control form-control-lg" placeholder="Type Name" name="name"
-                                    v-model="this.form.name" required>
-                            </div>
-                            <div class="mb-3">
-                                <div class="row g-2">
-                                    <div class="col-md-6">
-                                        <label for="exampleFormControlInput1" class="form-label ms-1">RTT Green</label>
-                                        <input type="number" class="form-control form-control-lg" placeholder="RTT Green"
-                                            name="rtt_g" v-model="this.form.rtt_g">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="exampleFormControlInput1" class="form-label ms-1">RTT Red</label>
-                                        <input type="number" class="form-control form-control-lg" placeholder="RTT Red"
-                                            name="rtt_r" v-model="this.form.rtt_r">
+                                <div>
+                                    <div class="pagination">
+                                        <button class="prevBtn"><i class="fa-solid fa-angle-left"></i> Prev</button>
+                                        <div class="pageNumber">-</div>
+                                        <div class="pageNumber">-</div>
+                                        <div class="pageNumber pageBtn">1</div>
+                                        <div class="pageNumber">-</div>
+                                        <div class="pageNumber">-</div>
+                                        <button class="nextBtn">Next <i class="fa-solid fa-angle-right"></i></button>
                                     </div>
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <div class="row g-2">
-                                    <div class="col-md-6">
-                                        <label for="exampleFormControlInput1" class="form-label ms-1">Jitter Green</label>
-                                        <input type="number" class="form-control form-control-lg" placeholder="Jitter Green"
-                                            name="jitter_g" v-model="this.form.jitter_g">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="exampleFormControlInput1" class="form-label ms-1">Jitter Red</label>
-                                        <input type="number" class="form-control form-control-lg" placeholder="Jitter Red"
-                                            name="jitter_r" v-model="this.form.jitter_r">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <div class="row g-2">
-                                    <div class="col-md-6">
-                                        <label for="exampleFormControlInput1" class="form-label ms-1">Downlink Green</label>
-                                        <input type="number" class="form-control form-control-lg" placeholder="Downlink Green"
-                                            name="downlink_g" v-model="this.form.downlink_g">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="exampleFormControlInput1" class="form-label ms-1">Downlink Red</label>
-                                        <input type="number" class="form-control form-control-lg" placeholder="Downlink Red"
-                                            name="downlink_r" v-model="this.form.downlink_r">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <div class="row g-2">
-                                    <div class="col-md-6">
-                                        <label for="exampleFormControlInput1" class="form-label ms-1">Downlink BandWidth Green</label>
-                                        <input type="number" class="form-control form-control-lg" placeholder="Downlink BandWidth Green"
-                                            name="downlink_bw_g" v-model="this.form.downlink_bw_g">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="exampleFormControlInput1" class="form-label ms-1">Downlink BandWidth Red</label>
-                                        <input type="number" class="form-control form-control-lg" placeholder="Downlink BandWidth Red"
-                                            name="downlink_bw_r" v-model="this.form.downlink_bw_r">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <div class="row g-2">
-                                    <div class="col-md-6">
-                                        <label for="exampleFormControlInput1" class="form-label ms-1">Uplink Green</label>
-                                        <input type="number" class="form-control form-control-lg" placeholder="Uplink Green"
-                                            name="uplink_g" v-model="this.form.uplink_g">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="exampleFormControlInput1" class="form-label ms-1">Uplink Red</label>
-                                        <input type="number" class="form-control form-control-lg" placeholder="Uplink Red"
-                                            name="uplink_r" v-model="this.form.uplink_r">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <div class="row g-2">
-                                    <div class="col-md-6">
-                                        <label for="exampleFormControlInput1" class="form-label ms-1">Uplink BandWidth Green</label>
-                                        <input type="number" class="form-control form-control-lg" placeholder="Uplink BandWidth Green"
-                                            name="uplink_bw_g" v-model="this.form.uplink_bw_g">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="exampleFormControlInput1" class="form-label ms-1">Uplink BandWidth Red</label>
-                                        <input type="number" class="form-control form-control-lg" placeholder="Uplink BandWidth Red"
-                                            name="uplink_bw_r" v-model="this.form.uplink_bw_r">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <div class="row g-2">
-                                    <div class="col-md-6">
-                                        <label for="exampleFormControlInput1" class="form-label ms-1">Loss Green</label>
-                                        <input type="number" class="form-control form-control-lg" placeholder="Loss Green"
-                                            name="loss_g" v-model="this.form.loss_g">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="exampleFormControlInput1" class="form-label ms-1">Loss Red</label>
-                                        <input type="number" class="form-control form-control-lg" placeholder="Loss Red"
-                                            name="loss_r" v-model="this.form.loss_r">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <div class="row g-2">
-                                    <div class="col-md-6">
-                                        <label for="exampleFormControlInput1" class="form-label ms-1">Delay Green</label>
-                                        <input type="number" class="form-control form-control-lg" placeholder="Delay Green"
-                                            name="delay_g" v-model="this.form.delay_g">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="exampleFormControlInput1" class="form-label ms-1">Delay Red</label>
-                                        <input type="number" class="form-control form-control-lg" placeholder="Delay Red"
-                                            name="delay_r" v-model="this.form.delay_r">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <div class="row g-2">
-                                    <div class="col-md-4">
-                                        <label for="exampleFormControlInput1" class="form-label ms-1">Wait Time</label>
-                                        <input type="number" class="form-control form-control-lg" placeholder="W Time"
-                                            name="w_time" v-model="this.form.w_time">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="exampleFormControlInput1" class="form-label ms-1">Dscp</label>
-                                        <input type="number" class="form-control form-control-lg" placeholder="Dscp"
-                                            name="dscp" v-model="this.form.dscp">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="exampleFormControlInput1" class="form-label ms-1">Count</label>
-                                        <input type="number" class="form-control form-control-lg" placeholder="Count"
-                                            name="count" v-model="this.form.count">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <div class="row g-2">
-                                    <div class="col-md-4">
-                                        <label for="exampleFormControlInput1" class="form-label ms-1">Number Packets</label>
-                                        <input type="number" class="form-control form-control-lg" placeholder="No Packets"
-                                            name="n_packets" v-model="this.form.n_packets">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="exampleFormControlInput1" class="form-label ms-1">Packets
-                                            Interval</label>
-                                        <input type="number" class="form-control form-control-lg" placeholder="P Interval"
-                                            name="p_interval" v-model="this.form.p_interval">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="exampleFormControlInput1" class="form-label ms-1">Packets Size</label>
-                                        <input type="number" class="form-control form-control-lg" placeholder="Packets Size"
-                                            name="p_size" v-model="this.form.p_size">
-                                    </div>
-                                </div>
-                            </div>   
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <div class="d-flex justify-content-end">
-                            <button type="button" class="modelCancelBtn" data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" data-bs-dismiss="modal" @click="handleEditMonitor"
-                                class="modelSaveBtn ms-2">Save</button>
                         </div>
                     </div>
                 </div>
@@ -335,11 +236,12 @@
 <script>
 import AddMonitor from './AddMonitor.vue';
 import Header from '../common/Header.vue';
-import { ProfileList, deleteMonitor, updateMonitor } from '../../services/monitor_profile_Services';
+import { ProfileList, deleteMonitor } from '../../services/monitor_profile_Services';
 import { VueSpinner } from 'vue3-spinners';
 import moment from 'moment';
-import { createToast } from 'mosha-vue-toastify';
-import 'mosha-vue-toastify/dist/style.css';
+import Swal from "sweetalert2"
+import EditModel from './EditModel.vue';
+import Skeleton from '../Skeleton.vue';
 
 export default {
     name: 'Monitor',
@@ -347,45 +249,22 @@ export default {
         Header,
         VueSpinner,
         AddMonitor,
+        Swal,
+        EditModel,
+        Skeleton
     },
     created: function () {
         this.moment = moment;
     },
-    computed:{
-        getToken(){
-            return 
+    computed: {
+        getToken() {
+            return
         }
     },
     data() {
         return {
             monitorData: [],
             loading: false,
-            form: {
-                id: null,
-                name: '',
-                w_time: '',
-                dscp: '',
-                count: '',
-                n_packets: '',
-                p_interval: '',
-                p_size: '',
-                jitter_g: '',
-                jitter_r: '',
-                downlink_g: '',
-                downlink_r: '',
-                downlink_bw_g: '',
-                downlink_bw_r: '',
-                loss_g: '',
-                loss_r: '',
-                rtt_g: '',
-                rtt_r: '',
-                uplink_g: '',
-                uplink_r: '',
-                uplink_bw_g: '',
-                uplink_bw_r: '',
-                delay_g: '',
-                delay_r: '',
-            }
         }
     },
     mounted() {
@@ -403,91 +282,37 @@ export default {
                 this.loading = false
             }
         },
-        async handleDelete(id) {
-            try {
-                await deleteMonitor(id)
-                createToast(`delete successfully`, {
-                    type: 'success',
-                    position: 'top-right',
-                    transition: 'zoom',
-                });
-                this.handleMonitorList()
-            } catch (error) {
-                console.log(error)
-            }
+
+        async handleDelete(id, name) {
+
+            Swal.fire({
+                title: `${name}`,
+                text: "Are you sure?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then(async (result) => {
+
+                if (result.isConfirmed) {
+
+                    try {
+                        await deleteMonitor(id)
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: `${name} deleted successfully.`,
+                            icon: "success",
+                        })
+                        this.handleMonitorList()
+                    } catch (error) {
+                        console.log(error)
+                        Swal.fire("Error!", "Delete failed.", "error")
+                    }
+
+                }
+            })
         },
-        handleEditModel(id, name, p_size, count, n_packets, p_interval, w_time, dscp, jitter_g, jitter_r, downlink_g, downlink_r, downlink_bw_g, downlink_bw_r,
-            loss_g, loss_r, rtt_g, rtt_r, uplink_g, uplink_r, uplink_bw_g, uplink_bw_r, delay_g, delay_r) {
-            this.form.id = id
-            this.form.name = name
-            this.form.p_size = p_size
-            this.form.count = count
-            this.form.n_packets = n_packets
-            this.form.p_interval = p_interval
-            this.form.w_time = w_time
-            this.form.dscp = dscp
-            this.form.jitter_g = jitter_g
-            this.form.jitter_r = jitter_r
-            this.form.downlink_g = downlink_g
-            this.form.downlink_r = downlink_r
-            this.form.downlink_bw_g = downlink_bw_g
-            this.form.downlink_bw_r = downlink_bw_r
-            this.form.loss_g = loss_g
-            this.form.loss_r = loss_r
-            this.form.rtt_g = rtt_g
-            this.form.rtt_r = rtt_r
-            this.form.uplink_g = uplink_g
-            this.form.uplink_r = uplink_r
-            this.form.uplink_bw_g = uplink_bw_g
-            this.form.uplink_bw_r = uplink_bw_r
-            this.form.delay_g = delay_g
-            this.form.delay_r = delay_r
-        },
-        async handleEditMonitor() {
-            const payload = {
-                id: this.form.id,
-                name: this.form.name,
-                count: this.form.count,
-                n_packets: this.form.n_packets,
-                p_interval: this.form.p_interval,
-                w_time: this.form.w_time,
-                dscp: this.form.dscp,
-                p_size: this.form.p_size,
-                rtt_g: this.form.rtt_g,
-                rtt_r: this.form.rtt_r,
-                uplink_g: this.form.uplink_g,
-                uplink_r: this.form.uplink_r,
-                downlink_g: this.form.downlink_g,
-                downlink_r: this.form.downlink_r,
-                delay_g: this.form.delay_g,
-                delay_r: this.form.delay_r,
-                downlink_bw_g: this.form.downlink_bw_g,
-                downlink_bw_r: this.form.downlink_bw_r,
-                uplink_bw_g: this.form.uplink_bw_g,
-                uplink_bw_r: this.form.uplink_bw_r,
-                jitter_g: this.form.jitter_g,
-                jitter_r: this.form.jitter_r,
-                loss_g: this.form.loss_g,
-                loss_r: this.form.loss_r,
-                edit: true
-            }
-            try {
-                await updateMonitor(payload)
-                this.handleMonitorList()
-                createToast(`Profile update successfully`, {
-                    type: 'success',
-                    position: 'top-right',
-                    transition: 'zoom',
-                });
-            } catch (error) {
-                createToast(`Profile update error`, {
-                    type: 'danger',
-                    position: 'top-right',
-                    transition: 'zoom',
-                });
-                console.log(error)
-            }
-        }
     }
 }
 </script>
@@ -535,5 +360,101 @@ export default {
 
 .css {
     line-height: 1.2;
+}
+
+.tableP {
+    font-size: 16px;
+    display: inline-block;
+}
+
+/* Green / Red colors */
+.value-green {
+    color: #16a34a;
+    font-weight: 600;
+}
+
+.value-red {
+    color: #dc2626;
+    font-weight: 600;
+}
+
+.head-green {
+    color: #16a34a;
+    font-weight: bold;
+}
+
+.head-red {
+    color: #dc2626;
+    font-weight: bold;
+}
+
+/* Date Badge */
+.date-badge {
+    background: #f1f3f5;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Table UI */
+/* Table Look */
+.table {
+    border-radius: 12px;
+    overflow: hidden;
+    background: white;
+    font-size: 14px;
+}
+
+.table thead {
+    background: #f6f8fa;
+}
+
+.table th {
+    font-weight: 600;
+    font-size: 13px;
+    color: #555;
+    text-transform: uppercase;
+}
+
+/* Row Hover */
+.table tbody tr:hover {
+    background: #f9fafb !important;
+    transform: scale(1.001);
+    transition: 0.15s;
+}
+
+/* Green Red Values */
+.value-green {
+    background: #e6f7ec;
+    color: #1e9b4b;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.value-red {
+    background: #fdeaea;
+    color: #e63946;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 12px;
+    margin-left: 4px;
+}
+
+/* Table Head Link */
+.tableHead {
+    text-decoration: none;
+    color: #444;
+    font-size: 13px;
+}
+
+/* Align text */
+.table td,
+.table th {
+    vertical-align: middle;
+    text-align: center;
 }
 </style>

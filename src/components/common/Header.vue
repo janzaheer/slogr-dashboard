@@ -22,6 +22,7 @@
           <li class="nav-item">
             <RouterLink class="nav-link d-flex align-items-center gap-2" to="/">
               <img src="../../assets/Home.svg" class="icon-img" />
+               <!-- <i class="fa-regular fa-house"></i> -->
               <span>Home</span>
             </RouterLink>
           </li>
@@ -72,7 +73,7 @@
 
         <!-- RIGHT ACTIONS -->
         <div class="d-flex align-items-center gap-2 nav-right">
-
+          <!-- <FilterDropdown /> -->
           <button class="btn-icon">
             <i class="fa-regular fa-bell"></i>
           </button>
@@ -89,7 +90,7 @@
               <li>
                 <h6 class="dropdown-header">
                   <i class="fa-regular fa-user"></i>
-                  {{ userData?.user?.name }}
+                   {{ userData?.user?.name }}
                 </h6>
               </li>
               <li>
@@ -98,10 +99,8 @@
                 </button>
               </li>
             </ul>
-
           </div>
         </div>
-
       </div>
     </div>
   </nav>
@@ -115,6 +114,7 @@
 <script>
 import { RouterLink, RouterView } from "vue-router";
 import { useAuth0 } from "@auth0/auth0-vue";
+import FilterDropdown from "./FilterDropdown.vue";
 
 export default {
   name: "Header",
@@ -123,6 +123,10 @@ export default {
     return {
       logout: () => logout(),
     };
+  },
+
+  components: {
+    FilterDropdown
   },
 
   computed: {

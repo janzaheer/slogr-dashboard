@@ -1,5 +1,4 @@
 <template>
-    <!-- <Header/> -->
     <div class="pageHeight">
         <div class="bg">
             <Header />
@@ -22,7 +21,8 @@
                                 <h6 class="me-4 mt-2"> - Sentinel</h6>
                                 <button class="addBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop2"> <i
                                         class="fa-solid fa-plus fa-lg"></i> Add New Sentinel</button>
-                                <div class="mx-3"><i class="fa-solid fa-ellipsis fa-2xl"></i></div>
+                                <div class="mx-3"><i class="fa-solid fa-ellipsis fa-2xl"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -35,6 +35,35 @@
                             <div class="card-body">
                                 <div class="text-center m-5" v-if="loading2">
                                     <VueSpinner size="100" color="#8cb63d" />
+                                </div>
+                                <div class="m-5" v-else-if="!loading2 && (!agents || agents.length === 0)">
+                                    <!-- <h3 class="text-danger">Alerts not found Add new Alert</h3> -->
+                                    <div class="empty-state-container">
+                                        <div class="empty-state-card text-center p-5 rounded-4 shadow-sm">
+                                            <!-- Icon -->
+                                            <div class="empty-state-icon mb-4">
+                                                <div class="icon-circle mx-auto">
+                                                    <i class="fa-solid fa-location-dot"></i>
+                                                </div>
+                                            </div>
+
+                                            <!-- Message - EXACTLY YOUR CODE -->
+                                            <div class="empty-state-message mb-4">
+                                                <h3 class="fw-semibold mb-2" style="color: #1f2937; font-size: 1.5rem;">
+                                                    No Sentinels Found
+                                                </h3>
+                                                <p class="text-muted mb-0"
+                                                    style="font-size: 1rem; max-width: 500px; margin: 0 auto;">
+                                                    You haven't set up any Sentinels yet. Create your first Sentinel to stay
+                                                    updated.
+                                                </p>
+                                            </div>
+                                            <!-- Action Button -->
+                                            <button class="addBtn" data-bs-toggle="modal"
+                                                data-bs-target="#staticBackdrop2"> <i
+                                                    class="fa-solid fa-plus fa-lg"></i> Add New Sentinel</button>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="table-responsive" v-else>
                                     <table class="table table-striped table-hover text-center">
@@ -84,18 +113,20 @@
                                                 <td>
                                                     <p class="tableP">{{ data.Country }}</p>
                                                 </td>
-                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP"
+                                                <td class="fs-5"><a href="#"
+                                                        class="text-decoration-none text-dark tableP"
                                                         data-bs-toggle="modal" data-bs-target="#staticBackdrop"
                                                         @click="handleUpdateModalData(data.id, data.name)"> <i
                                                             class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
-                                                <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP"
+                                                <td class="fs-5"><a href="#"
+                                                        class="text-decoration-none text-dark tableP"
                                                         @click="handleGrids(data.id, data.name)">
                                                         <i class="fa-solid fa-chevron-right"></i></a></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="d-flex justify-content-between">
+                                <div class="d-flex justify-content-between" v-if="loading2">
                                     <div>
                                         <button class="addBtn2"><i class="fa-solid fa-chevron-down fa-lg"></i> Go to
                                             Page</button>
@@ -107,13 +138,16 @@
                                     </div>
                                     <div>
                                         <div class="pagination">
-                                            <button class="prevBtn" @click="handleSentinelListing(pages.previousPage)"><i class="fa-solid fa-angle-left"></i> Prev</button>
+                                            <button class="prevBtn"
+                                                @click="handleSentinelListing(pages.previousPage)"><i
+                                                    class="fa-solid fa-angle-left"></i> Prev</button>
                                             <div class="pageNumber">-</div>
                                             <div class="pageNumber">-</div>
                                             <div class="pageNumber pageBtn">{{ pages.currentPage }}</div>
                                             <div class="pageNumber">-</div>
                                             <div class="pageNumber">-</div>
-                                            <button class="nextBtn" @click="handleSentinelListing(pages.nextPage)">Next <i class="fa-solid fa-angle-right"></i></button>
+                                            <button class="nextBtn" @click="handleSentinelListing(pages.nextPage)">Next
+                                                <i class="fa-solid fa-angle-right"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -133,13 +167,15 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
                                             <p class="card-text ms-2">{{ data?.name }}</p>
-                                            <span class="text-secondary ms-2" style="font-size: 13px;">{{ data?.machine_name }}
+                                            <span class="text-secondary ms-2" style="font-size: 13px;">{{
+                                                data?.machine_name }}
                                             </span> <br>
                                             <span class="text-secondary ms-2" style="font-size: 13px;">Data</span>
                                         </div>
                                         <div>
                                             <RouterLink :to="`/sentinelReports/` + data.id"><i
-                                                    class="fa-solid fa-chevron-right me-1 text-secondary"></i></RouterLink>
+                                                    class="fa-solid fa-chevron-right me-1 text-secondary"></i>
+                                            </RouterLink>
                                         </div>
                                     </div>
                                     <hr class="">
@@ -229,7 +265,8 @@
                         <div class="d-flex justify-content-end">
                             <button type="button" id="AddCancelButton" class="modelCancelBtn"
                                 data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" class="modelSaveBtn ms-2" @click="handleSentinelCreation">Save</button>
+                            <button type="button" class="modelSaveBtn ms-2"
+                                @click="handleSentinelCreation">Save</button>
                         </div>
                     </div>
                 </div>
@@ -305,11 +342,11 @@ export default {
     },
     async mounted() {
         await this.handleSentinelListing()
-  
+
 
     },
     methods: {
-        async handleSentinelListing(page=1) {
+        async handleSentinelListing(page = 1) {
             try {
                 this.loading2 = true
                 const respData = await agentList(page)
@@ -334,15 +371,15 @@ export default {
                     this.addSentinel.name = null;
                     this.addSentinel.agent_code = null;
                 } catch (error) {
-                    console.log('add-error',error)
+                    console.log('add-error', error)
                     let newError = error.response.data.error
                     if (newError) {
-                        console.log('res-error',newError)
+                        console.log('res-error', newError)
                         createToast(newError, {
-                    type: 'success',
-                    position: 'top-right',
-                    transition: 'zoom',
-                });
+                            type: 'success',
+                            position: 'top-right',
+                            transition: 'zoom',
+                        });
                     }
                 }
             }
@@ -392,7 +429,7 @@ export default {
                     this.refSessions = []
                 } else {
                     this.refSessions = res.sessions
-                    console.log('ref-sessions',res.sessions)
+                    console.log('ref-sessions', res.sessions)
                 }
             } catch (error) {
                 console.log(error)
@@ -406,6 +443,52 @@ export default {
 </script>
 
 <style>
+.empty-state-container {
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.empty-state-card {
+    background: white;
+    max-width: 500px;
+    width: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.icon-circle {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f0f4ff 0%, #e6f0ff 100%);
+    border-radius: 50%;
+    color: #667eea;
+    font-size: 2rem;
+}
+
+.btn-primary {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+/* Optional: Add pulse animation to icon */
+.icon-circle {
+    animation: pulse 2s infinite;
+}
 .pageHeight {
     height: 100vh;
 }

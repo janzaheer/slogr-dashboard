@@ -317,7 +317,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="d-flex justify-content-end align-items-center mt-3">
+                                <div class="d-flex justify-content-end align-items-center mt-1">
                                     <div class="me-4">
                                         <button class="modelCancelBtn">Cancel</button>
                                         <button class="modelSaveBtn">Save</button>

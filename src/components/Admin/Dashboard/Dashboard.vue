@@ -28,7 +28,6 @@
                 <div class="col-9">
                     <div class="card" style="height: 100vh;">
                         <div class="card-body">
-                            
                             <div v-if="userData.user.organization_id == null">
                                 <AddOrd />
                             </div>
@@ -60,10 +59,10 @@
                                             </div>
                                             <div class="d-flex">
                                                 <div>
-                                                    <div>Designation </div>
+                                                    <div><i class="fa-solid fa-map-location"></i> Designation </div>
                                                     <div>
-                                                        <div>Phone: {{ data.phone }}</div>
-                                                        <div>Address: {{ data.address }}</div>
+                                                        <div><i class="fa-solid fa-mobile-screen"></i> Phone: {{ data.phone }}</div>
+                                                        <div><i class="fa-solid fa-location-dot"></i> Address: {{ data.address }}</div>
                                                     </div>
                                                 </div>
                                                 <div v-if="userData.user.organization_id  && userData.user.organization_id === data.id">
@@ -194,9 +193,9 @@ export default {
             try {
                 this.loading = true;
                 let res = await getOrganization()
-                console.log('org', res.data.organizations)
+                // console.log('org', res.data.organizations)
                 this.organizationData = res.data.organizations
-                console.log('userData',this.$store.getters.getUserData)
+                // console.log('userData',this.$store.getters.getUserData)
             } catch (error) {
                 console.log('error', error)
             } finally {
@@ -209,7 +208,7 @@ export default {
 
 <style>
 .boxTop {
-    margin-top: 120px !important;
+    /* margin-top: 120px !important; */
 }
 
 .editBtn {

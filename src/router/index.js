@@ -37,7 +37,7 @@ const router = createRouter({
       path: '/sentinel',
       name: 'Sentinel',
       component: Sentinel,
-      meta: { requiresAuth: true },
+      meta: { title: 'Sentinel', requiresAuth: true },
     },
     {
       path: '/sessions',
