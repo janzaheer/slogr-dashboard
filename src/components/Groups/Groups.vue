@@ -19,7 +19,8 @@
                             <div class="d-flex align-items-center">
                                 <h6 class="mx-1 mt-2 text-muted">Home </h6>
                                 <h6 class="me-4 mt-2"> - Groups</h6>
-                                <AddGroup :handleGroupList="handleGroupList" :handleGroupsSessionsData="handleGroupsSessionsData" />
+                                <AddGroup :handleGroupList="handleGroupList"
+                                    :handleGroupsSessionsData="handleGroupsSessionsData" />
                                 <div class="mx-3"><i class="fa-solid fa-ellipsis fa-2xl"></i></div>
                             </div>
                         </div>
@@ -38,7 +39,8 @@
                         <div class="row g-2">
                             <div class="col-2">
                                 <GroupSidebar @groupid="handleGroupId" :groupData="groupData"
-                                    :handleGroupList="handleGroupList" :handleGroupsSessionsData="handleGroupsSessionsData" />
+                                    :handleGroupList="handleGroupList"
+                                    :handleGroupsSessionsData="handleGroupsSessionsData" />
                             </div>
                             <div class="col-10">
                                 <div class="card" style="height: 100vh;">
@@ -46,6 +48,37 @@
                                         <perfect-scrollbar style="height: 820px;">
                                             <div class="text-center m-5" v-if="loading">
                                                 <VueSpinner size="80" color="#8cb63d" />
+                                            </div>
+                                            <div class="m-5"
+                                                v-else-if="!loading && (!groupListSessionsData || groupListSessionsData.length === 0)">
+                                                <!-- <h3 class="text-danger">Alerts not found Add new Alert</h3> -->
+                                                <div class="empty-state-container">
+                                                    <div class="empty-state-card text-center p-5 rounded-4 shadow-sm">
+                                                        <!-- Icon -->
+                                                        <div class="empty-state-icon mb-4">
+                                                            <div class="icon-circle mx-auto">
+                                                               <img src="../../assets/group-25271.svg" class="icon-img" />
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Message - EXACTLY YOUR CODE -->
+                                                        <div class="empty-state-message mb-4">
+                                                            <h3 class="fw-semibold mb-2"
+                                                                style="color: #1f2937; font-size: 1.5rem;">
+                                                                No Groups Found
+                                                            </h3>
+                                                            <p class="text-muted mb-0"
+                                                                style="font-size: 1rem; max-width: 500px; margin: 0 auto;">
+                                                                You haven't set up any Groups yet. Create your first
+                                                                Group to stay
+                                                                updated.
+                                                            </p>
+                                                        </div>
+                                                        <!-- Action Button -->
+                                                        <AddGroup :handleGroupList="handleGroupList"
+                                                            :handleGroupsSessionsData="handleGroupsSessionsData" />
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="table-responsive" v-else>
                                                 <table class="table table-striped table-hover text-center">
@@ -69,7 +102,8 @@
                                                                 <p class="tableP">{{ data?.p_name }}</p>
                                                             </td>
                                                             <td class="fs-5 dropstart">
-                                                                <RouterLink :to="`/sentinelReports/` + data.id" class="text-decoration-none text-dark tableP">
+                                                                <RouterLink :to="`/sentinelReports/` + data.id"
+                                                                    class="text-decoration-none text-dark tableP">
                                                                     <i class="fa-solid fa-chevron-right"></i>
                                                                 </RouterLink>
                                                             </td>
@@ -127,12 +161,12 @@ export default {
             let res = await getGroups()
             this.groupData = res
             if (this.groupData.length >= 1) {
-               await this.handleGroupId(this.groupData[0].id)
+                await this.handleGroupId(this.groupData[0].id)
             }
         },
         async handleGroupId(data) {
             let id = this.receivedGroupId = data
-           await this.handleGroupsSessionsData(id)
+            await this.handleGroupsSessionsData(id)
         },
         async handleGroupsSessionsData(id) {
             try {
