@@ -54,7 +54,8 @@
                                                 </h3>
                                                 <p class="text-muted mb-0"
                                                     style="font-size: 1rem; max-width: 500px; margin: 0 auto;">
-                                                    You haven't set up any Sentinels yet. Create your first Sentinel to stay
+                                                    You haven't set up any Sentinels yet. Create your first Sentinel to
+                                                    stay
                                                     updated.
                                                 </p>
                                             </div>
@@ -127,6 +128,9 @@
                                     </table>
                                 </div>
                                 <div class="d-flex justify-content-between" v-if="loading2">
+
+                                </div>
+                                <div class="d-flex justify-content-between" v-else>
                                     <div>
                                         <button class="addBtn2"><i class="fa-solid fa-chevron-down fa-lg"></i> Go to
                                             Page</button>
@@ -489,6 +493,7 @@ export default {
 .icon-circle {
     animation: pulse 2s infinite;
 }
+
 .pageHeight {
     height: 100vh;
 }

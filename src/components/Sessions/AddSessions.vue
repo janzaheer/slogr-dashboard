@@ -258,9 +258,8 @@
 import { agentListForm } from "../../services/agent_services";
 import { ProfileListForm } from "../../services/monitor_profile_Services";
 import { addSessions } from "../../services/sessions_services";
-import { createToast } from "mosha-vue-toastify";
-import "mosha-vue-toastify/dist/style.css";
 import { RouterLink } from 'vue-router';
+import Toast from "../Toast";
 
 export default {
   name: "AddSessions",
@@ -313,39 +312,42 @@ export default {
 
       try {
         await addSessions(payload);
-        this.getSessions();
-        this.form = {
-          schedule: null,
-          count: null,
-          n_packets: null,
-          p_interval: null,
-          w_time: null,
-          dscp: null,
-          p_size: null,
-        };
-        (this.selectedAgentId = null),
-          (this.selectedClientId = null),
-          (this.selectedProfileId = null);
-        createToast(`add sessions successfully`, {
-          type: "success",
-          position: "top-right",
-          transition: "zoom",
-        });
+       
+        // this.form = {
+        //   schedule: null,
+        //   count: null,
+        //   n_packets: null,
+        //   p_interval: null,
+        //   w_time: null,
+        //   dscp: null,
+        //   p_size: null,
+        // };
+        // (this.selectedAgentId = null),
+        //   (this.selectedClientId = null),
+        //   (this.selectedProfileId = null);
+          // ✅ reset form safely (no null)
+    this.form = {
+      schedule: 600,
+      count: 0,
+      n_packets: 0,
+      p_interval: 0,
+      w_time: 0,
+      dscp: 0,
+      p_size: 0,
+    };
+
+    this.selectedAgentId = "please select sender sentinel";
+    this.selectedClientId = "please select receiver sentinel";
+    this.selectedProfileId = 0;
+    this.selectedProfile = 0;
+          Toast.fire({ icon: "success", title: 'add sessions successfully' })
+        await this.getSessions();
         document.getElementById("EditCancelButton").click();
       } catch (error) {
         if (error.response.status === 400) {
-          createToast(error.response.data.error, {
-            type: "danger",
-            position: "top-right",
-            transition: "zoom",
-          });
+          Toast.fire({ icon: "error", title: error.response.data.error })
         } else if (error.response.status === 401) {
-          createToast(error.response.data.Unauthorized, {
-            type: "warning",
-            position: "top-right",
-            transition: "zoom",
-          });
-          console.log("401", error.response.data.Unauthorized);
+          Toast.fire({ icon: "warning", title: error.response.data.Unauthorized })
         } else {
           console.log("main-error-1", error);
         }
@@ -363,7 +365,6 @@ export default {
     updateSelectedProfileId() {
       // Update selectedProfileId when the selection changes
       this.selectedProfile = this.selectedProfile;
-      console.log("single", this.selectedProfile);
       this.selectedProfileId = this.selectedProfile.id;
       this.form.count = this.selectedProfile.count;
       this.form.n_packets = this.selectedProfile.n_packets;
