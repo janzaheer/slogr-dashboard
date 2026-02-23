@@ -39,7 +39,7 @@
                                     <div class="empty-state-icon mb-4">
                                         <div class="icon-circle mx-auto">
                                             <!-- <i class="fa-solid fa-location-dot"></i> -->
-                                              <img src="../../assets/group-24551.svg" class="icon-img" />
+                                            <img src="../../assets/group-24551.svg" class="icon-img" />
                                         </div>
                                     </div>
 
@@ -131,7 +131,10 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="d-flex justify-content-between" v-if="loading">
+                        <div v-if="loading">
+
+                        </div>
+                        <div class="d-flex justify-content-between" v-else>
                             <div>
                                 <button class="addBtn2"><i class="fa-solid fa-chevron-down fa-lg"></i> Go to
                                     Page</button>
@@ -254,11 +257,12 @@
                             <div class="mb-4">
                                 <label for="exampleFormControlInput1" class="form-label ms-1">Monitoring
                                     Profile*</label>
-                                <select v-model="selectedProfile" class="form-select form-select-lg mb-3 custom-select"
+                                <select v-model="selectedProfileId"
+                                    class="form-select form-select-lg mb-3 custom-select"
                                     aria-label=".form-select-lg example">
                                     <option class="text-secondary" disabled>select here</option>
-                                    <option v-for="profile in profiles" :key="profile.id" :value="profile.id">{{
-                                        profile.name }}
+                                    <option v-for="profile in profiles" :key="profile.id" :value="profile.id">
+                                        {{ profile.name }}
                                     </option>
                                 </select>
                             </div>
@@ -329,8 +333,7 @@ import { agentListForm } from '../../services/agent_services';
 import { VueSpinner } from 'vue3-spinners';
 import AddSessions from './AddSessions.vue';
 import { RouterLink } from 'vue-router';
-import { createToast } from 'mosha-vue-toastify';
-import 'mosha-vue-toastify/dist/style.css';
+import Toast from '../Toast';
 export default {
     name: 'Sessions',
     components: {
@@ -356,7 +359,7 @@ export default {
                 schedule: null,
                 p_size: null,
             },
-            selectedProfile: null, // Will store the selected profile id
+            selectedProfileId: '', // Will store the selected profile id
             profiles: [],
             agents: [],
             selectedAgentId: 'please select sender sentinel',
@@ -392,21 +395,13 @@ export default {
             try {
                 await deleteSessions(payload)
                 this.getSessions()
-                createToast(`session delete`, {
-                    type: 'success',
-                    position: 'top-right',
-                    transition: 'zoom',
-                });
+                Toast.fire({ icon: "error", title: 'session delete' })
             } catch (error) {
-                createToast(`delete error`, {
-                    type: 'danger',
-                    position: 'top-right',
-                    transition: 'zoom',
-                });
+                Toast.fire({ icon: "error", title: 'delete error' })
                 console.log(error)
             }
         },
-        handleEditModel(id, s_name, c_name, p_name, n_packets, p_interval, w_time, dscp, count, schedule, p_size) {
+        async handleEditModel(id, s_name, c_name, p_name, n_packets, p_interval, w_time, dscp, count, schedule, p_size) {
             this.form.id = id
             this.form.n_packets = n_packets
             this.form.p_interval = p_interval
@@ -418,13 +413,20 @@ export default {
 
             this.selectedClientId = this.clients.find(client => client.name === c_name)?.id;
             this.selectedAgentId = this.agents.find(agent => agent.name === s_name)?.id;
-            this.selectedProfile = this.profiles.find(profile => profile.name === p_name)?.id;
+
+            // this.selectedProfileId = this.profiles.find(profile => profile.name === p_name)?.id;
+            // console.log("selectedProfile", this.selectedProfileId)
+            if (!this.profiles.length) {
+                await this.monitor();   // profiles API call
+            }
+            this.selectedProfileId =
+                this.profiles.find(p => p.name === p_name)?.id || "";
         },
         async handleEditSessions() {
             const payload = {
                 serve: this.selectedAgentId,
                 client: this.selectedClientId,
-                profile: this.selectedProfile,
+                profile: this.selectedProfileId,
                 schedule: this.form.schedule,
                 count: this.form.count,
                 n_packets: this.form.n_packets,
@@ -436,34 +438,22 @@ export default {
                 aid: this.form.id
             }
             try {
+                // console.log('update',payload)
                 await updateSessions(payload)
                 this.getSessions();
-                createToast(`session update successfully`, {
-                    type: 'success',
-                    position: 'top-right',
-                    transition: 'zoom',
-                });
+                Toast.fire({ icon: "success", title: 'session update successfully' })
             } catch (error) {
                 if (error.response.status === 400) {
-                    createToast(error.response.data.error, {
-                        type: 'danger',
-                        position: 'top-right',
-                        transition: 'zoom',
-                    });
+                    Toast.fire({ icon: "error", title: error.response.data.error })
                 }
                 else if (error.response.status === 401) {
-                    createToast(error.response.data.Unauthorized, {
-                        type: 'warning',
-                        position: 'top-right',
-                        transition: 'zoom',
-                    });
-                    console.log('401', error.response.data.Unauthorized)
+                    Toast.fire({ icon: "error", title: response.data.Unauthorized })
                 } else {
                     console.log('main-error-1', error)
                 }
             }
-            console.log('edit', payload)
         },
+        
         async monitor(size = 1000) {
             try {
                 let res = await ProfileListForm(size)
