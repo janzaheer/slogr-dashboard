@@ -42,6 +42,9 @@ export default {
             loading:false
         }
     },
+    mounted(){
+        // console.log('user',this.user)
+    },
     methods: {
         async socialLogin() {
             const payload = {
@@ -50,6 +53,8 @@ export default {
             }
             try {
                 this.loading = true
+                // console.log('ddd',payload)
+                // console.log('22',this.social)
                 await this.$store.dispatch('socialLogin', payload)
             } catch (error) {
                 console.log(error)
