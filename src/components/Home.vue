@@ -1,6 +1,5 @@
 <template>
   <div id="map"></div>
-  <!-- Pop-up element for no connections message -->
   <div id="no-connections-popup" class="popup">
     <p>No connections available</p>
   </div>
@@ -12,70 +11,53 @@
           <h6 class="card-title mb-0">Legend</h6>
           <hr class="hr1" />
           <perfect-scrollbar style="height: 100px">
-            <!-- Use v-for to iterate over the groups -->
             <div class="text-center m-2" v-if="loading">
-              <VueSpinner size="60" color="#8cb63d" />
+              <!-- <VueSpinner size="60" color="#8cb63d" /> -->
+              <div v-for="i in 4" :key="i">
+                <p class="placeholder-glow">
+                  <span class="placeholder col-12"></span>
+                </p>
+              </div>
+
             </div>
             <div v-else>
-              <div
-                v-for="group in groups"
-                :key="group.id"
-                class="d-flex justify-content-between align-items-center"
-              >
-                <label
-                  class="form-check-label"
-                  :for="'flexSwitchCheckDefault_' + group.id"
-                  data-bs-toggle="popover"
-                  :title="group.name"
-                  :data-content="group.name"
-                >
+              <div v-for="group in groups" :key="group.id" class="d-flex justify-content-between align-items-center">
+                <label class="form-check-label" :for="'flexSwitchCheckDefault_' + group.id" data-bs-toggle="popover"
+                  :title="group.name" :data-content="group.name">
                   {{
                     group.name.length > 9
                       ? group.name.substring(0, 9) + "..."
                       : group.name
-                  }}</label
-                >
-                <div class="form-check form-switch" v-if="!loading">
-                  <input
-                    class="form-check-input fs-5"
-                    type="checkbox"
-                    role="switch"
-                    :id="'flexSwitchCheckDefault_' + group.id"
-                    v-model="groupSwitches[group.id]"
-                    @change="
+                  }}
+                </label>
+                <div class="form-check form-switch">
+                  <input class="form-check-input fs-5" type="checkbox" role="switch"
+                    :id="'flexSwitchCheckDefault_' + group.id" v-model="groupSwitches[group.id]" @change="
                       handleToggleGroup(group.id, groupSwitches[group.id])
-                    "
-                  />
+                      " />
                 </div>
               </div>
             </div>
           </perfect-scrollbar>
-          <!-- <hr class="hr" /> -->
           <hr class="hr1" />
           <h6 class="my-1">Map Settings</h6>
-          <div class="">
-            <label
-              class="form-check-label"
-              @click="clearLines"
-              style="color: var(--primary_color); cursor: pointer"
-              ><i class="fa-solid fa-circle-xmark" style="color: var(--primary_color); margin-top: 5px"></i> Clear Connections</label
-            >
-            <label
-              class="form-check-label"
-              @click="zoomDeafault"
-              style="color: var(--primary_color); cursor: pointer"
-              ><i class="fa-solid fa-down-left-and-up-right-to-center" style="color: var(--primary_color); margin-top: 5px"></i> Default View</label
-            >
+          <div>
+            <label class="form-check-label" @click="clearLines" style="color: var(--primary_color); cursor: pointer">
+              <i class="fa-solid fa-circle-xmark" style="color: var(--primary_color); margin-top: 5px"></i>
+              Clear Connections
+            </label>
+            <label class="form-check-label" @click="zoomDeafault" style="color: var(--primary_color); cursor: pointer">
+              <i class="fa-solid fa-down-left-and-up-right-to-center"
+                style="color: var(--primary_color); margin-top: 5px"></i>
+              Default View
+            </label>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div
-    class="position-relative bg-secondary mt-md-4 ms-md-3 opacity-75"
-    style="width: 190px; top: 260px"
-  >
+  <div class="position-relative bg-secondary mt-md-4 ms-md-3 opacity-75" style="width: 190px; top: 260px">
     <div class="position-absolute p-2">
       <div class="card bg-light" style="width: 190px; height: 290px">
         <div class="card-body">
@@ -83,21 +65,17 @@
           <hr class="hr1" />
           <perfect-scrollbar style="height: 150px">
             <div class="text-center m-2" v-if="loading">
-              <VueSpinner size="60" color="#8cb63d" />
+              <div v-for="i in 5" :key="i">
+                <p class="placeholder-glow">
+                  <span class="placeholder col-12"></span>
+                </p>
+              </div>
             </div>
             <div v-else>
-              <div
-                v-for="profile in profiles"
-                :key="profile.id"
-                class="d-flex justify-content-between align-items-center"
-              >
-                <label
-                  class="form-check-label"
-                  :for="'profileDefault' + profile.id"
-                  data-bs-toggle="popover"
-                  :title="profile.name"
-                  :data-content="profile.name"
-                >
+              <div v-for="profile in profiles" :key="profile.id"
+                class="d-flex justify-content-between align-items-center">
+                <label class="form-check-label" :for="'profileDefault' + profile.id" data-bs-toggle="popover"
+                  :title="profile.name" :data-content="profile.name">
                   {{
                     profile?.name.length > 9
                       ? profile.name.substring(0, 9) + "..."
@@ -105,38 +83,25 @@
                   }}
                 </label>
                 <div class="form-check form-switch">
-                  <input
-                    class="form-check-input fs-5"
-                    type="checkbox"
-                    role="switch"
-                    v-model="profileSwitches[profile.id]"
-                    :id="'profileDefault' + profile.id"
-                    @change="handleProfileToggle(profile.id, profile.name)"
-                  />
+                  <input class="form-check-input fs-5" type="checkbox" role="switch"
+                    v-model="profileSwitches[profile.id]" :id="'profileDefault' + profile.id"
+                    @change="handleProfileToggle(profile.id, profile.name)" />
                 </div>
               </div>
             </div>
           </perfect-scrollbar>
           <hr class="hr1" />
           <h6 class="my-1">Monitoring</h6>
-          <RouterLink
-            to="/monitor"
-            class="text-decoration-none"
-            style="color: var(--primary_color)"
-          >
-            <span
-              ><i
-                class="fa-solid fa-gear"
-                style="color: var(--primary_color); margin-top: 5px"
-              ></i>
-              Profile Setting</span
-            >
+          <RouterLink to="/monitor" class="text-decoration-none" style="color: var(--primary_color)">
+            <span><i class="fa-solid fa-gear" style="color: var(--primary_color); margin-top: 5px"></i>
+              Profile Setting</span>
           </RouterLink>
         </div>
       </div>
     </div>
   </div>
 </template>
+
 <script>
 import { RouterLink } from "vue-router";
 import { VueSpinner } from "vue3-spinners";
@@ -175,10 +140,13 @@ export default {
     VueSpinner,
   },
   async mounted() {
+    await this.handleGroupData();
+    await this.handleClusterData();
     var clusters = await this.handleClusters("");
     var sessions = await this.handleSessions("");
-    mapboxgl.accessToken =
-      "pk.eyJ1Ijoicmh3b3JrcyIsImEiOiJjazBmZmE0bGIwNzh3M25wMjBhOHI2em56In0.317s4zEB48T9QC33pf6sVw#13";
+
+    mapboxgl.accessToken = '';
+
     this.map = new mapboxgl.Map({
       container: "map",
       style: "mapbox://styles/mapbox/light-v11",
@@ -190,17 +158,15 @@ export default {
     // Change water color to blue
     let myMap = this.map;
     myMap.on("style.load", function () {
-      // Find the water layer in the style
       myMap.setPaintProperty("water", "fill-color", "#CEEAF2");
     });
+
     // Hide the Mapbox logo
     const logoContainer = document.querySelector(".mapboxgl-ctrl-logo");
     if (logoContainer) {
       logoContainer.style.display = "none";
     }
-    const attrib = document.querySelector(
-      ".mapboxgl-ctrl.mapboxgl-ctrl-attrib"
-    );
+    const attrib = document.querySelector(".mapboxgl-ctrl.mapboxgl-ctrl-attrib");
     if (attrib) {
       attrib.style.display = "none";
     }
@@ -208,13 +174,11 @@ export default {
     this.map.addControl(nav, "bottom-right");
 
     this.handleData();
-    // this.handleGroups();
     this.handleProfiles();
-    // this.handleClusterData();
-    this.handleGroupData();
 
     this.map.on("load", () => {
       this.showClusters(clusters);
+
       // inspect a cluster on click
       this.map.on("click", "clusters", (e) => {
         const features = this.map.queryRenderedFeatures(e.point, {
@@ -233,6 +197,7 @@ export default {
       });
 
       let popup = new mapboxgl.Popup({ offset: [0, -15] });
+
       this.map.on("mouseenter", "clusters", async (e) => {
         const features = this.map.queryRenderedFeatures(e.point, {
           layers: ["clusters"],
@@ -244,6 +209,7 @@ export default {
 
           let map = this.map;
           var allPointsInCluster = [];
+
           async function getAllSubChildPoints(clusterId, callback) {
             function querySubCluster(subClusterId) {
               map
@@ -253,16 +219,13 @@ export default {
 
                   features.forEach(async function (feature) {
                     if (feature.properties.cluster) {
-                      // If it's another cluster, recursively query its children
                       await querySubCluster(feature.properties.cluster_id);
                     } else {
-                      // If it's a point, add it to the list
                       allPointsInCluster.push(feature);
                     }
                   });
 
                   if (features.length === 0) {
-                    // No more features in the current sub-cluster, callback with the result
                     callback(null, allPointsInCluster);
                   }
 
@@ -291,20 +254,20 @@ export default {
                   }
                 });
             }
-            // Start the recursive query
             await querySubCluster(clusterId);
           }
 
-          // Call the recursive function to get all sub-child points
           await getAllSubChildPoints(
             clusterId,
-            function (err, subChildPoints) {}
+            function (err, subChildPoints) { }
           );
         }
       });
+
       this.map.on("mouseleave", "clusters", () => {
         popup.remove();
       });
+
       this.map.on("click", "unclustered-point", async (e) => {
         this.map.getCanvas().style.cursor = "pointer";
         const markerId = e.features[0].properties.id;
@@ -313,10 +276,8 @@ export default {
         const popupElement = document.getElementById("no-connections-popup");
         const loader = document.getElementById("loader");
 
-        // Show the loader while waiting for the asynchronous action
         loader.style.display = "block";
 
-        // Hide the loader and show the popup (if needed) after 2 seconds
         setTimeout(() => {
           loader.style.display = "none";
           if (agentLinks.length === 0) {
@@ -345,22 +306,25 @@ export default {
         const markerCoordinates = e.features[0].geometry.coordinates;
         const markerId = e.features[0].properties.id;
 
-        // Find connections for the clicked marker using markerId
         const connections = sessions.filter(
           (session) => session.from === markerId
         );
 
         if (connections.length > 0) {
-          // If there are connections, display them
           this.displayConnections(markerCoordinates, connections);
         }
       });
     });
-    this.map.setProjection("Mercator");
+    // this.map.setProjection("Mercator");
+    try {
+      this.map.setProjection('mercator');
+    } catch (e) {
+      console.log("Projection not supported in this version");
+    }
   },
   methods: {
     async handleProfileToggle(profileId, profileName) {
-      let isProfile = this.profileSwitches[profileId]; // profile test
+      let isProfile = this.profileSwitches[profileId];
       let map = this.map;
       let profileSwitchesData = this.profileSwitchesData;
       let groupGeoJson = this.GroupGeoJson;
@@ -395,9 +359,10 @@ export default {
         });
       });
     },
+
     async handleToggleGroup(groupId, switchValue) {
       let map = this.map;
-      console.log(this.groupMarkers, "groupMarkers");
+      // console.log(this.groupMarkers, "groupMarkers");
       let myGroupMarkers = this.groupMarkers[groupId];
       if (this.mapLayers.length == 0) {
         let clusterLayers = ["clusters", "cluster-count"];
@@ -407,12 +372,10 @@ export default {
       }
 
       if (switchValue) {
-        // Draw connected lines
         const sessions = await this.handleSessions(groupId);
         this.drawLines(this.map, sessions, groupId);
         this.mapLayers.push(`line-${groupId}`);
       } else {
-        // Remove the group from the list of active groups
         this.map.removeLayer(`line-${groupId}`);
         this.map.removeSource(`line-${groupId}`);
 
@@ -430,7 +393,6 @@ export default {
         delete this.groupMarkers[groupId];
       }
 
-      // Show and Hide clusters on group toggle
       if (this.mapLayers.length > 0) {
         let clusterLayers = ["clusters", "cluster-count"];
         clusterLayers.forEach(function (layerId) {
@@ -443,63 +405,62 @@ export default {
         });
       }
     },
+
     async handleClusters(groupId) {
       try {
         let respData;
         if (groupId === "") {
           respData = await fetchClusters("");
-          console.log("clusters", respData);
         } else {
           respData = this.clusterdata[groupId];
-          console.log("clusterssss", respData);
         }
         return respData;
       } catch (error) {
         console.error("Error handling clusters:", error);
       }
     },
+
     async handleSessions(groupId) {
-      const respData = this.groupdata[groupId];
-      return respData;
+      return this.groupdata[groupId] || { features: [] }
     },
+
     async handleAgentlinks(id) {
       const respData = await fetchAgentlinks(id);
       return respData;
     },
+
     async handleGroupData() {
       try {
         const response = await fetchGroupData();
-        // const response = await fetchGroups();
         this.groupdata = response;
       } catch (error) {
         console.error("Error fetching groups:", error);
       }
     },
+
     async handleClusterData() {
       try {
         this.loading = true;
         const response = await fetchClustersData();
-        // const response = await fetchGroups();
         this.clusterdata = response;
-        console.log("Cluster data", response);
       } catch (error) {
         console.error("Error fetching groups:", error);
       } finally {
-        this.loading = false; // Reset loading after API request completion
-  }
+        this.loading = false;
+      }
     },
+
     async handleGroups() {
       try {
-        // this.loading = true;
-        // const response = await fetchGroupData();
         const response = await fetchGroups();
         this.groups = response;
       } catch (error) {
         console.error("Error fetching groups:", error);
       } finally {
-          this.loading = false;
+        this.loading = false;
       }
     },
+
     async handleData() {
       try {
         this.loading = true;
@@ -516,28 +477,23 @@ export default {
         this.loading = false;
       }
     },
+
     async handleProfiles() {
       try {
-        // this.loading = true;
         const resp = await ProfileList();
         this.profiles = resp.profiles;
       } catch (errors) {
         console.log(errors);
       }
-      // finally {
-      //   this.loading = false;
-      // }
     },
+
     showClusters(clusters) {
-      // Add a new source from our GeoJSON data and
-      // set the 'cluster' option to true. GL-JS will
-      // add the point_count property to your source data.
       this.map.addSource("earthquakes", {
         type: "geojson",
         data: clusters,
         cluster: true,
-        clusterMaxZoom: 14, // Max zoom to cluster points on
-        clusterRadius: 50, // Radius of each cluster when clustering points (defaults to 50)
+        clusterMaxZoom: 14,
+        clusterRadius: 50,
       });
 
       this.map.addLayer({
@@ -578,15 +534,7 @@ export default {
           "text-size": 12,
         },
       });
-      const organizationColors = {};
-      clusters.features.forEach((feature) => {
-        const org = feature.properties.organization;
-        if (!(org in organizationColors)) {
-          // You can use your getColor function to dynamically set colors
-          organizationColors[org] = this.getColor(org);
-        }
-      });
-      // Add unclustered points layer with dynamically set colors
+
       this.map.addLayer({
         id: "unclustered-point",
         type: "circle",
@@ -597,10 +545,10 @@ export default {
             "match",
             ["get", "organization"],
             "GCP",
-            "#8cb63d", // Green
+            "#8cb63d",
             "AZURE",
-            "#f1f075", // Yellow
-            "#f28cb1", // Default color
+            "#f1f075",
+            "#f28cb1",
           ],
           "circle-radius": 8,
           "circle-stroke-width": 3,
@@ -608,18 +556,18 @@ export default {
         },
       });
     },
+
     getColor(organization) {
-      // Add your logic here to determine the color based on the organization
-      // For example, you can use a switch statement or if-else conditions
       switch (organization) {
         case "GCP":
-          return "#8cb63d"; // Green
+          return "#8cb63d";
         case "AZURE":
-          return "#f1f075"; // Yellow
+          return "#f1f075";
         default:
-          return "#f28cb1"; // Default color
+          return "#f28cb1";
       }
     },
+
     drawLines(map, lines, group_id) {
       let uniqueId = "line-" + group_id;
       let lineFeatures = [];
@@ -638,61 +586,56 @@ export default {
             Math.pow(t, 2) * endCoords[0];
           var y =
             Math.pow(1 - t, 2) * startCoords[1] +
-            3 * (1 - t) * t * controlPoint[1] +
+            2 * (1 - t) * t * controlPoint[1] +
             Math.pow(t, 2) * endCoords[1];
           curvePoints.push([x, y]);
         }
         return curvePoints;
       }
 
+      // ***** YAHAN FIX KIYA - MARKERS AB SAHI BANENGE *****
       // function addMarker(properties, coordinates) {
       //   let el = document.createElement("div");
-      //   el.className = "my-marker-icon";
-      //   let marker = new mapboxgl.Marker(el).setLngLat(coordinates).addTo(map);
 
-      //   console.log(properties);
+      //   // Check karo ke properties exist karti hain
+      //   const org = properties?.client?.Organization || properties?.organization || "Unknown";
+      //   const server = properties?.server?.machine_name || properties?.machine_name || "N/A";
+      //   const client = properties?.client?.machine_name || "N/A";
 
-      //   let el = document.createElement('div');
-      //   const org = properties.client.Organization;
-      //   const server = properties.server.machine_name;
-      //   const client = properties.client.machine_name; */
-
-      //   if (org === 'GCP') {
-      //     el.className = 'gcp-marker';
-      //   } else  if (org === 'Azure') {
-      //     el.className = 'azure-marker';
+      //   if (org === "GCP") {
+      //     el.className = "gcp-marker";
+      //   } else if (org === "Azure" || org === "AZURE") {
+      //     el.className = "azure-marker";
       //   } else {
-      //    el.className = 'default-marker';
+      //     el.className = "default-marker";
       //   }
 
-      //   let marker = new mapboxgl.Marker(el)
-      //     .setLngLat(coordinates)
-      //     .addTo(map);
+      //   // YEH IMPORTANT LINE - map ko use karo, this.map nahi
+      //   let marker = new mapboxgl.Marker(el).setLngLat(coordinates).addTo(map);
 
-      //   let popupHTML = `<h5>${org}</h5><p>server: ${server}</p><p>client: ${client}</p>`
-      //   let markerPopup = new mapboxgl.Popup()
-      //   marker.getElement().addEventListener('mouseenter', function () {
-      //     markerPopup
-      //       .setLngLat(coordinates)
-      //       .setHTML(popupHTML)
-      //       .addTo(map);
+      //   let popupHTML = `<h5>${org}</h5><p>server: ${server}</p><p>client: ${client}</p>`;
+      //   let markerPopup = new mapboxgl.Popup();
+
+      //   marker.getElement().addEventListener("mouseenter", function () {
+      //     markerPopup.setLngLat(coordinates).setHTML(popupHTML).addTo(map);
       //   });
 
       //   marker.getElement().addEventListener("mouseleave", function () {
-      //     // Close the popup on mouse leave
-      //    markerPopup.remove();
+      //     markerPopup.remove();
       //   });
+
       //   return marker;
       // }
       function addMarker(properties, coordinates) {
         let el = document.createElement("div");
-        const org = properties.client.Organization;
-        const server = properties.server.machine_name;
-        const client = properties.client.machine_name;
+
+        const org = properties?.client?.Organization || properties?.organization || "Unknown";
+        const server = properties?.server?.machine_name || properties?.machine_name || "N/A";
+        const client = properties?.client?.machine_name || "N/A";
 
         if (org === "GCP") {
           el.className = "gcp-marker";
-        } else if (org === "Azure") {
+        } else if (org === "Azure" || org === "AZURE") {
           el.className = "azure-marker";
         } else {
           el.className = "default-marker";
@@ -700,26 +643,37 @@ export default {
 
         let marker = new mapboxgl.Marker(el).setLngLat(coordinates).addTo(map);
 
+        // FIXED POPUP
         let popupHTML = `<h5>${org}</h5><p>server: ${server}</p><p>client: ${client}</p>`;
-        let markerPopup = new mapboxgl.Popup();
+
+        let markerPopup = new mapboxgl.Popup({
+          offset: 25,
+          closeButton: false,
+          focusAfterOpen: false,  // IMPORTANT - focus nahi lega
+          className: 'marker-popup'
+        });
+
         marker.getElement().addEventListener("mouseenter", function () {
           markerPopup.setLngLat(coordinates).setHTML(popupHTML).addTo(map);
         });
 
         marker.getElement().addEventListener("mouseleave", function () {
-          // Close the popup on mouse leave
           markerPopup.remove();
         });
+
         return marker;
       }
 
       let groupMarkersList = [];
+
       lines["features"].forEach(function (line) {
         if (!checkLineIds.includes(line["properties"]["session_id"])) {
           let cur = drawCurved(
             line["geometry"]["coordinates"][0],
             line["geometry"]["coordinates"][1]
           );
+
+          // Markers add karo
           let m1 = addMarker(
             line["properties"],
             line["geometry"]["coordinates"][0]
@@ -728,23 +682,23 @@ export default {
             line["properties"],
             line["geometry"]["coordinates"][1]
           );
+
           groupMarkersList.push(m1);
           groupMarkersList.push(m2);
 
           const obj = {
             type: "Feature",
             geometry: {
-              // zaheer: comment this out, if you don't need curved lines
               type: "LineString",
               coordinates: cur,
             },
-            // geometry: line["geometry"],
             properties: line["properties"],
           };
           lineFeatures.push(obj);
           checkLineIds.push(line["properties"]["session_id"]);
         }
       });
+
       this.groupMarkers[group_id] = groupMarkersList;
 
       this.initialGroupGeoJsonData = {
@@ -752,9 +706,11 @@ export default {
         features: lineFeatures,
       };
 
-      console.log("lineFeature", lineFeatures);
+      // console.log("lineFeature", lineFeatures);
+      // console.log("Markers created:", groupMarkersList.length);
 
       this.GroupGeoJson[uniqueId] = this.initialGroupGeoJsonData;
+
       this.map.addSource(uniqueId, {
         type: "geojson",
         data: this.initialGroupGeoJsonData,
@@ -770,48 +726,50 @@ export default {
         },
         paint: {
           "line-color": ["get", "color"],
-          "line-width": 1, // Maximum line width at higher zoom levels
+          "line-width": 1,
         },
       });
     },
+
     clearLines() {
       const map = this.map;
-      // Iterate through the layers to find and remove layers with 'line-' prefix
+
       map.getStyle().layers.forEach((layer) => {
         if (layer.id.startsWith("line-")) {
           map.removeLayer(layer.id);
           map.removeSource(layer.id);
-          // Extract groupId from the layer id
+
           const groupId = layer.id.replace("line-", "");
-          // Remove markers associated with the group
           const myGroupMarkers = this.groupMarkers[groupId];
+
           if (myGroupMarkers) {
             myGroupMarkers.forEach((marker) => marker.remove());
             delete this.groupMarkers[groupId];
           }
         }
       });
+
       this.groupSwitches = {};
-      // Reset profile switches and associated UI elements
       this.clearProfileSwitches();
-      // Show clusters after clearing lines
+
       const clusterLayers = ["clusters", "cluster-count"];
       clusterLayers.forEach((layerId) => {
         map.setLayoutProperty(layerId, "visibility", "visible");
       });
     },
+
     clearProfileSwitches() {
       const profileSwitchesData = this.profileSwitchesData;
-      // Clear profile switches and associated UI elements
+
       Object.keys(profileSwitchesData).forEach((profileId) => {
         delete profileSwitchesData[profileId];
         document.getElementById("profileDefault" + profileId).checked = false;
       });
     },
+
     clearAll() {
       const map = this.map;
 
-      // Remove cluster layers
       map.getStyle().layers.forEach((layer) => {
         if (
           layer.id.startsWith("clusters") ||
@@ -821,43 +779,38 @@ export default {
         }
       });
 
-      // Remove connection layers
       map.getStyle().layers.forEach((layer) => {
         if (layer.id.startsWith("line-")) {
           map.removeLayer(layer.id);
         }
       });
 
-      // Remove cluster count layer
       const clusterCountLayer = map.getLayer("cluster-count");
       if (clusterCountLayer) {
         map.removeLayer("cluster-count");
       }
 
-      // Remove cluster sources
       ["earthquakes"].forEach((source) => {
         if (map.getSource(source)) {
           map.removeSource(source);
         }
       });
     },
+
     handleLineHover(e) {
       const map = this.map;
       const lineId = e.features[0].layer.id;
-
-      // Change the line color when hovering (you can customize the effect as needed)
       map.setPaintProperty(lineId, "#11b4da", "white");
     },
+
     resetLineHover(e) {
       const map = this.map;
       const lineId = e.features[0].layer.id;
-      // Reset the line color to its original color when the mouse leaves
       map.setPaintProperty(lineId, "#11b4da", "white");
     },
+
     zoomDeafault() {
-      // Define the default zoom level
       const defaultZoomLevel = 1.8;
-      // Ease the map to the default center and zoom level
       this.map.easeTo({
         center: [0, 20],
         zoom: defaultZoomLevel,
@@ -887,7 +840,6 @@ export default {
 
 #loader {
   display: none;
-  /* Initially hide the loader */
   position: fixed;
   top: 50%;
   left: 50%;
@@ -964,5 +916,64 @@ export default {
   border: 0;
   border-top: var(--bs-border-width) solid;
   opacity: 0.25;
+}
+
+/* Marker styles - YEH ADD KIYE HAIN TAAKE MARKERS DIKHEIN */
+.gcp-marker {
+  background-color: #8cb63d;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid white;
+  cursor: pointer;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.azure-marker {
+  background-color: #f1f075;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid white;
+  cursor: pointer;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.default-marker {
+  background-color: #f28cb1;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid white;
+  cursor: pointer;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Popup focus issue fix */
+.marker-popup .mapboxgl-popup-content {
+  outline: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.marker-popup:focus {
+  outline: none;
+}
+
+.marker-popup h5 {
+  margin: 0 0 4px 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.marker-popup p {
+  margin: 2px 0;
+  font-size: 11px;
+}
+
+/* Ensure no element with aria-hidden causes issues */
+[aria-hidden="true"] {
+  pointer-events: none !important;
 }
 </style>
