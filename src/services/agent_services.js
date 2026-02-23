@@ -5,9 +5,10 @@ let base_url = import.meta.env.VITE_BASE_URL
 
 axios.interceptors.request.use(
   (config) => {
-    config.headers[
-      "Authorization"
-    ] = `Bearer ${store.getters.getToken}`;
+    const token = store.getters.getToken;
+    if (token) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
     return Promise.resolve(config);
   },
   (error) => {
