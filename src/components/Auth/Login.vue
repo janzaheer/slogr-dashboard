@@ -14,10 +14,8 @@
 
             <!-- Logo -->
             <RouterLink to="/">
-              <img src="@/assets/group-2420.svg" class="logo" />
+              <img src="@/assets/group-2420.svg" class="logo my-5" />
             </RouterLink>
-
-            <h3 class="fw-bold my-4">Welcome Back</h3>
 
             <!-- FORM -->
             <Form :validation-schema="schema" @submit="loginUser" v-slot="{ errors, meta }">

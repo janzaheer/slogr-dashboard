@@ -16,9 +16,10 @@ const app = createApp(App)
 app.use(router)
 app.use(
     createAuth0({
-      domain: "dev-ydfsobinon8j04ec.us.auth0.com",
-      clientId: "5BLg0aCqe3DJHMSSaShvhzA9uTVLEIOF",
+      domain: import.meta.env.VITE_AUTHO_DOMAIN,
+      clientId: import.meta.env.VITE_AUTHO_CLIENT_ID,
       authorizationParams: {
+        // redirect_uri: import.meta.VITE_AUTHO_CALLBACK_URL
         redirect_uri: window.location.origin
       }
     })
