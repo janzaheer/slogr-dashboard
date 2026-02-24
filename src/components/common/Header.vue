@@ -118,12 +118,6 @@ import FilterDropdown from "./FilterDropdown.vue";
 
 export default {
   name: "Header",
-  setup() {
-    const { logout } = useAuth0();
-    return {
-      logout: () => logout(),
-    };
-  },
 
   components: {
     FilterDropdown
@@ -138,7 +132,12 @@ export default {
   methods: {
     logoutUser() {
       this.$store.dispatch("logout");
-      this.logout();
+      const domain = import.meta.env.VITE_AUTHO_DOMAIN;
+      const clientId = import.meta.env.VITE_AUTHO_CLIENT_ID;
+      const returnTo = window.location.origin;
+
+      window.location.href =
+        `https://${domain}/v2/logout?client_id=${clientId}&returnTo=${encodeURIComponent(returnTo)}`;
     },
   },
 };
