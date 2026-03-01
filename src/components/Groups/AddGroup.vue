@@ -16,8 +16,12 @@
                     <div class="modal-body">
                         <div class="">
                             <div class="mb-3">
-                                <input type="text" class="form-control form-control-lg" placeholder="Enter Group Name"
-                                    name="name" v-model="this.form.name">
+                                <input type="text" class="form-control form-control-lg"
+                                    :class="{ 'is-invalid': showNameError }" placeholder="Enter Group Name" name="name"
+                                    v-model="form.name" @blur="handleBlur" @input="validateName">
+                                <div class="invalid-feedback" v-if="showNameError">
+                                    You need to put in the name to create the group
+                                </div>
                             </div>
                             <div class="row g-2 mt-1">
                                 <div class="col-6">
@@ -61,7 +65,8 @@
                                                 <div class="d-flex align-items-center" v-for="data in selectedSessions"
                                                     :key="data.id">
                                                     <a href="#" class="text-decoration-none" style="color: #b63d3d;"
-                                                        @click="handleCancel(data.id)"><i class="fa-solid fa-xmark"></i></a>
+                                                        @click="handleCancel(data.id)"><i
+                                                            class="fa-solid fa-xmark"></i></a>
                                                     <p class="sessionFormText me-1">{{ data?.s_name }}</p> |
                                                     <p class="sessionFormText">{{ data?.c_name }}</p>
                                                 </div>
@@ -75,8 +80,9 @@
                     <div class="modal-footer">
                         <div class="d-flex justify-content-end">
                             <button type="button" class="modelCancelBtn" data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" data-bs-dismiss="modal" @click="handleAddGroup" class="modelSaveBtn ms-2"
-                                :disabled="this.selectedSessions.length === 0">Create</button>
+                            <button type="button" data-bs-dismiss="modal" @click="handleAddGroup"
+                                class="modelSaveBtn ms-2"
+                                :disabled="this.selectedSessions.length === 0 || !this.form.name || this.form.name.trim() === ''">Create</button>
                         </div>
                     </div>
                 </div>
@@ -89,9 +95,8 @@
 import { getSessionsNames } from '../../services/sessions_services'
 import { VueSpinner } from 'vue3-spinners';
 import { createGroup } from '../../services/group_services';
-import { createToast } from 'mosha-vue-toastify';
-import 'mosha-vue-toastify/dist/style.css';
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar';
+import Toast from '../Toast';
 export default {
     name: 'AddGroup',
     components: {
@@ -107,6 +112,8 @@ export default {
             sessionsData: [],
             selectedSessions: [],
             searchQuery: '',
+            showNameError: false,
+            nameTouched: false
         }
     },
     computed: {
@@ -125,7 +132,24 @@ export default {
         this.handleSessionsName()
     },
     methods: {
+        handleBlur() {
+            this.nameTouched = true;
+            this.validateName();
+        },
+
+        validateName() {
+            if (this.nameTouched) {
+                this.showNameError = !this.form.name || this.form.name.trim() === '';
+            }
+        },
+
         async handleAddGroup() {
+            this.nameTouched = true;
+            if (!this.form.name || this.form.name.trim() === '') {
+                this.showNameError = true;
+                this.nameTouched = true;
+                return; // Stop form submission
+            }
             const payload = {
                 name: this.form.name,
                 sessions: this.form.sessions
@@ -133,6 +157,8 @@ export default {
             try {
                 await createGroup(payload)
                 this.form.name = '';
+                this.showNameError = false;
+                this.nameTouched = false;
                 this.selectedSessions.forEach(session => {
                     const id = session.id;
                     const checkboxElement = document.getElementById(`sessions-${id}`);
@@ -143,17 +169,14 @@ export default {
                 this.selectedSessions = [];
                 this.handleGroupList()
                 this.handleGroupsSessionsData()
-                createToast(`add Group successfully`, {
-                    type: 'success',
-                    position: 'top-right',
-                    transition: 'zoom',
-                });
+                Toast.fire({ icon: "success", title: "add Group successfully" })
 
             } catch (error) {
                 console.log(error)
             }
 
         },
+
         async handleSessionsCheck($event, id, s_name, c_name) {
             if ($event.target.checked) {
                 this.form.sessions.push(id);
@@ -169,6 +192,7 @@ export default {
                 }
             }
         },
+
         handleCancel(id) {
             const index2 = this.selectedSessions.findIndex(item => item.id === id);
             if (index2 !== -1) {
@@ -180,7 +204,10 @@ export default {
                 this.form.sessions.splice(index, 1);
             }
         },
+        
         async handleSessionsName() {
+            this.showNameError = false;
+            this.nameTouched = false;
             try {
                 let res = await getSessionsNames()
                 this.sessionsData = res;

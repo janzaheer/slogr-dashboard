@@ -117,7 +117,7 @@
                                                         Edit</a>
                                                 </li>
                                                 <li>
-                                                    <RouterLink :to="`/sentinelReports/` + data.id"
+                                                    <RouterLink :to="`/sessionReports/` + data.id"
                                                         class="dropdown-item"><i
                                                             class="fa-regular fa-eye me-1 text-dark"></i>Details
                                                     </RouterLink>
