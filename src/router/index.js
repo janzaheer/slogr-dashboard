@@ -11,6 +11,7 @@ import Analytics from '../components/Analytics/Analytics.vue';
 import SentinelReports from '../components/Sentinel/SentinelReports.vue';
 import SessionReports from '../components/Sessions/SessionReports.vue';
 import GroupReports from '../components/Groups/GroupReports.vue';
+import SessionDetails from '../components/Sessions/SessionDetails.vue';
 ////////////////////ADMIN/////////////////////////////////////
 import Dashboard from '../components/Admin/Dashboard/Dashboard.vue'
 import CreateNewUser from '../components/Admin/CreateUser/CreateNewUser.vue'
@@ -137,7 +138,13 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue'),
       meta: { requiresAuth: true },
-    }
+    },
+    {
+      path: '/sessionDetails',
+      name: 'SessionDetails',
+      component: SessionDetails,
+      meta: { requiresAuth: true },
+    },
   ]
 })
 
