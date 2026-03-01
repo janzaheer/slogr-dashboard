@@ -102,7 +102,7 @@
                                                                 <p class="tableP">{{ data?.p_name }}</p>
                                                             </td>
                                                             <td class="fs-5 dropstart">
-                                                                <RouterLink :to="`/sentinelReports/` + data.id"
+                                                                <RouterLink :to="`/groupReports/` + data.id"
                                                                     class="text-decoration-none text-dark tableP">
                                                                     <i class="fa-solid fa-chevron-right"></i>
                                                                 </RouterLink>

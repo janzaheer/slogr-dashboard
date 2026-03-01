@@ -423,7 +423,6 @@ export default {
             }
             this.selectedGridId = selectedId
             this.selectedGridName = selectedName
-            console.log('id-grid', selectedId)
             try {
                 this.loading = true;
                 this.error = null;
@@ -433,7 +432,6 @@ export default {
                     this.refSessions = []
                 } else {
                     this.refSessions = res.sessions
-                    console.log('ref-sessions', res.sessions)
                 }
             } catch (error) {
                 console.log(error)

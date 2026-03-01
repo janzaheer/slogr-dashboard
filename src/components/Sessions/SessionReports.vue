@@ -5,7 +5,7 @@
             <div class="container-fluid sentinel mt-2">
                 <div class="d-flex justify-content-end">
                     <h1 class="me-2">
-                        <RouterLink to="/sentinel"> <i class="fa-solid fa-xmark fa-xs" style="color: #d8dce2;"></i>
+                        <RouterLink to="/sessions"> <i class="fa-solid fa-xmark fa-xs" style="color: #d8dce2;"></i>
                         </RouterLink>
                     </h1>
                 </div>
@@ -22,7 +22,7 @@ import {
     RouterLink
 } from 'vue-router';
 import Header from '../common/Header.vue'
-import ReportsChild from './ReportsChild.vue';
+import ReportsChild from '../Sentinel/ReportsChild.vue';
 
 export default {
     name: 'SessionReports',

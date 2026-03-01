@@ -123,6 +123,8 @@ import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
 import { deleteGroup } from '../../services/group_services';
 import { createToast } from 'mosha-vue-toastify';
 import 'mosha-vue-toastify/dist/style.css';
+import Toast from '../Toast';
+
 export default {
     name: 'GroupSidebar',
     components: {
@@ -190,11 +192,7 @@ export default {
                 await deleteGroup(id)
                 this.handleGroupList()
                 this.handleGroupsSessionsData()
-                createToast(`Delete Group successfully`, {
-                    type: 'success',
-                    position: 'top-right',
-                    transition: 'zoom',
-                });
+                Toast.fire({ icon: "success", title: "Delete Group successfully" })
             } catch (error) {
                 console.log(error)
             }

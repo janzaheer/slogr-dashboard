@@ -9,6 +9,8 @@ import SignUp from '../components/Auth/SignUp.vue';
 import Groups from '../components/Groups/Groups.vue';
 import Analytics from '../components/Analytics/Analytics.vue';
 import SentinelReports from '../components/Sentinel/SentinelReports.vue';
+import SessionReports from '../components/Sessions/SessionReports.vue';
+import GroupReports from '../components/Groups/GroupReports.vue';
 ////////////////////ADMIN/////////////////////////////////////
 import Dashboard from '../components/Admin/Dashboard/Dashboard.vue'
 import CreateNewUser from '../components/Admin/CreateUser/CreateNewUser.vue'
@@ -77,6 +79,18 @@ const router = createRouter({
       path: '/sentinelReports/:id',
       name: 'SentinelReports',
       component: SentinelReports,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/sessionReports/:id',
+      name: 'SessionReports',
+      component: SessionReports,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/groupReports/:id',
+      name: 'GroupReports',
+      component: GroupReports,
       meta: { requiresAuth: true },
     },
     {
