@@ -102,7 +102,10 @@
                                             <p class="tableP">{{ data.dscp }}</p>
                                         </td>
                                         <td class="fs-5"><a href="#" class="text-decoration-none text-dark tableP">
-                                                <i class="fa-solid fa-circle-play"></i></a></td>
+                                                <RouterLink to="/sessionDetails">
+                                                    <i class="fa-solid fa-circle-play"></i>
+                                                </RouterLink>
+                                            </a></td>
                                         <td class="fs-5 dropstart">
                                             <a href="#" class="text-decoration-none text-dark tableP"
                                                 data-bs-toggle="dropdown" aria-expanded="false">
@@ -453,7 +456,7 @@ export default {
                 }
             }
         },
-        
+
         async monitor(size = 1000) {
             try {
                 let res = await ProfileListForm(size)
