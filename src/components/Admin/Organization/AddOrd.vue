@@ -1,43 +1,45 @@
 <template>
     <div>
         <div class="d-flex align-items-center">
-            <!-- <div>
-                <h6>To create your own organization use this button </h6>
-            </div> -->
             <div>
-                <button class="editBtn ms-4" data-bs-toggle="modal" data-bs-target="#staticBackdrop3"><i
-                        class="fa-solid fa-plus"></i> Add New Organization</button>
+                <button class="editBtn ms-4" data-bs-toggle="modal" data-bs-target="#staticBackdrop3">
+                    <i class="fa-solid fa-plus"></i> Add New Organization
+                </button>
             </div>
         </div>
-        <!-- Modal  add-->
+
         <div class="modal fade" id="staticBackdrop3" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="staticBackdrop1Label" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered  modal-lg">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                     <div class="modal-header d-flex justify-content-center align-items-center">
                         <div class="">
                             <h2 class="text-dark">Add New Organization</h2>
                         </div>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                            @click="resetForm"></button>
                     </div>
                     <div class="modal-body">
                         <div class="">
                             <div class="mb-3">
                                 <div class="row g-2">
                                     <div class="col-md-4">
-                                        <label for="exampleFormControlInput1" class="form-label ms-1">Name</label>
-                                        <input type="text" class="form-control form-control-lg" placeholder="name"
-                                            name="name" v-model="this.form.name">
+                                        <label class="form-label ms-1">Name <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control form-control-lg"
+                                            :class="{ 'is-invalid': nameTouched && !form.name }"
+                                            placeholder="Enter Organization Name" name="name" v-model="form.name"
+                                            @blur="nameTouched = true" />
+                                        <div class="invalid-feedback" v-if="nameTouched && !form.name">Name is required.</div>
                                     </div>
                                     <div class="col-md-4">
-                                        <label for="exampleFormControlInput1" class="form-label ms-1">Phone</label>
-                                        <input type="text" class="form-control form-control-lg" placeholder="Phone"
-                                            name="phone" v-model="this.form.phone">
+                                        <label class="form-label ms-1">Phone</label>
+                                        <input type="text" class="form-control form-control-lg"
+                                            placeholder="Enter Phone Number" name="phone" v-model="form.phone" />
                                     </div>
                                     <div class="col-md-4">
-                                        <label for="exampleFormControlInput1" class="form-label ms-1">Address</label>
-                                        <input type="text" class="form-control form-control-lg" placeholder="Address"
-                                            name="address" v-model="this.form.address">
+                                        <label class="form-label ms-1">Address</label>
+                                        <input type="text" class="form-control form-control-lg"
+                                            placeholder="Enter Address" name="address" v-model="form.address" />
                                     </div>
                                 </div>
                             </div>
@@ -45,9 +47,11 @@
                     </div>
                     <div class="modal-footer">
                         <div class="d-flex justify-content-end">
-                            <button type="button" class="modelCancelBtn" data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" data-bs-dismiss="modal" @click="handleAddOrg"
-                                class="modelSaveBtn ms-2">Save</button>
+                            <button type="button" class="modelCancelBtn" data-bs-dismiss="modal" id="orgCancelBtn"
+                                @click="resetForm">Cancel</button>
+                            <button type="button" class="modelSaveBtn ms-2"
+                                :disabled="!isFormValid"
+                                @click="handleAddOrg">Save</button>
                         </div>
                     </div>
                 </div>
@@ -57,13 +61,18 @@
 </template>
 
 <script>
-import { createToast } from 'mosha-vue-toastify';
-import 'mosha-vue-toastify/dist/style.css';
-import { addOrganization } from '../../../services/organization_services'
+import { addOrganization } from '../../../services/organization_services';
+import Toast from '../../Toast';
+
 export default {
     name: 'AddOrg',
     props: {
         handleGetOrganization: Function
+    },
+    computed: {
+        isFormValid() {
+            return !!this.form.name
+        }
     },
     data() {
         return {
@@ -71,13 +80,15 @@ export default {
                 name: '',
                 address: '',
                 phone: ''
-            }
+            },
+            nameTouched: false,
         }
     },
-    mounted() {
-
-    },
     methods: {
+        resetForm() {
+            this.form = { name: '', address: '', phone: '' }
+            this.nameTouched = false
+        },
         async handleAddOrg() {
             const payload = {
                 name: this.form.name,
@@ -86,18 +97,23 @@ export default {
             }
             try {
                 await addOrganization(payload)
-                createToast(`Add New Organization Successfully`, {
-                    type: 'success',
-                    position: 'top-right',
-                    transition: 'zoom',
-                });
+                Toast.fire({ icon: 'success', title: 'Organization added successfully' })
                 this.handleGetOrganization()
+                document.getElementById('orgCancelBtn').click()
+                this.resetForm()
             } catch (error) {
                 console.log(error)
+                Toast.fire({ icon: 'error', title: 'Something went wrong' })
             }
         }
     }
 }
 </script>
 
-<style></style>
+<style scoped>
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+</style>

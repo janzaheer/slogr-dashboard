@@ -12,8 +12,8 @@ let HEADERS = {
     "Authorization": `Bearer ${TOKEN}`
 }
 
-export async function ProfileList() {
-    const resp = await axios.get(`${base_url}/api/profiles`, {headers: HEADERS})
+export async function ProfileList(page = 1, size = 10) {
+    const resp = await axios.get(`${base_url}/api/profiles?page=${page}&size=${size}`, {headers: HEADERS})
     return resp.data
 }
 

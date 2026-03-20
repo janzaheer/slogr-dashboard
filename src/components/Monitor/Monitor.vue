@@ -209,19 +209,24 @@
                                 </tbody>
                             </table>
                             <div class="d-flex justify-content-between">
-                                <div>
-                                    <button class="addBtn2"><i class="fa-solid fa-chevron-down fa-lg"></i> Go to
-                                        Page</button>
+                                <div class="d-flex align-items-center text-muted" style="font-size: 0.9rem;">
+                                    Total Records: {{ monitorData.length }}
                                 </div>
                                 <div>
                                     <div class="pagination">
-                                        <button class="prevBtn"><i class="fa-solid fa-angle-left"></i> Prev</button>
+                                        <button class="prevBtn" :disabled="pages.previousPage === 0"
+                                            @click="handleMonitorList(pages.previousPage)">
+                                            <i class="fa-solid fa-angle-left"></i> Prev
+                                        </button>
                                         <div class="pageNumber">-</div>
                                         <div class="pageNumber">-</div>
-                                        <div class="pageNumber pageBtn">1</div>
+                                        <div class="pageNumber pageBtn">{{ pages.currentPage }}</div>
                                         <div class="pageNumber">-</div>
                                         <div class="pageNumber">-</div>
-                                        <button class="nextBtn">Next <i class="fa-solid fa-angle-right"></i></button>
+                                        <button class="nextBtn" :disabled="pages.nextPage === 0"
+                                            @click="handleMonitorList(pages.nextPage)">
+                                            Next <i class="fa-solid fa-angle-right"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -265,17 +270,25 @@ export default {
         return {
             monitorData: [],
             loading: false,
+            pages: {
+                currentPage: 1,
+                previousPage: 0,
+                nextPage: 0,
+            },
         }
     },
     mounted() {
         this.handleMonitorList()
     },
     methods: {
-        async handleMonitorList() {
+        async handleMonitorList(page = 1) {
             try {
                 this.loading = true
-                let res = await ProfileList()
+                let res = await ProfileList(page)
                 this.monitorData = res.profiles
+                this.pages.currentPage = page
+                this.pages.previousPage = page > 1 ? page - 1 : 0
+                this.pages.nextPage = (res.profiles && res.profiles.length === 10) ? (res?.next || page + 1) : 0
             } catch (error) {
                 console.log(error)
             } finally {

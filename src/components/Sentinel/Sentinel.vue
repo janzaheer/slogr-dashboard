@@ -37,17 +37,13 @@
                                     <VueSpinner size="100" color="#8cb63d" />
                                 </div>
                                 <div class="m-5" v-else-if="!loading2 && (!agents || agents.length === 0)">
-                                    <!-- <h3 class="text-danger">Alerts not found Add new Alert</h3> -->
                                     <div class="empty-state-container">
                                         <div class="empty-state-card text-center p-5 rounded-4 shadow-sm">
-                                            <!-- Icon -->
                                             <div class="empty-state-icon mb-4">
                                                 <div class="icon-circle mx-auto">
                                                     <i class="fa-solid fa-location-dot"></i>
                                                 </div>
                                             </div>
-
-                                            <!-- Message - EXACTLY YOUR CODE -->
                                             <div class="empty-state-message mb-4">
                                                 <h3 class="fw-semibold mb-2" style="color: #1f2937; font-size: 1.5rem;">
                                                     No Sentinels Found
@@ -59,7 +55,6 @@
                                                     updated.
                                                 </p>
                                             </div>
-                                            <!-- Action Button -->
                                             <button class="addBtn" data-bs-toggle="modal"
                                                 data-bs-target="#staticBackdrop2"> <i
                                                     class="fa-solid fa-plus fa-lg"></i> Add New Sentinel</button>
@@ -92,6 +87,7 @@
                                                 </th>
                                                 <th scope="col"></th>
                                                 <th scope="col"></th>
+                                                <th scope="col"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -117,8 +113,13 @@
                                                 <td class="fs-5"><a href="#"
                                                         class="text-decoration-none text-dark tableP"
                                                         data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-                                                        @click="handleUpdateModalData(data.id, data.name)"> <i
+                                                        @click="selectedSentinel = data"> <i
                                                             class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
+                                                <td class="fs-5"><a href="#"
+                                                        class="text-decoration-none text-danger tableP"
+                                                        data-bs-toggle="modal" data-bs-target="#deleteConfirmModal"
+                                                        @click="deleteId = data.id">
+                                                        <i class="fa-regular fa-trash-can fa-lg"></i></a></td>
                                                 <td class="fs-5"><a href="#"
                                                         class="text-decoration-none text-dark tableP"
                                                         @click="handleGrids(data.id, data.name)">
@@ -131,18 +132,12 @@
 
                                 </div>
                                 <div class="d-flex justify-content-between" v-else>
-                                    <div>
-                                        <button class="addBtn2"><i class="fa-solid fa-chevron-down fa-lg"></i> Go to
-                                            Page</button>
-                                        <!-- <button class="addBtn2 mx-2" data-bs-toggle="modal" data-bs-target="#groupModal"><i
-                                                class="fa-solid fa-plus fa-lg"></i> Add to
-                                            Group</button>
-                                        <button class="addBtn2"><i class="fa-solid fa-plus fa-lg"></i> Create
-                                            Report</button> -->
+                                    <div class="d-flex align-items-center text-muted" style="font-size: 0.9rem;">
+                                        Total Records: {{ agents.length }}
                                     </div>
                                     <div>
                                         <div class="pagination">
-                                            <button class="prevBtn"
+                                            <button class="prevBtn" :disabled="pages.previousPage === 0"
                                                 @click="handleSentinelListing(pages.previousPage)"><i
                                                     class="fa-solid fa-angle-left"></i> Prev</button>
                                             <div class="pageNumber">-</div>
@@ -150,7 +145,8 @@
                                             <div class="pageNumber pageBtn">{{ pages.currentPage }}</div>
                                             <div class="pageNumber">-</div>
                                             <div class="pageNumber">-</div>
-                                            <button class="nextBtn" @click="handleSentinelListing(pages.nextPage)">Next
+                                            <button class="nextBtn" :disabled="pages.nextPage === 0"
+                                                @click="handleSentinelListing(pages.nextPage)">Next
                                                 <i class="fa-solid fa-angle-right"></i></button>
                                         </div>
                                     </div>
@@ -191,116 +187,25 @@
             </div>
         </div>
     </div>
-    <!-- go to Modal -->
-    <!-- <div class="modal fade" id="groupModal" tabindex="-1" aria-labelledby="groupModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="my-4 text-center">
-                        <h2 class="text-dark">Add To Group</h2>
-                    </div>
-                    <div class="container mb-2">
-                        <input type="text" class="form-control form-control-lg" style="background-color: #f3f3f3;"
-                            id="exampleFormControlInput1" placeholder="">
-                    </div>
-                    <div class="">
-                        <hr>
-                        <button class="createGroupBtn"> <i class="fa-solid fa-plus fa-lg"></i> Create New Group</button>
-                        <hr>
-                    </div>
-                    <div class="mx-2">
-                        <div class="form-check mb-3">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
-                                Group 01
-                            </label>
-                        </div>
-                        <div class="form-check mb-3">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
-                            <label class="form-check-label" for="flexCheckDefault1">
-                                Group 024
-                            </label>
-                        </div>
-                        <div class="form-check mb-3">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
-                            <label class="form-check-label" for="flexCheckDefault2">
-                                Group Number 021
-                            </label>
-                        </div>
-                        <div class="form-check mb-3">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
-                            <label class="form-check-label" for="flexCheckDefault3">
-                                Group Number B23
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="modelCancelBtn" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="modelSaveBtn ms-2">Add Group</button>
-                </div>
-            </div>
-        </div>
-    </div> -->
 
-    <!-- Modal  Add new sentinel-->
-    <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdrop2Label" aria-hidden="true">
+    <AddSentinel @sentinelAdded="handleSentinelListing(1)" />
+
+    <EditSentinel :selectedSentinel="selectedSentinel" @sentinelUpdated="handleSentinelListing(1)" />
+
+    <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-body">
-                    <div class="my-2 text-center">
-                        <h2 class="text-secondary">Add Sentinel</h2>
-                        <p class="modelText">Add new Sentinel</p>
-                    </div>
-                    <div class="">
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label ms-1">Name</label>
-                            <input type="text" class="form-control form-control-lg" id="exampleFormControlInput1"
-                                placeholder="Enter Name" v-model="addSentinel.name">
-                            <span class="text-danger" v-if="!addSentinel.name">This field is required.</span>
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput2" class="form-label ms-1">Agent Code</label>
-                            <input type="text" class="form-control form-control-lg" id="exampleFormControlInput2"
-                                placeholder="Enter Agent Code" v-model="addSentinel.agent_code">
-                            <span class="text-danger" v-if="!addSentinel.agent_code">This field is required.</span>
-                        </div>
-                        <div class="d-flex justify-content-end">
-                            <button type="button" id="AddCancelButton" class="modelCancelBtn"
-                                data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" class="modelSaveBtn ms-2"
-                                @click="handleSentinelCreation">Save</button>
-                        </div>
-                    </div>
+                <div class="modal-header border-0">
+                    <h5 class="modal-title text-dark fw-semibold">Delete Sentinel</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal  edit-->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
                 <div class="modal-body">
-                    <div class="my-2 text-center">
-                        <h2 class="text-secondary">Edit Sentinel</h2>
-                        <p class="modelText">Enter your Sentinel Below Field</p>
-                    </div>
-                    <div class="">
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label ms-1">Name</label>
-                            <input type="text" class="form-control form-control-lg" id="exampleFormControlInput1"
-                                placeholder="Enter Name" v-model="updateData.name">
-                            <span class="text-danger" v-if="!updateData.name">This field is required.</span>
-                        </div>
-                        <div class="d-flex justify-content-end">
-                            <button type="button" id="EditCancelButton" class="modelCancelBtn"
-                                data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" class="modelSaveBtn ms-2" @click="handleSentinelUpdate">Save</button>
-                        </div>
-                    </div>
+                    <p class="text-muted mb-0">Are you sure you want to delete this sentinel? This action cannot be undone.</p>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="modelCancelBtn" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="modelSaveBtn ms-2" data-bs-dismiss="modal"
+                        @click="handleDelete(deleteId)">Delete</button>
                 </div>
             </div>
         </div>
@@ -309,45 +214,40 @@
 
 <script>
 import Header from '../common/Header.vue';
-import { createAgent, agentUpdate, agentList, agentRefSessions } from '../../services/agent_services';
+import { agentList, agentRefSessions, deleteAgent } from '../../services/agent_services';
 import { VueSpinner } from 'vue3-spinners';
-import { createToast } from 'mosha-vue-toastify';
-import 'mosha-vue-toastify/dist/style.css';
+import AddSentinel from './AddSentinel.vue';
+import EditSentinel from './EditSentinel.vue';
+import Toast from '../Toast';
+
 export default {
     name: 'Sentinel',
     components: {
         Header,
-        VueSpinner
+        VueSpinner,
+        AddSentinel,
+        EditSentinel
     },
     data() {
         return {
-            addSentinel: {
-                name: null,
-                agent_code: null,
-            },
-            updateData: {
-                id: null,
-                name: null
-            },
-            editName: null,
             agents: [],
             pages: {
                 currentPage: 1,
-                previousPage: 1,
-                nextPage: 1
+                previousPage: 0,
+                nextPage: 0
             },
+            selectedSentinel: null,
+            deleteId: null,
             selectedGridId: 0,
             selectedGridName: null,
             refSessions: [],
-            error: null, // data not found check
+            error: null,
             loading: false,
             loading2: false
         }
     },
     async mounted() {
         await this.handleSentinelListing()
-
-
     },
     methods: {
         async handleSentinelListing(page = 1) {
@@ -355,52 +255,23 @@ export default {
                 this.loading2 = true
                 const respData = await agentList(page)
                 this.agents = respData.data.agents
-                this.pages.previousPage = respData.data.prev || 0
-                this.pages.currentPage = this.pages.previousPage + 1
-                this.pages.nextPage = respData.data.next || 1
+                this.pages.currentPage = page
+                this.pages.previousPage = page > 1 ? page - 1 : 0
+                this.pages.nextPage = (respData.data.agents && respData.data.agents.length === 10) ? (respData.data.next || page + 1) : 0
             } catch (error) {
                 console.log(error)
             } finally {
-                this.loading2 = false;
-            }
-
-        },
-        async handleSentinelCreation() {
-            if (this.addSentinel.name && this.addSentinel.agent_code) {
-                const payload = { name: this.addSentinel.name, agent_code: this.addSentinel.agent_code }
-                try {
-                    await createAgent(payload)
-                    await this.handleSentinelListing()
-                    document.getElementById('AddCancelButton').click();
-                    this.addSentinel.name = null;
-                    this.addSentinel.agent_code = null;
-                } catch (error) {
-                    console.log('add-error', error)
-                    let newError = error.response.data.error
-                    if (newError) {
-                        console.log('res-error', newError)
-                        createToast(newError, {
-                            type: 'success',
-                            position: 'top-right',
-                            transition: 'zoom',
-                        });
-                    }
-                }
+                this.loading2 = false
             }
         },
-        handleUpdateModalData(id, name) {
-            this.updateData.id = id
-            this.updateData.name = name
-        },
-        async handleSentinelUpdate() {
-            if (this.updateData.name) {
-                const payload = { aid: this.updateData.id, name: this.updateData.name }
-                await agentUpdate(payload)
-                await this.handleSentinelListing()
-
-                document.getElementById('EditCancelButton').click();
-                this.updateData.name = null;
-                this.updateData.id = null;
+        async handleDelete(id) {
+            try {
+                await deleteAgent(id)
+                await this.handleSentinelListing(1)
+                Toast.fire({ icon: 'success', title: 'Sentinel deleted successfully' })
+            } catch (error) {
+                console.log(error)
+                Toast.fire({ icon: 'error', title: 'Something went wrong' })
             }
         },
         async handleGrids(selectedId, selectedName) {
@@ -424,11 +295,11 @@ export default {
             this.selectedGridId = selectedId
             this.selectedGridName = selectedName
             try {
-                this.loading = true;
-                this.error = null;
+                this.loading = true
+                this.error = null
                 let res = await agentRefSessions(selectedId)
                 if (res.sessions.length === 0) {
-                    this.error = "Sentinel not found.";
+                    this.error = "Sentinel not found."
                     this.refSessions = []
                 } else {
                     this.refSessions = res.sessions
@@ -436,10 +307,9 @@ export default {
             } catch (error) {
                 console.log(error)
             } finally {
-                this.loading = false;
+                this.loading = false
             }
         },
-
     }
 }
 </script>
@@ -487,7 +357,6 @@ export default {
     transform: translateY(0);
 }
 
-/* Optional: Add pulse animation to icon */
 .icon-circle {
     animation: pulse 2s infinite;
 }
@@ -565,10 +434,6 @@ export default {
     color: white;
 }
 
-/* .sentinel {
-    margin-top: 40px;
-} */
-
 .bg {
     background-color: #f7f7f8;
     min-height: 100vh;
@@ -584,11 +449,8 @@ export default {
 .prevBtn,
 .nextBtn {
     padding: 10px 15px;
-    /* font-size: 16px; */
     border-radius: 6px;
-    /* background-color:  #8CB63D; */
     border: 1px solid #8CB63D;
-    /* color: #8CB63D; */
     cursor: pointer;
     transition: background-color 0.3s ease;
     background-color: white;
@@ -652,26 +514,19 @@ p {
     border-radius: 6px;
     border: 1px solid #8CB63D;
     padding: 5px 0;
-
 }
 
 .ApplyBtn:hover {
     background-color: #72962f;
 }
 
-/* Style the label text */
 .form-check-label {
     font-weight: normal;
-    /* Make the label text normal weight */
     color: #333;
-    /* Change the label text color */
 }
 
-/* Style the checkbox when checked */
 .form-check-input:checked {
     background-color: #8CB63D !important;
-    /* Change the background color when checked */
     border: 1px solid #8CB63D !important;
-    /* Change the border color when checked */
 }
 </style>

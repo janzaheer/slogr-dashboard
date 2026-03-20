@@ -31,41 +31,41 @@
                             <div v-if="userData.user.organization_id == null">
                                 <AddOrd />
                             </div>
-                            <div v-else>
-                            </div>
-                            <div class="mt-5 ">
-                                <div class="text-center m-5" v-if="loading">
+                            <div class="mb-4" style="min-height: 90px;">
+                                <div class="text-center py-2" v-if="loading">
                                     <VueSpinner size="80" color="#8cb63d" />
                                 </div>
                                 <div v-else>
-                                    <div class="d-flex justify-content-start mt-4 ms-3" v-for="(data, index) in organizationData" :key="data.id">
-                                        <div class="d-flex justify-content-between align-items-center" v-if="index === 0 || (userData.user.organization_id && userData.user.organization_id === data.id)">
-                                            <div v-if="userData.user.organization_id  && userData.user.organization_id === data.id">
-                                                <div>
-                                                    <AssignOrg :handleGetOrganization="handleGetOrganization" />
-                                                </div>
-                                            </div>
-                                            <div v-else>
-                                                <div class="card border-0" style="background-color: var(--icon-bg);">
-                                                    <div class="card-body d-flex justify-content-center align-items-center">
-                                                        <h1><i class="fa-solid fa-user-plus fa-lg" style="color: gray;"></i>
-                                                        </h1>
+                                    <div v-for="(data, index) in organizationData" :key="data.id">
+                                        <div class="card border mb-2"
+                                            v-if="index === 0 || (userData.user.organization_id && userData.user.organization_id === data.id)">
+                                            <div class="card-body d-flex justify-content-between align-items-center">
+                                                <div class="d-flex align-items-center gap-3">
+                                                    <div v-if="userData.user.organization_id && userData.user.organization_id === data.id">
+                                                        <AssignOrg :handleGetOrganization="handleGetOrganization" />
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div class="mx-4">
-                                                <h4>{{ data.name }}</h4>
-                                                <span>Organization</span>
-                                            </div>
-                                            <div class="d-flex">
-                                                <div>
-                                                    <div><i class="fa-solid fa-map-location"></i> Designation </div>
+                                                    <div v-else class="card border-0" style="background-color: var(--icon-bg);">
+                                                        <div class="card-body d-flex justify-content-center align-items-center p-3">
+                                                            <i class="fa-solid fa-user-plus fa-lg" style="color: gray;"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="me-3">
+                                                        <h5 class="mb-0">{{ data.name }}</h5>
+                                                        <small class="text-muted">Organization</small>
+                                                    </div>
                                                     <div>
-                                                        <div><i class="fa-solid fa-mobile-screen"></i> Phone: {{ data.phone }}</div>
-                                                        <div><i class="fa-solid fa-location-dot"></i> Address: {{ data.address }}</div>
+                                                        <div style="font-size: 13px;">
+                                                            <i class="fa-solid fa-id-badge me-1" style="color: #5b9bd5;"></i> Designation
+                                                        </div>
+                                                        <div style="font-size: 13px;">
+                                                            <i class="fa-solid fa-mobile-screen me-1" style="color: #5b9bd5;"></i> Phone: {{ data.phone || '-' }}
+                                                        </div>
+                                                        <div style="font-size: 13px;">
+                                                            <i class="fa-solid fa-location-dot me-1" style="color: #5b9bd5;"></i> Address: {{ data.address || '-' }}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div v-if="userData.user.organization_id  && userData.user.organization_id === data.id">
+                                                <div v-if="userData.user.organization_id && userData.user.organization_id === data.id">
                                                     <EditOrg :name="data.name" :phone="data.phone" :address="data.address" :handleGetOrganization="handleGetOrganization" />
                                                 </div>
                                             </div>
@@ -73,66 +73,63 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="boxTop">
-                                <div class="row g-2">
-                                    <div class="col-lg-3">
-                                        <div class="card border border-2">
-                                            <div class="card-body">
-                                                <div class="my-2 d-flex align-items-center">
-                                                    <h5 class="card-title">Create New User</h5>
-                                                </div>
-                                                <hr>
-                                                <p>To enjoy the experience as a organization,
-                                                    create new pro your employee</p>
-                                                <div class="d-flex justify-content-end align-items-center my-3">
-                                                    <h1><i class="fa-solid fa-user-plus fa-2xl" style="color: #e9efc6;"></i></h1>
-                                                </div>
+                            <div class="row g-2" style="margin-top: 15%;">
+                                <div class="col-lg-3">
+                                    <div class="card border border-2">
+                                        <div class="card-body">
+                                            <div class="my-2 d-flex align-items-center">
+                                                <h5 class="card-title">Create New User</h5>
+                                            </div>
+                                            <hr>
+                                            <p>To enjoy the experience as a organization,
+                                                create new pro your employee</p>
+                                            <div class="d-flex justify-content-end align-items-center my-3">
+                                                <h1><i class="fa-solid fa-user-plus fa-2xl" style="color: #e9efc6;"></i></h1>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
-                                        <div class="card border border-2">
-                                            <div class="card-body">
-                                                <div class="my-2 d-flex align-items-center">
-                                                    <h5 class="card-title">Rights Profile</h5>
-                                                </div>
-                                                <hr>
-                                                <p>To enjoy the experience as a organization,
-                                                    create new pro your employee</p>
-                                                <div class="d-flex justify-content-end align-items-center my-3">
-                                                    <h1><i class="fa-solid fa-shield-halved fa-2xl" style="color: #e9efc6;"></i></h1>
-                                                </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="card border border-2">
+                                        <div class="card-body">
+                                            <div class="my-2 d-flex align-items-center">
+                                                <h5 class="card-title">Rights Profile</h5>
+                                            </div>
+                                            <hr>
+                                            <p>To enjoy the experience as a organization,
+                                                create new pro your employee</p>
+                                            <div class="d-flex justify-content-end align-items-center my-3">
+                                                <h1><i class="fa-solid fa-shield-halved fa-2xl" style="color: #e9efc6;"></i></h1>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
-                                        <div class="card border border-2">
-                                            <div class="card-body">
-                                                <div class="my-2 d-flex align-items-center">
-                                                    <h5 class="card-title">Billing</h5>
-                                                </div>
-                                                <hr>
-                                                <p>To enjoy the experience as a organization,
-                                                    create new pro your employee</p>
-                                                <div class="d-flex justify-content-end align-items-center my-3">
-                                                    <h1><i class="fa-solid fa-dollar-sign fa-2xl" style="color: #e9efc6;"></i>
-                                                    </h1>
-                                                </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="card border border-2">
+                                        <div class="card-body">
+                                            <div class="my-2 d-flex align-items-center">
+                                                <h5 class="card-title">Billing</h5>
+                                            </div>
+                                            <hr>
+                                            <p>To enjoy the experience as a organization,
+                                                create new pro your employee</p>
+                                            <div class="d-flex justify-content-end align-items-center my-3">
+                                                <h1><i class="fa-solid fa-dollar-sign fa-2xl" style="color: #e9efc6;"></i></h1>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
-                                        <div class="card border border-2">
-                                            <div class="card-body">
-                                                <div class="my-2 d-flex align-items-center">
-                                                    <h5 class="card-title">Select Plan</h5>
-                                                </div>
-                                                <hr>
-                                                <p>To enjoy the experience as a organization,
-                                                    create new pro your employee</p>
-                                                <div class="d-flex justify-content-end align-items-center my-3">
-                                                    <h1><i class="fa-solid fa-file-lines fa-2xl" style="color: #e9efc6;"></i></h1>
-                                                </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="card border border-2">
+                                        <div class="card-body">
+                                            <div class="my-2 d-flex align-items-center">
+                                                <h5 class="card-title">Select Plan</h5>
+                                            </div>
+                                            <hr>
+                                            <p>To enjoy the experience as a organization,
+                                                create new pro your employee</p>
+                                            <div class="d-flex justify-content-end align-items-center my-3">
+                                                <h1><i class="fa-solid fa-file-lines fa-2xl" style="color: #e9efc6;"></i></h1>
                                             </div>
                                         </div>
                                     </div>
@@ -186,16 +183,13 @@ export default {
     },
     mounted() {
         this.handleGetOrganization()
-        
     },
     methods: {
         async handleGetOrganization() {
             try {
                 this.loading = true;
                 let res = await getOrganization()
-                // console.log('org', res.data.organizations)
                 this.organizationData = res.data.organizations
-                // console.log('userData',this.$store.getters.getUserData)
             } catch (error) {
                 console.log('error', error)
             } finally {
@@ -207,10 +201,6 @@ export default {
 </script>
 
 <style>
-.boxTop {
-    /* margin-top: 120px !important; */
-}
-
 .editBtn {
     background-color: var(--white_color);
     border-radius: 6px;
