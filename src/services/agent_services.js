@@ -92,6 +92,11 @@ export async function fetchClustersData() {
 
     return clusterdata
 }
+export async function deleteAgent(id) {
+    const resp = await axios.post(`${base_url}/api/delete-agent`, { delete: id })
+    return resp.data
+}
+
 export async function agentRefSessions(id){
     const resp = await axios.get(`${base_url}/api/get-ref-sessions?aid=` + id)
     return resp.data

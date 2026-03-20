@@ -1,13 +1,9 @@
 <template>
   <div>
-    <button
-      class="addBtn"
-      data-bs-toggle="modal"
-      data-bs-target="#staticBackdrop"
-    >
+    <button class="addBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
       <i class="fa-solid fa-plus fa-lg"></i> Add New Sessions
     </button>
-    <!-- Modal  add-->
+
     <div
       class="modal fade"
       id="staticBackdrop"
@@ -26,228 +22,171 @@
               class="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
+              @click="resetForm"
             ></button>
           </div>
           <div class="modal-body">
             <form @submit.prevent="handleAddSessions">
               <div class="">
-                <div class="mb-4">
-                  <label for="exampleFormControlInput1" class="form-label ms-1"
-                    >Form*</label
-                  >
+                <div class="mb-3">
+                  <label class="form-label ms-1">From <span class="text-danger">*</span></label>
                   <select
                     v-model="selectedAgentId"
-                    class="form-select form-select-lg mb-3 custom-select"
-                    aria-label=".form-select-lg example"
-                    required
+                    class="form-select form-select-lg custom-select"
+                    :class="{ 'is-invalid': fromTouched && !selectedAgentId }"
+                    @blur="fromTouched = true"
                   >
-                    <option class="text-secondary" disabled>
-                      please select sender sentinel
-                    </option>
-                    <option
-                      v-for="agent in agents"
-                      :key="agent.id"
-                      :value="agent.id"
-                    >
+                    <option :value="null" disabled>Please select sender sentinel</option>
+                    <option v-for="agent in agents" :key="agent.id" :value="agent.id">
                       {{ agent.name }}
                     </option>
                   </select>
+                  <div class="invalid-feedback" v-if="fromTouched && !selectedAgentId">
+                    From is required.
+                  </div>
                 </div>
-                <div class="mb-4">
-                  <label for="exampleFormControlInput1" class="form-label ms-1"
-                    >To*</label
-                  >
+
+                <div class="mb-3">
+                  <label class="form-label ms-1">To <span class="text-danger">*</span></label>
                   <select
                     v-model="selectedClientId"
-                    class="form-select form-select-lg mb-3"
-                    aria-label=".form-select-lg example"
-                    required
+                    class="form-select form-select-lg"
+                    :class="{ 'is-invalid': toTouched && !selectedClientId }"
+                    @blur="toTouched = true"
                   >
-                    <option class="text-secondary" disabled>
-                      please select receiver sentinel
-                    </option>
-                    <option
-                      v-for="client in clients"
-                      :key="client.id"
-                      :value="client.id"
-                    >
+                    <option :value="null" disabled>Please select receiver sentinel</option>
+                    <option v-for="client in clients" :key="client.id" :value="client.id">
                       {{ client.name }}
                     </option>
                   </select>
+                  <div class="invalid-feedback" v-if="toTouched && !selectedClientId">
+                    To is required.
+                  </div>
                 </div>
-                <!-- Advanced button -->
-                <RouterLink to="#"
-                  @click="toggleAdvancedFields"
-                  class="ms-2 mt-2"
-                >
+
+                <RouterLink to="#" @click="toggleAdvancedFields" class="ms-2 mt-2">
                   {{ showAdvancedFields ? "Hide Advanced -" : "Show Advanced +" }}
                 </RouterLink>
+
                 <div v-if="showAdvancedFields">
-                  <div class="mb-4">
-                    <label
-                      for="exampleFormControlInput1"
-                      class="form-label ms-1"
-                      >Monitoring Profile*</label
-                    >
+                  <div class="mb-3 mt-3">
+                    <label class="form-label ms-1">Monitoring Profile <span class="text-danger">*</span></label>
                     <select
                       v-model="selectedProfile"
                       @change="updateSelectedProfileId"
-                      class="form-select form-select-lg mb-3 custom-select"
-                      aria-label=".form-select-lg example"
-                      required
+                      @blur="monitoringProfileTouched = true"
+                      class="form-select form-select-lg custom-select"
+                      :class="{ 'is-invalid': monitoringProfileTouched && selectedProfile === null }"
                     >
-                      <option class="text-secondary" disabled>
-                        select here
-                      </option>
-                      <option :value=0>
-                        Default
-                      </option>
-                      <option
-                        v-for="profile in profiles"
-                        :key="profile.id"
-                        :value="profile"
-                      >
+                      <option :value="null" disabled>Select profile</option>
+                      <option :value="0">Default</option>
+                      <option v-for="profile in profiles" :key="profile.id" :value="profile">
                         {{ profile.name }}
                       </option>
                     </select>
+                    <div class="invalid-feedback" v-if="monitoringProfileTouched && selectedProfile === null">
+                      Monitoring Profile is required.
+                    </div>
                   </div>
+
                   <div class="mb-3">
                     <div class="row g-2">
                       <div class="col-md-12">
-                        <label
-                          for="exampleFormControlInput1"
-                          class="form-label ms-1"
-                          >Schedule*</label
-                        >
+                        <label class="form-label ms-1">Schedule <span class="text-danger">*</span></label>
                         <input
                           type="number"
                           class="form-control form-control-lg"
                           placeholder="Enter Schedule"
-                          v-model="this.form.schedule"
+                          v-model="form.schedule"
                           name="schedule"
-                          required
                         />
                       </div>
                       <div class="col-md-6">
-                        <label
-                          for="exampleFormControlInput1"
-                          class="form-label ms-1"
-                          >Count*</label
-                        >
+                        <label class="form-label ms-1">Count <span class="text-danger">*</span></label>
                         <input
                           type="number"
                           class="form-control form-control-lg"
                           placeholder="Enter Count"
-                          v-model="this.form.count"
+                          v-model="form.count"
                           name="count"
-                          required
                         />
                       </div>
                       <div class="col-md-6">
-                        <label
-                          for="exampleFormControlInput1"
-                          class="form-label ms-1"
-                          >Number Of Packets*</label
-                        >
+                        <label class="form-label ms-1">Number Of Packets <span class="text-danger">*</span></label>
                         <input
                           type="number"
                           class="form-control form-control-lg"
-                          placeholder="Enter No-packets"
-                          v-model="this.form.n_packets"
+                          placeholder="Enter number of packets"
+                          v-model="form.n_packets"
                           name="n_packets"
-                          required
                         />
                       </div>
                       <div class="col-md-6">
-                        <label
-                          for="exampleFormControlInput1"
-                          class="form-label ms-1"
-                          >Packet Interval*</label
-                        >
+                        <label class="form-label ms-1">Packet Interval <span class="text-danger">*</span></label>
                         <input
                           type="number"
                           class="form-control form-control-lg"
-                          placeholder="Enter P-Interval"
-                          v-model="this.form.p_interval"
+                          placeholder="Enter packet interval"
+                          v-model="form.p_interval"
                           name="p_interval"
-                          required
                         />
                       </div>
                       <div class="col-md-6">
-                        <label
-                          for="exampleFormControlInput1"
-                          class="form-label ms-1"
-                          >Wait Time*</label
-                        >
+                        <label class="form-label ms-1">Wait Time <span class="text-danger">*</span></label>
                         <input
                           type="number"
                           class="form-control form-control-lg"
-                          placeholder="Enter W Time"
-                          v-model="this.form.w_time"
+                          placeholder="Enter wait time"
+                          v-model="form.w_time"
                           name="w_time"
-                          required
                         />
                       </div>
                       <div class="col-md-6">
-                        <label
-                          for="exampleFormControlInput1"
-                          class="form-label ms-1"
-                          >DSCP*</label
-                        >
+                        <label class="form-label ms-1">DSCP <span class="text-danger">*</span></label>
                         <input
                           type="number"
                           class="form-control form-control-lg"
-                          placeholder="Enter Dscp"
-                          v-model="this.form.dscp"
+                          placeholder="Enter DSCP"
+                          v-model="form.dscp"
                           name="dscp"
-                          required
                         />
                       </div>
                       <div class="col-md-6">
-                        <label
-                          for="exampleFormControlInput1"
-                          class="form-label ms-1"
-                          >Packet Size*</label
-                        >
+                        <label class="form-label ms-1">Packet Size <span class="text-danger">*</span></label>
                         <input
                           type="number"
                           class="form-control form-control-lg"
-                          placeholder="Enter P_Size"
+                          placeholder="Enter packet size"
+                          v-model="form.p_size"
                           name="p_size"
-                          v-model="this.form.p_size"
-                          required
                         />
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+
               <hr />
-              <div>
-                <div class="d-flex justify-content-end">
-                  <button
-                    type="button"
-                    class="modelCancelBtn"
-                    id="EditCancelButton"
-                    data-bs-dismiss="modal"
-                  >
-                    Cancel
-                  </button>
-                  <button type="submit" class="modelSaveBtn ms-2">
-                    Create
-                  </button>
-                </div>
+              <div class="d-flex justify-content-end">
+                <button
+                  type="button"
+                  class="modelCancelBtn"
+                  id="EditCancelButton"
+                  data-bs-dismiss="modal"
+                  @click="resetForm"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  class="modelSaveBtn ms-2"
+                  :disabled="!selectedAgentId || !selectedClientId"
+                >
+                  Create
+                </button>
               </div>
             </form>
           </div>
-          <!-- <div class="modal-footer">
-                        <div class="d-flex justify-content-end">
-                            <button type="button" class="modelCancelBtn" id="EditCancelButton"
-                                data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" class="modelSaveBtn ms-2" @click="handleAddSessions"
-                                :disabled="isCreateButtonDisabled">Create</button>
-                        </div>
-                    </div> -->
         </div>
       </div>
     </div>
@@ -267,7 +206,6 @@ export default {
   props: {
     getSessions: Function,
   },
-
   data() {
     return {
       form: {
@@ -282,11 +220,14 @@ export default {
       selectedProfileId: 0,
       selectedProfile: 0,
       profiles: [],
-      selectedAgentId: `please select sender sentinel`,
+      selectedAgentId: null,
       agents: [],
-      selectedClientId: "please select receiver sentinel",
+      selectedClientId: null,
       clients: [],
       showAdvancedFields: false,
+      fromTouched: false,
+      toTouched: false,
+      monitoringProfileTouched: false,
     };
   },
   async mounted() {
@@ -294,6 +235,25 @@ export default {
     await this.server();
   },
   methods: {
+    resetForm() {
+      this.form = {
+        schedule: 600,
+        count: 0,
+        n_packets: 0,
+        p_interval: 0,
+        w_time: 0,
+        dscp: 0,
+        p_size: 0,
+      };
+      this.selectedAgentId = null;
+      this.selectedClientId = null;
+      this.selectedProfileId = 0;
+      this.selectedProfile = 0;
+      this.showAdvancedFields = false;
+      this.fromTouched = false;
+      this.toTouched = false;
+      this.monitoringProfileTouched = false;
+    },
     async handleAddSessions(e) {
       e.preventDefault();
       const payload = {
@@ -309,49 +269,20 @@ export default {
         p_size: this.form.p_size,
         edit: false,
       };
-
       try {
         await addSessions(payload);
-       
-        // this.form = {
-        //   schedule: null,
-        //   count: null,
-        //   n_packets: null,
-        //   p_interval: null,
-        //   w_time: null,
-        //   dscp: null,
-        //   p_size: null,
-        // };
-        // (this.selectedAgentId = null),
-        //   (this.selectedClientId = null),
-        //   (this.selectedProfileId = null);
-          // ✅ reset form safely (no null)
-    this.form = {
-      schedule: 600,
-      count: 0,
-      n_packets: 0,
-      p_interval: 0,
-      w_time: 0,
-      dscp: 0,
-      p_size: 0,
-    };
-
-    this.selectedAgentId = "please select sender sentinel";
-    this.selectedClientId = "please select receiver sentinel";
-    this.selectedProfileId = 0;
-    this.selectedProfile = 0;
-          Toast.fire({ icon: "success", title: 'add sessions successfully' })
+        this.resetForm();
+        Toast.fire({ icon: "success", title: 'Session added successfully' });
         await this.getSessions();
         document.getElementById("EditCancelButton").click();
       } catch (error) {
         if (error.response.status === 400) {
-          Toast.fire({ icon: "error", title: error.response.data.error })
+          Toast.fire({ icon: "error", title: error.response.data.error });
         } else if (error.response.status === 401) {
-          Toast.fire({ icon: "warning", title: error.response.data.Unauthorized })
+          Toast.fire({ icon: "warning", title: error.response.data.Unauthorized });
         } else {
-          console.log("main-error-1", error);
+          console.log("error", error);
         }
-        console.log("main-error", error);
       }
     },
     async monitor(size = 1000) {
@@ -363,8 +294,6 @@ export default {
       }
     },
     updateSelectedProfileId() {
-      // Update selectedProfileId when the selection changes
-      this.selectedProfile = this.selectedProfile;
       this.selectedProfileId = this.selectedProfile.id;
       this.form.count = this.selectedProfile.count;
       this.form.n_packets = this.selectedProfile.n_packets;
@@ -389,10 +318,15 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .custom-select {
   max-height: 100px;
-  /* Adjust this value as needed */
   overflow: scroll;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 </style>

@@ -219,8 +219,8 @@ export default {
             loading2: false,
             pages: {
                 currentPage: 1,
-                previousPage: 1,
-                nextPage: 1
+                previousPage: 0,
+                nextPage: 0
             },
             Up: [],
             DownLink: [],
@@ -238,9 +238,9 @@ export default {
                 this.loading2 = true;
                 let res = await getSessionsResults(this.id, page)
                 this.analyticsData = res.data.analytics
-                this.pages.previousPage = res?.data?.prev || 0
-                this.pages.currentPage = this.pages.previousPage + 1
-                this.pages.nextPage = res?.data?.next || 0
+                this.pages.currentPage = page
+                this.pages.previousPage = page > 1 ? page - 1 : 0
+                this.pages.nextPage = (res.data.analytics && res.data.analytics.length === 10) ? (res?.data?.next || page + 1) : 0
             } catch (error) {
                 console.log(error)
             } finally {
@@ -249,7 +249,6 @@ export default {
         },
 
         async SessionsDetails() {
-            let id = this.$route.params.id
             try {
                 this.loading = true;
                 let res = await getSessionsDetails(this.id)
