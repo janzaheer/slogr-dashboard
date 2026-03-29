@@ -84,7 +84,7 @@
                                                     <!-- <th><a href="#" class="tableHead"> Packet <br> Loss</a></th> -->
                                                     <th><a href="#" class="tableHead text-muted"> JITTER <br> Min /Max
                                                             /Sdev</a></th>
-                                                    <th style="font-size: 18px; color: darkgray;"></th>
+                                                    <th><a href="#" class="tableHead text-muted">PACKET LOSS <br> Value % / Lost / Total</a></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -108,9 +108,6 @@
                                                             /{{
                                                                 data.st_rtt }}</p>
                                                     </td>
-                                                    <!-- <td>
-                                                    <p class="tableP">{{ data?.t_packets }}</p>
-                                                </td> -->
                                                     <td>
                                                         <p class="tableP css">{{ data.avg_jitter }}</p>
                                                         <p class="css fw-lighter">{{ data.min_jitter }} / {{
@@ -118,19 +115,16 @@
                                                             }}
                                                         </p>
                                                     </td>
-                                                    <td class="fs-5"><a href="#"
-                                                            class="text-decoration-none text-dark tableP">
-                                                            <i class="fa-solid fa-ellipsis"></i></a></td>
+                                                    <td>
+                                                         <p class="tableP css">{{ data.packet_loss?.value }}%</p>
+                                                        <p class="css fw-lighter">{{ data.packet_loss?.received }} / {{ data.packet_loss?.total }}</p>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </perfect-scrollbar>
                                 <div class="d-flex justify-content-end mt-3">
-                                    <!-- <div>
-                                            <button class="addBtn2"><i class="fa-solid fa-chevron-down fa-lg"></i> Go to
-                                                Page</button>
-                                        </div> -->
                                     <div>
                                         <div class="pagination">
                                             <button class="prevBtn" :disabled="pages.previousPage === 0"
@@ -154,29 +148,28 @@
             </div>
             <div class="container-fluid tableDiv">
                 <div class="row g-2 mx-md-2 mb-5">
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                         <div class="card">
                             <div class="card-body">
+                                <div class="d-flex justify-content-end mb-3">
+                                    <div class="btn-group">
+                                        <button
+                                            :class="activeFilters.includes('uplink') ? 'toggleBtnActive' : 'toggleBtnInactive'"
+                                            @click="toggleSeries(0, 'uplink')">Uplink</button>
+                                        <button
+                                            :class="activeFilters.includes('downlink') ? 'toggleBtnActive' : 'toggleBtnInactive'"
+                                            @click="toggleSeries(1, 'downlink')">Downlink</button>
+                                        <button
+                                            :class="activeFilters.includes('rtt') ? 'toggleBtnActive' : 'toggleBtnInactive'"
+                                            @click="toggleSeries(2, 'rtt')">RTT</button>
+                                        <button
+                                            :class="activeFilters.includes('packetloss') ? 'toggleBtnActive' : 'toggleBtnInactive'"
+                                            :style="activeFilters.includes('packetloss') ? 'background-color:#ef4444; border-color:#ef4444;' : 'color:#ef4444; border-color:#ef4444;'"
+                                            @click="toggleSeries(3, 'packetloss')">Packet Loss</button>
+                                    </div>
+                                </div>
                                 <figure class="highcharts-figure">
                                     <div id="container"></div>
-                                </figure>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <figure class="highcharts-figure">
-                                    <div id="container2"></div>
-                                </figure>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <figure class="highcharts-figure">
-                                    <div id="container3"></div>
                                 </figure>
                             </div>
                         </div>
@@ -224,7 +217,10 @@ export default {
             },
             Up: [],
             DownLink: [],
-            Rtt: []
+            Rtt: [],
+            PacketLoss: [],
+            activeFilters: ['uplink', 'downlink', 'rtt', 'packetloss'],
+            chartInstance: null
         }
     },
     mounted() {
@@ -257,6 +253,7 @@ export default {
                 this.Up = res.data.uplink
                 this.DownLink = res.data.downlink
                 this.Rtt = res.data.rtt
+                this.PacketLoss = res.data.packet_loss ?? []
                 await this.loadCharts();
             } catch (error) {
                 console.log(error)
@@ -266,117 +263,56 @@ export default {
         },
 
         async loadCharts() {
+            const categories = this.Up.map(d => moment(d.date).format('HH:mm:ss'));
 
-            // ===== UPLINK =====
-            const categories1 = this.Up.map(d =>
-                moment(d.date).format('HH:mm:ss')
-            );
-
-            const values1 = this.Up.map(d =>
-                parseFloat(d.value)
-            );
-
-            Highcharts.chart('container', {
+            this.chartInstance = Highcharts.chart('container', {
                 chart: {
-                    type: 'column'
+                    type: 'spline'
                 },
                 title: {
-                    text: 'UPLINK'
+                    text: 'Network Performance'
                 },
                 xAxis: {
-                    categories: categories1,
+                    categories: categories,
                     scrollbar: {
                         enabled: true
-                    }
+                    },
+                    tickInterval: Math.ceil(this.Up.length / 10)
                 },
                 yAxis: {
                     title: {
                         text: 'Value'
                     }
                 },
-                series: [{
-                    name: 'Uplink',
-                    data: values1
-                }],
+                legend: {
+                    enabled: true
+                },
+                series: [
+                    { name: 'Uplink', data: this.Up.map(d => parseFloat(d.value)) },
+                    { name: 'Downlink', data: this.DownLink.map(d => parseFloat(d.value)) },
+                    { name: 'RTT', data: this.Rtt.map(d => parseFloat(d.value)) },
+                    {
+                        name: 'Packet Loss (%)',
+                        data: this.PacketLoss.map(d => parseFloat(d.value)),
+                        color: '#ef4444',
+                        visible: true,
+                        yAxis: 0
+                    }
+                ],
                 credits: {
                     enabled: false
                 }
             });
-
-
-            // ===== DOWNLINK =====
-            const categories2 = this.DownLink.map(d =>
-                moment(d.date).format('HH:mm:ss')
-            );
-
-            const values2 = this.DownLink.map(d =>
-                parseFloat(d.value)
-            );
-
-            Highcharts.chart('container2', {
-                chart: {
-                    type: 'column'
-                },
-                title: {
-                    text: 'DOWNLINK'
-                },
-                xAxis: {
-                    categories: categories2,
-                    scrollbar: {
-                        enabled: true
-                    }
-                },
-                yAxis: {
-                    title: {
-                        text: 'Value'
-                    }
-                },
-                series: [{
-                    name: 'Downlink',
-                    data: values2
-                }],
-                credits: {
-                    enabled: false
-                }
-            });
-
-
-            // ===== RTT =====
-            const categories3 = this.Rtt.map(d =>
-                moment(d.date).format('HH:mm:ss')
-            );
-
-            const values3 = this.Rtt.map(d =>
-                parseFloat(d.value)
-            );
-
-            Highcharts.chart('container3', {
-                chart: {
-                    type: 'column'
-                },
-                title: {
-                    text: 'RTT'
-                },
-                xAxis: {
-                    categories: categories3,
-                    scrollbar: {
-                        enabled: true
-                    }
-                },
-                yAxis: {
-                    title: {
-                        text: 'Value'
-                    }
-                },
-                series: [{
-                    name: 'RTT',
-                    data: values3
-                }],
-                credits: {
-                    enabled: false
-                }
-            });
-
+        },
+        toggleSeries(index, key) {
+            if (!this.chartInstance) return
+            const isActive = this.activeFilters.includes(key)
+            if (isActive) {
+                this.activeFilters = this.activeFilters.filter(f => f !== key)
+            } else {
+                this.activeFilters.push(key)
+            }
+            this.chartInstance.series[index].setVisible(!isActive, true)
         },
         async handleReload() {
             Toast.fire({ icon: "success", title: "Restart" })
@@ -387,3 +323,28 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+.toggleBtnActive {
+    background-color: var(--primary_color);
+    color: #fff;
+    border: 1px solid var(--primary_color);
+    padding: 4px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.toggleBtnInactive {
+    background-color: #fff;
+    color: var(--primary_color);
+    border: 1px solid var(--primary_color);
+    padding: 4px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.toggleBtnInactive:hover {
+    background-color: var(--primary_color_Hover);
+    color: #fff;
+}
+</style>

@@ -102,9 +102,9 @@
                                         <td><p class="tableP">{{ data.p_size }}</p></td>
                                         <td><p class="tableP">{{ data.dscp }}</p></td>
                                         <td class="fs-5">
-                                            <RouterLink to="/sessionDetails" class="text-decoration-none text-dark tableP">
+                                            <!-- <RouterLink to="/sessionDetails" class="text-decoration-none text-dark tableP"> -->
                                                 <i class="fa-solid fa-circle-play"></i>
-                                            </RouterLink>
+                                            <!-- </RouterLink> -->
                                         </td>
                                         <td class="text-center">
                                             <div class="dropdown">
@@ -243,7 +243,7 @@ export default {
         async getSessions(page = 1) {
             try {
                 this.loading = true
-                let res = await sessionsList(page, 10, this.searchQuery)
+                let res = await sessionsList(page, this.searchQuery)
                 this.sessionsData = res.data.sessions
                 this.pages.currentPage = page
                 this.pages.previousPage = res?.data?.prev || 0
