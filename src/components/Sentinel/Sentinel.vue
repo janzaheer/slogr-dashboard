@@ -85,6 +85,7 @@
                                                 <th scope="col"><a href="#" class="tableHead" data-bs-toggle="dropdown"
                                                         aria-expanded="false">Country</a>
                                                 </th>
+                                                <th scope="col"><a href="#" class="tableHead">Status</a></th>
                                                 <th scope="col"></th>
                                                 <th scope="col"></th>
                                                 <th scope="col"></th>
@@ -110,6 +111,21 @@
                                                 <td>
                                                     <p class="tableP">{{ data.Country }}</p>
                                                 </td>
+                                                <td>
+                                                    <span
+                                                        :style="{
+                                                            backgroundColor: data.status === 'active' ? '#22c55e' : '#ef4444',
+                                                            color: 'white',
+                                                            padding: '3px 12px',
+                                                            borderRadius: '20px',
+                                                            fontSize: '12px',
+                                                            fontWeight: '600',
+                                                            textTransform: 'capitalize',
+                                                            display: 'inline-block'
+                                                        }">
+                                                        {{ data.status === 'active' ? 'Active' : 'Inactive' }}
+                                                    </span>
+                                                </td>
                                                 <td class="fs-5"><a href="#"
                                                         class="text-decoration-none text-dark tableP"
                                                         data-bs-toggle="modal" data-bs-target="#staticBackdrop"
@@ -120,10 +136,15 @@
                                                         data-bs-toggle="modal" data-bs-target="#deleteConfirmModal"
                                                         @click="deleteId = data.id">
                                                         <i class="fa-regular fa-trash-can fa-lg"></i></a></td>
-                                                <td class="fs-5"><a href="#"
-                                                        class="text-decoration-none text-dark tableP"
+                                                <td class="fs-5">
+                                                    <RouterLink :to="`/agentHeartbeat/${data.id}`" class="text-decoration-none text-dark tableP me-3">
+                                                        <i class="fa-solid fa-heart-pulse"></i>
+                                                    </RouterLink>
+                                                    <a href="#" class="text-decoration-none text-dark tableP"
                                                         @click="handleGrids(data.id, data.name)">
-                                                        <i class="fa-solid fa-chevron-right"></i></a></td>
+                                                        <i class="fa-solid fa-chevron-right"></i>
+                                                    </a>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>

@@ -93,8 +93,8 @@
                                 </thead>
                                 <tbody>
                                     <tr v-for="data in sessionsData" :key="data.id">
-                                        <td><p class="tableP">{{ data?.s_name }}</p></td>
-                                        <td><p class="tableP">{{ data?.c_name }}</p></td>
+                                        <td><p class="tableP"><span class="dot me-2" :style="{ backgroundColor: data.server_status === 'active' ? '#22c55e' : '#ef4444' }"></span>{{ data?.s_name }}</p></td>
+                                        <td><p class="tableP"><span class="dot me-2" :style="{ backgroundColor: data.client_status === 'active' ? '#22c55e' : '#ef4444' }"></span>{{ data?.c_name }}</p></td>
                                         <td><p class="tableP">{{ data?.n_packets }}</p></td>
                                         <td><p class="tableP">{{ data?.p_name }}</p></td>
                                         <td><p class="tableP">{{ data?.p_interval }}</p></td>
@@ -328,6 +328,13 @@ export default {
 
 .search-clear-btn:hover {
     color: #495057;
+}
+
+.dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
 }
 
 .addBtnSessions {

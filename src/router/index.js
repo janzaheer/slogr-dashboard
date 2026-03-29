@@ -145,6 +145,12 @@ const router = createRouter({
       component: SessionDetails,
       meta: { requiresAuth: true },
     },
+    {
+      path: '/agentHeartbeat/:id',
+      name: 'AgentHeartbeat',
+      component: () => import('../components/Sentinel/AgentHeartbeat.vue'),
+      meta: { requiresAuth: true },
+    },
   ]
 })
 
