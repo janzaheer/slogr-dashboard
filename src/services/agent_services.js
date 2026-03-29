@@ -101,3 +101,8 @@ export async function agentRefSessions(id){
     const resp = await axios.get(`${base_url}/api/get-ref-sessions?aid=` + id)
     return resp.data
 }
+
+export async function getAgentHeartbeats(id) {
+    const resp = await axios.get(`${base_url}/api/agent-heartbeats/${id}`)
+    return resp.data
+}
