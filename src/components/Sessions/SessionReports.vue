@@ -3,7 +3,10 @@
         <div class="bg">
             <Header />
             <div class="container-fluid sentinel mt-2">
-                <div class="d-flex justify-content-end">
+                <div class="d-flex justify-content-between">
+                    <RouterLink :to="'/sessionDetails/' + $route.params.id" class="text-decoration-none text-dark tableP">
+                        <button type="button" class="modelSaveBtn ms-2">Trace Routes</button>
+                    </RouterLink>
                     <h1 class="me-2">
                         <RouterLink to="/sessions"> <i class="fa-solid fa-xmark fa-xs" style="color: #d8dce2;"></i>
                         </RouterLink>
@@ -33,7 +36,7 @@ export default {
     },
     data() {
         return {
-  
+
         }
     },
     mounted() {

@@ -140,7 +140,7 @@ const router = createRouter({
       meta: { requiresAuth: true },
     },
     {
-      path: '/sessionDetails',
+      path: '/sessionDetails/:id',
       name: 'SessionDetails',
       component: SessionDetails,
       meta: { requiresAuth: true },
